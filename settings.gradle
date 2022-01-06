@@ -1,0 +1,4 @@
+
+rootProject.name = "FinalArchitecture"
+include ':app'
+include ':lib_base'
