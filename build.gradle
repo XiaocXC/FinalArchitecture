@@ -1,13 +1,79 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
+    ext {
+        // App SDK
+        compileSdkVersion = 31
+        minSdkVersion = 25
+        targetSdkVersion = 31
+
+        // Kotlin
+        kotlin_version = '1.5.32'
+        kotlin_coroutines_version = '1.5.2'
+        kotlin_serialization = "1.3.1"
+
+        // Core
+        androidx_app_compat_version = "1.4.0"
+        androidx_core_ktx_version = "1.7.0"
+        constraint_layout_version = "2.1.2"
+        lifecycle_version = "2.4.0"
+        activity_version = "1.4.0"
+        fragment_version = "1.4.0"
+        recyclerview_version = "1.2.1"
+        recyclerview_selection_version = "1.1.0"
+
+        // MaterialDesign UI
+        material_version = "1.5.0-rc01"
+
+        // Paging3分页库
+        paging3_version = "3.1.0"
+        // Navigation导航
+        navigation_version = "2.4.0-rc01"
+        preference_version = "1.1.1"
+
+        /**
+         * 第三方库
+         */
+        // 网络库Retrofit
+        retrofit_version = "2.9.0"
+        okhttp_version = "4.9.3"
+
+        // RecyclerView工具
+        BaseRecyclerViewAdapterHelper_version = "3.0.7"
+
+        // Glide图片加载框架
+        glide_version = "4.12.0"
+        // Coil图片加载框架
+        coil_version = "1.4.0"
+        // Coil 图片加载框架后置处理器
+        coil_transformers_version = "1.0.3"
+
+        // 防止数据倒灌的LiveData
+        unpeek_livedata = "7.2.0-beta1"
+
+        // Timber日志
+        timber_version = "5.0.1"
+        // 图片压缩工具
+        compressor_version = "3.0.1"
+        // MMKV
+        mmkv_version = "1.2.11"
+        // PermissionX
+        permissionx_version = "1.5.1"
+        // Banner轮播图
+        banner_version = "2.2.2"
+        // stetho
+        stetho_version = "1.6.0"
+        // 图片选择器
+        picture_selector_version = "v2.7.3-rc07"
+
+    }
     repositories {
+        mavenCentral()
         maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
         google()
-        mavenCentral()
     }
     dependencies {
         classpath "com.android.tools.build:gradle:4.2.2"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.20"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -16,6 +82,7 @@ buildscript {
 
 allprojects {
     repositories {
+        mavenCentral()
         // 阿里云云效仓库，提升编译速度：https://maven.aliyun.com/mvn/guide
         maven { url 'https://maven.aliyun.com/repository/jcenter' }
         maven { url 'https://maven.aliyun.com/repository/public' }
