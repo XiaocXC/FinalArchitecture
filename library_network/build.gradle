@@ -1,10 +1,22 @@
 apply from: "../common_config.gradle"
+apply plugin: 'kotlinx-serialization'
+apply plugin: 'org.jetbrains.kotlin.plugin.serialization'
+
+android{
+
+    //统一资源前缀,规范资源引用
+    resourcePrefix "network_"
+}
 
 dependencies {
+    api project(':library_base')
 
     // Retrofit
     api "com.squareup.retrofit2:retrofit:$retrofit_version"
-    api "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    api "com.squareup.okhttp3:okhttp:$okhttp_version"
+    api "org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlin_serialization"
+    // Log日志拦截器
+    implementation("com.squareup.okhttp3:logging-interceptor:$okhttp_version")
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

@@ -1,7 +1,9 @@
 apply from: "../common_config.gradle"
+apply plugin: 'kotlinx-serialization'
+apply plugin: 'org.jetbrains.kotlin.plugin.serialization'
 
 dependencies {
-    api project(':library_base')
+    api project(':library_network')
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

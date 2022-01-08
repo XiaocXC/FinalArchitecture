@@ -1,19 +1,26 @@
-package com.zjl.base
+package com.zjl.base.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
+import com.zjl.base.viewmodel.BaseViewModel
 
 /**
  * @author Xiaoc
  * @since 2022-01-07
  *
  * 基类Activity，提供基本的封装内容进行统一
+ * 规定一个Activity要基于ViewBinding且有一个统一的ViewModel作为支撑
+ * 这一点在BaseFragment中没有强制
  */
-abstract class BaseActivity<T: ViewBinding>: AppCompatActivity() {
+abstract class BaseActivity<V: ViewBinding, VM: BaseViewModel>: AppCompatActivity() {
 
-    protected val binding: T by lazy {
+    protected val binding: V by lazy {
         bindView()
+    }
+
+    protected val viewModel: VM by lazy {
+        bindViewModel()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,6 +40,12 @@ abstract class BaseActivity<T: ViewBinding>: AppCompatActivity() {
      * 绑定ViewBinding
      * @return 返回一个具体泛型的ViewBinding实例
      */
-    abstract fun bindView(): T
+    abstract fun bindView(): V
+
+    /**
+     * 绑定ViewModel
+     * @return 返回一个具体泛型的ViewModel实例
+     */
+    abstract fun bindViewModel(): VM
 
 }

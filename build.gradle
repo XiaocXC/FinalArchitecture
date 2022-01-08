@@ -9,7 +9,7 @@ buildscript {
         // Kotlin
         kotlin_version = '1.5.32'
         kotlin_coroutines_version = '1.5.2'
-        kotlin_serialization = "1.3.1"
+        kotlin_serialization = "1.3.2"
 
         // Core
         androidx_app_compat_version = "1.4.0"
@@ -74,6 +74,9 @@ buildscript {
     dependencies {
         classpath "com.android.tools.build:gradle:4.2.2"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+
+        // kotlin-serialization
+        classpath "org.jetbrains.kotlin:kotlin-serialization:$kotlin_version"
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files

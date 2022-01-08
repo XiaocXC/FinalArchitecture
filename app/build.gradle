@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlinx-serialization'
+    id 'org.jetbrains.kotlin.plugin.serialization'
 }
 
 android {
