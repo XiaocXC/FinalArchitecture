@@ -28,6 +28,7 @@ abstract class BaseActivity<V: ViewBinding, VM: BaseViewModel>: AppCompatActivit
         setContentView(binding.root)
 
         initViewAndEvent()
+        createObserver()
     }
 
     /**
@@ -47,5 +48,11 @@ abstract class BaseActivity<V: ViewBinding, VM: BaseViewModel>: AppCompatActivit
      * @return 返回一个具体泛型的ViewModel实例
      */
     abstract fun bindViewModel(): VM
+
+
+    /**
+     * 创建观察者
+     */
+    abstract fun createObserver()
 
 }

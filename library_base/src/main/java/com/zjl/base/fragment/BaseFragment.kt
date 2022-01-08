@@ -52,6 +52,7 @@ abstract class BaseFragment<V: ViewBinding>: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         isFirst = true
         initViewAndEvent()
+        createObserver()
     }
 
     /**
@@ -59,6 +60,11 @@ abstract class BaseFragment<V: ViewBinding>: Fragment() {
      * 用于初始化需要的View相关内容，包括其点击事件，初始状态等
      */
     abstract fun initViewAndEvent()
+
+    /**
+     * 创建观察者
+     */
+    abstract fun createObserver()
 
     /**
      * 懒加载
