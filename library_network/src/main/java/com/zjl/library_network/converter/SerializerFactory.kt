@@ -1,5 +1,6 @@
 package com.zjl.library_network.converter
 
+import com.zjl.library_network.utils.globalJson
 import kotlinx.serialization.BinaryFormat
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.StringFormat
@@ -13,6 +14,10 @@ import java.lang.reflect.Type
 /**
  * @author Xiaoc
  * @since 2021-10-13
+ *
+ * Kotlin-serialization序列化工具创建工厂
+ * 用于Retrofit相关的序列化处理
+ * 注意：该工厂创建的Retrofit序列化处理器会自动脱壳[ResultVO]，详情见[Serializer]
  */
 @ExperimentalSerializationApi
 internal class SerializerFactory(
