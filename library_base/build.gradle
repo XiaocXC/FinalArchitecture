@@ -47,6 +47,9 @@ dependencies {
     // 日志打印
     api "com.jakewharton.timber:timber:$timber_version"
 
+    // MultiStatePage
+    api "com.github.Zhao-Yan-Yan:MultiStatePage:$multi_state_page_version"
+
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'

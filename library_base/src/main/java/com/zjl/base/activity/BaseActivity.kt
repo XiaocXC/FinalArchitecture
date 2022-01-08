@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
 import com.zjl.base.viewmodel.BaseViewModel
+import com.zy.multistatepage.MultiStatePage.bindMultiState
 
 /**
  * @author Xiaoc
@@ -21,6 +22,10 @@ abstract class BaseActivity<V: ViewBinding, VM: BaseViewModel>: AppCompatActivit
 
     protected val viewModel: VM by lazy {
         bindViewModel()
+    }
+
+    protected val rootUiState by lazy {
+        bindMultiState(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

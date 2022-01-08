@@ -1,9 +1,11 @@
 package com.zjl.base
 
 import android.app.Application
+import com.zjl.lib_base.BuildConfig
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import timber.log.Timber
 
 
 /**
@@ -34,5 +36,13 @@ class FinalArchitectureApplication: Application() {
     override fun onCreate() {
         super.onCreate()
         globalApplication = this
+
+        /**
+         * 配置Timber日志记录树
+         * 当为debug模式时使用DebugTree
+         */
+        if(BuildConfig.DEBUG){
+            Timber.plant(Timber.DebugTree())
+        }
     }
 }

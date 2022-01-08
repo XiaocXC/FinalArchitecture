@@ -6,6 +6,7 @@ import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.ViewDataBinding
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
@@ -37,7 +38,12 @@ abstract class BaseFragment<V: ViewBinding>: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = bindView()
+        val _binding = bindView()
+        // 如果是DataBinding，加入lifecycleOwner
+        if(_binding is ViewDataBinding){
+            _binding.lifecycleOwner = viewLifecycleOwner
+        }
+        binding = _binding
         return binding.root
     }
 

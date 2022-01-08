@@ -1,5 +1,6 @@
 package com.zjl.base.viewmodel
 
+import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import com.zjl.base.globalApplication
 
@@ -12,5 +13,7 @@ import com.zjl.base.globalApplication
  * Fragment可能会同时依赖多个ViewModel或者干脆不使用ViewModel
  * 所以我们没有在Fragment中强制规定ViewModel的使用
  */
-abstract class BaseViewModel: AndroidViewModel(globalApplication) {
+abstract class BaseViewModel(
+    application: Application = globalApplication
+): AndroidViewModel(application) {
 }

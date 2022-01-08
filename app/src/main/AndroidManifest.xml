@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.zjl.finalarchitecture">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name="com.zjl.base.FinalArchitectureApplication"
         android:icon="@mipmap/ic_launcher"
