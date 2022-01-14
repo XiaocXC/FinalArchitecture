@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="network_description_unknown_error">未知错误</string>
+    <string name="network_description_data_is_null_error">返回的数据为空</string>
+    <string name="network_description_connection_error">网络连接失败，请检查网络</string>
+    <string name="network_description_timeout_error">请求超时，请重试</string>
+    <string name="network_description_data_type_error">数据返回类型不正确，解析发生错误</string>
+    <string name="network_description_http_status_error">与服务器连接异常</string>
+</resources>

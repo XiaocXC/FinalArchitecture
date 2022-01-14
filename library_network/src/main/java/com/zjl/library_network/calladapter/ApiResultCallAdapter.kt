@@ -1,6 +1,6 @@
 package com.zjl.library_network.calladapter
 
-import com.zjl.base.error.ApiError
+import com.zjl.library_network.error.ApiError
 import com.zjl.library_network.ApiResult
 import com.zjl.library_network.exception.ApiException
 import okhttp3.Request

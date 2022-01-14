@@ -90,7 +90,9 @@ abstract class BaseFragment<V: ViewBinding>: Fragment() {
         if (lifecycle.currentState == Lifecycle.State.STARTED && isFirst) {
             // 延迟加载 防止 切换动画还没执行完毕时数据就已经加载好了，这时页面会有渲染卡顿
             handler.postDelayed( {
+
                 lazyLoadData()
+
                 isFirst = false
             },lazyLoadTime())
         }

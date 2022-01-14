@@ -1,6 +1,6 @@
 package com.zjl.library_network
 
-import com.zjl.base.error.Error
+import com.zjl.library_network.error.Error
 
 
 /**

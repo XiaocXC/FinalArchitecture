@@ -1,7 +1,7 @@
 package com.zjl.module_domain.usecase
 
-import com.zjl.base.error.ApiError
 import com.zjl.library_network.ApiResult
+import com.zjl.library_network.error.ApiError
 import com.zjl.library_network.exception.ApiException
 import com.zjl.module_domain.UiModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -30,8 +30,7 @@ import timber.log.Timber
  * @param Result 最后转换后返回的数据类型
  **/
 abstract class SuspendUseCase<in Parameters, Result>(
-    private val coroutineDispatcher: CoroutineDispatcher = Dispatchers.IO
-) {
+    private val coroutineDispatcher: CoroutineDispatcher = Dispatchers.IO) {
 
     suspend operator fun invoke(parameters: Parameters): UiModel<Result> {
         return try {

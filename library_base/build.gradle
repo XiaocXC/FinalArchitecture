@@ -50,6 +50,14 @@ dependencies {
     // MultiStatePage
     api "com.github.Zhao-Yan-Yan:MultiStatePage:$multi_state_page_version"
 
+    api "com.github.Zhao-Yan-Yan:MultiStatePage:$multi_state_page_version"
+
+    //屏幕适配
+    api "me.jessyan:autosize:$autosize_version"
+
+    //微信开源项目，替代SP
+    api "com.tencent:mmkv:$mmkv_version"
+
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'

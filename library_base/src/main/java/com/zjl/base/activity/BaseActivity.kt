@@ -16,11 +16,11 @@ import com.zy.multistatepage.MultiStatePage.bindMultiState
  */
 abstract class BaseActivity<V: ViewBinding, VM: BaseViewModel>: AppCompatActivity() {
 
-    protected val binding: V by lazy {
+    protected val mBinding: V by lazy {
         bindView()
     }
 
-    protected val viewModel: VM by lazy {
+    protected val mViewModel: VM by lazy {
         bindViewModel()
     }
 
@@ -30,17 +30,11 @@ abstract class BaseActivity<V: ViewBinding, VM: BaseViewModel>: AppCompatActivit
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(binding.root)
+        setContentView(mBinding.root)
 
         initViewAndEvent()
         createObserver()
     }
-
-    /**
-     * 初始化视图和事件
-     * 用于初始化需要的View相关内容，包括其点击事件，初始状态等
-     */
-    abstract fun initViewAndEvent()
 
     /**
      * 绑定ViewBinding
@@ -54,6 +48,11 @@ abstract class BaseActivity<V: ViewBinding, VM: BaseViewModel>: AppCompatActivit
      */
     abstract fun bindViewModel(): VM
 
+    /**
+     * 初始化视图和事件
+     * 用于初始化需要的View相关内容，包括其点击事件，初始状态等
+     */
+    abstract fun initViewAndEvent()
 
     /**
      * 创建观察者

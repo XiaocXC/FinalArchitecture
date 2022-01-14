@@ -1,6 +1,6 @@
 package com.zjl.library_network.exception
 
-import com.zjl.base.error.Error
+import com.zjl.library_network.error.Error
 import java.io.IOException
 
 /**

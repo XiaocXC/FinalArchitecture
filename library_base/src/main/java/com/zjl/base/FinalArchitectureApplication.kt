@@ -1,6 +1,7 @@
 package com.zjl.base
 
 import android.app.Application
+import com.tencent.mmkv.MMKV
 import com.zjl.lib_base.BuildConfig
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -37,6 +38,8 @@ class FinalArchitectureApplication: Application() {
         super.onCreate()
         globalApplication = this
 
+        MMKV.initialize(this.filesDir.absolutePath + "/mmkv")
+
         /**
          * 配置Timber日志记录树
          * 当为debug模式时使用DebugTree
@@ -44,5 +47,6 @@ class FinalArchitectureApplication: Application() {
         if(BuildConfig.DEBUG){
             Timber.plant(Timber.DebugTree())
         }
+
     }
 }

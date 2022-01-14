@@ -1,4 +1,4 @@
-package com.zjl.base.error
+package com.zjl.library_network.error
 
 import com.zjl.lib_base.R
 
