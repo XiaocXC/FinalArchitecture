@@ -1,7 +1,7 @@
 package com.zjl.finalarchitecture.module.main.ui
 
 import androidx.activity.OnBackPressedCallback
-import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import com.blankj.utilcode.util.ToastUtils
 import com.zjl.base.activity.BaseActivity
 import com.zjl.finalarchitecture.R
@@ -23,10 +23,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     override fun bindViewModel(): MainViewModel = createBaseViewModel()
 
     override fun initViewAndEvent() {
+        // 配置Navigation
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                val nav = Navigation.findNavController(this@MainActivity, R.id.mFragmentContainerView)
-                if (nav.currentDestination != null && nav.currentDestination!!.id != R.id.mFragmentContainerView) {
+                val nav = findNavController(R.id.mFragmentContainerView)
+                if (nav.currentDestination != null && nav.currentDestination?.id != R.id.mFragmentContainerView) {
                     //如果当前界面不是主页，那么直接调用返回即可
                     nav.navigateUp()
                 } else {

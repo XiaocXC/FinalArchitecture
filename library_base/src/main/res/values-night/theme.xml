@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- APP主题 -->
-    <style name="Base_Theme.FinalArchitecture" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Base_Theme.FinalArchitecture" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- 主色调 -->
         <item name="colorPrimary">@color/base_purple_200</item>
         <item name="colorPrimaryVariant">@color/base_purple_700</item>
@@ -15,7 +15,7 @@
         <item name="android:windowLightStatusBar">false</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
-        <item name="android:windowTranslucentNavigation">true</item>
+<!--        <item name="android:windowTranslucentNavigation">true</item>-->
         <item name="android:windowTranslucentStatus">true</item>
         <!-- 禁用强制暗黑模式  -->
         <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
