@@ -24,9 +24,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <TextView
+    <com.hjq.shape.view.ShapeTextView
         android:id="@+id/txtEnter"
-        android:layout_width="wrap_content"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="72dp"
         android:paddingLeft="12dp"
@@ -35,19 +35,23 @@
         android:paddingBottom="8dp"
         android:text="@string/enter_now"
         android:textColor="@color/white"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:shape="rectangle"
+        app:shape_endColor="#ED58FF"
+        app:shape_radius="10dp"
+        app:shape_solidPressedColor="#5A8DDF"
+        app:shape_startColor="#49DAFA"
+        android:gravity="center"/>
 
 
-    <com.hjq.shape.view.ShapeImageView
+    <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/imgLogo"
         android:layout_width="108dp"
         android:layout_height="108dp"
         android:src="@mipmap/logo"
-        app:shape="rectangle"
-        app:shape_radius="10dp"
+        app:riv_corner_radius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

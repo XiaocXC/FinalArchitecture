@@ -57,6 +57,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.3.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
@@ -66,5 +67,8 @@ dependencies {
     implementation 'com.github.zhpanvip:BannerViewPager:3.5.2'
     //圆角shape
     implementation 'com.github.getActivity:ShapeView:6.2'
+
+    implementation 'com.makeramen:roundedimageview:2.3.0'
+
 
 }

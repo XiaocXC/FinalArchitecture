@@ -66,8 +66,10 @@ buildscript {
         picture_selector_version = "v2.7.3-rc07"
         // MultiStatePage
         multi_state_page_version = "2.0.5"
-        //屏幕适配
+        // 屏幕适配
         autosize_version = "1.2.1"
+        // 工具类
+        tools_version = "1.30.6"
 
     }
     repositories {
