@@ -17,10 +17,10 @@ object ApiError {
     private const val timeoutCode = 0x0016
     private const val connectionErrorCode = 0x0017
 
-    val dataIsNull = Error(errorMsgId = R.string.base_network_description_data_is_null_error,errorCode = dataIsNullCode)
-    val unknownError = Error(errorMsgId = R.string.base_network_description_unknown_error,errorCode = unknownCode)
-    val connectionError = Error(errorMsgId = R.string.base_network_description_connection_error,errorCode = connectionErrorCode)
-    val timeoutError = Error(errorMsgId = R.string.base_network_description_timeout_error,errorCode = timeoutCode)
-    val dataTypeError = Error(errorMsgId = R.string.base_network_description_timeout_error,errorCode = dataTypeCode)
-    val httpStatusError = Error(errorMsgId = R.string.base_network_description_http_status_error,errorCode = httpStatusCode)
+    val dataIsNull = Error("返回的数据为空",errorMsgId = R.string.base_network_description_data_is_null_error,errorCode = dataIsNullCode)
+    val unknownError = Error("未知错误",errorMsgId = R.string.base_network_description_unknown_error,errorCode = unknownCode)
+    val connectionError = Error("网络连接失败，请检查网络",errorMsgId = R.string.base_network_description_connection_error,errorCode = connectionErrorCode)
+    val timeoutError = Error("请求超时，请重试",errorMsgId = R.string.base_network_description_timeout_error,errorCode = timeoutCode)
+    val dataTypeError = Error("数据返回类型不正确，解析发生错误",errorMsgId = R.string.base_network_description_timeout_error,errorCode = dataTypeCode)
+    val httpStatusError = Error("与服务器连接异常",errorMsgId = R.string.base_network_description_http_status_error,errorCode = httpStatusCode)
 }

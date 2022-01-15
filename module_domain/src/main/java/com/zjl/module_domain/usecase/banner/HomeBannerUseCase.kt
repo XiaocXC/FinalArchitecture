@@ -12,7 +12,8 @@ import com.zjl.module_domain.usecase.SuspendUseCase
 class HomeBannerUseCase: SuspendUseCase<Unit, List<BannerVO>>() {
 
     override suspend fun execute(parameters: Unit): ApiResult<List<BannerVO>> {
-        return HomeRepository.getBanner()
+//        return HomeRepository.getBanner()
+        return ApiResult.Success(emptyList())
     }
 
 }

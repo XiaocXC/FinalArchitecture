@@ -43,7 +43,6 @@ class MainFragment : BaseFragment<FragmentMainBinding>(){
             }
         }
 
-
         binding.bottomNavigationView.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.home -> {

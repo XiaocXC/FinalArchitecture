@@ -8,6 +8,7 @@ import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.module.main.viewmodel.MainViewModel
 import com.zjl.finalarchitecture.databinding.ActivityMainBinding
 import com.zjl.finalarchitecture.di.createBaseViewModel
+import com.zjl.module_domain.UiModel
 
 /**
  * @description: 主界面
@@ -44,6 +45,20 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     }
 
     override fun createObserver() {
+        // Banner状态
+        mViewModel.bannerListUiModel.observe(this){
+            when (it) {
+                is UiModel.Loading -> {
+                    mBinding.tvInfo.text = "加载中"
+                }
+                is UiModel.Error -> {
+                    mBinding.tvInfo.text = it.error.message
+                }
+            }
+        }
 
+        mViewModel.bannerList.observe(this){
+            mBinding.tvInfo.text = it.toString()
+        }
     }
 }
