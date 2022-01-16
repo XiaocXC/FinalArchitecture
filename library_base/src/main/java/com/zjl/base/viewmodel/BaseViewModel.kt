@@ -1,9 +1,6 @@
 package com.zjl.base.viewmodel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
-import com.zjl.base.globalApplication
 
 /**
  * @author Xiaoc

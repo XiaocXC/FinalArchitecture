@@ -4,11 +4,13 @@ import androidx.activity.OnBackPressedCallback
 import androidx.navigation.findNavController
 import com.blankj.utilcode.util.ToastUtils
 import com.zjl.base.activity.BaseActivity
+import com.zjl.base.ui.onFailure
+import com.zjl.base.ui.onLoading
+import com.zjl.base.ui.onSuccess
 import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.module.main.viewmodel.MainViewModel
 import com.zjl.finalarchitecture.databinding.ActivityMainBinding
 import com.zjl.finalarchitecture.di.createBaseViewModel
-import com.zjl.module_domain.UiModel
 
 /**
  * @description: 主界面
@@ -45,20 +47,15 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     }
 
     override fun createObserver() {
-        // Banner状态
-        mViewModel.bannerListUiModel.observe(this){
-            when (it) {
-                is UiModel.Loading -> {
-                    mBinding.tvInfo.text = "加载中"
-                }
-                is UiModel.Error -> {
-                    mBinding.tvInfo.text = it.error.message
-                }
+        // Banner状态及数据观察
+        mViewModel.bannerListUiModel.observe(this){ uiModel ->
+            uiModel.onSuccess {
+                mBinding.tvInfo.text = it.toString()
+            }.onFailure { _, throwable ->
+                mBinding.tvInfo.text = throwable.message
+            }.onLoading {
+                mBinding.tvInfo.text = "加载中"
             }
-        }
-
-        mViewModel.bannerList.observe(this){
-            mBinding.tvInfo.text = it.toString()
         }
     }
 }

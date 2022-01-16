@@ -1,9 +1,10 @@
 package com.zjl.module_domain.usecase
 
+import com.zjl.base.ui.UiModel
 import com.zjl.library_network.ApiResult
 import com.zjl.library_network.error.ApiError
 import com.zjl.library_network.exception.ApiException
-import com.zjl.module_domain.UiModel
+import com.zjl.library_network.transToUiModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -35,14 +36,8 @@ abstract class SuspendUseCase<in Parameters, Result>(
     suspend operator fun invoke(parameters: Parameters): UiModel<Result> {
         return try {
             withContext(coroutineDispatcher) {
-                when (val result = execute(parameters)) {
-                    is ApiResult.Success -> {
-                        UiModel.Success(result.data)
-                    }
-                    is ApiResult.Failure -> {
-                        UiModel.Error(error = ApiException(result.error))
-                    }
-                }
+                val result = execute(parameters)
+                return@withContext result.transToUiModel()
             }
         } catch (e: Exception) {
             Timber.d(e)
