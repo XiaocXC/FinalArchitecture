@@ -35,6 +35,7 @@
     <color name="base_white10">#1AFFFFFF</color>
     <color name="base_white5">#0DFFFFFF</color>
     <color name="base_whitebg">#f5f5f5</color>
+    <color name="base_bgColorThird">#E8E8E8</color>
 
     <!-- 黑色 -->
     <color name="base_black95">#F2000000</color>

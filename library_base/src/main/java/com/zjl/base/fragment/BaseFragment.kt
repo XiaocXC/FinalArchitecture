@@ -3,6 +3,7 @@ package com.zjl.base.fragment
 import android.content.Context
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,9 +27,9 @@ abstract class BaseFragment<V: ViewBinding>: Fragment() {
 
     lateinit var mActivity: AppCompatActivity
 
-    protected var binding by autoCleared<V>()
+    var mBinding by autoCleared<V>()
 
-    private val handler = Handler()
+    private val mHandler = Handler(Looper.myLooper()!!)
 
     //是否第一次加载
     private var isFirst: Boolean = true
@@ -43,8 +44,8 @@ abstract class BaseFragment<V: ViewBinding>: Fragment() {
         if(_binding is ViewDataBinding){
             _binding.lifecycleOwner = viewLifecycleOwner
         }
-        binding = _binding
-        return binding.root
+        mBinding = _binding
+        return mBinding.root
     }
 
     abstract fun bindView(): V
@@ -89,7 +90,7 @@ abstract class BaseFragment<V: ViewBinding>: Fragment() {
     private fun onVisible() {
         if (lifecycle.currentState == Lifecycle.State.STARTED && isFirst) {
             // 延迟加载 防止 切换动画还没执行完毕时数据就已经加载好了，这时页面会有渲染卡顿
-            handler.postDelayed( {
+            mHandler.postDelayed( {
 
                 lazyLoadData()
 
@@ -110,7 +111,7 @@ abstract class BaseFragment<V: ViewBinding>: Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        handler.removeCallbacksAndMessages(null)
+        mHandler.removeCallbacksAndMessages(null)
     }
 
 }

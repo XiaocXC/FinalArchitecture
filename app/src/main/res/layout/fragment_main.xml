@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:fitsSystemWindows="true">
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/mViewPager2"
@@ -12,9 +13,17 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
+
+    <!--
+        关闭item切换动画（labelVisibilityMode）
+        auto:自动模式，该模式使用item数来确定是否显示或隐藏标签
+        labeled:所有item都显示，包括文字
+        unlabeled:所有item 中都不显示，包括底下都文字
+        selected:标签在选中的item 中显示
+     -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigationView"
-        app:labelVisibilityMode="labeled"
+        android:id="@+id/mBottomNavigationView"
+        app:labelVisibilityMode="selected"
         app:menu="@menu/menu_bottom_navigation"
         app:backgroundTint="@color/base_white"
         android:layout_width="match_parent"

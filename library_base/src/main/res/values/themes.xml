@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- APP主题 -->
-    <style name="Base_Theme.FinalArchitecture" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base_Theme.FinalArchitecture" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- 主色调 -->
         <item name="colorPrimary">@color/base_purple_500</item>
         <item name="colorPrimaryVariant">@color/base_purple_700</item>
@@ -13,7 +13,7 @@
 
         <!--  设置透明状态栏，适合浅色时的状态栏  -->
         <item name="android:windowLightStatusBar">true</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:statusBarColor">@color/base_white</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
 <!--        <item name="android:windowTranslucentNavigation">true</item>-->
         <item name="android:windowTranslucentStatus">true</item>

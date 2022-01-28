@@ -30,7 +30,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 val nav = findNavController(R.id.mFragmentContainerView)
-                if (nav.currentDestination != null && nav.currentDestination?.id != R.id.mFragmentContainerView) {
+                if (nav.currentDestination != null && nav.currentDestination?.id != R.id.mainFragment) {
                     //如果当前界面不是主页，那么直接调用返回即可
                     nav.navigateUp()
                 } else {
@@ -48,14 +48,14 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
     override fun createObserver() {
         // Banner状态及数据观察
-        mViewModel.bannerListUiModel.observe(this){ uiModel ->
-            uiModel.onSuccess {
-                mBinding.tvInfo.text = it.toString()
-            }.onFailure { _, throwable ->
-                mBinding.tvInfo.text = throwable.message
-            }.onLoading {
-                mBinding.tvInfo.text = "加载中"
-            }
-        }
+//        mViewModel.bannerListUiModel.observe(this){ uiModel ->
+//            uiModel.onSuccess {
+//                mBinding.tvInfo.text = it.toString()
+//            }.onFailure { _, throwable ->
+//                mBinding.tvInfo.text = throwable.message
+//            }.onLoading {
+//                mBinding.tvInfo.text = "加载中"
+//            }
+//        }
     }
 }

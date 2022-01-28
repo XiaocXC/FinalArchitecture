@@ -62,6 +62,7 @@ class WelcomeActivity : BaseActivity<ActivityWelcomeBinding, WelcomeViewModel>()
                 })
             mBinding.mViewPager.create(mItemTextArray.toList())
         } else {
+            mBinding.txtEnter.gone()
             mBinding.imgLogo.visible()
             mBinding.mViewPager.postDelayed({
                 startActivity(Intent(this, MainActivity::class.java))

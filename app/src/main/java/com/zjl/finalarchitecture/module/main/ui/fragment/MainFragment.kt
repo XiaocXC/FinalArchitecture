@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.finalarchitecture.R
@@ -21,29 +22,30 @@ import com.zjl.finalarchitecture.module.system.ui.fragment.SystemFragment
  * @author: zhou
  * @date : 2022/1/14 15:42
  */
-class MainFragment : BaseFragment<FragmentMainBinding>(){
-
-    private val mFragmentList = arrayListOf<Fragment>()
+class MainFragment : BaseFragment<FragmentMainBinding>() {
 
     override fun bindView(): FragmentMainBinding = FragmentMainBinding.inflate(layoutInflater)
 
     override fun initViewAndEvent() {
 
-        binding.mViewPager2.isUserInputEnabled = false
-        binding.mViewPager2.offscreenPageLimit = 5
-        binding.mViewPager2.adapter = object : FragmentStateAdapter(this){
+        //viewpager2是否可以滑动
+        mBinding.mViewPager2.isUserInputEnabled = false
+        //全部缓存,避免切换回重新加载
+        mBinding.mViewPager2.offscreenPageLimit = 5
+        mBinding.mViewPager2.adapter = object : FragmentStateAdapter(this) {
             override fun getItemCount() = 5
-            override fun createFragment(position: Int) = when(position){
+            override fun createFragment(position: Int) = when (position) {
                 0 -> HomeFragment()
                 1 -> SystemFragment()
-                2-> DiscoveryFragment()
-                3-> NavigationFragment()
-                4-> MineFragment()
+                2 -> DiscoveryFragment()
+                3 -> NavigationFragment()
+                4 -> MineFragment()
                 else -> HomeFragment()
             }
         }
 
-        binding.bottomNavigationView.setOnNavigationItemSelectedListener {
+        //初始化底部导航栏
+        mBinding.mBottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.home -> {
                     switchFragment(0)
@@ -61,8 +63,18 @@ class MainFragment : BaseFragment<FragmentMainBinding>(){
                     switchFragment(4)
                 }
             }
+            //这里注意返回true,否则点击失效
             true
         }
+
+        //viewpager2联动bottomNavigationView
+        mBinding.mViewPager2.registerOnPageChangeCallback(object :
+            ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                mBinding.mBottomNavigationView.menu.getItem(position).isChecked = true
+            }
+        })
 
     }
 
@@ -70,13 +82,14 @@ class MainFragment : BaseFragment<FragmentMainBinding>(){
     }
 
     override fun lazyLoadData() {
+
     }
 
     private fun switchFragment(position: Int): Boolean {
-        binding.mViewPager2.setCurrentItem(position, false)
+        //smoothScroll设置为false 不然会有转场效果
+        mBinding.mViewPager2.setCurrentItem(position, false)
         return true
     }
-
 
 
 }
