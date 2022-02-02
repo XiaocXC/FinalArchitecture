@@ -7,6 +7,7 @@ import kotlinx.serialization.Serializable
  * @author Xiaoc
  * @since 2022-01-08
  */
+@Deprecated("请暂时使用app层的")
 @Serializable
 data class PageVO<out T>(
     /**

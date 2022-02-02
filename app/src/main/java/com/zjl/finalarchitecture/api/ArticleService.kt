@@ -7,9 +7,14 @@ import retrofit2.http.GET
 /**
  * @author Xiaoc
  * @since 2022-01-08
+ *
+ * 文章相关Service
  */
-interface HomeService {
+interface ArticleService {
 
+    /**
+     * 获取文章栏目相关Banner数据
+     */
     @GET("banner/json")
     suspend fun getBanner(): ApiResult<List<BannerVO>>
 }

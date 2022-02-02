@@ -39,7 +39,7 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding>() {
 
     override fun createObserver() {
         // Banner状态及数据观察
-        articleViewModel.bannerListUiModel.observe(this){ uiModel ->
+        articleViewModel.bannerListUiModel.observe(viewLifecycleOwner){ uiModel ->
             uiModel.onSuccess {
                 uiRootState.show(SuccessState())
                 mBinding.articleBanner.create(it)

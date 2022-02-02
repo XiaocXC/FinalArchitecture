@@ -46,12 +46,12 @@
         android:gravity="center"/>
 
 
-    <com.makeramen.roundedimageview.RoundedImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/imgLogo"
         android:layout_width="108dp"
         android:layout_height="108dp"
         android:src="@mipmap/logo"
-        app:riv_corner_radius="10dp"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.Architecture.MediumComponent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
