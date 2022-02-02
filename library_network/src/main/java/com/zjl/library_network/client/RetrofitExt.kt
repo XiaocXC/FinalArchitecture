@@ -4,7 +4,7 @@ import com.zjl.lib_base.BuildConfig
 import com.zjl.library_network.calladapter.ApiResultCallAdapterFactory
 import com.zjl.library_network.converter.asConverterFactory
 import com.zjl.library_network.interceptor.BusinessErrorInterceptor
-import kotlinx.serialization.json.Json
+import com.zjl.library_network.utils.globalJson
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -21,7 +21,9 @@ private const val BASE_URL = "https://www.wanandroid.com/"
 
 private val okHttpClient = OkHttpClient.Builder().apply {
     if(BuildConfig.DEBUG){
-        addInterceptor(HttpLoggingInterceptor())
+        addInterceptor(HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        })
     }
 }.addInterceptor(BusinessErrorInterceptor())
     .callTimeout(30, TimeUnit.SECONDS)
@@ -31,7 +33,7 @@ private val okHttpClient = OkHttpClient.Builder().apply {
 
 val retrofit = Retrofit.Builder()
     .addCallAdapterFactory(ApiResultCallAdapterFactory())
-    .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
+    .addConverterFactory(globalJson.asConverterFactory("application/json".toMediaType()))
     .baseUrl(BASE_URL)
     .client(okHttpClient)
     .build()

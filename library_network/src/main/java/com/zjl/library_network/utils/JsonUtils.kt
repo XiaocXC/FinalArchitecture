@@ -8,7 +8,11 @@ import kotlinx.serialization.json.Json
  * @author Xiaoc
  * @since 2022-01-08
  */
-val globalJson = Json
+val globalJson = Json {
+    // 取消严格模式，如果实体类没有包含Json字符串中的字段时不报错
+    ignoreUnknownKeys = true
+    isLenient = true
+}
 
 /**
  * 使用 [json] 以及 [serializer] 将数据实体 [T] 转换为 [String]

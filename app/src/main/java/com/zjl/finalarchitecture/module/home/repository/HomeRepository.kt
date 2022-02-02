@@ -2,7 +2,10 @@ package com.zjl.finalarchitecture.module.home.repository
 
 import com.zjl.base.ui.UiModel
 import com.zjl.finalarchitecture.api.ArticleService
+import com.zjl.finalarchitecture.module.home.model.ArticleListVO
 import com.zjl.finalarchitecture.module.home.model.BannerVO
+import com.zjl.finalarchitecture.module.home.model.PageVO
+import com.zjl.library_network.ApiResult
 import com.zjl.library_network.client.retrofit
 import com.zjl.library_network.transToUiModel
 import kotlinx.coroutines.Dispatchers
@@ -28,6 +31,16 @@ object HomeRepository {
         return withContext(Dispatchers.IO){
             val result = articleService.getBanner()
             result.transToUiModel()
+        }
+    }
+
+    /**
+     * 获取文章分页数据
+     * @return Banner列表
+     */
+    suspend fun getArticleByPage(currentPage: Int): ApiResult<PageVO<ArticleListVO>> {
+        return withContext(Dispatchers.IO){
+            articleService.getArticleListByPage(currentPage)
         }
     }
 }

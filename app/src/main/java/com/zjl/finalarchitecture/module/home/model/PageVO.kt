@@ -13,7 +13,7 @@ data class PageVO<out T>(
      * 当前页码
      */
     @SerialName("curPage")
-    val currentPage: Long,
+    val currentPage: Int,
     /**
      * 数据列表
      */
