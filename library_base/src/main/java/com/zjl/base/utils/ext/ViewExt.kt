@@ -1,9 +1,16 @@
 package com.zjl.base.utils.ext
 
+import android.content.Context
+import android.content.res.Resources
+import android.graphics.drawable.Drawable
+import android.util.TypedValue
 import android.view.View
+import androidx.annotation.*
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.color.MaterialColors
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -44,6 +51,48 @@ fun View.visibleOrGone(flag: Boolean) {
         View.GONE
     }
 }
+
+fun View.getColor(@ColorRes id: Int): Int = resources.getColor(id, context.theme)
+
+/**
+ * 获取Attr属性的颜色值
+ */
+@ColorInt
+fun View.getAttrColor(@AttrRes id: Int): Int = MaterialColors.getColor(this, id)
+
+
+/**
+ * 获取Attr属性的颜色值
+ */
+@ColorInt
+fun Context.getAttrColor(@AttrRes id: Int): Int = MaterialColors.getColor(this, id, "")
+
+/**
+ * 获取尺寸值（根据屏幕适配）
+ */
+fun Context.getDimension(@DimenRes id: Int): Float = resources.getDimension(id)
+
+/**
+ * 获取尺寸值（根据屏幕适配）
+ */
+fun View.getDimension(@DimenRes id: Int): Float = resources.getDimension(id)
+
+/**
+ * 得到Drawable资源
+ */
+fun View.getDrawable(@DrawableRes id: Int): Drawable? = ResourcesCompat.getDrawable(resources,id,context.theme)
+
+/**
+ * 将dp转为对应px的像素
+ */
+val Int.dp: Int
+    get() {
+        return TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            this.toFloat(),
+            Resources.getSystem().displayMetrics
+        ).toInt()
+    }
 
 /**
  * 根据条件设置view显示隐藏 为true 显示，为false 隐藏

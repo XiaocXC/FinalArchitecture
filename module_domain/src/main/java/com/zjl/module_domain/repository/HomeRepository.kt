@@ -12,6 +12,7 @@ import kotlinx.coroutines.withContext
  * @author Xiaoc
  * @since 2022-01-08
  */
+@Deprecated("请暂时使用app层的")
 object HomeRepository {
 
     /**

@@ -20,4 +20,22 @@
         <!-- 禁用强制暗黑模式  -->
         <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
     </style>
+
+    <!-- 小型圆角 -->
+    <style name="ShapeAppearance.Architecture.SmallComponent" parent="ShapeAppearance.Material3.SmallComponent" tools:ignore="ResourceName">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">6dp</item>
+    </style>
+
+    <!-- 中型圆角 -->
+    <style name="ShapeAppearance.Architecture.MediumComponent" parent="ShapeAppearance.Material3.MediumComponent" tools:ignore="ResourceName">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">12dp</item>
+    </style>
+
+    <!-- 大型圆角 -->
+    <style name="ShapeAppearance.Architecture.LargeComponent" parent="ShapeAppearance.Material3.LargeComponent" tools:ignore="ResourceName">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">20dp</item>
+    </style>
 </resources>

@@ -8,6 +8,7 @@ import retrofit2.http.GET
  * @author Xiaoc
  * @since 2022-01-08
  */
+@Deprecated("请暂时使用app层的")
 interface HomeService {
 
     @GET("banner/json")

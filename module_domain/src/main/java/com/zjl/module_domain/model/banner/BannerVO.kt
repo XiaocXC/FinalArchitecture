@@ -18,6 +18,7 @@ import kotlinx.serialization.Serializable
 //    "type": 0,
 //    "url": "https://www.wanandroid.com/blog/show/2"
 
+@Deprecated("请暂时使用app层的")
 @Serializable
 data class BannerVO(
     @SerialName("id")

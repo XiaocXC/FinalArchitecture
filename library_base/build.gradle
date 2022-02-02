@@ -50,8 +50,6 @@ dependencies {
     // MultiStatePage
     api "com.github.Zhao-Yan-Yan:MultiStatePage:$multi_state_page_version"
 
-    api "com.github.Zhao-Yan-Yan:MultiStatePage:$multi_state_page_version"
-
     //屏幕适配
     api "me.jessyan:autosize:$autosize_version"
 

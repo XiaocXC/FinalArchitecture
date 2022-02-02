@@ -13,6 +13,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.viewbinding.ViewBinding
 import com.zjl.base.utils.autoCleared
+import com.zy.multistatepage.MultiStateContainer
+import com.zy.multistatepage.bindMultiState
 
 /**
  * @author Xiaoc
@@ -25,14 +27,18 @@ import com.zjl.base.utils.autoCleared
  */
 abstract class BaseFragment<V: ViewBinding>: Fragment() {
 
-    lateinit var mActivity: AppCompatActivity
-
     var mBinding by autoCleared<V>()
+    private set
 
     private val mHandler = Handler(Looper.myLooper()!!)
 
     //是否第一次加载
     private var isFirst: Boolean = true
+
+    /**
+     * 整个Fragment的状态控制器
+     */
+    protected lateinit var uiRootState: MultiStateContainer
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,15 +51,11 @@ abstract class BaseFragment<V: ViewBinding>: Fragment() {
             _binding.lifecycleOwner = viewLifecycleOwner
         }
         mBinding = _binding
-        return mBinding.root
+        uiRootState = _binding.root.bindMultiState()
+        return uiRootState
     }
 
     abstract fun bindView(): V
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        mActivity = context as AppCompatActivity
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -72,42 +74,6 @@ abstract class BaseFragment<V: ViewBinding>: Fragment() {
      * 创建观察者
      */
     abstract fun createObserver()
-
-    /**
-     * 懒加载
-     */
-    abstract fun lazyLoadData()
-
-
-    override fun onResume() {
-        super.onResume()
-        onVisible()
-    }
-
-    /**
-     * 是否需要懒加载
-     */
-    private fun onVisible() {
-        if (lifecycle.currentState == Lifecycle.State.STARTED && isFirst) {
-            // 延迟加载 防止 切换动画还没执行完毕时数据就已经加载好了，这时页面会有渲染卡顿
-            mHandler.postDelayed( {
-
-                lazyLoadData()
-
-                isFirst = false
-            },lazyLoadTime())
-        }
-    }
-
-    /**
-     * 延迟加载 防止 切换动画还没执行完毕时数据就已经加载好了，这时页面会有渲染卡顿  bug
-     * 这里传入你想要延迟的时间，延迟时间可以设置比转场动画时间长一点 单位： 毫秒
-     * 不传默认 300毫秒
-     * @return Long
-     */
-    open fun lazyLoadTime(): Long {
-        return 300
-    }
 
     override fun onDestroy() {
         super.onDestroy()

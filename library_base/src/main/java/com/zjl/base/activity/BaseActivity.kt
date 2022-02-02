@@ -24,6 +24,9 @@ abstract class BaseActivity<V: ViewBinding, VM: BaseViewModel>: AppCompatActivit
         bindViewModel()
     }
 
+    /**
+     * 整个Activity的UiState状态控制器
+     */
     protected val rootUiState by lazy {
         bindMultiState(this)
     }

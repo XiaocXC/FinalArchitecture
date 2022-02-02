@@ -47,15 +47,5 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     }
 
     override fun createObserver() {
-        // Banner状态及数据观察
-//        mViewModel.bannerListUiModel.observe(this){ uiModel ->
-//            uiModel.onSuccess {
-//                mBinding.tvInfo.text = it.toString()
-//            }.onFailure { _, throwable ->
-//                mBinding.tvInfo.text = throwable.message
-//            }.onLoading {
-//                mBinding.tvInfo.text = "加载中"
-//            }
-//        }
     }
 }

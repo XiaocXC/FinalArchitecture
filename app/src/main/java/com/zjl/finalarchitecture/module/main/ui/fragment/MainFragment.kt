@@ -81,10 +81,6 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
     override fun createObserver() {
     }
 
-    override fun lazyLoadData() {
-
-    }
-
     private fun switchFragment(position: Int): Boolean {
         //smoothScroll设置为false 不然会有转场效果
         mBinding.mViewPager2.setCurrentItem(position, false)

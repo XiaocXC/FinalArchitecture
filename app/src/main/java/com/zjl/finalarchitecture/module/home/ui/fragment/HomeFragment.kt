@@ -16,9 +16,8 @@ import com.zjl.finalarchitecture.module.home.viewmodel.HomeViewModel
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
-    //文章,广场,问答,项目,微信
-    var mTitleArrayData = arrayListOf("文章", "广场", "问答", "项目","微信")
-
+    //文章,广场,问答,项目,微信和对应Fragment
+    private var mTitleArrayData = arrayListOf("文章", "广场", "问答", "项目","微信")
     private var mFragmentList: ArrayList<Fragment> = arrayListOf()
 
     //数据ViewModel
@@ -48,18 +47,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 findNavController().navigate(R.id.action_mainFragment_to_searchFragment)
             }
         })
+        initWidget()
     }
 
     override fun createObserver() {
     }
 
-    override fun lazyLoadData() {
-        initWidget()
-    }
-
     private fun initWidget(){
         //ViewPager2初始化
-        mBinding.mViewPager2.init(this,mFragmentList)
+        mBinding.mViewPager2.init(this, mFragmentList)
         //绑定TabLayout ViewPager2
         TabLayoutMediator(mBinding.mTabLayout,mBinding.mViewPager2,object :
             TabLayoutMediator.TabConfigurationStrategy {

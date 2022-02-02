@@ -64,7 +64,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     //轮播图
-    implementation 'com.github.zhpanvip:BannerViewPager:3.5.2'
+    implementation 'com.github.zhpanvip:bannerviewpager:3.5.5'
     //圆角shape
     implementation 'com.github.getActivity:ShapeView:6.2'
 
