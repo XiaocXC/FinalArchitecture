@@ -27,7 +27,9 @@ class BusinessErrorInterceptor: Interceptor {
         }
 
         /**
-         * 因为response.body().string() 只能调用一次，所以这里读取responseBody不使用response.body().string()，原因：https://juejin.im/post/6844903545628524551
+         * 因为response.body().string() 只能调用一次
+         * 所以这里读取responseBody不使用response.body().string()，
+         * 原因：https://juejin.im/post/6844903545628524551
          * 以下读取resultString的代码节选自:
          * https://github.com/square/okhttp/blob/master/okhttp-logging-interceptor/src/main/kotlin/okhttp3/logging/HttpLoggingInterceptor.kt
          */

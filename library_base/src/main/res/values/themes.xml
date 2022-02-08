@@ -15,12 +15,14 @@
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:statusBarColor">@color/base_white</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
-<!--        <item name="android:windowTranslucentNavigation">true</item>-->
+        <!--        <item name="android:windowTranslucentNavigation">true</item>-->
         <item name="android:windowTranslucentStatus">true</item>
         <!-- 禁用强制暗黑模式  -->
         <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
     </style>
 
+
+    <!-- 绝活！ -->
     <!-- 小型圆角 -->
     <style name="ShapeAppearance.Architecture.SmallComponent" parent="ShapeAppearance.Material3.SmallComponent" tools:ignore="ResourceName">
         <item name="cornerFamily">rounded</item>

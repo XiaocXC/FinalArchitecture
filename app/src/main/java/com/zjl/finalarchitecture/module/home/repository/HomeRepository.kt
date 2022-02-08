@@ -6,7 +6,7 @@ import com.zjl.finalarchitecture.module.home.model.ArticleListVO
 import com.zjl.finalarchitecture.module.home.model.BannerVO
 import com.zjl.finalarchitecture.module.home.model.PageVO
 import com.zjl.library_network.ApiResult
-import com.zjl.library_network.client.retrofit
+import com.zjl.library_network.client.mRetrofit
 import com.zjl.library_network.transToUiModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -19,28 +19,45 @@ import kotlinx.coroutines.withContext
  */
 object HomeRepository {
 
-    private val articleService by lazy {
-        retrofit.create(ArticleService::class.java)
-    }
+    private val mArticleService by lazy { mRetrofit.create(ArticleService::class.java) }
 
     /**
      * 获取Banner数据
      * @return Banner列表
      */
-    suspend fun getBanner(): UiModel<List<BannerVO>> {
+    suspend fun requestBanner(): UiModel<List<BannerVO>> {
         return withContext(Dispatchers.IO){
-            val result = articleService.getBanner()
+            val result = mArticleService.getBanner()
             result.transToUiModel()
         }
     }
 
     /**
      * 获取文章分页数据
-     * @return Banner列表
+     * @return 文章列表
      */
-    suspend fun getArticleByPage(currentPage: Int): ApiResult<PageVO<ArticleListVO>> {
+    suspend fun requestArticleByPage(currentPage: Int): ApiResult<PageVO<ArticleListVO>> {
         return withContext(Dispatchers.IO){
-            articleService.getArticleListByPage(currentPage)
+            mArticleService.getArticleListByPage(currentPage)
+        }
+    }
+
+    suspend fun requestArticleByPageData(currentPage: Int): UiModel<PageVO<ArticleListVO>> {
+        return withContext(Dispatchers.IO){
+            val result =  mArticleService.getArticleListByPage(currentPage)
+            result.transToUiModel()
+        }
+    }
+
+
+    /**
+     * 获取置顶文章
+     * @return 置顶文章列表
+     */
+    suspend fun requestTopArticleData(): UiModel<List<ArticleListVO>>{
+        return withContext(Dispatchers.IO){
+            val result = mArticleService.getTopArticleList()
+            result.transToUiModel()
         }
     }
 }

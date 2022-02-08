@@ -31,7 +31,7 @@ private val okHttpClient = OkHttpClient.Builder().apply {
     .connectTimeout(30, TimeUnit.SECONDS)
     .build()
 
-val retrofit = Retrofit.Builder()
+val mRetrofit = Retrofit.Builder()
     .addCallAdapterFactory(ApiResultCallAdapterFactory())
     .addConverterFactory(globalJson.asConverterFactory("application/json".toMediaType()))
     .baseUrl(BASE_URL)

@@ -11,4 +11,6 @@
     <string name="search_hint">搜索关键词以空格隔开</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="top_article">置顶</string>
+    <string name="new_article">新</string>
 </resources>

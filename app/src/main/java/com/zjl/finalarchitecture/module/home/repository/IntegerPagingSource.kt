@@ -15,7 +15,7 @@ abstract class IntegerPagingSource<V: Any>: PagingSource<Int, V>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, V> {
         // 获取当前页码，如果为空就是默认第1页
-        val nextPage = params.key ?: 1
+        val nextPage = params.key ?: 0
 
         try {
             when(val result = loadData(nextPage)){

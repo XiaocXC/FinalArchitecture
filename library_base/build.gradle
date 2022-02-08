@@ -59,6 +59,19 @@ dependencies {
     //util
     api "com.blankj:utilcodex:$tools_version"
 
+    //谷歌下拉刷新
+    api 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+
+
+    api  "io.github.scwang90:refresh-layout-kernel:$smartRefreshLayout_version"      //核心必须依赖
+    api  "io.github.scwang90:refresh-header-classics:$smartRefreshLayout_version"    //经典刷新头
+    api  "io.github.scwang90:refresh-header-radar:$smartRefreshLayout_version"       //雷达刷新头
+    api  "io.github.scwang90:refresh-header-falsify:$smartRefreshLayout_version"     //虚拟刷新头
+    api  "io.github.scwang90:refresh-header-material:$smartRefreshLayout_version"    //谷歌刷新头
+    api  "io.github.scwang90:refresh-header-two-level:$smartRefreshLayout_version"   //二级刷新头
+    api  "io.github.scwang90:refresh-footer-ball:$smartRefreshLayout_version"        //球脉冲加载
+    api  "io.github.scwang90:refresh-footer-classics:$smartRefreshLayout_version"    //经典加载
+
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'

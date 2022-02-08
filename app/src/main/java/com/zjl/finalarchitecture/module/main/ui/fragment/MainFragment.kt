@@ -27,7 +27,6 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
     override fun bindView(): FragmentMainBinding = FragmentMainBinding.inflate(layoutInflater)
 
     override fun initViewAndEvent() {
-
         //viewpager2是否可以滑动
         mBinding.mViewPager2.isUserInputEnabled = false
         //全部缓存,避免切换回重新加载

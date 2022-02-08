@@ -1,7 +1,7 @@
 package com.zjl.module_domain.repository
 
 import com.zjl.base.ui.UiModel
-import com.zjl.library_network.client.retrofit
+import com.zjl.library_network.client.mRetrofit
 import com.zjl.library_network.transToUiModel
 import com.zjl.module_domain.api.HomeService
 import com.zjl.module_domain.model.banner.BannerVO
@@ -21,7 +21,7 @@ object HomeRepository {
      */
     suspend fun getBanner(): UiModel<List<BannerVO>> {
         val result = withContext(Dispatchers.IO){
-            val homeService = retrofit.create(HomeService::class.java)
+            val homeService = mRetrofit.create(HomeService::class.java)
             homeService.getBanner()
         }
         return result.transToUiModel()

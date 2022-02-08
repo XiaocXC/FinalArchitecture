@@ -70,6 +70,8 @@ buildscript {
         autosize_version = "1.2.1"
         // 工具类
         tools_version = "1.30.6"
+        // SmartRefreshLayout
+        smartRefreshLayout_version = "2.0.5"
 
     }
     repositories {

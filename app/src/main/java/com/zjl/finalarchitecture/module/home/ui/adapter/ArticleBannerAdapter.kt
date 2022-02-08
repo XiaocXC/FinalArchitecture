@@ -1,5 +1,6 @@
 package com.zjl.finalarchitecture.module.home.ui.adapter
 
+import android.widget.ImageView
 import com.google.android.material.imageview.ShapeableImageView
 import com.zhpan.bannerview.BaseBannerAdapter
 import com.zhpan.bannerview.BaseViewHolder
@@ -22,7 +23,7 @@ class ArticleBannerAdapter: BaseBannerAdapter<BannerVO>() {
         pageSize: Int
     ) {
         holder?.let {
-            val ivBanner = it.findViewById<ShapeableImageView>(R.id.iv_banner)
+            val ivBanner = it.findViewById<ImageView>(R.id.iv_banner)
             ivBanner.load(data?.imgUrl)
         }
     }
