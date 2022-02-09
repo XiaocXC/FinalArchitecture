@@ -40,13 +40,11 @@ class ArticleViewModel : BaseViewModel() {
     fun toReFresh() {
         pageNo = 0
 
-        viewModelScope.launch {
-            // 请求中状态
-            _rootViewState.emit(UiModel.Loading())
+        // 请求中状态
+        _rootViewState.tryEmit(UiModel.Loading())
 
-            refreshBanner()
-            refreshArticle()
-        }
+        refreshBanner()
+        refreshArticle()
     }
 
     /**
