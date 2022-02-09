@@ -57,42 +57,35 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding>(), OnRefreshListene
 
         // 下拉刷新
         mBinding.refreshLayout.setOnRefreshListener(this)
-
-        lifecycleScope.launch {
-            articleAdapter.loadStateFlow.collectLatest { loadStates ->
-//                progressBar.isVisible = loadStates.refresh is LoadState.Loading
-//                retry.isVisible = loadState.refresh !is LoadState.Loading
-//                errorMsg.isVisible = loadState.refresh is LoadState.Error
-                if(loadStates.refresh is LoadState.Loading){
-                    mBinding.refreshLayout.finishRefresh(300)
-                }
-//                if(){
-//                    mBinding.refreshLayout.state
-//                }
-            }
-        }
     }
 
     override fun createObserver() {
-        // Banner状态及数据观察
-        // TODO: 状态是否需要放到 viewModel里面
-        articleViewModel.bannerListUiModel.observe(viewLifecycleOwner) { uiModel ->
-            uiModel.onSuccess {
-                uiRootState.show(SuccessState())
-                mBinding.articleBanner.create(it)
-            }.onFailure { _, throwable ->
-                // 展示错误信息
-                uiRootState.show<ErrorState> {
-                    it.setErrorMsg(throwable.message ?: "")
-                }
-            }.onLoading {
-                uiRootState.show(LoadingState())
+        // Banner数据观察
+        articleViewModel.bannerListUiModel.observe(viewLifecycleOwner){ bannerList ->
+            mBinding.articleBanner.create(bannerList)
+        }
+
+        // 文章数据
+        articleViewModel.articleListUiModel.observe(viewLifecycleOwner){ articleList ->
+            if(articleViewModel.pageNo == 0){
+                articleAdapter.setList(articleList)
+            } else {
+                articleAdapter.addData(articleList)
             }
         }
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            articleViewModel.articlePagingFlow.collect {
-                articleAdapter.submitData(it)
+        // 整个页面状态数据
+        articleViewModel.rootViewState.observe(viewLifecycleOwner){
+            it.onSuccess {
+                mBinding.refreshLayout.finishRefresh()
+                uiRootState.show(SuccessState())
+            }.onLoading {
+                mBinding.refreshLayout.autoRefreshAnimationOnly()
+            }.onFailure { _, throwable ->
+                mBinding.refreshLayout.finishRefresh()
+                uiRootState.show<ErrorState> {
+                    it.setErrorMsg(throwable.message ?: "")
+                }
             }
         }
 
@@ -101,9 +94,9 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding>(), OnRefreshListene
 
     override fun onRefresh(refreshLayout: RefreshLayout) {
         //重新请求banner
-//        articleViewModel.toReFresh()
+        articleViewModel.toReFresh()
         //重新请求列表 ?
-        articleAdapter.refresh()
+//        refreshLayout.autoRefresh(200)
     }
 
 

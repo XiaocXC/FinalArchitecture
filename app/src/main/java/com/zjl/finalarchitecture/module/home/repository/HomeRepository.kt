@@ -1,14 +1,17 @@
 package com.zjl.finalarchitecture.module.home.repository
 
 import com.zjl.base.ui.UiModel
+import com.zjl.base.ui.onSuccess
 import com.zjl.finalarchitecture.api.ArticleService
 import com.zjl.finalarchitecture.module.home.model.ArticleListVO
 import com.zjl.finalarchitecture.module.home.model.BannerVO
 import com.zjl.finalarchitecture.module.home.model.PageVO
 import com.zjl.library_network.ApiResult
 import com.zjl.library_network.client.mRetrofit
+import com.zjl.library_network.onSuccess
 import com.zjl.library_network.transToUiModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 
 /**
@@ -25,27 +28,37 @@ object HomeRepository {
      * 获取Banner数据
      * @return Banner列表
      */
-    suspend fun requestBanner(): UiModel<List<BannerVO>> {
+    suspend fun requestBanner(): ApiResult<List<BannerVO>> {
         return withContext(Dispatchers.IO){
-            val result = mArticleService.getBanner()
-            result.transToUiModel()
+            mArticleService.getBanner()
         }
     }
 
     /**
      * 获取文章分页数据
+     * 该请求会在分页最开始查询一次置顶文章
      * @return 文章列表
      */
-    suspend fun requestArticleByPage(currentPage: Int): ApiResult<PageVO<ArticleListVO>> {
+    suspend fun requestArticleByPageData(currentPage: Int): ApiResult<PageVO<ArticleListVO>> {
         return withContext(Dispatchers.IO){
-            mArticleService.getArticleListByPage(currentPage)
-        }
-    }
+            // 判断如果是第一页，则查询置顶文章
+            val topArticleList = mutableListOf<ArticleListVO>()
+            if(currentPage == 0){
+                val topArticleDeferred = async {
+                    requestTopArticleData()
+                }
+                topArticleDeferred.await().onSuccess {
+                    topArticleList.addAll(it)
+                }
+            }
 
-    suspend fun requestArticleByPageData(currentPage: Int): UiModel<PageVO<ArticleListVO>> {
-        return withContext(Dispatchers.IO){
-            val result =  mArticleService.getArticleListByPage(currentPage)
-            result.transToUiModel()
+            // 分页查询文章
+            val articleListDeferred = async {
+                mArticleService.getArticleListByPage(currentPage)
+            }
+            return@withContext articleListDeferred.await().onSuccess {
+                it.dataList.addAll(0, topArticleList)
+            }
         }
     }
 
@@ -54,7 +67,7 @@ object HomeRepository {
      * 获取置顶文章
      * @return 置顶文章列表
      */
-    suspend fun requestTopArticleData(): UiModel<List<ArticleListVO>>{
+    private suspend fun requestTopArticleData(): UiModel<List<ArticleListVO>>{
         return withContext(Dispatchers.IO){
             val result = mArticleService.getTopArticleList()
             result.transToUiModel()

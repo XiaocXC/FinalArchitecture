@@ -8,7 +8,7 @@ import kotlinx.serialization.Serializable
  * @since 2022-01-08
  */
 @Serializable
-data class PageVO<out T>(
+data class PageVO<T>(
     /**
      * 当前页码
      */
@@ -18,7 +18,7 @@ data class PageVO<out T>(
      * 数据列表
      */
     @SerialName("datas")
-    val dataList: List<T>,
+    val dataList: MutableList<T>,
     val offset: Int,
     /**
      * 是否到头

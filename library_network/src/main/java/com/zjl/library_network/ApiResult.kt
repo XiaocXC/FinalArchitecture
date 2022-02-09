@@ -60,3 +60,14 @@ fun <T> ApiResult<T>.transToUiModel(): UiModel<T>{
         }
     }
 }
+
+fun <T, R> ApiResult<T>.map(transform: (T) -> R): ApiResult<R>{
+    return when(this){
+        is ApiResult.Success ->{
+            ApiResult.Success(transform(this.data))
+        }
+        is ApiResult.Failure -> {
+            ApiResult.Failure(this.error)
+        }
+    }
+}
