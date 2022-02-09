@@ -48,7 +48,7 @@ class ArticleViewModel : BaseViewModel() {
      * 刷新Banner数据
      */
     private fun refreshBanner(){
-        requestByNormal({
+        launchRequestByNormal({
             HomeRepository.requestBanner()
         }, successBlock = {
             _bannerListUiModel.value = it
@@ -59,7 +59,7 @@ class ArticleViewModel : BaseViewModel() {
      * 刷新文章数据
      */
     private fun refreshArticle(){
-        requestByNormal({
+        launchRequestByNormal({
             HomeRepository.requestArticleByPageData(pageNo)
         }, successBlock = {
             // 成功状态

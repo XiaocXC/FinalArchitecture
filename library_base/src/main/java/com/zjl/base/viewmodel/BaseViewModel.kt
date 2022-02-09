@@ -10,6 +10,7 @@ import com.zjl.base.ui.UiModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
 
 /**
  * @author Xiaoc
@@ -40,22 +41,22 @@ abstract class BaseViewModel: ViewModel(){
      *
      * @return Job 协程Job，可以随时取消
      */
-    protected fun <T> requestByNormal(
-        requestAction: suspend () -> ApiResult<T>,
-        successBlock: suspend (T) -> Unit = {},
-        failureBlock: suspend (Error) -> Unit = {}
+    protected fun <T> launchRequestByNormal(
+        requestAction: suspend CoroutineContext.() -> ApiResult<T>,
+        successBlock: suspend CoroutineContext.(T) -> Unit = {},
+        failureBlock: suspend CoroutineContext.(Error) -> Unit = {}
     ): Job{
 
         return viewModelScope.launch {
             runCatching {
-                val result = requestAction()
+                val result = requestAction(coroutineContext)
                 result.onSuccess {
-                    successBlock(it)
+                    successBlock(coroutineContext, it)
                 }.onFailure {
-                    failureBlock(it)
+                    failureBlock(coroutineContext,it)
                 }
             }.onFailure {
-                failureBlock(Error(errorCode = 0, errorMsg = it.message))
+                failureBlock(coroutineContext, Error(errorCode = 0, errorMsg = it.message))
             }
         }
 
