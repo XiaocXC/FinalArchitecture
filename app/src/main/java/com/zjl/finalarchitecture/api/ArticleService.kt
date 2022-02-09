@@ -1,9 +1,9 @@
 package com.zjl.finalarchitecture.api
 
+import com.zjl.base.ApiResult
 import com.zjl.finalarchitecture.module.home.model.ArticleListVO
 import com.zjl.finalarchitecture.module.home.model.BannerVO
 import com.zjl.finalarchitecture.module.home.model.PageVO
-import com.zjl.library_network.ApiResult
 import retrofit2.http.GET
 import retrofit2.http.Path
 

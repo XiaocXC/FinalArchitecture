@@ -1,8 +1,8 @@
 package com.zjl.library_network.interceptor
 
-import com.zjl.library_network.error.ApiError
-import com.zjl.library_network.error.Error
-import com.zjl.library_network.exception.ApiException
+import com.zjl.base.error.ApiError
+import com.zjl.base.error.Error
+import com.zjl.base.exception.ApiException
 import okhttp3.Interceptor
 import okhttp3.Response
 import org.json.JSONException

@@ -2,6 +2,7 @@ package com.zjl.finalarchitecture.module.home.ui.fragment
 
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ConvertUtils
@@ -11,6 +12,7 @@ import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.ui.onFailure
 import com.zjl.base.ui.onLoading
 import com.zjl.base.ui.onSuccess
+import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
 import com.zjl.base.weight.recyclerview.SpaceItemDecoration
 import com.zjl.finalarchitecture.databinding.FragmentArticleBinding
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleAdapter
@@ -74,21 +76,24 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding>(), OnRefreshListene
             }
         }
 
-        // 整个页面状态数据
-        articleViewModel.rootViewState.observe(viewLifecycleOwner){
-            it.onSuccess {
-                mBinding.refreshLayout.finishRefresh()
-                uiRootState.show(SuccessState())
-            }.onLoading {
-                mBinding.refreshLayout.autoRefreshAnimationOnly()
-            }.onFailure { _, throwable ->
-                mBinding.refreshLayout.finishRefresh()
-                uiRootState.show<ErrorState> {
-                    it.setErrorMsg(throwable.message ?: "")
+        launchAndRepeatWithViewLifecycle {
+            launch {
+                // 整个页面状态数据
+                articleViewModel.rootViewState.collect {
+                    it.onSuccess {
+                        mBinding.refreshLayout.finishRefresh()
+                        uiRootState.show(SuccessState())
+                    }.onLoading {
+                        mBinding.refreshLayout.autoRefreshAnimationOnly()
+                    }.onFailure { _, throwable ->
+                        mBinding.refreshLayout.finishRefresh()
+                        uiRootState.show<ErrorState> {
+                            it.setErrorMsg(throwable.message ?: "")
+                        }
+                    }
                 }
             }
         }
-
 
     }
 

@@ -1,9 +1,15 @@
 package com.zjl.base.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.zjl.base.ApiResult
+import com.zjl.base.error.Error
+import com.zjl.base.onFailure
+import com.zjl.base.onSuccess
 import com.zjl.base.ui.UiModel
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 
 /**
  * @author Xiaoc
@@ -19,7 +25,40 @@ abstract class BaseViewModel: ViewModel(){
     /**
      * 根View状态值
      * 该值为当前viewModel控制视图的根View的状态值，它存储着整个页面当前的状态
+     * 该值属于视图事件，所以不能为黏性事件
      */
-    protected val _rootViewState = MutableLiveData<UiModel<Any>>()
-    val rootViewState: LiveData<UiModel<Any>> get() = _rootViewState
+    protected val _rootViewState = MutableSharedFlow<UiModel<Any>>()
+    val rootViewState: SharedFlow<UiModel<Any>> = _rootViewState.asSharedFlow()
+
+
+    /**
+     * 普通的协程请求
+     * @param requestAction 请求行为函数
+     * 需要返回一个由ApiResult包裹的数据集
+     * @param successBlock （可选）成功后所做的操作
+     * @param failureBlock （可选）失败后所做的操作
+     *
+     * @return Job 协程Job，可以随时取消
+     */
+    protected fun <T> requestByNormal(
+        requestAction: suspend () -> ApiResult<T>,
+        successBlock: suspend (T) -> Unit = {},
+        failureBlock: suspend (Error) -> Unit = {}
+    ): Job{
+
+        return viewModelScope.launch {
+            runCatching {
+                val result = requestAction()
+                result.onSuccess {
+                    successBlock(it)
+                }.onFailure {
+                    failureBlock(it)
+                }
+            }.onFailure {
+                failureBlock(Error(errorCode = 0, errorMsg = it.message))
+            }
+        }
+
+
+    }
 }

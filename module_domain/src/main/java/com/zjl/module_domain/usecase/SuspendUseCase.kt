@@ -1,10 +1,10 @@
 package com.zjl.module_domain.usecase
 
+import com.zjl.base.ApiResult
 import com.zjl.base.ui.UiModel
-import com.zjl.library_network.ApiResult
-import com.zjl.library_network.error.ApiError
-import com.zjl.library_network.exception.ApiException
-import com.zjl.library_network.transToUiModel
+import com.zjl.base.error.ApiError
+import com.zjl.base.exception.ApiException
+import com.zjl.base.transToUiModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

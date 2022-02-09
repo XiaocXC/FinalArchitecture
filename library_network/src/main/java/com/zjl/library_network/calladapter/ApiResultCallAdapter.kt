@@ -1,8 +1,8 @@
 package com.zjl.library_network.calladapter
 
-import com.zjl.library_network.error.ApiError
-import com.zjl.library_network.ApiResult
-import com.zjl.library_network.exception.ApiException
+import com.zjl.base.ApiResult
+import com.zjl.base.error.ApiError
+import com.zjl.base.exception.ApiException
 import okhttp3.Request
 import okio.Timeout
 import retrofit2.*

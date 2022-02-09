@@ -2,7 +2,6 @@ package com.zjl.finalarchitecture.di
 
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.zjl.base.viewmodel.BaseViewModel
 
 /**

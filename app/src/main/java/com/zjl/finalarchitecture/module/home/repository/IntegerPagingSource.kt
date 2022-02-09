@@ -2,10 +2,10 @@ package com.zjl.finalarchitecture.module.home.repository
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import com.zjl.base.ApiResult
 import com.zjl.finalarchitecture.module.home.model.PageVO
-import com.zjl.library_network.ApiResult
-import com.zjl.library_network.error.ApiError
-import com.zjl.library_network.exception.ApiException
+import com.zjl.base.error.ApiError
+import com.zjl.base.exception.ApiException
 
 /**
  * @author Xiaoc

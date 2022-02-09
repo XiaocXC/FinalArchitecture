@@ -1,8 +1,8 @@
-package com.zjl.library_network
+package com.zjl.base
 
 import com.zjl.base.ui.UiModel
-import com.zjl.library_network.error.Error
-import com.zjl.library_network.exception.ApiException
+import com.zjl.base.error.Error
+import com.zjl.base.exception.ApiException
 
 
 /**

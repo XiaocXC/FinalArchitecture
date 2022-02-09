@@ -1,15 +1,13 @@
 package com.zjl.finalarchitecture.module.home.repository
 
-import com.zjl.base.ui.UiModel
+import com.zjl.base.ApiResult
+import com.zjl.base.onSuccess
 import com.zjl.base.ui.onSuccess
 import com.zjl.finalarchitecture.api.ArticleService
 import com.zjl.finalarchitecture.module.home.model.ArticleListVO
 import com.zjl.finalarchitecture.module.home.model.BannerVO
 import com.zjl.finalarchitecture.module.home.model.PageVO
-import com.zjl.library_network.ApiResult
 import com.zjl.library_network.client.mRetrofit
-import com.zjl.library_network.onSuccess
-import com.zjl.library_network.transToUiModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext

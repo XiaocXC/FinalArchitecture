@@ -1,6 +1,6 @@
 package com.zjl.module_domain.api
 
-import com.zjl.library_network.ApiResult
+import com.zjl.base.ApiResult
 import com.zjl.module_domain.model.banner.BannerVO
 import retrofit2.http.GET
 

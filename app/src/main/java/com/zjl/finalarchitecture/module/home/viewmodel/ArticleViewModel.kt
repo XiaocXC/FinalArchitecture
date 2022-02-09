@@ -8,10 +8,7 @@ import com.zjl.base.viewmodel.BaseViewModel
 import com.zjl.finalarchitecture.module.home.model.ArticleListVO
 import com.zjl.finalarchitecture.module.home.model.BannerVO
 import com.zjl.finalarchitecture.module.home.repository.HomeRepository
-import com.zjl.finalarchitecture.utils.requestByNormal
-import com.zjl.library_network.exception.ApiException
-import com.zjl.library_network.map
-import com.zjl.library_network.onSuccess
+import com.zjl.base.exception.ApiException
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
@@ -41,47 +38,42 @@ class ArticleViewModel : BaseViewModel() {
      * 刷新
      */
     fun toReFresh() {
+        pageNo = 0
+
         viewModelScope.launch {
-            requestByNormal({
-                // 请求中状态
-                _rootViewState.value = UiModel.Loading()
+            // 请求中状态
+            _rootViewState.emit(UiModel.Loading())
 
-                // 请求banner数据
-                val bannerDeferred = async {
-                    HomeRepository.requestBanner()
-                }
-                // 请求article文章数据
-                val articleListDeferred = async {
-                    HomeRepository.requestArticleByPageData(pageNo)
-                }
-                // banner数据结果
-                val bannerList = mutableListOf<BannerVO>()
-                bannerDeferred.await().onSuccess {
-                    bannerList.addAll(it)
-                }
-
-                // 文章数据结果
-                val articleDataResult = articleListDeferred.await()
-                // 返回ArticleHomeData包裹类，内含banner数据集和article数据集，方便使用
-                return@requestByNormal articleDataResult.map {
-                    ArticleHomeData(bannerList, it.dataList)
-                }
-
-            }, successBlock = {
-                // 成功状态
-                _rootViewState.value = UiModel.Success(Unit)
-
-                _bannerListUiModel.value = it.bannerList ?: emptyList()
-                _articleListUiModel.value = it.articleList
-            }, failureBlock = {
-                // 失败状态
-                _rootViewState.value = UiModel.Error(ApiException(it))
-            })
+            refreshBanner()
+            refreshArticle()
         }
     }
-}
 
-data class ArticleHomeData(
-    val bannerList: List<BannerVO>?,
-    val articleList: List<ArticleListVO>
-)
+    /**
+     * 刷新Banner数据
+     */
+    private fun refreshBanner(){
+        requestByNormal({
+            HomeRepository.requestBanner()
+        }, successBlock = {
+            _bannerListUiModel.value = it
+        })
+    }
+
+    /**
+     * 刷新文章数据
+     */
+    private fun refreshArticle(){
+        requestByNormal({
+            HomeRepository.requestArticleByPageData(pageNo)
+        }, successBlock = {
+            // 成功状态
+            _rootViewState.emit(UiModel.Success(Unit))
+
+            _articleListUiModel.value = it.dataList
+        }, failureBlock = {
+            // 失败状态
+            _rootViewState.emit(UiModel.Error(ApiException(it)))
+        })
+    }
+}

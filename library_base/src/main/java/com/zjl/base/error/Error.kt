@@ -1,4 +1,4 @@
-package com.zjl.library_network.error
+package com.zjl.base.error
 
 import androidx.annotation.StringRes
 import com.zjl.lib_base.R

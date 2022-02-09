@@ -1,8 +1,8 @@
 package com.zjl.module_domain.repository
 
+import com.zjl.base.transToUiModel
 import com.zjl.base.ui.UiModel
 import com.zjl.library_network.client.mRetrofit
-import com.zjl.library_network.transToUiModel
 import com.zjl.module_domain.api.HomeService
 import com.zjl.module_domain.model.banner.BannerVO
 import kotlinx.coroutines.Dispatchers
