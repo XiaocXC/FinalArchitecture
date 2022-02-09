@@ -2,15 +2,12 @@ package com.zjl.finalarchitecture.module.home.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import com.zjl.base.ui.UiModel
 import com.zjl.base.viewmodel.BaseViewModel
 import com.zjl.finalarchitecture.module.home.model.ArticleListVO
 import com.zjl.finalarchitecture.module.home.model.BannerVO
 import com.zjl.finalarchitecture.module.home.repository.HomeRepository
 import com.zjl.base.exception.ApiException
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
 
 /**
  * @author Xiaoc
