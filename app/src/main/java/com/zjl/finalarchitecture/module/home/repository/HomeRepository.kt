@@ -67,10 +67,7 @@ object HomeRepository {
      * 获取置顶文章
      * @return 置顶文章列表
      */
-    private suspend fun requestTopArticleData(): UiModel<List<ArticleListVO>>{
-        return withContext(Dispatchers.IO){
-            val result = mArticleService.getTopArticleList()
-            result.transToUiModel()
-        }
+    private suspend fun requestTopArticleData(): ApiResult<List<ArticleListVO>>{
+        return mArticleService.getTopArticleList()
     }
 }
