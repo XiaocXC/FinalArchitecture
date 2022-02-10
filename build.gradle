@@ -70,8 +70,12 @@ buildscript {
         autosize_version = "1.2.1"
         // 工具类
         tools_version = "1.30.6"
-        // SmartRefreshLayout
-        smartRefreshLayout_version = "2.0.5"
+        // SmartRefreshLayout 刷新加载
+        smart_refresh_Layout_version = "2.0.5"
+        // AgentWeb
+        agent_web_core_version = "v5.0.0-alpha.1-androidx"
+        agent_web_filechooser_version = "v5.0.0-alpha.1-androidx"
+        agent_web_downloader_version = "v5.0.0-androidx"
 
     }
     repositories {

@@ -46,7 +46,6 @@ abstract class BaseViewModel: ViewModel(){
         successBlock: suspend CoroutineContext.(T) -> Unit = {},
         failureBlock: suspend CoroutineContext.(Error) -> Unit = {}
     ): Job{
-
         return viewModelScope.launch {
             runCatching {
                 val result = requestAction(coroutineContext)
@@ -59,7 +58,5 @@ abstract class BaseViewModel: ViewModel(){
                 failureBlock(coroutineContext, Error(errorCode = 0, errorMsg = it.message))
             }
         }
-
-
     }
 }

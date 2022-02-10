@@ -22,4 +22,19 @@ object CacheUtil {
         return kv.encode("firstEnter",firstEnter)
     }
 
+    /**
+     * 首页是否开启获取置顶文章
+     */
+    fun isNeedTop(): Boolean {
+        val kv = MMKV.mmkvWithID("app")
+        return kv.decodeBool("top", true)
+    }
+    /**
+     * 设置首页是否开启获取置顶文章
+     */
+    fun setIsNeedTop(isNeedTop:Boolean): Boolean {
+        val kv = MMKV.mmkvWithID("app")
+        return kv.encode("top", isNeedTop)
+    }
+
 }

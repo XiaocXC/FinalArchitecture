@@ -63,14 +63,19 @@ dependencies {
     api 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 
 
-    api  "io.github.scwang90:refresh-layout-kernel:$smartRefreshLayout_version"      //核心必须依赖
-    api  "io.github.scwang90:refresh-header-classics:$smartRefreshLayout_version"    //经典刷新头
-    api  "io.github.scwang90:refresh-header-radar:$smartRefreshLayout_version"       //雷达刷新头
-    api  "io.github.scwang90:refresh-header-falsify:$smartRefreshLayout_version"     //虚拟刷新头
-    api  "io.github.scwang90:refresh-header-material:$smartRefreshLayout_version"    //谷歌刷新头
-    api  "io.github.scwang90:refresh-header-two-level:$smartRefreshLayout_version"   //二级刷新头
-    api  "io.github.scwang90:refresh-footer-ball:$smartRefreshLayout_version"        //球脉冲加载
-    api  "io.github.scwang90:refresh-footer-classics:$smartRefreshLayout_version"    //经典加载
+    api  "io.github.scwang90:refresh-layout-kernel:$smart_refresh_Layout_version"      //核心必须依赖
+    api  "io.github.scwang90:refresh-header-classics:$smart_refresh_Layout_version"    //经典刷新头
+    api  "io.github.scwang90:refresh-header-radar:$smart_refresh_Layout_version"       //雷达刷新头
+    api  "io.github.scwang90:refresh-header-falsify:$smart_refresh_Layout_version"     //虚拟刷新头
+    api  "io.github.scwang90:refresh-header-material:$smart_refresh_Layout_version"    //谷歌刷新头
+    api  "io.github.scwang90:refresh-header-two-level:$smart_refresh_Layout_version"   //二级刷新头
+    api  "io.github.scwang90:refresh-footer-ball:$smart_refresh_Layout_version"        //球脉冲加载
+    api  "io.github.scwang90:refresh-footer-classics:$smart_refresh_Layout_version"    //经典加载
+
+
+    api "com.github.Justson.AgentWeb:agentweb-core:$agent_web_core_version" // (必选)
+    api "com.github.Justson.AgentWeb:agentweb-filechooser:$agent_web_filechooser_version" // (可选)
+    api "com.github.Justson:Downloader:$agent_web_downloader_version" // (可选)
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

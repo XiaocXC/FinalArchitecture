@@ -1,19 +1,25 @@
 package com.zjl.finalarchitecture.module.home.ui.fragment
 
+import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ConvertUtils
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
+import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.ui.onFailure
 import com.zjl.base.ui.onLoading
 import com.zjl.base.ui.onSuccess
 import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
 import com.zjl.base.weight.recyclerview.SpaceItemDecoration
+import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.databinding.FragmentArticleBinding
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleAdapter
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleBannerAdapter
@@ -30,7 +36,8 @@ import kotlinx.coroutines.launch
  * @author: zhou
  * @date : 2022/1/20 17:52
  */
-class ArticleFragment : BaseFragment<FragmentArticleBinding>(), OnRefreshListener {
+class ArticleFragment : BaseFragment<FragmentArticleBinding>(), OnRefreshListener,
+    OnRefreshLoadMoreListener, OnItemClickListener {
 
     companion object {
         fun newInstance() = ArticleFragment()
@@ -58,7 +65,10 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding>(), OnRefreshListene
         mBinding.rvArticle.addItemDecoration(SpaceItemDecoration(0, ConvertUtils.dp2px(8f), false))
 
         // 下拉刷新
-        mBinding.refreshLayout.setOnRefreshListener(this)
+        mBinding.refreshLayout.setOnRefreshLoadMoreListener(this)
+
+        //item点击事件
+        articleAdapter.setOnItemClickListener(this)
     }
 
     override fun createObserver() {
@@ -79,10 +89,14 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding>(), OnRefreshListene
         launchAndRepeatWithViewLifecycle {
             launch {
                 // 整个页面状态数据
-                articleViewModel.rootViewState.collect {
+                articleViewModel.rootViewState.collect { it ->
                     it.onSuccess {
                         mBinding.refreshLayout.finishRefresh()
+
                         uiRootState.show(SuccessState())
+
+                        mBinding.refreshLayout.finishLoadMore()
+
                     }.onLoading {
                         mBinding.refreshLayout.autoRefreshAnimationOnly()
                     }.onFailure { _, throwable ->
@@ -90,10 +104,13 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding>(), OnRefreshListene
                         uiRootState.show<ErrorState> {
                             it.setErrorMsg(throwable.message ?: "")
                         }
+                        mBinding.refreshLayout.finishLoadMore()
                     }
                 }
             }
         }
+
+
 
     }
 
@@ -104,6 +121,13 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding>(), OnRefreshListene
 //        refreshLayout.autoRefresh(200)
     }
 
+    override fun onLoadMore(refreshLayout: RefreshLayout) {
+        articleViewModel.loadMoreArticle()
+    }
+
+    override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
+        findNavController().navigate(R.id.action_mainFragment_to_searchFragment)
+    }
 
 
 }
