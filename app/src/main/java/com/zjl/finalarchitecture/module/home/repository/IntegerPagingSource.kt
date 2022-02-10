@@ -10,6 +10,12 @@ import com.zjl.base.exception.ApiException
 /**
  * @author Xiaoc
  * @since 2022-02-02
+ *
+ * 这是一个基于Paging3的分页数据源基类
+ * 为什么要写这个基类？因为对于app的分页来讲都是基于Int值进行分页的
+ * 但是分页的地方有很多，不想每个分页的地方都去写一次分页逻辑，所以就在此放置一个基类
+ *
+ * 该类主要是用于告诉Paging3，获取到内容后，下一页（或上一页）要加载的具体逻辑和页码等内容
  */
 abstract class IntegerPagingSource<V: Any>: PagingSource<Int, V>() {
 
@@ -24,7 +30,7 @@ abstract class IntegerPagingSource<V: Any>: PagingSource<Int, V>() {
                     // 1.取得当前分页数据
                     val data = result.data
                     // 如果页数已经over
-                    val nextPage = if(data.over){
+                    val nextPage = if(!data.over){
                         data.currentPage + 1
                     } else {
                         null

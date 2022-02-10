@@ -67,7 +67,15 @@ object HomeRepository {
      * 获取置顶文章
      * @return 置顶文章列表
      */
-    private suspend fun requestTopArticleData(): ApiResult<List<ArticleListVO>> {
+    suspend fun requestTopArticleData(): ApiResult<List<ArticleListVO>> {
         return mArticleService.getTopArticleList()
+    }
+
+    /**
+     * 分页获取文章
+     * @param pageNo 当前页码
+     */
+    suspend fun requestArticleDataByPage(pageNo: Int): ApiResult<PageVO<ArticleListVO>> {
+        return mArticleService.getArticleListByPage(pageNo)
     }
 }

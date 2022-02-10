@@ -39,8 +39,7 @@ import kotlinx.coroutines.launch
  * @author: zhou
  * @date : 2022/1/20 17:52
  */
-class ArticleFragment : BaseFragment<FragmentArticleBinding>(), OnRefreshListener,
-    OnRefreshLoadMoreListener, OnItemClickListener {
+class ArticleFragment : BaseFragment<FragmentArticleBinding>(), OnRefreshListener, OnItemClickListener {
 
     companion object {
         fun newInstance() = ArticleFragment()
@@ -64,10 +63,7 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding>(), OnRefreshListene
         mBinding.rvArticle.adapter = ConcatAdapter(bannerAdapter, articleAdapter)
 
         // 下拉刷新
-        mBinding.refreshLayout.setOnRefreshLoadMoreListener(this)
-
-        //item点击事件
-        articleAdapter.setOnItemClickListener(this)
+        mBinding.refreshLayout.setOnRefreshListener(this)
     }
 
     override fun createObserver() {
@@ -78,17 +74,9 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding>(), OnRefreshListene
             )
         }
 
-        // 文章数据
-        articleViewModel.articleListUiModel.observe(viewLifecycleOwner){ articleList ->
-            articleAdapter.setList(articleList)
-        }
-
-        // 文章增量数据
-        articleViewModel.addArticleList.observe(viewLifecycleOwner){
-            mBinding.refreshLayout.finishLoadMore()
-
-            if(!it.isNullOrEmpty()){
-                articleAdapter.addData(it)
+        viewLifecycleOwner.lifecycleScope.launch {
+            articleViewModel.articlePagingFlow.collect {
+                articleAdapter.submitData(it)
             }
         }
 
@@ -114,18 +102,13 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding>(), OnRefreshListene
         }
 
 
-
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout) {
         //重新请求banner
         articleViewModel.toReFresh()
-        //重新请求列表 ?
-//        refreshLayout.autoRefresh(200)
-    }
-
-    override fun onLoadMore(refreshLayout: RefreshLayout) {
-        articleViewModel.loadMoreArticle()
+        // 刷新Paging
+        articleAdapter.refresh()
     }
 
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
