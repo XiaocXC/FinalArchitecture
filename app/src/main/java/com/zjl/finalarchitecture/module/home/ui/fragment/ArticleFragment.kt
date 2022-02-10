@@ -6,6 +6,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
+import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ConvertUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -23,6 +24,8 @@ import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.databinding.FragmentArticleBinding
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleAdapter
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleBannerAdapter
+import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleBannerWrapperAdapter
+import com.zjl.finalarchitecture.module.home.ui.adapter.BannerVOWrapper
 import com.zjl.finalarchitecture.module.home.viewmodel.ArticleViewModel
 import com.zy.multistatepage.state.ErrorState
 import com.zy.multistatepage.state.LoadingState
@@ -45,24 +48,20 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding>(), OnRefreshListene
 
     private val articleViewModel by viewModels<ArticleViewModel>()
 
-    private lateinit var bannerAdapter: ArticleBannerAdapter
+    private lateinit var bannerAdapter: ArticleBannerWrapperAdapter
     private lateinit var articleAdapter: ArticleAdapter
 
     override fun bindView() = FragmentArticleBinding.inflate(layoutInflater)
 
     override fun initViewAndEvent() {
         // Banner适配器
-        bannerAdapter = ArticleBannerAdapter()
-        mBinding.articleBanner.setAdapter(bannerAdapter)
-        mBinding.articleBanner.setIndicatorSliderWidth(10, 10)
-        // Banner轮播图设置lifecycle
-        mBinding.articleBanner.setLifecycleRegistry(viewLifecycleOwner.lifecycle)
+        bannerAdapter = ArticleBannerWrapperAdapter(viewLifecycleOwner.lifecycle)
 
         // 列表适配器
         articleAdapter = ArticleAdapter()
-        mBinding.rvArticle.adapter = articleAdapter
-        mBinding.rvArticle.layoutManager = LinearLayoutManager(context)
         mBinding.rvArticle.addItemDecoration(SpaceItemDecoration(0, ConvertUtils.dp2px(8f), false))
+
+        mBinding.rvArticle.adapter = ConcatAdapter(bannerAdapter, articleAdapter)
 
         // 下拉刷新
         mBinding.refreshLayout.setOnRefreshLoadMoreListener(this)
@@ -74,15 +73,22 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding>(), OnRefreshListene
     override fun createObserver() {
         // Banner数据观察
         articleViewModel.bannerListUiModel.observe(viewLifecycleOwner){ bannerList ->
-            mBinding.articleBanner.create(bannerList)
+            bannerAdapter.setList(
+                listOf(BannerVOWrapper(bannerList))
+            )
         }
 
         // 文章数据
         articleViewModel.articleListUiModel.observe(viewLifecycleOwner){ articleList ->
-            if(articleViewModel.pageNo == 0){
-                articleAdapter.setList(articleList)
-            } else {
-                articleAdapter.addData(articleList)
+            articleAdapter.setList(articleList)
+        }
+
+        // 文章增量数据
+        articleViewModel.addArticleList.observe(viewLifecycleOwner){
+            mBinding.refreshLayout.finishLoadMore()
+
+            if(!it.isNullOrEmpty()){
+                articleAdapter.addData(it)
             }
         }
 
@@ -95,8 +101,6 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding>(), OnRefreshListene
 
                         uiRootState.show(SuccessState())
 
-                        mBinding.refreshLayout.finishLoadMore()
-
                     }.onLoading {
                         mBinding.refreshLayout.autoRefreshAnimationOnly()
                     }.onFailure { _, throwable ->
@@ -104,7 +108,6 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding>(), OnRefreshListene
                         uiRootState.show<ErrorState> {
                             it.setErrorMsg(throwable.message ?: "")
                         }
-                        mBinding.refreshLayout.finishLoadMore()
                     }
                 }
             }

@@ -1,6 +1,5 @@
 package com.zjl.finalarchitecture.module.home.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.zjl.base.ui.UiModel
@@ -25,8 +24,11 @@ class ArticleViewModel : BaseViewModel() {
     val bannerListUiModel: LiveData<List<BannerVO>> get() = _bannerListUiModel
 
     // ArticleDataUI
-    private val _articleListUiModel = MutableLiveData<List<ArticleListVO>>()
-    val articleListUiModel: LiveData<List<ArticleListVO>> get() = _articleListUiModel
+    private val _articleListUiModel = MutableLiveData<MutableList<ArticleListVO>>()
+    val articleListUiModel: LiveData<MutableList<ArticleListVO>> get() = _articleListUiModel
+
+    private val _addArticleList = MutableLiveData<List<ArticleListVO>>()
+    val addArticleList: LiveData<List<ArticleListVO>> get() = _addArticleList
 
     init {
         toReFresh()
@@ -81,16 +83,16 @@ class ArticleViewModel : BaseViewModel() {
      * 数据先加载出来后，加载更多的布局才消失
      */
     fun loadMoreArticle(){
-        launchRequestByNormal({ HomeRepository.requestArticleByPageData(pageNo) },
-            successBlock = {
-            // 成功状态
-            _rootViewState.emit(UiModel.Success(Unit))
+        launchRequestByNormal({
+            HomeRepository.requestArticleByPageData(pageNo)
+        }, successBlock = {
             pageNo = it.currentPage
             Timber.tag("zjl").v("当前页码：%s", pageNo)
-            _articleListUiModel.value = it.dataList
-        }, failureBlock = {
-            // 失败状态
-            _rootViewState.emit(UiModel.Error(ApiException(it)))
+            _addArticleList.value = it.dataList
+            _addArticleList.value = emptyList()
+
+            // 与原来的数据叠加
+            _articleListUiModel.value?.addAll(it.dataList)
         })
     }
 }
