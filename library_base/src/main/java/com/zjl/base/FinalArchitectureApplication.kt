@@ -46,7 +46,7 @@ class FinalArchitectureApplication: Application() {
         fun initSDK(){
             //设置全局的Header构建器
             SmartRefreshLayout.setDefaultRefreshHeaderCreator { context, layout ->
-                layout.setPrimaryColorsId(R.color.base_purple_200, R.color.white) //全局设置主题颜色
+                layout.setPrimaryColorsId(R.color.base_light_blue_800, R.color.white) //全局设置主题颜色
                 ClassicsHeader(context) //.setTimeFormat(new DynamicTimeFormat("更新于 %s"));//指定为经典Header，默认是 贝塞尔雷达Header
             }
             // 设置全局的 Footer 构建器

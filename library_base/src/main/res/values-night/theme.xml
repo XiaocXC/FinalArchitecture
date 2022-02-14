@@ -3,13 +3,29 @@
     <!-- APP主题 -->
     <style name="Base_Theme.FinalArchitecture" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- 主色调 -->
-        <item name="colorPrimary">@color/base_purple_200</item>
-        <item name="colorPrimaryVariant">@color/base_purple_700</item>
-        <item name="colorOnPrimary">@color/base_black</item>
+        <item name="colorPrimary">@color/base_blue_100</item>
+        <item name="colorOnPrimary">@color/base_blue_700</item>
+        <item name="colorPrimaryContainer">@color/base_light_blue_200</item>
+        <item name="colorOnPrimaryContainer">@color/base_hard_blue_700</item>
         <!-- 次色调 -->
-        <item name="colorSecondary">@color/base_teal_200</item>
-        <item name="colorSecondaryVariant">@color/base_teal_200</item>
-        <item name="colorOnSecondary">@color/base_black</item>
+        <item name="colorSecondary">@color/base_hard_blue_300</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorSecondaryContainer">@color/base_light_blue_300</item>
+        <item name="colorOnSecondaryContainer">@color/base_hard_blue_650</item>
+        <!-- 第三色调 -->
+        <item name="colorTertiary">@color/base_blue_600</item>
+        <item name="colorOnTertiary">@color/white</item>
+        <item name="colorTertiaryContainer">@color/base_light_blue_500</item>
+        <item name="colorOnTertiaryContainer">@color/base_hard_blue_750</item>
+
+        <!-- 背景色 -->
+        <item name="backgroundColor">@color/base_grey_100</item>
+        <item name="colorOnBackground">@color/base_black_700</item>
+        <item name="colorSurface">@color/base_grey_100</item>
+        <item name="colorOnSurface">@color/base_black_700</item>
+        <item name="colorOutline">@color/base_grey_600</item>
+        <item name="colorSurfaceVariant">@color/base_grey_200</item>
+        <item name="colorOnSurfaceVariant">@color/base_grey_700</item>
 
         <!--  设置透明状态栏，适合深色时的状态栏  -->
         <item name="android:windowLightStatusBar">false</item>

@@ -5,13 +5,12 @@
     android:layout_height="match_parent"
     tools:context=".module.discovery.ui.fragment.DiscoveryFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="发现"
         android:gravity="center"
-        android:textColor="@color/base_teal_200"
+        android:textColor="@color/base_red"
         android:textSize="48dp"/>
 
 </FrameLayout>

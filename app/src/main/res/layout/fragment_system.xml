@@ -5,13 +5,12 @@
     android:layout_height="match_parent"
     tools:context=".module.system.ui.fragment.SystemFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="体系"
         android:gravity="center"
-        android:textColor="@color/base_purple_200"
+        android:textColor="@color/base_chocolate"
         android:textSize="48dp"/>
 
 </FrameLayout>

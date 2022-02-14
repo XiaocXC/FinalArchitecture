@@ -25,9 +25,8 @@
         android:id="@+id/mBottomNavigationView"
         app:labelVisibilityMode="selected"
         app:menu="@menu/menu_bottom_navigation"
-        app:backgroundTint="@color/base_white"
+        app:itemActiveIndicatorStyle="@style/Widget.Architecture.BottomNavigationView.ActiveIndicator"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:marginHorizontal="2dp"/>
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>

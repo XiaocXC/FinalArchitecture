@@ -45,7 +45,7 @@ fun MultiStateContainer.handleWithPaging3(
             }
         }
         else ->{
-            show(SuccessState())
+            show(SuccessState(), enabledHandle)
         }
     }
 }
