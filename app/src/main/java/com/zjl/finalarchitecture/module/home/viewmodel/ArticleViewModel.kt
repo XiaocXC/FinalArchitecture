@@ -31,15 +31,11 @@ class ArticleViewModel : BaseViewModel() {
         .cachedIn(viewModelScope)
 
     init {
-        toReFresh()
+        toRefresh()
     }
 
-    /**
-     * 刷新
-     */
-    fun toReFresh() {
+    override fun refresh() {
         // 请求中状态
-        _rootViewState.tryEmit(UiModel.Loading())
         refreshBanner()
     }
 

@@ -4,6 +4,12 @@ android{
 
     //统一资源前缀,规范资源引用
     resourcePrefix "base_"
+
+    // 开启dataBinding数据绑定和viewBinding视图绑定
+    buildFeatures {
+        viewBinding true
+        dataBinding true
+    }
 }
 
 dependencies {

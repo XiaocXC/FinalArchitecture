@@ -14,6 +14,7 @@ import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
+import com.zjl.base.adapter.DefaultLoadStateAdapter
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.ui.onFailure
 import com.zjl.base.ui.onLoading
@@ -27,12 +28,15 @@ import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleBannerAdapter
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleBannerWrapperAdapter
 import com.zjl.finalarchitecture.module.home.ui.adapter.BannerVOWrapper
 import com.zjl.finalarchitecture.module.home.viewmodel.ArticleViewModel
+import com.zjl.finalarchitecture.utils.multistate.handleWithPaging3
+import com.zjl.finalarchitecture.utils.smartrefresh.handleWithPaging3
 import com.zy.multistatepage.state.ErrorState
 import com.zy.multistatepage.state.LoadingState
 import com.zy.multistatepage.state.SuccessState
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 /**
  * @description:
@@ -60,7 +64,13 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding>(), OnRefreshListene
         articleAdapter = ArticleAdapter()
         mBinding.rvArticle.addItemDecoration(SpaceItemDecoration(0, ConvertUtils.dp2px(8f), false))
 
-        mBinding.rvArticle.adapter = ConcatAdapter(bannerAdapter, articleAdapter)
+        // 给ArticleAdapter加上分页的状态尾
+        val withFooterAdapter = articleAdapter.withLoadStateFooter(DefaultLoadStateAdapter{
+            articleAdapter.retry()
+        })
+
+        // 将BannerAdapter和ArticleAdapter整合为一个Adapter
+        mBinding.rvArticle.adapter = ConcatAdapter(bannerAdapter, withFooterAdapter)
 
         // 下拉刷新
         mBinding.refreshLayout.setOnRefreshListener(this)
@@ -74,39 +84,34 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding>(), OnRefreshListene
             )
         }
 
+        // 文章分页数据
         viewLifecycleOwner.lifecycleScope.launch {
             articleViewModel.articlePagingFlow.collect {
                 articleAdapter.submitData(it)
             }
         }
 
-        launchAndRepeatWithViewLifecycle {
-            launch {
-                // 整个页面状态数据
-                articleViewModel.rootViewState.collect { it ->
-                    it.onSuccess {
-                        mBinding.refreshLayout.finishRefresh()
-
-                        uiRootState.show(SuccessState())
-
-                    }.onLoading {
-                        mBinding.refreshLayout.autoRefreshAnimationOnly()
-                    }.onFailure { _, throwable ->
-                        mBinding.refreshLayout.finishRefresh()
-                        uiRootState.show<ErrorState> {
-                            it.setErrorMsg(throwable.message ?: "")
-                        }
-                    }
+        // 分页状态观察
+        viewLifecycleOwner.lifecycleScope.launch {
+            articleAdapter.loadStateFlow.collectLatest {
+                // 处理SmartLayout与Paging3相关状态联动
+                mBinding.refreshLayout.handleWithPaging3(it)
+                // 处理Paging3状态与整个布局状态相关联动
+                uiRootState.handleWithPaging3(it, articleAdapter.itemCount <= 0){
+                    refresh()
                 }
             }
         }
 
-
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout) {
-        //重新请求banner
-        articleViewModel.toReFresh()
+        refresh()
+    }
+
+    private fun refresh(){
+        // 重新请求，如果文章列表没有数据，则整个界面会重新显示loading状态（当然这里意义不大，没有用处）
+        articleViewModel.toRefresh(articleAdapter.itemCount <= 0)
         // 刷新Paging
         articleAdapter.refresh()
     }

@@ -8,4 +8,7 @@ import com.zjl.base.viewmodel.BaseViewModel
  * @date : 2022/1/17 17:44
  */
 class HomeViewModel : BaseViewModel() {
+    override fun refresh() {
+
+    }
 }

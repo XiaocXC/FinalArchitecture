@@ -1,6 +1,7 @@
 package com.zjl.finalarchitecture.module.main.ui
 
 import androidx.activity.OnBackPressedCallback
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.blankj.utilcode.util.ToastUtils
 import com.zjl.base.activity.BaseActivity
@@ -11,6 +12,11 @@ import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.module.main.viewmodel.MainViewModel
 import com.zjl.finalarchitecture.databinding.ActivityMainBinding
 import com.zjl.finalarchitecture.di.createBaseViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 /**
  * @description: 主界面

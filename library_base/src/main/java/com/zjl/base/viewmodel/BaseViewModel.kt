@@ -27,10 +27,29 @@ abstract class BaseViewModel: ViewModel(){
      * 根View状态值
      * 该值为当前viewModel控制视图的根View的状态值，它存储着整个页面当前的状态
      * 该值属于视图事件，所以不能为黏性事件
+     * 如果你需要颗粒度更细的加载状态，例如Paging3等内容的状态，可以自行处理
      */
     protected val _rootViewState = MutableSharedFlow<UiModel<Any>>()
-    val rootViewState: SharedFlow<UiModel<Any>> = _rootViewState.asSharedFlow()
+    val rootViewState: SharedFlow<UiModel<Any>> get() =  _rootViewState.asSharedFlow()
 
+    /**
+     * 刷新
+     * @param resetState 是否重置加载状态
+     * 如果重置加载状态，那么会将整个布局的状态更改为加载状态
+     */
+    fun toRefresh(resetState: Boolean = true){
+        if(resetState){
+            _rootViewState.tryEmit(UiModel.Loading())
+        }
+        // 调用重写子类的刷新方法
+        refresh()
+    }
+
+    /**
+     * 刷新重写方法
+     * 该方法仅供ViewModel中使用
+     */
+    protected abstract fun refresh()
 
     /**
      * 普通的协程请求
