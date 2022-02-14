@@ -31,7 +31,7 @@ abstract class IntegerPagingSource<V: Any>: PagingSource<Int, V>() {
                     val data = result.data
                     // 如果页数已经over
                     val nextPage = if(!data.over){
-                        data.currentPage + 1
+                        data.currentPage
                     } else {
                         null
                     }
@@ -56,12 +56,7 @@ abstract class IntegerPagingSource<V: Any>: PagingSource<Int, V>() {
         }
     }
 
-    override fun getRefreshKey(state: PagingState<Int, V>): Int? {
-        return state.anchorPosition?.let { anchorPosition ->
-            val anchorPage = state.closestPageToPosition(anchorPosition)
-            anchorPage?.prevKey?.minus(1) ?: anchorPage?.nextKey?.plus(1)
-        }
-    }
+    override fun getRefreshKey(state: PagingState<Int, V>): Int? = null
 
 
     /**
