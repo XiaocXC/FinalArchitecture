@@ -27,6 +27,6 @@
         app:menu="@menu/menu_bottom_navigation"
         app:itemActiveIndicatorStyle="@style/Widget.Architecture.BottomNavigationView.ActiveIndicator"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="68dp"/>
 
 </LinearLayout>
