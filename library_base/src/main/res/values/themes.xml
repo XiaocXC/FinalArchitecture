@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- APP主题 -->
-    <style name="Base_Theme.FinalArchitecture" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base_Theme.FinalArchitecture" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- 主色调 -->
         <item name="colorPrimary">@color/base_blue_100</item>
         <item name="colorOnPrimary">@color/base_blue_700</item>
@@ -78,8 +78,9 @@
     </style>
 
     <!-- 底部导航栏选中Style -->
-    <style name="Widget.Architecture.BottomNavigationView.ActiveIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator" tools:ignore="ResourceName">
+    <style name="Widget.Architecture.BottomNavigationView.ActiveIndicator"
+        parent="Widget.Material3.BottomNavigationView.ActiveIndicator" tools:ignore="ResourceName">
         <item name="android:color">@android:color/transparent</item>
-        <item name="android:height">28dp</item>
+        <item name="android:height">21dp</item>
     </style>
 </resources>

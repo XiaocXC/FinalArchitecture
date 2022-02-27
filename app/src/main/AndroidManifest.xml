@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Base_Theme.FinalArchitecture">
         <activity
+            android:name=".module.study.LifecycleTestActivity"
+            android:exported="true">
+
+        </activity>
+
+        <activity
             android:name=".module.splash.ui.WelcomeActivity"
             android:exported="true">
             <intent-filter>
@@ -18,13 +24,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
         <activity
             android:name=".module.main.ui.MainActivity"
             android:configChanges="keyboard|keyboardHidden|screenSize|fontScale|density|orientation"
-            android:windowSoftInputMode="stateHidden|adjustResize"
-            android:exported="true">
+            android:exported="true"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
 
-        </activity>
+
     </application>
 
 </manifest>

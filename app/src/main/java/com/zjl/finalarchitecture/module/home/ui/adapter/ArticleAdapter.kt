@@ -28,9 +28,7 @@ class ArticleAdapter: ViewBoundPagingListAdapter<ArticleListVO, ItemArticleListD
         override fun areContentsTheSame(oldItem: ArticleListVO, newItem: ArticleListVO): Boolean {
             return oldItem.title == newItem.title
         }
-
-    }
-) {
+    }) {
 
     override fun createBinding(
         parent: ViewGroup,
@@ -56,6 +54,13 @@ class ArticleAdapter: ViewBoundPagingListAdapter<ArticleListVO, ItemArticleListD
             binding.itemHomeDate.text = niceDate
             binding.itemHomeNew.visibility = if(fresh) View.VISIBLE else View.GONE
             binding.itemHomeType1.text = niceDate
+
+            if(type == 1){
+                binding.itemHomeTop.visibility = View.VISIBLE
+            }else{
+                binding.itemHomeTop.visibility = View.GONE
+            }
+
             if (tags.isNotEmpty()) {
                 binding.itemHomeType1.visibility = View.VISIBLE
                 binding.itemHomeType1.text = tags[0].name

@@ -23,6 +23,7 @@ class DefaultLoadStateAdapter(
      * 重试回调
      */
     private val retry: () -> Unit
+
 ): LoadStateAdapter<ViewBoundViewHolder<LoadState, BaseItemDefaultLoadStateBinding>>() {
 
     override fun onBindViewHolder(

@@ -30,6 +30,7 @@ import timber.log.Timber
  * @param Parameters 需要给 Repository 传递的参数类型
  * @param Result 最后转换后返回的数据类型
  **/
+@Deprecated("Deprecated")
 abstract class SuspendUseCase<in Parameters, Result>(
     private val coroutineDispatcher: CoroutineDispatcher = Dispatchers.IO) {
 

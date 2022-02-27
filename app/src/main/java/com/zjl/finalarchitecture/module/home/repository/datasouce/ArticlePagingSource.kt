@@ -1,10 +1,12 @@
-package com.zjl.finalarchitecture.module.home.repository
+package com.zjl.finalarchitecture.module.home.repository.datasouce
 
 import com.zjl.base.ApiResult
 import com.zjl.base.onSuccess
 import com.zjl.base.utils.CacheUtil
 import com.zjl.finalarchitecture.module.home.model.ArticleListVO
 import com.zjl.finalarchitecture.module.home.model.PageVO
+import com.zjl.finalarchitecture.module.home.repository.IntegerPagingSource
+import com.zjl.finalarchitecture.module.home.repository.resp.HomeRepository
 
 /**
  * @author Xiaoc
@@ -17,18 +19,18 @@ class ArticlePagingSource: IntegerPagingSource<ArticleListVO>() {
     override suspend fun loadData(currentPage: Int): ApiResult<PageVO<ArticleListVO>> {
         val articlePageData = HomeRepository.requestArticleDataByPage(currentPage)
         //如果App配置打开了首页请求置顶文章(为什么做这个，我们可以再设置页面灵活开关)，且是第一页，则额外请求一个置顶文章列表
-        if (CacheUtil.isNeedTop() && currentPage == 0) {
+        return if (CacheUtil.isNeedTop() && currentPage == 0) {
             val topArticleList = mutableListOf<ArticleListVO>()
 
             val topArticleListData = HomeRepository.requestTopArticleData()
             topArticleListData.onSuccess {
                 topArticleList.addAll(it)
             }
-            return articlePageData.onSuccess {
+            articlePageData.onSuccess {
                 it.dataList.addAll(0, topArticleList)
             }
         } else {
-            return articlePageData
+            articlePageData
         }
     }
 }

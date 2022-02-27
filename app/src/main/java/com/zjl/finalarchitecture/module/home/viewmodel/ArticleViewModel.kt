@@ -1,19 +1,14 @@
 package com.zjl.finalarchitecture.module.home.viewmodel
-
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
-import com.zjl.base.ui.UiModel
 import com.zjl.base.viewmodel.BaseViewModel
-import com.zjl.finalarchitecture.module.home.model.ArticleListVO
 import com.zjl.finalarchitecture.module.home.model.BannerVO
-import com.zjl.finalarchitecture.module.home.repository.HomeRepository
-import com.zjl.base.exception.ApiException
-import com.zjl.finalarchitecture.module.home.repository.ArticlePagingSource
-import timber.log.Timber
+import com.zjl.finalarchitecture.module.home.repository.resp.HomeRepository
+import com.zjl.finalarchitecture.module.home.repository.datasouce.ArticlePagingSource
 
 /**
  * @author Xiaoc
@@ -25,10 +20,10 @@ class ArticleViewModel : BaseViewModel() {
     private val _bannerListUiModel = MutableLiveData<List<BannerVO>>()
     val bannerListUiModel: LiveData<List<BannerVO>> get() = _bannerListUiModel
 
+    // 文章
     val articlePagingFlow = Pager(PagingConfig(pageSize = 20)) {
         ArticlePagingSource()
-    }.flow
-        .cachedIn(viewModelScope)
+    }.flow.cachedIn(viewModelScope)
 
     init {
         toRefresh()

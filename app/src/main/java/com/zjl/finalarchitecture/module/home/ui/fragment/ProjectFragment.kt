@@ -22,7 +22,7 @@ class ProjectFragment: Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+      "abc".apply {  }
     }
 
     override fun onCreateView(

@@ -1,8 +1,7 @@
-package com.zjl.finalarchitecture.module.home.repository
+package com.zjl.finalarchitecture.module.home.repository.resp
 
 import com.zjl.base.ApiResult
 import com.zjl.base.onSuccess
-import com.zjl.base.ui.onSuccess
 import com.zjl.base.utils.CacheUtil
 import com.zjl.finalarchitecture.api.ArticleService
 import com.zjl.finalarchitecture.module.home.model.ArticleListVO

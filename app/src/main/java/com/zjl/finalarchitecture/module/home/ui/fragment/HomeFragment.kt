@@ -1,9 +1,12 @@
 package com.zjl.finalarchitecture.module.home.ui.fragment
 
+import android.content.Context
+import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.blankj.utilcode.util.LogUtils
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -63,6 +66,51 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 tab.text = mTitleArrayData[position]
             }
         }).attach()
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        LogUtils.eTag("zhou::","onAttach")
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        LogUtils.eTag("zhou::","onCreate")
+    }
+
+    override fun onStart() {
+        super.onStart()
+        LogUtils.eTag("zhou::","onStart")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        LogUtils.eTag("zhou::","onResume")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        LogUtils.eTag("zhou::","onPause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        LogUtils.eTag("zhou::","onStop")
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        LogUtils.eTag("zhou::","onDestroyView")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        LogUtils.eTag("zhou::","onDestroy")
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        LogUtils.eTag("zhou::","onDetach")
     }
 
 }

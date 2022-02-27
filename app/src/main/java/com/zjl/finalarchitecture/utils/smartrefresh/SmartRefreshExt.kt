@@ -13,14 +13,15 @@ fun SmartRefreshLayout.handleWithPaging3(
     /**
      * 是否处理刷新，默认处理
      */
-    enableHandleRefresh: Boolean = true,
+    isRefresh: Boolean = true,
+
     /**
      * 是否处理加载更多，默认不处理
      */
-    enableHandleLoadMore: Boolean = false
+    isLoadMore: Boolean = false
 ){
 
-    if(enableHandleRefresh){
+    if(isRefresh){
         when(combinedLoadStates.refresh){
             is LoadState.Loading ->{
                 autoRefreshAnimationOnly()
@@ -34,7 +35,7 @@ fun SmartRefreshLayout.handleWithPaging3(
         }
     }
 
-    if(enableHandleLoadMore){
+    if(isLoadMore){
         when(combinedLoadStates.append){
             is LoadState.Loading ->{
                 autoLoadMoreAnimationOnly()

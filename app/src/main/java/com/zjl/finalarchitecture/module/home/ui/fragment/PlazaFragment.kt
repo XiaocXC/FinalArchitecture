@@ -5,30 +5,28 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.zjl.base.fragment.BaseFragment
 import com.zjl.finalarchitecture.R
+import com.zjl.finalarchitecture.databinding.FragmentPlazaBinding
 
 /**
  * @description:
  * @author: zhou
  * @date : 2022/1/20 17:56
  */
-class PlazaFragment : Fragment(){
+class PlazaFragment : BaseFragment<FragmentPlazaBinding>(){
 
     companion object {
         fun newInstance() = PlazaFragment()
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun bindView() = FragmentPlazaBinding.inflate(layoutInflater)
 
+    override fun initViewAndEvent() {
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_plaza, container, false)
+    override fun createObserver() {
+
     }
 
 }
