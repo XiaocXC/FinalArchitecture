@@ -1,17 +1,12 @@
 package com.zjl.finalarchitecture.module.home.ui.fragment
 
-import android.content.Context
-import android.os.Bundle
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ConcatAdapter
-import com.blankj.utilcode.util.ConvertUtils
-import com.blankj.utilcode.util.LogUtils
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
 import com.zjl.base.adapter.DefaultLoadStateAdapter
 import com.zjl.base.fragment.BaseFragment
-import com.zjl.base.weight.recyclerview.SpaceItemDecoration
 import com.zjl.finalarchitecture.databinding.FragmentArticleBinding
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleAdapter
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleBannerWrapperAdapter
@@ -48,9 +43,6 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding>(), OnRefreshListene
 
         // 列表适配器
         mArticleAdapter = ArticleAdapter()
-
-        // ArticleAdapter 分割线
-        mBinding.rvArticle.addItemDecoration(SpaceItemDecoration(0, ConvertUtils.dp2px(8f), false))
 
         // 给ArticleAdapter加上分页的状态尾
         val withFooterAdapter = mArticleAdapter.withLoadStateFooter(DefaultLoadStateAdapter{

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- APP主题 -->
-    <style name="Base_Theme.FinalArchitecture" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="Base_Theme.FinalArchitecture" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- 主色调 -->
         <item name="colorPrimary">@color/base_blue_100</item>
         <item name="colorOnPrimary">@color/base_blue_700</item>
@@ -19,9 +19,9 @@
         <item name="colorOnTertiaryContainer">@color/base_hard_blue_750</item>
 
         <!-- 背景色 -->
-        <item name="backgroundColor">@color/base_grey_100</item>
+        <item name="android:colorBackground">@color/white</item>
         <item name="colorOnBackground">@color/base_black_700</item>
-        <item name="colorSurface">@color/base_grey_100</item>
+        <item name="colorSurface">@color/base_white</item>
         <item name="colorOnSurface">@color/base_black_700</item>
         <item name="colorOutline">@color/base_grey_600</item>
         <item name="colorSurfaceVariant">@color/base_grey_200</item>
@@ -78,7 +78,7 @@
     </style>
 
     <!-- 底部导航栏选中Style -->
-    <style name="Widget.Architecture.BottomNavigationView.ActiveIndicator"
+    <style name="Widget.Architecture.BottomNavigationView.ActiveIndicator.NoColor"
         parent="Widget.Material3.BottomNavigationView.ActiveIndicator" tools:ignore="ResourceName">
         <item name="android:color">@android:color/transparent</item>
         <item name="android:height">21dp</item>

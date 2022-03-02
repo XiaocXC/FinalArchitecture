@@ -12,7 +12,7 @@
         android:id="@+id/mAppBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/base_white">
+        android:background="@android:color/transparent">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/mToolbar"
@@ -58,8 +58,7 @@
             android:layout_height="wrap_content"
             app:tabGravity="fill"
             app:tabMode="fixed"
-            app:tabTextColor="@color/base_panda"
-            app:tabBackground="@color/base_white"/>
+            app:tabTextColor="@color/base_panda"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 
