@@ -30,7 +30,7 @@ abstract class BaseViewModel: ViewModel(){
      * 如果你需要颗粒度更细的加载状态，例如Paging3等内容的状态，可以自行处理
      */
     protected val _rootViewState = MutableSharedFlow<UiModel<Any>>()
-    val rootViewState: SharedFlow<UiModel<Any>> get() =  _rootViewState.asSharedFlow()
+    val rootViewState: SharedFlow<UiModel<Any>> =  _rootViewState
 
     /**
      * 刷新

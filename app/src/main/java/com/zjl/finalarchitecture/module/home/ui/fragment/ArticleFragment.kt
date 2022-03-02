@@ -7,6 +7,8 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
 import com.zjl.base.adapter.DefaultLoadStateAdapter
 import com.zjl.base.fragment.BaseFragment
+import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
+import com.zjl.base.weight.recyclerview.SpaceItemDecoration
 import com.zjl.finalarchitecture.databinding.FragmentArticleBinding
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleAdapter
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleBannerWrapperAdapter
@@ -58,10 +60,20 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding>(), OnRefreshListene
 
     override fun createObserver() {
         // Banner数据观察
-        articleViewModel.bannerListUiModel.observe(viewLifecycleOwner){ bannerList ->
-            mBannerAdapter.setList(
-                listOf(BannerVOWrapper(bannerList))
-            )
+//        articleViewModel.bannerListUiModel.observe(viewLifecycleOwner){ bannerList ->
+//            mBannerAdapter.setList(
+//                listOf(BannerVOWrapper(bannerList))
+//            )
+//        }
+
+        launchAndRepeatWithViewLifecycle {
+            launch {
+                articleViewModel.bannerList.collect { bannerList ->
+                    mBannerAdapter.setList(
+                        listOf(BannerVOWrapper(bannerList))
+                    )
+                }
+            }
         }
 
         // 文章分页数据
