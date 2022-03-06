@@ -9,11 +9,6 @@
         android:roundIcon="@mipmap/logo"
         android:supportsRtl="true"
         android:theme="@style/Base_Theme.FinalArchitecture">
-        <activity
-            android:name=".module.study.LifecycleTestActivity"
-            android:exported="true">
-
-        </activity>
 
         <activity
             android:name=".module.splash.ui.WelcomeActivity"

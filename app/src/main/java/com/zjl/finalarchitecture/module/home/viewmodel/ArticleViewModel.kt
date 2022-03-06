@@ -1,6 +1,4 @@
 package com.zjl.finalarchitecture.module.home.viewmodel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig

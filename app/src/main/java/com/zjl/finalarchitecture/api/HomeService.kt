@@ -13,7 +13,7 @@ import retrofit2.http.Path
  *
  * 文章相关Service
  */
-interface ArticleService {
+interface HomeService {
 
     /**
      * 获取文章栏目相关Banner数据
@@ -33,5 +33,13 @@ interface ArticleService {
      */
     @GET("article/top/json")
     suspend fun getTopArticleList(): ApiResult<ArrayList<ArticleListVO>>
+
+
+    /**
+     * 获取广场文章列表
+     */
+    @GET("/user_article/list/{page}/json")
+    suspend fun getPlazaArticleList(@Path("page") page : Int): ApiResult<PageVO<ArticleListVO>>
+
 
 }

@@ -2,5 +2,5 @@
 rootProject.name = "FinalArchitecture"
 include ':app'
 include ':library_base'
-include ':module_domain'
+//include ':module_domain'
 include ':library_network'

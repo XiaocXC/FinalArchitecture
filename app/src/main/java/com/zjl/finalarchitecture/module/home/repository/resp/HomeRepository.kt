@@ -3,7 +3,7 @@ package com.zjl.finalarchitecture.module.home.repository.resp
 import com.zjl.base.ApiResult
 import com.zjl.base.onSuccess
 import com.zjl.base.utils.CacheUtil
-import com.zjl.finalarchitecture.api.ArticleService
+import com.zjl.finalarchitecture.api.HomeService
 import com.zjl.finalarchitecture.module.home.model.ArticleListVO
 import com.zjl.finalarchitecture.module.home.model.BannerVO
 import com.zjl.finalarchitecture.module.home.model.PageVO
@@ -20,7 +20,7 @@ import kotlinx.coroutines.withContext
  */
 object HomeRepository {
 
-    private val mArticleService by lazy { mRetrofit.create(ArticleService::class.java) }
+    private val mHomeService by lazy { mRetrofit.create(HomeService::class.java) }
 
     /**
      * 获取Banner数据
@@ -28,7 +28,7 @@ object HomeRepository {
      */
     suspend fun requestBanner(): ApiResult<List<BannerVO>> {
         return withContext(Dispatchers.IO) {
-            mArticleService.getBanner()
+            mHomeService.getBanner()
         }
     }
 
@@ -41,7 +41,7 @@ object HomeRepository {
         return withContext(Dispatchers.IO) {
             // 先！！分页查询文章 还没 await
             val articleListDeferred = async {
-                mArticleService.getArticleListByPage(currentPage)
+                mHomeService.getArticleListByPage(currentPage)
             }
             //如果App配置打开了首页请求置顶文章(为什么做这个，我们可以再设置页面灵活开关)，且是第一页
             if (CacheUtil.isNeedTop() && currentPage == 0) {
@@ -67,7 +67,7 @@ object HomeRepository {
      * @return 置顶文章列表
      */
     suspend fun requestTopArticleData(): ApiResult<List<ArticleListVO>> {
-        return mArticleService.getTopArticleList()
+        return mHomeService.getTopArticleList()
     }
 
     /**
@@ -75,6 +75,16 @@ object HomeRepository {
      * @param pageNo 当前页码
      */
     suspend fun requestArticleDataByPage(pageNo: Int): ApiResult<PageVO<ArticleListVO>> {
-        return mArticleService.getArticleListByPage(pageNo)
+        return mHomeService.getArticleListByPage(pageNo)
     }
+
+
+    /**
+     * 分页获取广场文章
+     * @param pageNo 当前页码
+     */
+    suspend fun requestPlazaArticleData(pageNo: Int): ApiResult<PageVO<ArticleListVO>> {
+        return mHomeService.getPlazaArticleList(pageNo)
+    }
+
 }

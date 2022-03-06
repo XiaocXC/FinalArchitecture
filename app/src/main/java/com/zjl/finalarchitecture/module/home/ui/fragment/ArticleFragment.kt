@@ -8,7 +8,6 @@ import com.scwang.smart.refresh.layout.listener.OnRefreshListener
 import com.zjl.base.adapter.DefaultLoadStateAdapter
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
-import com.zjl.base.weight.recyclerview.SpaceItemDecoration
 import com.zjl.finalarchitecture.databinding.FragmentArticleBinding
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleAdapter
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleBannerWrapperAdapter
@@ -31,7 +30,7 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding>(), OnRefreshListene
         fun newInstance() = ArticleFragment()
     }
 
-    private val articleViewModel by viewModels<ArticleViewModel>()
+    private val mArticleViewModel by viewModels<ArticleViewModel>()
 
     private lateinit var mBannerAdapter: ArticleBannerWrapperAdapter
     private lateinit var mArticleAdapter: ArticleAdapter
@@ -68,7 +67,7 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding>(), OnRefreshListene
 
         launchAndRepeatWithViewLifecycle {
             launch {
-                articleViewModel.bannerList.collect { bannerList ->
+                mArticleViewModel.bannerList.collect { bannerList ->
                     mBannerAdapter.setList(
                         listOf(BannerVOWrapper(bannerList))
                     )
@@ -78,7 +77,7 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding>(), OnRefreshListene
 
         // 文章分页数据
         viewLifecycleOwner.lifecycleScope.launch {
-            articleViewModel.articlePagingFlow.collect {
+            mArticleViewModel.articlePagingFlow.collect {
                 mArticleAdapter.submitData(it)
             }
         }
@@ -104,7 +103,7 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding>(), OnRefreshListene
 
     private fun refresh(){
         // 重新请求，如果文章列表没有数据，则整个界面会重新显示loading状态（当然这里意义不大，没有用处）
-        articleViewModel.toRefresh(mArticleAdapter.itemCount <= 0)
+        mArticleViewModel.toRefresh(mArticleAdapter.itemCount <= 0)
         // 刷新Paging
         mArticleAdapter.refresh()
     }

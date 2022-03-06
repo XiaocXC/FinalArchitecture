@@ -22,11 +22,7 @@ class ApiResultCallAdapterFactory: CallAdapter.Factory(){
     /**
      * 检查是否是 Call<ApiResult<T>> 类型的返回类型
      */
-    override fun get(
-        returnType: Type,
-        annotations: Array<Annotation>,
-        retrofit: Retrofit
-    ): CallAdapter<*, *> {
+    override fun get(returnType: Type, annotations: Array<Annotation>, retrofit: Retrofit): CallAdapter<*, *> {
         /**
          * 凡是检测不通过的，直接抛异常，并提示使用者返回值的类型不正确
          */
@@ -53,16 +49,12 @@ class ApiResultCallAdapterFactory: CallAdapter.Factory(){
         return ApiResultCallAdapter<Any>(dataType)
     }
 
-
-
 }
 
 /**
  * CallAdapter适配器，也就是将 T 转换为 ApiResult<T> 的适配器
  */
-class ApiResultCallAdapter<T>(
-    private val type: Type
-): CallAdapter<T, Call<ApiResult<T>>> {
+class ApiResultCallAdapter<T>(private val type: Type): CallAdapter<T, Call<ApiResult<T>>> {
 
     override fun responseType(): Type = type
 
@@ -78,9 +70,7 @@ class ApiResultCallAdapter<T>(
  * 它将从服务端传回的数据类型封装为 ApiResult<T> 再回调
  * 并进行了一些错误处理
  */
-class ApiResultCall<T>(
-    private val delegate: Call<T>
-): Call<ApiResult<T>> {
+class ApiResultCall<T>(private val delegate: Call<T>): Call<ApiResult<T>> {
 
     override fun enqueue(callback: Callback<ApiResult<T>>) {
         delegate.enqueue(object : Callback<T> {
