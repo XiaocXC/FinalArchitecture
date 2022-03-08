@@ -9,6 +9,8 @@ import com.zjl.finalarchitecture.module.home.model.ArticleListVO
 class PlazaArticleAdapter : BaseQuickAdapter<ArticleListVO, BaseViewHolder>(R.layout.item_plaza_list_data) {
 
     override fun convert(holder: BaseViewHolder, item: ArticleListVO) {
+    }
 
+    override fun onItemViewHolderCreated(viewHolder: BaseViewHolder, viewType: Int) {
     }
 }

@@ -79,8 +79,7 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding>(), OnRefreshListene
         viewLifecycleOwner.lifecycleScope.launch {
             mArticleViewModel.articlePagingFlow.collect {
                 mArticleAdapter.submitData(it)
-            }
-        }
+            }        }
 
         // 下拉刷新,上拉分页,LEC状态观察
         viewLifecycleOwner.lifecycleScope.launch {

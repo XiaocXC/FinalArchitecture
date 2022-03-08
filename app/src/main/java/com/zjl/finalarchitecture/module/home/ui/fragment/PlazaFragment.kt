@@ -37,7 +37,13 @@ class PlazaFragment : BaseFragment<FragmentPlazaBinding>(){
         launchAndRepeatWithViewLifecycle {
             launch {
                 mViewModel.mPlazaListFlow.collect {
+                    mPlazaArticleAdapter.addData(it)
+                }
+            }
 
+            launch {
+                mViewModel.mAddPlazaListFlow.collect {
+                    mPlazaArticleAdapter.addData(it)
                 }
             }
         }
@@ -52,7 +58,7 @@ class PlazaFragment : BaseFragment<FragmentPlazaBinding>(){
                 R.color.base_light_blue_200
             )
             setOnRefreshListener {
-                mViewModel.requestPlazaData()
+                mViewModel.toRefresh()
             }
         }
     }

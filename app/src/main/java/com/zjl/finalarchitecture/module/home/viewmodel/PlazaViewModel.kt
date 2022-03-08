@@ -1,24 +1,70 @@
 package com.zjl.finalarchitecture.module.home.viewmodel
 
+import androidx.lifecycle.viewModelScope
 import com.zjl.base.viewmodel.BaseViewModel
 import com.zjl.finalarchitecture.module.home.model.ArticleListVO
 import com.zjl.finalarchitecture.module.home.model.BannerVO
 import com.zjl.finalarchitecture.module.home.repository.resp.HomeRepository
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 
 class PlazaViewModel: BaseViewModel()  {
 
-    // BannerUI
-    private val _plazaListFlow = MutableStateFlow<List<ArticleListVO>>(emptyList())
-    val mPlazaListFlow: StateFlow<List<ArticleListVO>> = _plazaListFlow
+    val coldFlow = flow {
+        emit(1)
+        emit(2)
+        emit(2)
+        emit(2)
+        emit(2)
+        emit(2)
+        emit(2)
+    }.flowOn(Dispatchers.IO) // 以上内容在IO线程执行
+        .map {
 
-    companion object {
-        const val INITIAL_PAGE = 0
+        }.map {
+
+        }.flowOn(Dispatchers.Default)  // 以上Map内容在Default线程执行
+
+    val hotFlow = MutableStateFlow(2)
+
+    fun test(){
+        viewModelScope.launch {
+            coldFlow.collect {
+                // 打印
+                // 1  2
+            }
+
+            coldFlow.collect {
+                // 打印
+                // 1  2
+            }
+
+            hotFlow.collect {
+                // 打印
+                // 2
+
+                // 执行下面的内容后
+                // 5
+            }
+
+            hotFlow.value = 5
+        }
     }
 
+    // BannerUI
+    private val _plazaListFlow = MutableStateFlow<MutableList<ArticleListVO>>(mutableListOf())
+    val mPlazaListFlow: StateFlow<MutableList<ArticleListVO>> = _plazaListFlow
+
+    // BannerUI
+    private val _addPlazaListFlow = MutableStateFlow<List<ArticleListVO>>(emptyList())
+    val mAddPlazaListFlow: StateFlow<List<ArticleListVO>> = _addPlazaListFlow
+
+    private var currentPage = 0
+
     init {
-        requestPlazaData()
+        toRefresh()
     }
 
     /**
@@ -26,15 +72,20 @@ class PlazaViewModel: BaseViewModel()  {
      */
     fun requestPlazaData(){
         launchRequestByNormal({
-            HomeRepository.requestPlazaArticleData(INITIAL_PAGE)
+            HomeRepository.requestPlazaArticleData(currentPage)
         }, successBlock = {
 //            _bannerListUiModel.value = it
-            _plazaListFlow.value = it.dataList
+            _addPlazaListFlow.value = it.dataList
+            _plazaListFlow.value.addAll(it.dataList)
+            _addPlazaListFlow.value = mutableListOf()
+
+            currentPage = it.currentPage
         })
     }
 
 
     override fun refresh() {
-
+        currentPage = 0
+        requestPlazaData()
     }
 }
