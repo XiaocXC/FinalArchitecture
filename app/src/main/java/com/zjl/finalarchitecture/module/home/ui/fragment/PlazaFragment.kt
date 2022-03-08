@@ -6,6 +6,7 @@ import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
 import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.databinding.FragmentPlazaBinding
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleAdapter
+import com.zjl.finalarchitecture.module.home.ui.adapter.PlazaArticleAdapter
 import com.zjl.finalarchitecture.module.home.viewmodel.PlazaViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -23,7 +24,7 @@ class PlazaFragment : BaseFragment<FragmentPlazaBinding>(){
 
     private val mViewModel by viewModels<PlazaViewModel>()
 
-    private lateinit var mArticleAdapter: ArticleAdapter
+    private lateinit var mPlazaArticleAdapter: PlazaArticleAdapter
 
     override fun bindView() = FragmentPlazaBinding.inflate(layoutInflater)
 

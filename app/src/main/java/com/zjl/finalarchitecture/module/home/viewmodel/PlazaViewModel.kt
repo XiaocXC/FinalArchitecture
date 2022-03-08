@@ -17,6 +17,10 @@ class PlazaViewModel: BaseViewModel()  {
         const val INITIAL_PAGE = 0
     }
 
+    init {
+        requestPlazaData()
+    }
+
     /**
      * 获取广场文章
      */
