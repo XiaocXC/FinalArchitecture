@@ -28,7 +28,6 @@
         app:labelVisibilityMode="unlabeled"
         app:itemActiveIndicatorStyle="@style/Widget.Architecture.BottomNavigationView.ActiveIndicator.NoColor"
         app:menu="@menu/menu_bottom_navigation"
-        app:itemActiveIndicatorStyle="@style/Widget.Architecture.BottomNavigationView.ActiveIndicator"
         />
 
 </LinearLayout>

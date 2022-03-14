@@ -3,14 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".module.system.ui.fragment.SystemFragment">
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_system"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="体系"
-        android:gravity="center"
-        android:textColor="@color/base_chocolate"
-        android:textSize="48dp"/>
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
 </FrameLayout>

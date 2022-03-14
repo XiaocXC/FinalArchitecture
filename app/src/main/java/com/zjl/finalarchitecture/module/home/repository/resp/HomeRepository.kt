@@ -7,6 +7,7 @@ import com.zjl.finalarchitecture.api.HomeService
 import com.zjl.finalarchitecture.module.home.model.ArticleListVO
 import com.zjl.finalarchitecture.module.home.model.BannerVO
 import com.zjl.finalarchitecture.module.home.model.PageVO
+import com.zjl.finalarchitecture.module.home.model.system.SystemVO
 import com.zjl.library_network.client.mRetrofit
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -85,6 +86,13 @@ object HomeRepository {
      */
     suspend fun requestPlazaArticleData(pageNo: Int): ApiResult<PageVO<ArticleListVO>> {
         return mHomeService.getPlazaArticleList(pageNo)
+    }
+
+    /**
+     * 获取体系数据
+     */
+    suspend fun requestSystemListData(): ApiResult<List<SystemVO>> {
+        return mHomeService.getSystemList()
     }
 
 }

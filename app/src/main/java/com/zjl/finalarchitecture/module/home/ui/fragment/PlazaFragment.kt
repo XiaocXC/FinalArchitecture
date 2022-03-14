@@ -64,7 +64,7 @@ class PlazaFragment : BaseFragment<FragmentPlazaBinding>(){
     }
 
     private fun initAdapter(){
-
+        mPlazaArticleAdapter = PlazaArticleAdapter()
     }
 
 }

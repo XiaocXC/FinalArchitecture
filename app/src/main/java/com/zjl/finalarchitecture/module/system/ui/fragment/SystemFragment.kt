@@ -1,27 +1,64 @@
 package com.zjl.finalarchitecture.module.system.ui.fragment
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import com.zjl.finalarchitecture.R
+import androidx.fragment.app.viewModels
+import com.zjl.base.fragment.BaseFragment
+import com.zjl.base.ui.onFailure
+import com.zjl.base.ui.onLoading
+import com.zjl.base.ui.onSuccess
+import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
+import com.zjl.finalarchitecture.databinding.FragmentSystemBinding
+import com.zjl.finalarchitecture.module.system.ui.adapter.SystemGroupAdapter
+import com.zjl.finalarchitecture.module.system.ui.viewmodel.SystemViewModel
+import com.zy.multistatepage.state.ErrorState
+import com.zy.multistatepage.state.LoadingState
+import com.zy.multistatepage.state.SuccessState
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
+/**
+ * 体系Fragment
+ */
+class SystemFragment : BaseFragment<FragmentSystemBinding>() {
 
-class SystemFragment : Fragment() {
+    private lateinit var systemGroupAdapter: SystemGroupAdapter
 
+    private val systemViewModel by viewModels<SystemViewModel>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
+    override fun bindView(): FragmentSystemBinding {
+        return FragmentSystemBinding.inflate(layoutInflater)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_system, container, false)
+    override fun initViewAndEvent() {
+        systemGroupAdapter = SystemGroupAdapter()
+
+        mBinding.rvSystem.adapter = systemGroupAdapter
+    }
+
+    override fun createObserver() {
+
+        launchAndRepeatWithViewLifecycle {
+
+            // 监听状态
+            launch {
+                systemViewModel.rootViewState.collectLatest {
+                    it.onSuccess {
+                        uiRootState.show(SuccessState())
+                    }.onLoading {
+                        uiRootState.show(LoadingState())
+                    }.onFailure { _, _ ->
+                        uiRootState.show(ErrorState())
+                    }
+                }
+            }
+
+            // 更新数据
+            launch {
+                systemViewModel.systemList.collectLatest {
+                    systemGroupAdapter.setList(it)
+                }
+            }
+        }
+
     }
 
 

@@ -45,6 +45,7 @@ dependencies {
     api "com.github.bumptech.glide:glide:$glide_version"
     // BaseRecyclerViewAdapterHelper
     api "com.github.CymChad:BaseRecyclerViewAdapterHelper:$BaseRecyclerViewAdapterHelper_version"
+    api "com.google.android.flexbox:flexbox:$flexbox_version"
     // UnPeekLiveData防止数据倒灌的LiveData
     api "com.kunminx.arch:unpeek-livedata:$unpeek_livedata"
     // 动态替换BaseUrl库 使用可参考 https://github.com/JessYanCoding/RetrofitUrlManager
