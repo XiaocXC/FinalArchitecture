@@ -66,6 +66,9 @@ dependencies {
     //util
     api "com.blankj:utilcodex:$tools_version"
 
+    //谷歌下拉刷新
+    api 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+
     api  "io.github.scwang90:refresh-layout-kernel:$smart_refresh_Layout_version"      //核心必须依赖
     api  "io.github.scwang90:refresh-header-classics:$smart_refresh_Layout_version"    //经典刷新头
     api  "io.github.scwang90:refresh-header-radar:$smart_refresh_Layout_version"       //雷达刷新头
