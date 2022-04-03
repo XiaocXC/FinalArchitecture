@@ -17,16 +17,25 @@ import kotlin.reflect.KProperty
  * private var XXX by autoCleared<XXX>()
  *
  */
-class AutoClearedValue<T: Any>(fragment: Fragment): ReadWriteProperty<Fragment,T>{
+class AutoClearedValue<T: Any>(fragment: Fragment, isViewLifeCycle: Boolean = true): ReadWriteProperty<Fragment,T>{
     private var _value: T? = null
 
     init {
-        fragment.lifecycle.addObserver(object: DefaultLifecycleObserver{
-            override fun onDestroy(owner: LifecycleOwner) {
-                _value = null
-                fragment.lifecycle.removeObserver(this)
-            }
-        })
+        if(isViewLifeCycle){
+            fragment.viewLifecycleOwner.lifecycle.addObserver(object: DefaultLifecycleObserver{
+                override fun onDestroy(owner: LifecycleOwner) {
+                    _value = null
+                    fragment.lifecycle.removeObserver(this)
+                }
+            })
+        } else {
+            fragment.lifecycle.addObserver(object: DefaultLifecycleObserver{
+                override fun onDestroy(owner: LifecycleOwner) {
+                    _value = null
+                    fragment.lifecycle.removeObserver(this)
+                }
+            })
+        }
     }
 
     override fun getValue(thisRef: Fragment, property: KProperty<*>): T {
