@@ -95,4 +95,13 @@ object HomeRepository {
         return mHomeService.getSystemList()
     }
 
+    /**
+     * 获取体系子栏目列表数据
+     * @param id 栏目ID
+     * @param pageNo 页码
+     */
+    suspend fun requestSystemListData(pageNo: Int, id: String): ApiResult<PageVO<ArticleListVO>> {
+        return mHomeService.getSystemChildData(pageNo, id)
+    }
+
 }

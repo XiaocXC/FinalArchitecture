@@ -58,14 +58,14 @@
     </style>
 
     <!-- 极小样式的加载条 -->
-    <style name="Widget.Architecture.Progress.ExtraSmall" parent="Widget.MaterialComponents.CircularProgressIndicator" tools:ignore="ResourceName">
+    <style name="Widget.Architecture.Progress.ExtraSmall" parent="Widget.Material3.CircularProgressIndicator.ExtraSmall" tools:ignore="ResourceName">
         <item name="trackThickness">2.5dp</item>
         <item name="indicatorSize">20dp</item>
         <item name="indicatorInset">2dp</item>
     </style>
 
     <!-- Icon（无边衬）样式按钮 -->
-    <style name="Widget.Architecture.NoInsetButton" parent="Widget.MaterialComponents.Button.OutlinedButton" tools:ignore="ResourceName">
+    <style name="Widget.Architecture.NoInsetButton" parent="Widget.Material3.Button.OutlinedButton" tools:ignore="ResourceName">
         <item name="android:insetTop">0dp</item>
         <item name="android:insetBottom">0dp</item>
         <item name="iconPadding">0dp</item>

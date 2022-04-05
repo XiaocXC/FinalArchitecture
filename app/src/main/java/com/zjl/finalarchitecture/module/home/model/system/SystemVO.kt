@@ -1,11 +1,14 @@
 package com.zjl.finalarchitecture.module.home.model.system
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 import kotlinx.serialization.Serializable
 
 /**
  * 体系VO
  */
 @Serializable
+@Parcelize
 data class SystemVO(
     val id: String,
     val name: String,
@@ -14,4 +17,4 @@ data class SystemVO(
     val userControlSetTop: Boolean,
     val visible: Int,
     val children: List<ClassifyVO>
-)
+): Parcelable

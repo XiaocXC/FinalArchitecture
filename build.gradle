@@ -26,7 +26,7 @@ buildscript {
         material_version = "1.5.0"
 
         // Paging3分页库
-        paging3_version = "3.1.0"
+        paging3_version = "3.1.1"
         // Navigation导航
         navigation_version = "2.4.1"
         preference_version = "1.1.1"
@@ -56,7 +56,7 @@ buildscript {
         // 图片压缩工具
         compressor_version = "3.0.1"
         // MMKV
-        mmkv_version = "1.2.12"
+        mmkv_version = "1.2.13"
         // PermissionX
         permissionx_version = "1.6.1"
         // Banner轮播图
@@ -90,6 +90,9 @@ buildscript {
 
         // kotlin-serialization
         classpath "org.jetbrains.kotlin:kotlin-serialization:$kotlin_version"
+
+        // Navigation Args
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navigation_version"
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files

@@ -7,6 +7,7 @@ import com.zjl.finalarchitecture.module.home.model.PageVO
 import com.zjl.finalarchitecture.module.home.model.system.SystemVO
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 /**
  * @author Xiaoc
@@ -47,6 +48,15 @@ interface HomeService {
      */
     @GET("/tree/json")
     suspend fun getSystemList(): ApiResult<List<SystemVO>>
+
+    /**
+     * 知识体系下的文章数据
+     */
+    @GET("article/list/{page}/json")
+    suspend fun getSystemChildData(
+        @Path("page") pageNo: Int,
+        @Query("cid") id: String
+    ): ApiResult<PageVO<ArticleListVO>>
 
 
 }

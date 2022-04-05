@@ -15,6 +15,9 @@
             app:destination="@id/searchFragment"
             app:enterAnim="@anim/zoom_small_in"
             app:exitAnim="@anim/zoom_small_out"/>
+        <action
+            android:id="@+id/action_mainFragment_to_systemDetailArrFragment"
+            app:destination="@id/systemDetailArrFragment" />
     </fragment>
 
 
@@ -23,6 +26,18 @@
         android:name="com.zjl.finalarchitecture.module.search.ui.fragment.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@+id/systemDetailArrFragment"
+        android:name="com.zjl.finalarchitecture.module.system.ui.fragment.SystemDetailArrFragment"
+        android:label="SystemDetailArrFragment">
+
+        <argument
+            android:name="detailData"
+            app:argType="com.zjl.finalarchitecture.module.home.model.system.SystemVO"/>
+        <argument
+            android:name="index"
+            app:argType="integer"/>
+    </fragment>
 
 
 </navigation>

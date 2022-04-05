@@ -16,26 +16,28 @@ import kotlin.reflect.KProperty
  * 使用方式如下：
  * private var XXX by autoCleared<XXX>()
  *
+ * @param isViewLifeCycle 如果为true，使用Fragment的ViewLifeCycle，在视图销毁时就进行清理，默认为true
+ *
  */
 class AutoClearedValue<T: Any>(fragment: Fragment, isViewLifeCycle: Boolean = true): ReadWriteProperty<Fragment,T>{
     private var _value: T? = null
 
     init {
-        if(isViewLifeCycle){
-            fragment.viewLifecycleOwner.lifecycle.addObserver(object: DefaultLifecycleObserver{
-                override fun onDestroy(owner: LifecycleOwner) {
-                    _value = null
-                    fragment.lifecycle.removeObserver(this)
-                }
-            })
-        } else {
+//        if(isViewLifeCycle){
+//            fragment.viewLifecycleOwner.lifecycle.addObserver(object: DefaultLifecycleObserver{
+//                override fun onDestroy(owner: LifecycleOwner) {
+//                    _value = null
+//                    fragment.viewLifecycleOwner.lifecycle.removeObserver(this)
+//                }
+//            })
+//        } else {
             fragment.lifecycle.addObserver(object: DefaultLifecycleObserver{
                 override fun onDestroy(owner: LifecycleOwner) {
                     _value = null
                     fragment.lifecycle.removeObserver(this)
                 }
             })
-        }
+//        }
     }
 
     override fun getValue(thisRef: Fragment, property: KProperty<*>): T {
@@ -50,4 +52,4 @@ class AutoClearedValue<T: Any>(fragment: Fragment, isViewLifeCycle: Boolean = tr
 
 }
 
-fun <T : Any> Fragment.autoCleared() = AutoClearedValue<T>(this)
+fun <T : Any> Fragment.autoCleared(isViewLifeCycle: Boolean = true) = AutoClearedValue<T>(this, isViewLifeCycle)

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/system_child_title"
     style="@style/TextAppearance.Material3.TitleMedium"
+    android:background="@drawable/shape_bg_search"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="6dp"

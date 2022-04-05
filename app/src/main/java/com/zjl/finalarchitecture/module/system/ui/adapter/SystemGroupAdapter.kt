@@ -11,10 +11,14 @@ import com.zjl.finalarchitecture.module.home.model.system.SystemVO
 /**
  * 体系外层Adapter
  */
-class SystemGroupAdapter: BaseQuickAdapter<SystemVO, BaseViewHolder>(
+class SystemGroupAdapter(
+    private val itemChildClicked: (SystemVO, Int) -> Unit
+): BaseQuickAdapter<SystemVO, BaseViewHolder>(
     R.layout.item_system_group
 ) {
     override fun convert(holder: BaseViewHolder, item: SystemVO) {
+        holder.itemView.tag = item
+
         holder.setText(R.id.system_classify_title, item.name)
         val rvSystemChild = holder.getView<RecyclerView>(R.id.rv_system_child)
         (rvSystemChild.adapter as SystemChildAdapter).setList(item.children)
@@ -26,6 +30,11 @@ class SystemGroupAdapter: BaseQuickAdapter<SystemVO, BaseViewHolder>(
             // 左对齐
             justifyContent = JustifyContent.FLEX_START
         }
-        rvSystemChild.adapter = SystemChildAdapter()
+        val adapter = SystemChildAdapter()
+        adapter.setOnItemClickListener { _, _, position ->
+            itemChildClicked(viewHolder.itemView.tag as SystemVO, position)
+
+        }
+        rvSystemChild.adapter = adapter
     }
 }
