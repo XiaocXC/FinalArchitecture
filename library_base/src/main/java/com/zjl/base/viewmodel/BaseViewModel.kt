@@ -58,8 +58,6 @@ abstract class BaseViewModel: ViewModel(){
      * 需要返回一个由ApiResult包裹的数据集
      * @param successBlock （可选）成功后所做的操作
      * @param failureBlock （可选）失败后所做的操作
-     *
-     * @return Job 协程Job，可以随时取消
      */
     protected suspend fun <T> launchRequestByNormal(
         requestAction: suspend CoroutineContext.() -> ApiResult<T>,
