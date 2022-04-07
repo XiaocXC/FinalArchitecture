@@ -1,5 +1,7 @@
 package com.zjl.finalarchitecture.module.home.model
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 import kotlinx.serialization.Serializable
 
 /**
@@ -9,6 +11,7 @@ import kotlinx.serialization.Serializable
  * 文章列表项的数据VO
  */
 @Serializable
+@Parcelize
 data class ArticleListVO(
 
     val apkLink: String,
@@ -50,4 +53,4 @@ data class ArticleListVO(
     val zan: Int,
     /* 本地字段是否是 置顶文章 */
     var top: Boolean = false
-)
+): Parcelable

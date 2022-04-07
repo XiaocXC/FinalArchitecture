@@ -7,6 +7,7 @@ import com.zjl.finalarchitecture.api.HomeService
 import com.zjl.finalarchitecture.module.home.model.ArticleListVO
 import com.zjl.finalarchitecture.module.home.model.BannerVO
 import com.zjl.finalarchitecture.module.home.model.PageVO
+import com.zjl.finalarchitecture.module.home.model.navigation.NavigationVO
 import com.zjl.finalarchitecture.module.home.model.system.SystemVO
 import com.zjl.library_network.client.mRetrofit
 import kotlinx.coroutines.Dispatchers
@@ -102,6 +103,13 @@ object HomeRepository {
      */
     suspend fun requestSystemListData(pageNo: Int, id: String): ApiResult<PageVO<ArticleListVO>> {
         return mHomeService.getSystemChildData(pageNo, id)
+    }
+
+    /**
+     * 获取导航数据
+     */
+    suspend fun requestNavigationListData(): ApiResult<List<NavigationVO>> {
+        return mHomeService.getNavigationList()
     }
 
 }

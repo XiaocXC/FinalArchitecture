@@ -1,5 +1,7 @@
 package com.zjl.finalarchitecture.module.home.model
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 import kotlinx.serialization.Serializable
 
 /**
@@ -8,4 +10,5 @@ import kotlinx.serialization.Serializable
  * @date : 2022/2/7 19:04
  */
 @Serializable
-data class TagsVO(var name:String, var url:String)
+@Parcelize
+data class TagsVO(var name:String, var url:String): Parcelable

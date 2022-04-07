@@ -3,15 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".module.navigation.ui.fragment.NavigationFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_navigation"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="导航"
-        android:gravity="center"
-        android:textColor="@color/base_chinese_red"
-        android:textSize="48dp"/>
-
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 </FrameLayout>

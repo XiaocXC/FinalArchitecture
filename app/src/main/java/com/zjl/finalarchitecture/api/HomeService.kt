@@ -4,6 +4,7 @@ import com.zjl.base.ApiResult
 import com.zjl.finalarchitecture.module.home.model.ArticleListVO
 import com.zjl.finalarchitecture.module.home.model.BannerVO
 import com.zjl.finalarchitecture.module.home.model.PageVO
+import com.zjl.finalarchitecture.module.home.model.navigation.NavigationVO
 import com.zjl.finalarchitecture.module.home.model.system.SystemVO
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -46,7 +47,7 @@ interface HomeService {
     /**
      * 获取体系数据
      */
-    @GET("/tree/json")
+    @GET("tree/json")
     suspend fun getSystemList(): ApiResult<List<SystemVO>>
 
     /**
@@ -57,6 +58,12 @@ interface HomeService {
         @Path("page") pageNo: Int,
         @Query("cid") id: String
     ): ApiResult<PageVO<ArticleListVO>>
+
+    /**
+     * 获取导航数据
+     */
+    @GET("navi/json")
+    suspend fun getNavigationList(): ApiResult<List<NavigationVO>>
 
 
 }
