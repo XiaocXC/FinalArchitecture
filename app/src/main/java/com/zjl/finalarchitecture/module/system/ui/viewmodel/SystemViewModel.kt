@@ -1,7 +1,5 @@
 package com.zjl.finalarchitecture.module.system.ui.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.zjl.base.exception.ApiException
 import com.zjl.base.ui.UiModel
@@ -31,16 +29,18 @@ class SystemViewModel: BaseViewModel() {
      * 加载体系数据
      */
     private fun loadSystemData(){
-        launchRequestByNormal({
-            HomeRepository.requestSystemListData()
-        },{ data ->
-            // 状态更改为成功
-            _rootViewState.emit(UiModel.Success(data))
-            _systemList.value = data
-        },{ error ->
-            // 状态更改为错误
-            _rootViewState.emit(UiModel.Error(ApiException(error)))
-        })
+        viewModelScope.launch {
+            launchRequestByNormal({
+                HomeRepository.requestSystemListData()
+            },{ data ->
+                // 状态更改为成功
+                _rootViewState.emit(UiModel.Success(data))
+                _systemList.value = data
+            },{ error ->
+                // 状态更改为错误
+                _rootViewState.emit(UiModel.Error(ApiException(error)))
+            })
+        }
     }
 
     override fun refresh() {

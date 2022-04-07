@@ -9,6 +9,7 @@ import com.zjl.finalarchitecture.module.home.repository.resp.HomeRepository
 import com.zjl.finalarchitecture.module.home.repository.datasouce.ArticlePagingSource
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 
 /**
  * @author Xiaoc
@@ -42,11 +43,14 @@ class ArticleViewModel : BaseViewModel() {
      * 刷新Banner数据
      */
     private fun refreshBanner(){
-        launchRequestByNormal({
-            HomeRepository.requestBanner()
-        }, successBlock = {
+        viewModelScope.launch {
+            launchRequestByNormal({
+                HomeRepository.requestBanner()
+            }, successBlock = {
 //            _bannerListUiModel.value = it
-            _bannerList.value = it
-        })
+                _bannerList.value = it
+            })
+        }
+
     }
 }

@@ -11,7 +11,13 @@ class SystemDetailArrViewModel(
     savedStateHandle: SavedStateHandle
 ): BaseViewModel() {
 
+    /**
+     * 子栏目的List数据，通过[savedStateHandle]获取从上一个Fragment传来
+     */
     private val systemData: SystemVO? = savedStateHandle["detailData"]
+    /**
+     * 默认选中的子栏目Index，通过[savedStateHandle]获取从上一个Fragment传来
+     */
     private val systemNavIndex: Int = savedStateHandle["index"] ?: 0
 
     private val _systemChild = MutableStateFlow<Pair<Int, List<ClassifyVO>>>(Pair(systemNavIndex, emptyList()))

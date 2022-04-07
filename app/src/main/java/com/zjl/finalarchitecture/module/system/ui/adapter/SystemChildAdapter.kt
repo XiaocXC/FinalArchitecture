@@ -1,5 +1,6 @@
 package com.zjl.finalarchitecture.module.system.ui.adapter
 
+import android.graphics.Color
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.zjl.base.utils.ext.toHtml

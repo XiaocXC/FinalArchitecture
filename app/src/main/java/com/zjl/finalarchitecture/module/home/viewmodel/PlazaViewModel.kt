@@ -71,16 +71,18 @@ class PlazaViewModel: BaseViewModel()  {
      * 获取广场文章
      */
     fun requestPlazaData(){
-        launchRequestByNormal({
-            HomeRepository.requestPlazaArticleData(currentPage)
-        }, successBlock = {
+        viewModelScope.launch {
+            launchRequestByNormal({
+                HomeRepository.requestPlazaArticleData(currentPage)
+            }, successBlock = {
 //            _bannerListUiModel.value = it
-            _addPlazaListFlow.value = it.dataList
-            _plazaListFlow.value.addAll(it.dataList)
-            _addPlazaListFlow.value = mutableListOf()
+                _addPlazaListFlow.value = it.dataList
+                _plazaListFlow.value.addAll(it.dataList)
+                _addPlazaListFlow.value = mutableListOf()
 
-            currentPage = it.currentPage
-        })
+                currentPage = it.currentPage
+            })
+        }
     }
 
 

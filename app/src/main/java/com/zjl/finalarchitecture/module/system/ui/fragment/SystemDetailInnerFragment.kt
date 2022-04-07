@@ -3,6 +3,7 @@ package com.zjl.finalarchitecture.module.system.ui.fragment
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.zjl.base.adapter.DefaultLoadStateAdapter
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.finalarchitecture.databinding.FragmentSystemDetailInnerBinding
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleAdapter
@@ -34,7 +35,9 @@ class SystemDetailInnerFragment: BaseFragment<FragmentSystemDetailInnerBinding>(
     override fun initViewAndEvent() {
         mArticleAdapter = ArticleAdapter()
 
-        mBinding.rvSystemChild.adapter = mArticleAdapter
+        mBinding.rvSystemChild.adapter = mArticleAdapter.withLoadStateFooter(DefaultLoadStateAdapter{
+            mArticleAdapter.retry()
+        })
     }
 
     override fun createObserver() {
