@@ -7,4 +7,5 @@
     <string name="base_network_description_data_type_error">数据返回类型不正确，解析发生错误</string>
     <string name="base_network_description_http_status_error">与服务器连接异常</string>
     <string name="base_load_state_retry">重试</string>
+    <string name="base_load_end">已经滑到底部啦！</string>
 </resources>

@@ -2,7 +2,7 @@ package com.zjl.finalarchitecture.module.home.model.navigation
 
 import android.os.Parcelable
 import com.zjl.finalarchitecture.module.home.model.ArticleListVO
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Serializable
 
 /**

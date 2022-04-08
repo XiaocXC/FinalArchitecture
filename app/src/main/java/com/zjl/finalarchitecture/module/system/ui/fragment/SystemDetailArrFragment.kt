@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
@@ -28,6 +29,9 @@ class SystemDetailArrFragment: BaseFragment<FragmentSystemDetailArrBinding>() {
     }
 
     override fun initViewAndEvent() {
+        mBinding.toolbarSystemArr.setNavigationOnClickListener {
+            findNavController().navigateUp()
+        }
         mBinding.toolbarSystemArr.title = args.detailData.name
 
         systemDetailArrViewPagerAdapter = SystemDetailArrViewPagerAdapter(emptyList(), this, viewLifecycleOwner.lifecycle)
