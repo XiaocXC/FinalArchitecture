@@ -15,6 +15,7 @@ import kotlin.reflect.KProperty
  *
  * 使用方式如下：
  * private var XXX by autoCleared<XXX>()
+ * 注意对应ViewBinding这类特殊的不能使用此autoCleared工具，因为当使用添加viewLifecycleOwner的Observer时，视图还没有创建，会直接报错
  *
  * @param isViewLifeCycle 如果为true，使用Fragment的ViewLifeCycle，在视图销毁时就进行清理，默认为true
  *
@@ -23,21 +24,21 @@ class AutoClearedValue<T: Any>(fragment: Fragment, isViewLifeCycle: Boolean = tr
     private var _value: T? = null
 
     init {
-//        if(isViewLifeCycle){
-//            fragment.viewLifecycleOwner.lifecycle.addObserver(object: DefaultLifecycleObserver{
-//                override fun onDestroy(owner: LifecycleOwner) {
-//                    _value = null
-//                    fragment.viewLifecycleOwner.lifecycle.removeObserver(this)
-//                }
-//            })
-//        } else {
+        if(isViewLifeCycle){
+            fragment.viewLifecycleOwner.lifecycle.addObserver(object: DefaultLifecycleObserver{
+                override fun onDestroy(owner: LifecycleOwner) {
+                    _value = null
+                    fragment.viewLifecycleOwner.lifecycle.removeObserver(this)
+                }
+            })
+        } else {
             fragment.lifecycle.addObserver(object: DefaultLifecycleObserver{
                 override fun onDestroy(owner: LifecycleOwner) {
                     _value = null
                     fragment.lifecycle.removeObserver(this)
                 }
             })
-//        }
+        }
     }
 
     override fun getValue(thisRef: Fragment, property: KProperty<*>): T {

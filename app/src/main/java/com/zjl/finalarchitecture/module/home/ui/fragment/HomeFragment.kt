@@ -12,6 +12,7 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.utils.ext.init
+import com.zjl.base.utils.ext.reduceDragSensitivity
 import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.databinding.FragmentHomeBinding
 import com.zjl.finalarchitecture.module.home.viewmodel.HomeViewModel
@@ -59,6 +60,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private fun initWidget(){
         //ViewPager2初始化
         mBinding.mViewPager2.init(this, mFragmentList)
+        mBinding.mViewPager2.reduceDragSensitivity()
+
         //绑定TabLayout ViewPager2
         TabLayoutMediator(mBinding.mTabLayout,mBinding.mViewPager2,object :
             TabLayoutMediator.TabConfigurationStrategy {

@@ -9,6 +9,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.zjl.base.fragment.BaseFragment
+import com.zjl.base.utils.ext.reduceDragSensitivity
 import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
 import com.zjl.finalarchitecture.databinding.FragmentSystemDetailArrBinding
 import com.zjl.finalarchitecture.module.home.model.system.ClassifyVO
@@ -34,6 +35,7 @@ class SystemDetailArrFragment: BaseFragment<FragmentSystemDetailArrBinding>() {
         }
         mBinding.toolbarSystemArr.title = args.detailData.name
 
+        mBinding.vpSystemInner.reduceDragSensitivity()
         systemDetailArrViewPagerAdapter = SystemDetailArrViewPagerAdapter(emptyList(), this, viewLifecycleOwner.lifecycle)
         mBinding.vpSystemInner.adapter = systemDetailArrViewPagerAdapter
 

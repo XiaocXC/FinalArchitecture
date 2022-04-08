@@ -24,8 +24,8 @@ import com.zy.multistatepage.bindMultiState
  */
 abstract class BaseFragment<V: ViewBinding>: Fragment() {
 
-    var mBinding by autoCleared<V>()
-    private set
+    private var _mBinding: V? = null
+    protected val mBinding get() = _mBinding!!
 
     private val mHandler = Handler(Looper.myLooper()!!)
 
@@ -47,7 +47,7 @@ abstract class BaseFragment<V: ViewBinding>: Fragment() {
         if(_binding is ViewDataBinding){
             _binding.lifecycleOwner = viewLifecycleOwner
         }
-        mBinding = _binding
+        _mBinding = _binding
         uiRootState = _binding.root.bindMultiState()
         return uiRootState
     }
@@ -71,6 +71,12 @@ abstract class BaseFragment<V: ViewBinding>: Fragment() {
      * 创建观察者
      */
     abstract fun createObserver()
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        // 保持ViewBinding在 onCreateView和onDestroyView生命周期之间
+        _mBinding = null
+    }
 
     override fun onDestroy() {
         super.onDestroy()
