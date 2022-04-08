@@ -4,6 +4,7 @@ import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import com.zjl.base.viewmodel.BaseViewModel
 import com.zy.multistatepage.MultiStateContainer
+import com.zy.multistatepage.state.EmptyState
 import com.zy.multistatepage.state.ErrorState
 import com.zy.multistatepage.state.LoadingState
 import com.zy.multistatepage.state.SuccessState
@@ -44,8 +45,14 @@ fun MultiStateContainer.handleWithPaging3(
                 it.retry(retry)
             }
         }
-        else ->{
-            show(SuccessState(), enabledHandle)
+        is LoadState.NotLoading ->{
+            // 如果enableHandle为true，则说明是空状态，我们显示空布局
+            if(enabledHandle){
+                show(EmptyState())
+            } else {
+                // enabledHandle为false传给show方法作为不展示渐变动画的选择
+                show(SuccessState(), enabledHandle)
+            }
         }
     }
 }
