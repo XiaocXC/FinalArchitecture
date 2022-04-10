@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".module.home.ui.fragment.HomeFragment">
 
     <!-- 这里不设置透明背景有时会出现莫名的颜色 -->
@@ -42,9 +42,9 @@
                     app:tint="@color/base_panda" />
 
                 <TextView
+                    style="@style/TextAppearance.MaterialComponents.Caption"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/TextAppearance.MaterialComponents.Caption"
                     android:text="@string/search_hint"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             app:tabGravity="fill"
             app:tabMode="fixed"
-            app:tabTextColor="@color/base_panda"/>
+            app:tabTextColor="@color/base_panda" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -67,17 +67,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
-
-<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-<!--        android:id="@+id/addFab"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_gravity="bottom|right"-->
-<!--        android:layout_marginEnd="20dp"-->
-<!--        android:layout_marginBottom="20dp"-->
-<!--        android:src="@drawable/ic_add"-->
-<!--        android:visibility="visible"-->
-<!--        android:contentDescription="@string/love" />-->
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
