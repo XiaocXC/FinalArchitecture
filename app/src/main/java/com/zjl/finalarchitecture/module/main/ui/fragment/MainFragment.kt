@@ -1,20 +1,15 @@
 package com.zjl.finalarchitecture.module.main.ui.fragment
 
-import android.view.MenuItem
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentStatePagerAdapter
-import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.databinding.FragmentMainBinding
 import com.zjl.finalarchitecture.module.discovery.ui.fragment.DiscoveryFragment
 import com.zjl.finalarchitecture.module.home.ui.fragment.HomeFragment
 import com.zjl.finalarchitecture.module.mine.ui.fragment.MineFragment
-import com.zjl.finalarchitecture.module.navigation.ui.fragment.NavigationFragment
-import com.zjl.finalarchitecture.module.system.ui.fragment.SystemFragment
+import com.zjl.finalarchitecture.module.navigation.ui.fragment.BlankFragment
+import com.zjl.finalarchitecture.module.system.ui.fragment.SysAndNavFragment
 
 
 /**
@@ -35,9 +30,9 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
             override fun getItemCount() = 5
             override fun createFragment(position: Int) = when (position) {
                 0 -> HomeFragment()
-                1 -> SystemFragment()
+                1 -> SysAndNavFragment()
                 2 -> DiscoveryFragment()
-                3 -> NavigationFragment()
+                3 -> BlankFragment()
                 4 -> MineFragment()
                 else -> HomeFragment()
             }

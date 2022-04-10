@@ -26,6 +26,7 @@
         android:name="com.zjl.finalarchitecture.module.search.ui.fragment.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" />
+
     <fragment
         android:id="@+id/systemDetailArrFragment"
         android:name="com.zjl.finalarchitecture.module.system.ui.fragment.SystemDetailArrFragment"

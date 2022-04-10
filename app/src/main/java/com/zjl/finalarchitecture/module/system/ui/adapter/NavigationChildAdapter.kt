@@ -1,4 +1,4 @@
-package com.zjl.finalarchitecture.module.navigation.ui.adapter
+package com.zjl.finalarchitecture.module.system.ui.adapter
 
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
@@ -7,7 +7,7 @@ import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.module.home.model.ArticleListVO
 
 /**
- * 体系内层Adapter
+ * 导航内层Adapter
  */
 class NavigationChildAdapter: BaseQuickAdapter<ArticleListVO, BaseViewHolder>(
     R.layout.item_system_child

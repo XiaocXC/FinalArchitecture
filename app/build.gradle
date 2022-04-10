@@ -57,7 +57,11 @@ android {
 }
 
 dependencies {
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
 //    implementation project(':module_domain')
+
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.7'
 
 
     implementation project(':library_base')

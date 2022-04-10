@@ -65,8 +65,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         mBinding.mViewPager2.reduceDragSensitivity()
 
         //绑定TabLayout ViewPager2
-        tabLayoutMediator = TabLayoutMediator(mBinding.mTabLayout,mBinding.mViewPager2
-        ) { tab, position ->
+        tabLayoutMediator =
+            TabLayoutMediator(mBinding.mTabLayout,mBinding.mViewPager2)
+        { tab, position ->
             tab.text = mTitleArrayData[position]
         }.apply {
             attach()

@@ -1,4 +1,4 @@
-package com.zjl.finalarchitecture.module.navigation.ui.viewmodel
+package com.zjl.finalarchitecture.module.system.ui.viewmodel
 
 import androidx.lifecycle.viewModelScope
 import com.zjl.base.exception.ApiException

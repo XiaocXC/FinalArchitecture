@@ -9,6 +9,7 @@ import com.zjl.base.ui.onSuccess
 import com.zjl.base.utils.autoCleared
 import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
 import com.zjl.finalarchitecture.databinding.FragmentSystemBinding
+import com.zjl.finalarchitecture.module.home.ui.fragment.ArticleFragment
 import com.zjl.finalarchitecture.module.main.ui.fragment.MainFragmentDirections
 import com.zjl.finalarchitecture.module.system.ui.adapter.SystemGroupAdapter
 import com.zjl.finalarchitecture.module.system.ui.viewmodel.SystemViewModel
@@ -26,6 +27,10 @@ class SystemFragment : BaseFragment<FragmentSystemBinding>() {
     private var systemGroupAdapter by autoCleared<SystemGroupAdapter>()
 
     private val systemViewModel by viewModels<SystemViewModel>()
+
+    companion object {
+        fun newInstance() = SystemFragment()
+    }
 
     override fun bindView(): FragmentSystemBinding {
         return FragmentSystemBinding.inflate(layoutInflater)
@@ -72,9 +77,7 @@ class SystemFragment : BaseFragment<FragmentSystemBinding>() {
                     systemGroupAdapter.setList(it)
                 }
             }
+
         }
-
     }
-
-
 }

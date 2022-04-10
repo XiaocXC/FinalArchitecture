@@ -1,4 +1,4 @@
-package com.zjl.finalarchitecture.module.navigation.ui.adapter
+package com.zjl.finalarchitecture.module.system.ui.adapter
 
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -12,6 +12,7 @@ import com.zjl.finalarchitecture.module.system.ui.adapter.SystemChildAdapter
 /**
  * @author Xiaoc
  * @since 2022-04-07
+ * 导航外层Adapter
  */
 class NavigationGroupAdapter(
     private val itemChildClicked: (NavigationVO, Int) -> Unit
