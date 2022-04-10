@@ -135,8 +135,9 @@ fun ViewPager2.init(
     this.offscreenPageLimit = fragmentList.size
     //是否可以滑动
     this.isUserInputEnabled = isUserInputEnabled
-    //设置适配器 这里传入fragment上下文
-    this.adapter = object : FragmentStateAdapter(fragment){
+    //设置适配器 这里传入fragment上下文，因为Navigation和ViewPager2的BUG，我们需要手动传入view的LifeCycle
+    // https://issuetracker.google.com/issues/154751401
+    this.adapter = object : FragmentStateAdapter(fragment.childFragmentManager, fragment.viewLifecycleOwner.lifecycle){
         override fun getItemCount() = fragmentList.size
         //when另一种写法
         override fun createFragment(position: Int) = fragmentList[position]

@@ -1,16 +1,12 @@
 package com.zjl.finalarchitecture.module.system.ui.fragment
 
-import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
-import com.chad.library.adapter.base.BaseQuickAdapter
-import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.ui.onFailure
 import com.zjl.base.ui.onLoading
 import com.zjl.base.ui.onSuccess
+import com.zjl.base.utils.autoCleared
 import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
 import com.zjl.finalarchitecture.databinding.FragmentSystemBinding
 import com.zjl.finalarchitecture.module.main.ui.fragment.MainFragmentDirections
@@ -27,7 +23,7 @@ import kotlinx.coroutines.launch
  */
 class SystemFragment : BaseFragment<FragmentSystemBinding>() {
 
-    private lateinit var systemGroupAdapter: SystemGroupAdapter
+    private var systemGroupAdapter by autoCleared<SystemGroupAdapter>()
 
     private val systemViewModel by viewModels<SystemViewModel>()
 

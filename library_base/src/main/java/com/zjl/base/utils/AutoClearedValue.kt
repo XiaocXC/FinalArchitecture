@@ -1,7 +1,9 @@
 package com.zjl.base.utils
 
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
+import timber.log.Timber
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
@@ -15,30 +17,34 @@ import kotlin.reflect.KProperty
  *
  * 使用方式如下：
  * private var XXX by autoCleared<XXX>()
- * 注意对应ViewBinding这类特殊的不能使用此autoCleared工具，因为当使用添加viewLifecycleOwner的Observer时，视图还没有创建，会直接报错
+ *
  *
  * @param isViewLifeCycle 如果为true，使用Fragment的ViewLifeCycle，在视图销毁时就进行清理，默认为true
  *
  */
-class AutoClearedValue<T: Any>(fragment: Fragment, isViewLifeCycle: Boolean = true): ReadWriteProperty<Fragment,T>{
+class AutoClearedValue<T: Any>(
+    fragment: Fragment,
+    private val isViewLifeCycle: Boolean = true
+): ReadWriteProperty<Fragment,T>{
     private var _value: T? = null
 
-    init {
-        if(isViewLifeCycle){
-            fragment.viewLifecycleOwner.lifecycle.addObserver(object: DefaultLifecycleObserver{
-                override fun onDestroy(owner: LifecycleOwner) {
-                    _value = null
-                    fragment.viewLifecycleOwner.lifecycle.removeObserver(this)
-                }
-            })
-        } else {
-            fragment.lifecycle.addObserver(object: DefaultLifecycleObserver{
-                override fun onDestroy(owner: LifecycleOwner) {
-                    _value = null
-                    fragment.lifecycle.removeObserver(this)
-                }
-            })
+    private var isFirstObserveViewLifeCycle = false
+
+    private val viewLifeCycleObserver = object: DefaultLifecycleObserver{
+        override fun onDestroy(owner: LifecycleOwner) {
+            _value = null
+            isFirstObserveViewLifeCycle = false
+            fragment.viewLifecycleOwner.lifecycle.removeObserver(this)
         }
+    }
+
+    init {
+        fragment.lifecycle.addObserver(object: DefaultLifecycleObserver{
+            override fun onDestroy(owner: LifecycleOwner) {
+                _value = null
+                fragment.lifecycle.removeObserver(this)
+            }
+        })
     }
 
     override fun getValue(thisRef: Fragment, property: KProperty<*>): T {
@@ -48,6 +54,11 @@ class AutoClearedValue<T: Any>(fragment: Fragment, isViewLifeCycle: Boolean = tr
     }
 
     override fun setValue(thisRef: Fragment, property: KProperty<*>, value: T) {
+        // 如果是viewLifeCycle时，我们在设置值时加入观察器
+        if(isViewLifeCycle && !isFirstObserveViewLifeCycle){
+            isFirstObserveViewLifeCycle = true
+            thisRef.viewLifecycleOwner.lifecycle.addObserver(viewLifeCycleObserver)
+        }
         _value = value
     }
 

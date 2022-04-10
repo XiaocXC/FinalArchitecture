@@ -31,7 +31,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
         mBinding.mViewPager2.isUserInputEnabled = false
         //全部缓存,避免切换回重新加载
         mBinding.mViewPager2.offscreenPageLimit = 5
-        mBinding.mViewPager2.adapter = object : FragmentStateAdapter(this) {
+        mBinding.mViewPager2.adapter = object : FragmentStateAdapter(childFragmentManager, viewLifecycleOwner.lifecycle) {
             override fun getItemCount() = 5
             override fun createFragment(position: Int) = when (position) {
                 0 -> HomeFragment()

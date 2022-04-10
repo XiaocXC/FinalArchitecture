@@ -7,6 +7,7 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
 import com.zjl.base.adapter.DefaultLoadStateAdapter
 import com.zjl.base.fragment.BaseFragment
+import com.zjl.base.utils.autoCleared
 import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
 import com.zjl.finalarchitecture.databinding.FragmentArticleBinding
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleAdapter
@@ -15,10 +16,8 @@ import com.zjl.finalarchitecture.module.home.ui.adapter.BannerVOWrapper
 import com.zjl.finalarchitecture.module.home.viewmodel.ArticleViewModel
 import com.zjl.finalarchitecture.utils.multistate.handleWithPaging3
 import com.zjl.finalarchitecture.utils.smartrefresh.handleWithPaging3
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 /**
  * @description:
@@ -33,8 +32,11 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding>(), OnRefreshListene
 
     private val mArticleViewModel by viewModels<ArticleViewModel>()
 
-    private lateinit var mBannerAdapter: ArticleBannerWrapperAdapter
-    private lateinit var mArticleAdapter: ArticleAdapter
+    /**
+     * 经测试，Adapter需要在视图清空时释放，否则可能持有导致内存泄漏
+     */
+    private var mBannerAdapter by autoCleared<ArticleBannerWrapperAdapter>()
+    private var mArticleAdapter by autoCleared<ArticleAdapter>()
 
     override fun bindView() = FragmentArticleBinding.inflate(layoutInflater)
 

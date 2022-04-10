@@ -1,15 +1,12 @@
 package com.zjl.base.fragment
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
-import com.zjl.base.utils.autoCleared
 import com.zy.multistatepage.MultiStateContainer
 import com.zy.multistatepage.bindMultiState
 
@@ -27,15 +24,14 @@ abstract class BaseFragment<V: ViewBinding>: Fragment() {
     private var _mBinding: V? = null
     protected val mBinding get() = _mBinding!!
 
-    private val mHandler = Handler(Looper.myLooper()!!)
-
     //是否第一次加载
     private var isFirst: Boolean = true
 
     /**
      * 整个Fragment的状态控制器
      */
-    protected lateinit var uiRootState: MultiStateContainer
+    private var _uiRootState: MultiStateContainer? = null
+    protected val uiRootState get() = _uiRootState!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,7 +44,7 @@ abstract class BaseFragment<V: ViewBinding>: Fragment() {
             _binding.lifecycleOwner = viewLifecycleOwner
         }
         _mBinding = _binding
-        uiRootState = _binding.root.bindMultiState()
+        _uiRootState = _binding.root.bindMultiState()
         return uiRootState
     }
 
@@ -72,15 +68,17 @@ abstract class BaseFragment<V: ViewBinding>: Fragment() {
      */
     abstract fun createObserver()
 
+    /**
+     * 当Fragment视图销毁时使用
+     * 如果Fragment需要手动释放部分视图内容时，我们使用请确保在调用 super.onDestroyView() 之前清除视图
+     */
     override fun onDestroyView() {
         super.onDestroyView()
-        // 保持ViewBinding在 onCreateView和onDestroyView生命周期之间
+        // 保持ViewBinding在 onCreateView 和 onDestroyView 生命周期之间
+        // 这里不自动使用autoCleared原因是因为有个先后顺序，因为部分adapter的原因，需要重写onDestroyView来手动设置为Null
+        // 而此时如果获取mBinding可能由于清除了mBinding导致报错，所以我们会手动处理
+        _uiRootState = null
         _mBinding = null
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        mHandler.removeCallbacksAndMessages(null)
     }
 
 }

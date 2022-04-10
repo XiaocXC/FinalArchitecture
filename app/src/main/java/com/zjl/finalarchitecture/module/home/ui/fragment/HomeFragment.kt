@@ -27,6 +27,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     //数据ViewModel
     private val mViewModel : HomeViewModel by viewModels()
 
+    private var tabLayoutMediator: TabLayoutMediator? = null
+
     //无参构造方法
     init {
         mFragmentList.add(ArticleFragment.newInstance())
@@ -63,12 +65,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         mBinding.mViewPager2.reduceDragSensitivity()
 
         //绑定TabLayout ViewPager2
-        TabLayoutMediator(mBinding.mTabLayout,mBinding.mViewPager2,object :
-            TabLayoutMediator.TabConfigurationStrategy {
-            override fun onConfigureTab(tab: TabLayout.Tab, position: Int) {
-                tab.text = mTitleArrayData[position]
-            }
-        }).attach()
+        tabLayoutMediator = TabLayoutMediator(mBinding.mTabLayout,mBinding.mViewPager2
+        ) { tab, position ->
+            tab.text = mTitleArrayData[position]
+        }.apply {
+            attach()
+        }
     }
 
     override fun onAttach(context: Context) {
@@ -102,6 +104,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     override fun onDestroyView() {
+        tabLayoutMediator?.detach()
+        tabLayoutMediator = null
+
         super.onDestroyView()
         LogUtils.eTag("zhou::","onDestroyView")
     }

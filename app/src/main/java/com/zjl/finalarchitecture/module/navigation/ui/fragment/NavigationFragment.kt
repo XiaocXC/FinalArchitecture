@@ -5,6 +5,7 @@ import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.ui.onFailure
 import com.zjl.base.ui.onLoading
 import com.zjl.base.ui.onSuccess
+import com.zjl.base.utils.autoCleared
 import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
 import com.zjl.finalarchitecture.databinding.FragmentNavigationBinding
 import com.zjl.finalarchitecture.module.navigation.ui.adapter.NavigationGroupAdapter
@@ -18,7 +19,7 @@ import kotlinx.coroutines.launch
 
 class NavigationFragment : BaseFragment<FragmentNavigationBinding>() {
 
-    private lateinit var navigationGroupAdapter: NavigationGroupAdapter
+    private var navigationGroupAdapter by autoCleared<NavigationGroupAdapter>()
 
     private val navigationViewModel by viewModels<NavigationViewModel>()
 

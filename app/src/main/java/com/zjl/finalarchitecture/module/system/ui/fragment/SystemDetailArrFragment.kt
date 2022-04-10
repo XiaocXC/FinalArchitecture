@@ -2,6 +2,7 @@ package com.zjl.finalarchitecture.module.system.ui.fragment
 
 import android.annotation.SuppressLint
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
@@ -25,6 +26,11 @@ class SystemDetailArrFragment: BaseFragment<FragmentSystemDetailArrBinding>() {
 
     private lateinit var systemDetailArrViewPagerAdapter: SystemDetailArrViewPagerAdapter
 
+    /**
+     * TabLayoutMediator可能需要在onDestroyView中手都detach，否则可能出现内存泄漏
+     */
+    private var tabLayoutMediator: TabLayoutMediator? = null
+
     override fun bindView(): FragmentSystemDetailArrBinding {
         return FragmentSystemDetailArrBinding.inflate(layoutInflater)
     }
@@ -36,12 +42,14 @@ class SystemDetailArrFragment: BaseFragment<FragmentSystemDetailArrBinding>() {
         mBinding.toolbarSystemArr.title = args.detailData.name
 
         mBinding.vpSystemInner.reduceDragSensitivity()
-        systemDetailArrViewPagerAdapter = SystemDetailArrViewPagerAdapter(emptyList(), this, viewLifecycleOwner.lifecycle)
+        systemDetailArrViewPagerAdapter = SystemDetailArrViewPagerAdapter(emptyList(), this.childFragmentManager, viewLifecycleOwner.lifecycle)
         mBinding.vpSystemInner.adapter = systemDetailArrViewPagerAdapter
 
-        TabLayoutMediator(mBinding.tabSystem, mBinding.vpSystemInner){ tab, index ->
+        tabLayoutMediator = TabLayoutMediator(mBinding.tabSystem, mBinding.vpSystemInner){ tab, index ->
             tab.text = systemDetailArrViewPagerAdapter.children[index].name
-        }.attach()
+        }.apply {
+            attach()
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -60,10 +68,22 @@ class SystemDetailArrFragment: BaseFragment<FragmentSystemDetailArrBinding>() {
         }
     }
 
+    override fun onDestroyView() {
+        // 我们在视图销毁时，将Tab绑定器还有ViewPager2的adapter手动置为空
+        // 因为ViewPager2可能导致内存泄漏的BUG
+        // https://issuetracker.google.com/issues/151212195
+        // https://issuetracker.google.com/issues/154751401
+        tabLayoutMediator?.detach()
+        tabLayoutMediator = null
+        mBinding.vpSystemInner.adapter = null
+        super.onDestroyView()
+
+    }
+
     class SystemDetailArrViewPagerAdapter(
         var children: List<ClassifyVO>,
-        fragment: Fragment, viewLifeCycle: Lifecycle
-    ): FragmentStateAdapter(fragment.childFragmentManager, viewLifeCycle) {
+        fragmentManager: FragmentManager, viewLifeCycle: Lifecycle
+    ): FragmentStateAdapter(fragmentManager, viewLifeCycle) {
 
         override fun getItemCount(): Int = children.size
 
