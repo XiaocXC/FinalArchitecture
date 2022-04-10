@@ -13,5 +13,6 @@
     <string name="top_article">置顶</string>
     <string name="new_article">新</string>
     <string name="new_ask">问答</string>
+    <string name="send_to_plaza">发表文章到广场</string>
     <string name="love">我爱你</string>
 </resources>

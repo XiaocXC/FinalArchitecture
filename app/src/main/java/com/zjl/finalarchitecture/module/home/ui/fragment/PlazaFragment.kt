@@ -39,29 +39,29 @@ class PlazaFragment : BaseFragment<FragmentPlazaBinding>(){
         initRefresh()
         initAdapter()
 
-        lifecycleScope.launch() {
-            val data = withContext(Dispatchers.IO){
-                    var s = "jajja"
-                return@withContext s
-            }
-            aslist.add(data)
-        }
+//        lifecycleScope.launch() {
+//            val data = withContext(Dispatchers.IO){
+//                    var s = "jajja"
+//                return@withContext s
+//            }
+//            aslist.add(data)
+//        }
     }
 
     override fun createObserver() {
-        launchAndRepeatWithViewLifecycle {
-            launch {
-                mViewModel.mPlazaListFlow.collect {
-                    mPlazaArticleAdapter.addData(it)
-                }
-            }
-
-            launch {
-                mViewModel.mAddPlazaListFlow.collect {
-                    mPlazaArticleAdapter.addData(it)
-                }
-            }
-        }
+//        launchAndRepeatWithViewLifecycle {
+//            launch {
+//                mViewModel.mPlazaListFlow.collect {
+//                    mPlazaArticleAdapter.addData(it)
+//                }
+//            }
+//
+//            launch {
+//                mViewModel.mAddPlazaListFlow.collect {
+//                    mPlazaArticleAdapter.addData(it)
+//                }
+//            }
+//        }
     }
 
     private fun initRefresh(){
