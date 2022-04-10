@@ -29,9 +29,7 @@ object HomeRepository {
      * @return Banner列表
      */
     suspend fun requestBanner(): ApiResult<List<BannerVO>> {
-        return withContext(Dispatchers.IO) {
-            mHomeService.getBanner()
-        }
+        return mHomeService.getBanner()
     }
 
     /**

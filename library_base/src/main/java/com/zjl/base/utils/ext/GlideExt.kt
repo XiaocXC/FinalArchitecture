@@ -21,7 +21,9 @@ import java.io.File
  * 使用高阶函数进行图片内容自定义与加载
  * 该工具集包含了内置的一些内容处理，如失败图等处理，同时支持自定义
  */
-val circleCrop = CircleCrop()
+val circleCrop by lazy {
+    CircleCrop()
+}
 
 @JvmOverloads
 inline fun ImageView.load(

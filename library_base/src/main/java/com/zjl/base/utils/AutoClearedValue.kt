@@ -1,9 +1,7 @@
 package com.zjl.base.utils
 
-import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
-import timber.log.Timber
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
@@ -13,11 +11,13 @@ import kotlin.reflect.KProperty
  *
  * 一个基于委托模式的当Fragment被销毁时自动清除属性的工具
  * 由于Fragment的生命周期特殊性与Navigation结合时可能导致回收View后的内存泄漏
- * 所以此工具基于fragment的lifecycle生命周期进行监管，并在其生命周期销毁后置空依赖的视图对象防止出现内存泄漏
+ * 所以此工具基于fragment相关联的lifecycle生命周期进行监管，并在其生命周期销毁后置空依赖的视图对象防止出现内存泄漏
  *
  * 使用方式如下：
  * private var XXX by autoCleared<XXX>()
  *
+ * 此工具支持 Fragment 默认的 LifeCycleOwner 和 视图相关的 ViewLifeCycleOwner 的清除
+ * 由于本项目使用原生Navigation，默认采用 ViewLifeCycleOwner
  *
  * @param isViewLifeCycle 如果为true，使用Fragment的ViewLifeCycle，在视图销毁时就进行清理，默认为true
  *
@@ -54,7 +54,7 @@ class AutoClearedValue<T: Any>(
     }
 
     override fun setValue(thisRef: Fragment, property: KProperty<*>, value: T) {
-        // 如果是viewLifeCycle时，我们在设置值时加入观察器
+        // 如果是viewLifeCycle时，我们在设置值时加入观察器，防止在错误的Fragment初始化阶段就调用 viewLifecycleOwner 导致报错
         if(isViewLifeCycle && !isFirstObserveViewLifeCycle){
             isFirstObserveViewLifeCycle = true
             thisRef.viewLifecycleOwner.lifecycle.addObserver(viewLifeCycleObserver)

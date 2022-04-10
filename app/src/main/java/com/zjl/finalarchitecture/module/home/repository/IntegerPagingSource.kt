@@ -30,7 +30,7 @@ abstract class IntegerPagingSource<V: Any>: PagingSource<Int, V>() {
                     // 1.取得当前分页数据
                     val data = result.data
                     // 如果页数已经over
-                    val nextPage = if(!data.over){
+                    val nextPageResult = if(!data.over){
                         data.currentPage
                     } else {
                         null
@@ -39,7 +39,7 @@ abstract class IntegerPagingSource<V: Any>: PagingSource<Int, V>() {
                     return LoadResult.Page(
                         data.dataList,
                         null,
-                        nextPage
+                        nextPageResult
                     )
                 }
                 is ApiResult.Failure ->{
@@ -56,11 +56,18 @@ abstract class IntegerPagingSource<V: Any>: PagingSource<Int, V>() {
         }
     }
 
+    /**
+     * 这里是Paging提供刷新时返回的Key
+     * 如果要全刷，一般就返回null
+     * 但是如果需要类似Bilibili那种刷新效果，我们就需要根据不同的状态，返回刷新时返回的Key
+     * 返回的这个Key就会成为[load]的参数
+     */
     override fun getRefreshKey(state: PagingState<Int, V>): Int? = null
 
 
     /**
      * 调用Data的API接口，返回对应内容
+     * 这才是真正需要重写的网络请求数据的方法
      */
     abstract suspend fun loadData(currentPage: Int): ApiResult<PageVO<V>>
 }

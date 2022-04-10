@@ -1,15 +1,13 @@
 package com.zjl.finalarchitecture.module.splash.ui
 
 import android.content.Intent
-import androidx.databinding.adapters.ViewBindingAdapter.setClickListener
-import androidx.viewpager.widget.ViewPager
+import androidx.activity.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.zjl.base.activity.BaseActivity
 import com.zjl.base.utils.CacheUtil
 import com.zjl.base.utils.ext.gone
 import com.zjl.base.utils.ext.visible
 import com.zjl.finalarchitecture.databinding.ActivityWelcomeBinding
-import com.zjl.finalarchitecture.di.createBaseViewModel
 import com.zjl.finalarchitecture.module.main.ui.MainActivity
 import com.zjl.finalarchitecture.module.splash.ui.adapter.WelcomeBannerAdapter
 import com.zjl.finalarchitecture.module.splash.viewmodel.WelcomeViewModel
@@ -27,7 +25,10 @@ class WelcomeActivity : BaseActivity<ActivityWelcomeBinding, WelcomeViewModel>()
         return ActivityWelcomeBinding.inflate(layoutInflater)
     }
 
-    override fun bindViewModel(): WelcomeViewModel = createBaseViewModel()
+    override fun bindViewModel(): WelcomeViewModel{
+        val vm by viewModels<WelcomeViewModel>()
+        return vm
+    }
 
     override fun initViewAndEvent() {
         //防止出现按Home键回到桌面时，再次点击重新进入该界面bug

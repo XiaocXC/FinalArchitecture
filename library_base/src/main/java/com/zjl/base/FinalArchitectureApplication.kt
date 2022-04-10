@@ -74,7 +74,7 @@ class FinalArchitectureApplication: Application() {
         super.onCreate()
         globalApplication = this
 
-        MMKV.initialize(this.filesDir.absolutePath + "/mmkv")
+        MMKV.initialize(this, this.filesDir.absolutePath + "/mmkv")
 
         /**
          * 配置Timber日志记录树

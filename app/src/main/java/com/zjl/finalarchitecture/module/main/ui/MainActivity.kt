@@ -1,22 +1,13 @@
 package com.zjl.finalarchitecture.module.main.ui
 
 import androidx.activity.OnBackPressedCallback
-import androidx.lifecycle.lifecycleScope
+import androidx.activity.viewModels
 import androidx.navigation.findNavController
 import com.blankj.utilcode.util.ToastUtils
 import com.zjl.base.activity.BaseActivity
-import com.zjl.base.ui.onFailure
-import com.zjl.base.ui.onLoading
-import com.zjl.base.ui.onSuccess
 import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.module.main.viewmodel.MainViewModel
 import com.zjl.finalarchitecture.databinding.ActivityMainBinding
-import com.zjl.finalarchitecture.di.createBaseViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 /**
  * @description: 主界面
@@ -29,7 +20,10 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
     override fun bindView(): ActivityMainBinding = ActivityMainBinding.inflate(layoutInflater)
 
-    override fun bindViewModel(): MainViewModel = createBaseViewModel()
+    override fun bindViewModel(): MainViewModel{
+        val vm by viewModels<MainViewModel>()
+        return vm
+    }
 
     override fun initViewAndEvent() {
         // 配置Navigation
