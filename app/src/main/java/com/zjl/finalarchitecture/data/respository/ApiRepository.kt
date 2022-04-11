@@ -15,7 +15,7 @@ import kotlinx.coroutines.withContext
  * @author Xiaoc
  * @since 2022-01-08
  *
- * 首页相关内容 仓库层
+ * 仓库层
  */
 object ApiRepository {
 

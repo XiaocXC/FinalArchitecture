@@ -110,7 +110,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     override fun onDestroyView() {
         tabLayoutMediator?.detach()
         tabLayoutMediator = null
-
+        mBinding.mViewPager2.adapter = null
         super.onDestroyView()
         LogUtils.eTag("zhou::","onDestroyView")
     }

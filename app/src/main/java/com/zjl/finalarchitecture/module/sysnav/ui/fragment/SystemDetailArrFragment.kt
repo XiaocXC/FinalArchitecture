@@ -10,6 +10,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.zjl.base.fragment.BaseFragment
+import com.zjl.base.utils.ext.init
 import com.zjl.base.utils.ext.reduceDragSensitivity
 import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
 import com.zjl.finalarchitecture.data.model.ClassifyVO
@@ -18,11 +19,13 @@ import com.zjl.finalarchitecture.module.sysnav.viewmodel.SystemDetailArrViewMode
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class SystemDetailArrFragment: BaseFragment<FragmentSystemDetailArrBinding>() {
+class SystemDetailArrFragment : BaseFragment<FragmentSystemDetailArrBinding>() {
 
     private val args by navArgs<SystemDetailArrFragmentArgs>()
 
     private val systemDetailArrViewModel by viewModels<SystemDetailArrViewModel>()
+
+    private var mFragmentList: ArrayList<Fragment> = arrayListOf()
 
     private lateinit var systemDetailArrViewPagerAdapter: SystemDetailArrViewPagerAdapter
 
@@ -31,21 +34,31 @@ class SystemDetailArrFragment: BaseFragment<FragmentSystemDetailArrBinding>() {
      */
     private var tabLayoutMediator: TabLayoutMediator? = null
 
-    override fun bindView(): FragmentSystemDetailArrBinding {
-        return FragmentSystemDetailArrBinding.inflate(layoutInflater)
-    }
+    override fun bindView() = FragmentSystemDetailArrBinding.inflate(layoutInflater)
 
     override fun initViewAndEvent() {
+        //标题
+        mBinding.toolbarSystemArr.title = args.detailData.name
+
         mBinding.toolbarSystemArr.setNavigationOnClickListener {
             findNavController().navigateUp()
         }
-        mBinding.toolbarSystemArr.title = args.detailData.name
+
 
         mBinding.vpSystemInner.reduceDragSensitivity()
-        systemDetailArrViewPagerAdapter = SystemDetailArrViewPagerAdapter(emptyList(), this.childFragmentManager, viewLifecycleOwner.lifecycle)
-        mBinding.vpSystemInner.adapter = systemDetailArrViewPagerAdapter
 
-        tabLayoutMediator = TabLayoutMediator(mBinding.tabSystem, mBinding.vpSystemInner){ tab, index ->
+//          用法2
+//        systemDetailArrViewPagerAdapter = SystemDetailArrViewPagerAdapter(
+//            emptyList(),
+//            this.childFragmentManager,
+//            viewLifecycleOwner.lifecycle
+//        )
+//        mBinding.vpSystemInner.adapter = systemDetailArrViewPagerAdapter
+
+        tabLayoutMediator = TabLayoutMediator(
+            mBinding.tabSystem,
+            mBinding.vpSystemInner
+        ) { tab, index ->
             tab.text = systemDetailArrViewPagerAdapter.children[index].name
         }.apply {
             attach()
@@ -60,8 +73,15 @@ class SystemDetailArrFragment: BaseFragment<FragmentSystemDetailArrBinding>() {
                 systemDetailArrViewModel.systemChild.collectLatest {
                     // 展示ViewPager内容
                     val (index, ids) = it
-                    systemDetailArrViewPagerAdapter.children = ids
-                    systemDetailArrViewPagerAdapter.notifyDataSetChanged()
+                    //用法1
+                    for (i in it.second) {
+                        mFragmentList.add(SystemDetailInnerFragment.newInstance(i.id))
+                    }
+                    mBinding.vpSystemInner.init(this@SystemDetailArrFragment,mFragmentList)
+                    //用法2
+//                    systemDetailArrViewPagerAdapter.children = ids
+//                    systemDetailArrViewPagerAdapter.notifyDataSetChanged()
+
                     mBinding.vpSystemInner.setCurrentItem(index, false)
                 }
             }
@@ -77,13 +97,13 @@ class SystemDetailArrFragment: BaseFragment<FragmentSystemDetailArrBinding>() {
         tabLayoutMediator = null
         mBinding.vpSystemInner.adapter = null
         super.onDestroyView()
-
     }
 
     class SystemDetailArrViewPagerAdapter(
         var children: List<ClassifyVO>,
-        fragmentManager: FragmentManager, viewLifeCycle: Lifecycle
-    ): FragmentStateAdapter(fragmentManager, viewLifeCycle) {
+        fragmentManager: FragmentManager,
+        viewLifeCycle: Lifecycle
+    ) : FragmentStateAdapter(fragmentManager, viewLifeCycle) {
 
         override fun getItemCount(): Int = children.size
 

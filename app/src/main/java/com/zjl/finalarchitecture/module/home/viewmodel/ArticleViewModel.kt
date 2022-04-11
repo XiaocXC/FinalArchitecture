@@ -51,6 +51,5 @@ class ArticleViewModel : BaseViewModel() {
                 _bannerList.value = it
             })
         }
-
     }
 }

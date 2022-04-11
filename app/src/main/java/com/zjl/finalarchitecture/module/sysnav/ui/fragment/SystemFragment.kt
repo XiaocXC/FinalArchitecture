@@ -36,10 +36,10 @@ class SystemFragment : BaseFragment<FragmentSystemBinding>() {
     }
 
     override fun initViewAndEvent() {
-        systemGroupAdapter = SystemGroupAdapter{ systemVO, index ->
+        systemGroupAdapter = SystemGroupAdapter{ systemVO, position ->
             // 点击内部的子栏目按钮跳转
             findNavController().navigate(
-                MainFragmentDirections.actionMainFragmentToSystemDetailArrFragment(systemVO, index)
+                MainFragmentDirections.actionMainFragmentToSystemDetailArrFragment(systemVO, position)
             )
         }
 

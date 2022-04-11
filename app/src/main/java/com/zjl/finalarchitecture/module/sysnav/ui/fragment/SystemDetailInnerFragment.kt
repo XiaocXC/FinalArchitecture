@@ -5,6 +5,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.zjl.base.adapter.DefaultLoadStateAdapter
 import com.zjl.base.fragment.BaseFragment
+import com.zjl.base.utils.autoCleared
 import com.zjl.finalarchitecture.databinding.FragmentSystemDetailInnerBinding
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleAdapter
 import com.zjl.finalarchitecture.module.sysnav.viewmodel.SystemDetailInnerViewModel
@@ -26,13 +27,15 @@ class SystemDetailInnerFragment: BaseFragment<FragmentSystemDetailInnerBinding>(
 
     private val systemDetailInnerViewModel by viewModels<SystemDetailInnerViewModel>()
 
-    private lateinit var mArticleAdapter: ArticleAdapter
+    //这里用的也是 ArticleAdapter
+    private var mArticleAdapter by autoCleared<ArticleAdapter>()
 
     override fun bindView(): FragmentSystemDetailInnerBinding {
         return FragmentSystemDetailInnerBinding.inflate(layoutInflater)
     }
 
     override fun initViewAndEvent() {
+
         mArticleAdapter = ArticleAdapter()
 
         mBinding.rvSystemChild.adapter = mArticleAdapter.withLoadStateFooter(DefaultLoadStateAdapter{
