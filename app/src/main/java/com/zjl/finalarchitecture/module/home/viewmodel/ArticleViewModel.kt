@@ -4,9 +4,9 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
 import com.zjl.base.viewmodel.BaseViewModel
-import com.zjl.finalarchitecture.module.home.model.BannerVO
-import com.zjl.finalarchitecture.module.home.repository.resp.HomeRepository
-import com.zjl.finalarchitecture.module.home.repository.datasouce.ArticlePagingSource
+import com.zjl.finalarchitecture.data.model.BannerVO
+import com.zjl.finalarchitecture.data.respository.ApiRepository
+import com.zjl.finalarchitecture.data.respository.datasouce.ArticlePagingSource
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -45,7 +45,7 @@ class ArticleViewModel : BaseViewModel() {
     private fun refreshBanner(){
         viewModelScope.launch {
             launchRequestByNormal({
-                HomeRepository.requestBanner()
+                ApiRepository.requestBanner()
             }, successBlock = {
 //            _bannerListUiModel.value = it
                 _bannerList.value = it

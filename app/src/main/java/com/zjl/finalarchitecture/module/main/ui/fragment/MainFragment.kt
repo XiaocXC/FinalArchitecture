@@ -1,15 +1,14 @@
 package com.zjl.finalarchitecture.module.main.ui.fragment
-
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.databinding.FragmentMainBinding
 import com.zjl.finalarchitecture.module.discovery.ui.fragment.DiscoveryFragment
-import com.zjl.finalarchitecture.module.home.ui.fragment.HomeFragment
 import com.zjl.finalarchitecture.module.mine.ui.fragment.MineFragment
 import com.zjl.finalarchitecture.module.navigation.ui.fragment.BlankFragment
-import com.zjl.finalarchitecture.module.system.ui.fragment.SysAndNavFragment
+import com.zjl.finalarchitecture.module.sysnav.ui.fragment.SysAndNavFragment
+import com.zjl.finalarchitecture.module.home.ui.fragment.HomeFragment
 
 
 /**

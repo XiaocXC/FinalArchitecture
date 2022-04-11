@@ -29,15 +29,17 @@
 
     <fragment
         android:id="@+id/systemDetailArrFragment"
-        android:name="com.zjl.finalarchitecture.module.system.ui.fragment.SystemDetailArrFragment"
+        android:name="com.zjl.finalarchitecture.module.sysnav.ui.fragment.SystemDetailArrFragment"
         android:label="SystemDetailArrFragment">
 
         <argument
             android:name="detailData"
-            app:argType="com.zjl.finalarchitecture.module.home.model.system.SystemVO"/>
+            app:argType="com.zjl.finalarchitecture.data.model.SystemVO"/>
+
         <argument
             android:name="index"
             app:argType="integer"/>
+
     </fragment>
 
 

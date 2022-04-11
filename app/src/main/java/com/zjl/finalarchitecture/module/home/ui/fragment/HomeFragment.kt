@@ -8,7 +8,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.blankj.utilcode.util.LogUtils
 import com.google.android.material.appbar.AppBarLayout
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.utils.ext.init
@@ -17,7 +16,11 @@ import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.databinding.FragmentHomeBinding
 import com.zjl.finalarchitecture.module.home.viewmodel.HomeViewModel
 
-
+/**
+ * @description:首页父Fragment管理5个子fragment
+ * @author: zhou
+ * @date : 2022/1/20 17:52
+ */
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     //文章,广场,问答,项目,微信和对应Fragment

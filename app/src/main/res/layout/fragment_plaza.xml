@@ -30,11 +30,10 @@
         android:layout_marginBottom="64dp"
         android:contentDescription="@string/send_to_plaza"
         android:src="@drawable/icon_share_wan"
-        app:fabCustomSize="56dp"
+        app:fabCustomSize="50dp"
         app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:tint="@color/base_white"
-        />
+        app:tint="@color/base_white" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

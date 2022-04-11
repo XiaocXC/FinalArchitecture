@@ -4,16 +4,12 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import com.chad.library.adapter.base.BaseQuickAdapter
-import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.zjl.base.adapter.ViewBoundPagingListAdapter
 import com.zjl.base.adapter.ViewBoundViewHolder
 import com.zjl.base.utils.ext.toHtml
-import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.databinding.ItemArticleListDataBinding
-import com.zjl.finalarchitecture.module.home.model.ArticleListVO
+import com.zjl.finalarchitecture.data.model.ArticleListVO
 
 /**
  * @author Xiaoc

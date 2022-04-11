@@ -5,7 +5,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.zhpan.bannerview.BannerViewPager
 import com.zjl.finalarchitecture.R
-import com.zjl.finalarchitecture.module.home.model.BannerVO
+import com.zjl.finalarchitecture.data.model.BannerVO
 
 /**
  * @author Xiaoc

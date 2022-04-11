@@ -1,12 +1,11 @@
 package com.zjl.finalarchitecture.module.home.ui.adapter
 
 import android.widget.ImageView
-import com.google.android.material.imageview.ShapeableImageView
 import com.zhpan.bannerview.BaseBannerAdapter
 import com.zhpan.bannerview.BaseViewHolder
 import com.zjl.base.utils.ext.load
 import com.zjl.finalarchitecture.R
-import com.zjl.finalarchitecture.module.home.model.BannerVO
+import com.zjl.finalarchitecture.data.model.BannerVO
 
 /**
  * @author Xiaoc

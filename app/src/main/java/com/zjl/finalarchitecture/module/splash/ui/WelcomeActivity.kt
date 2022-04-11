@@ -8,7 +8,7 @@ import com.zjl.base.utils.CacheUtil
 import com.zjl.base.utils.ext.gone
 import com.zjl.base.utils.ext.visible
 import com.zjl.finalarchitecture.databinding.ActivityWelcomeBinding
-import com.zjl.finalarchitecture.module.main.ui.MainActivity
+import com.zjl.finalarchitecture.module.main.ui.activity.MainActivity
 import com.zjl.finalarchitecture.module.splash.ui.adapter.WelcomeBannerAdapter
 import com.zjl.finalarchitecture.module.splash.viewmodel.WelcomeViewModel
 

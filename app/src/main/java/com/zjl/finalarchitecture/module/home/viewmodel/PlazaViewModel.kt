@@ -2,11 +2,9 @@ package com.zjl.finalarchitecture.module.home.viewmodel
 
 import androidx.lifecycle.viewModelScope
 import com.zjl.base.viewmodel.BaseViewModel
-import com.zjl.finalarchitecture.module.home.model.ArticleListVO
-import com.zjl.finalarchitecture.module.home.model.BannerVO
-import com.zjl.finalarchitecture.module.home.repository.resp.HomeRepository
+import com.zjl.finalarchitecture.data.model.ArticleListVO
+import com.zjl.finalarchitecture.data.respository.ApiRepository
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
@@ -73,7 +71,7 @@ class PlazaViewModel: BaseViewModel()  {
     fun requestPlazaData(){
         viewModelScope.launch {
             launchRequestByNormal({
-                HomeRepository.requestPlazaArticleData(currentPage)
+                ApiRepository.requestPlazaArticleDataByPage(currentPage)
             }, successBlock = {
 //            _bannerListUiModel.value = it
                 _addPlazaListFlow.value = it.dataList
