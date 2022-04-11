@@ -26,8 +26,9 @@
         style="@style/Widget.MaterialComponents.BottomNavigationView"
         android:layout_height="wrap_content"
         app:itemIconTint="@null"
-        app:itemActiveIndicatorStyle="@style/Widget.Architecture.BottomNavigationView.ActiveIndicator.NoColor"
-        app:labelVisibilityMode="auto"
-        app:menu="@menu/menu_bottom_navigation" />
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/menu_bottom_navigation"
+        app:itemTextColor="@drawable/nav_btm_color"
+        app:itemBackground="@color/base_white"/>
 
 </LinearLayout>

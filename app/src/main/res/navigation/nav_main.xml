@@ -18,6 +18,10 @@
         <action
             android:id="@+id/action_mainFragment_to_systemDetailArrFragment"
             app:destination="@id/systemDetailArrFragment" />
+
+        <action
+            android:id="@+id/action_mainFragment_to_addPlazaArticleFragment"
+            app:destination="@id/addPlazaArticleFragment" />
     </fragment>
 
 
@@ -41,6 +45,11 @@
             app:argType="integer"/>
 
     </fragment>
+    <fragment
+        android:id="@+id/addPlazaArticleFragment"
+        android:name="com.zjl.finalarchitecture.module.addPlaza.ui.fragment.AddPlazaArticleFragment"
+        android:label="fragment_add_plaza_article"
+        tools:layout="@layout/fragment_add_plaza_article" />
 
 
 </navigation>

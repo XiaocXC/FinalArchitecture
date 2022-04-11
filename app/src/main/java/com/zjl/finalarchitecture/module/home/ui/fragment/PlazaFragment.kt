@@ -2,6 +2,8 @@ package com.zjl.finalarchitecture.module.home.ui.fragment
 
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.blankj.utilcode.util.ToastUtils
 import com.download.library.Executors.io
 import com.zjl.base.adapter.DefaultLoadStateAdapter
 import com.zjl.base.fragment.BaseFragment
@@ -55,7 +57,8 @@ class PlazaFragment : BaseFragment<FragmentPlazaBinding>(){
 
 
         mBinding.floatBar.setOnClickListener {
-
+            ToastUtils.showShort("尿我嘴里！")
+            findNavController().navigate(R.id.action_mainFragment_to_addPlazaArticleFragment)
         }
     }
 

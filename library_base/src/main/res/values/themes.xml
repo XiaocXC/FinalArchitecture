@@ -74,13 +74,16 @@
         <item name="android:minHeight">0dp</item>
         <item name="android:paddingTop">0dp</item>
         <item name="android:paddingBottom">0dp</item>
-        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.Architecture.SmallComponent</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.Architecture.SmallComponent
+        </item>
     </style>
 
     <!-- 底部导航栏选中Style -->
-    <style name="Widget.Architecture.BottomNavigationView.ActiveIndicator.NoColor"
-        parent="Widget.Material3.BottomNavigationView.ActiveIndicator" tools:ignore="ResourceName">
+    <style name="Widget.Architecture.BottomNavigationView.ActiveIndicator.NoColor" parent="Widget.MaterialComponents.BottomNavigationView" tools:ignore="ResourceName">
         <item name="android:color">@android:color/transparent</item>
         <item name="android:height">21dp</item>
+        <item name="android:background">@color/base_white</item>
     </style>
+
+
 </resources>

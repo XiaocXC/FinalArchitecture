@@ -25,9 +25,10 @@ class SystemDetailArrFragment : BaseFragment<FragmentSystemDetailArrBinding>() {
 
     private val systemDetailArrViewModel by viewModels<SystemDetailArrViewModel>()
 
+    private var mTitleArrayData : ArrayList<String> = arrayListOf()
     private var mFragmentList: ArrayList<Fragment> = arrayListOf()
 
-    private lateinit var systemDetailArrViewPagerAdapter: SystemDetailArrViewPagerAdapter
+//    private lateinit var systemDetailArrViewPagerAdapter: SystemDetailArrViewPagerAdapter
 
     /**
      * TabLayoutMediator可能需要在onDestroyView中手都detach，否则可能出现内存泄漏
@@ -47,7 +48,7 @@ class SystemDetailArrFragment : BaseFragment<FragmentSystemDetailArrBinding>() {
 
         mBinding.vpSystemInner.reduceDragSensitivity()
 
-//          用法2
+//      用法2
 //        systemDetailArrViewPagerAdapter = SystemDetailArrViewPagerAdapter(
 //            emptyList(),
 //            this.childFragmentManager,
@@ -55,14 +56,14 @@ class SystemDetailArrFragment : BaseFragment<FragmentSystemDetailArrBinding>() {
 //        )
 //        mBinding.vpSystemInner.adapter = systemDetailArrViewPagerAdapter
 
-        tabLayoutMediator = TabLayoutMediator(
-            mBinding.tabSystem,
-            mBinding.vpSystemInner
-        ) { tab, index ->
-            tab.text = systemDetailArrViewPagerAdapter.children[index].name
-        }.apply {
-            attach()
-        }
+//        tabLayoutMediator = TabLayoutMediator(
+//            mBinding.tabSystem,
+//            mBinding.vpSystemInner
+//        ) { tab, index ->
+//            tab.text = systemDetailArrViewPagerAdapter.children[index].name
+//        }.apply {
+//            attach()
+//        }
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -76,8 +77,19 @@ class SystemDetailArrFragment : BaseFragment<FragmentSystemDetailArrBinding>() {
                     //用法1
                     for (i in it.second) {
                         mFragmentList.add(SystemDetailInnerFragment.newInstance(i.id))
+                        mTitleArrayData.add(i.name)
                     }
                     mBinding.vpSystemInner.init(this@SystemDetailArrFragment,mFragmentList)
+
+                    tabLayoutMediator = TabLayoutMediator(
+                        mBinding.tabSystem,
+                        mBinding.vpSystemInner
+                    ) { tab, index ->
+                        tab.text = mTitleArrayData[index]
+                    }.apply {
+                        attach()
+                    }
+
                     //用法2
 //                    systemDetailArrViewPagerAdapter.children = ids
 //                    systemDetailArrViewPagerAdapter.notifyDataSetChanged()
