@@ -37,6 +37,9 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
             }
         }
 
+        // 不按照默认BottomNavigation的Tint色调显示
+        mBinding.mBottomNavigationView.itemIconTintList = null
+
         //初始化底部导航栏
         mBinding.mBottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {

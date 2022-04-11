@@ -23,9 +23,11 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/mBottomNavigationView"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        style="@style/Widget.MaterialComponents.BottomNavigationView"
+        android:layout_height="wrap_content"
+        app:itemIconTint="@null"
         app:itemActiveIndicatorStyle="@style/Widget.Architecture.BottomNavigationView.ActiveIndicator.NoColor"
-        app:labelVisibilityMode="unlabeled"
+        app:labelVisibilityMode="auto"
         app:menu="@menu/menu_bottom_navigation" />
 
 </LinearLayout>
