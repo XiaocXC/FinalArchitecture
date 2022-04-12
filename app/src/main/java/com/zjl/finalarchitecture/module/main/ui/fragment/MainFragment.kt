@@ -1,7 +1,10 @@
 package com.zjl.finalarchitecture.module.main.ui.fragment
+import android.content.res.ColorStateList
+import android.graphics.Color
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.zjl.base.fragment.BaseFragment
+import com.zjl.base.utils.ext.getAttrColor
 import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.databinding.FragmentMainBinding
 import com.zjl.finalarchitecture.module.discovery.ui.fragment.DiscoveryFragment
@@ -39,6 +42,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
 
         // 不按照默认BottomNavigation的Tint色调显示
         mBinding.mBottomNavigationView.itemIconTintList = null
+        mBinding.mBottomNavigationView.setBackgroundColor(requireContext().getAttrColor(R.attr.colorSurface))
 
         //初始化底部导航栏
         mBinding.mBottomNavigationView.setOnItemSelectedListener {

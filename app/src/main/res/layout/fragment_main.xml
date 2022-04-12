@@ -28,7 +28,6 @@
         app:itemIconTint="@null"
         app:labelVisibilityMode="labeled"
         app:menu="@menu/menu_bottom_navigation"
-        app:itemTextColor="@drawable/nav_btm_color"
-        app:itemBackground="@color/base_white"/>
+        app:itemTextColor="@drawable/nav_btm_color"/>
 
 </LinearLayout>
