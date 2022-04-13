@@ -29,10 +29,8 @@
 
         <!--  设置透明状态栏，适合浅色时的状态栏  -->
         <item name="android:windowLightStatusBar">true</item>
-        <item name="android:statusBarColor">@color/base_white</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
-        <!--        <item name="android:windowTranslucentNavigation">true</item>-->
-        <item name="android:windowTranslucentStatus">true</item>
         <!-- 禁用强制暗黑模式  -->
         <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
     </style>

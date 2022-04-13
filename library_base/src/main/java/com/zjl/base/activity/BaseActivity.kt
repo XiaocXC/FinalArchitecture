@@ -1,7 +1,9 @@
 package com.zjl.base.activity
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.WindowCompat
 import androidx.viewbinding.ViewBinding
 import com.zjl.base.viewmodel.BaseViewModel
 import com.zy.multistatepage.MultiStatePage.bindMultiState
@@ -33,6 +35,9 @@ abstract class BaseActivity<V: ViewBinding, VM: BaseViewModel>: AppCompatActivit
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // 设置沉浸式状态栏，此操作会去掉透明遮罩等内容
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
         setContentView(mBinding.root)
 
         initViewAndEvent()
