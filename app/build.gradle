@@ -10,8 +10,7 @@ plugins {
 
 android {
     compileSdkVersion rootProject.compileSdkVersion
-
-    buildToolsVersion '30.0.3'
+    buildToolsVersion rootProject.buildToolVersion
 
     defaultConfig {
         applicationId "com.zjl.finalarchitecture"

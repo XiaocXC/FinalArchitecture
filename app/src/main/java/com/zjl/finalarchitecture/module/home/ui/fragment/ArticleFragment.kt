@@ -4,7 +4,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.divider.MaterialDividerItemDecoration
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
 import com.zjl.base.adapter.DefaultLoadStateAdapter
@@ -14,6 +13,7 @@ import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
 import com.zjl.finalarchitecture.databinding.FragmentArticleBinding
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleAdapter
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleBannerWrapperAdapter
+import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleDividerItemDecoration
 import com.zjl.finalarchitecture.module.home.ui.adapter.BannerVOWrapper
 import com.zjl.finalarchitecture.module.home.viewmodel.ArticleViewModel
 import com.zjl.finalarchitecture.utils.multistate.handleWithPaging3
@@ -57,6 +57,13 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding>(), OnRefreshListene
 
         // 将BannerAdapter和ArticleAdapter整合为一个Adapter
         mBinding.rvArticle.adapter = ConcatAdapter(mBannerAdapter, withFooterAdapter)
+        // 分割线
+        mBinding.rvArticle.addItemDecoration(
+            ArticleDividerItemDecoration(
+                requireContext(),
+                LinearLayoutManager.VERTICAL
+            )
+        )
 
         // 下拉刷新
         mBinding.refreshLayout.setOnRefreshListener(this)
