@@ -284,7 +284,8 @@ public class ArticleDividerItemDecoration extends ItemDecoration {
         int childCount = parent.getChildCount();
         for (int i = 0; i < childCount; i++) {
             View child = parent.getChildAt(i);
-            if(child instanceof BannerViewPager<?>){
+            // 如果是Banner或状态下，不加入分割线
+            if(child instanceof BannerViewPager<?> || child.getId() == com.zjl.finalarchitecture.R.id.container_load_state){
                 continue;
             }
             parent.getDecoratedBoundsWithMargins(child, tempRect);
@@ -320,8 +321,8 @@ public class ArticleDividerItemDecoration extends ItemDecoration {
         int childCount = parent.getChildCount();
         for (int i = 0; i < childCount; i++) {
             View child = parent.getChildAt(i);
-            // 如果是Banner下，不加入分割线
-            if(child instanceof BannerViewPager<?>){
+            // 如果是Banner或状态下，不加入分割线
+            if(child instanceof BannerViewPager<?> || child.getId() == com.zjl.finalarchitecture.R.id.container_load_state){
                 continue;
             }
             parent.getLayoutManager().getDecoratedBoundsWithMargins(child, tempRect);
@@ -341,8 +342,8 @@ public class ArticleDividerItemDecoration extends ItemDecoration {
             @NonNull RecyclerView parent,
             @NonNull RecyclerView.State state) {
         outRect.set(0, 0, 0, 0);
-        // 如果是Banner下，不加入分割线
-        if(view instanceof BannerViewPager<?>){
+        // 如果是Banner或状态下，不加入分割线
+        if(view instanceof BannerViewPager<?> || view.getId() == com.zjl.finalarchitecture.R.id.container_load_state){
             return;
         }
         if (orientation == VERTICAL) {
