@@ -6,6 +6,7 @@ import com.zjl.base.ApiResult
 import com.zjl.base.error.Error
 import com.zjl.base.onFailure
 import com.zjl.base.onSuccess
+import com.zjl.base.transToUiModel
 import com.zjl.base.ui.UiModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
@@ -73,6 +74,24 @@ abstract class BaseViewModel: ViewModel(){
             }
         }.onFailure {
             failureBlock(coroutineContext, Error(errorCode = 0, errorMsg = it.message))
+        }
+    }
+
+    /**
+     * 普通的协程请求（转换为UiModel）
+     * @param requestAction 请求行为函数
+     * 需要返回一个由ApiResult包裹的数据集
+     * @param resultBlock （可选）结果操作
+     */
+    protected suspend fun <T> launchRequestByNormalOnlyResult(
+        requestAction: suspend CoroutineContext.() -> ApiResult<T>,
+        resultBlock: suspend CoroutineContext.(UiModel<T>) -> Unit = {}
+    ){
+        runCatching {
+            val result = requestAction(coroutineContext)
+            resultBlock(coroutineContext, result.transToUiModel())
+        }.onFailure {
+            resultBlock(coroutineContext, UiModel.Error(it))
         }
     }
 }
