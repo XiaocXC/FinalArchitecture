@@ -12,8 +12,8 @@ import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
 import com.zjl.finalarchitecture.databinding.FragmentNavigationBinding
 import com.zjl.finalarchitecture.module.sysnav.ui.adapter.NavigationGroupAdapter
 import com.zjl.finalarchitecture.module.sysnav.viewmodel.NavigationViewModel
-import com.zjl.finalarchitecture.module.system.ui.adapter.NavigationTab
-import com.zjl.finalarchitecture.module.system.ui.adapter.NavigationTabAdapter
+import com.zjl.finalarchitecture.module.sysnav.ui.adapter.NavigationTab
+import com.zjl.finalarchitecture.module.sysnav.ui.adapter.NavigationTabAdapter
 import com.zy.multistatepage.state.ErrorState
 import com.zy.multistatepage.state.LoadingState
 import com.zy.multistatepage.state.SuccessState

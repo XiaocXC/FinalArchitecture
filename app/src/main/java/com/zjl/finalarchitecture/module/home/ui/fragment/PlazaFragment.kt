@@ -3,6 +3,7 @@ package com.zjl.finalarchitecture.module.home.ui.fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ToastUtils
 import com.download.library.Executors.io
 import com.zjl.base.adapter.DefaultLoadStateAdapter
@@ -11,6 +12,7 @@ import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
 import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.databinding.FragmentPlazaBinding
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleAdapter
+import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleDividerItemDecoration
 import com.zjl.finalarchitecture.module.home.ui.adapter.PlazaArticleAdapter
 import com.zjl.finalarchitecture.module.home.viewmodel.PlazaViewModel
 import com.zjl.finalarchitecture.utils.multistate.handleWithPaging3
@@ -55,6 +57,13 @@ class PlazaFragment : BaseFragment<FragmentPlazaBinding>(){
             mArticleAdapter.retry()
         })
 
+        // 分割线
+        mBinding.recyclerView.addItemDecoration(
+            ArticleDividerItemDecoration(
+                requireContext(),
+                LinearLayoutManager.VERTICAL
+            )
+        )
 
         mBinding.floatBar.setOnClickListener {
             ToastUtils.showShort("尿我嘴里！")

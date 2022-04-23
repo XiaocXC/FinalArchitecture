@@ -1,14 +1,19 @@
-package com.zjl.finalarchitecture.module.system.ui.adapter
+package com.zjl.finalarchitecture.module.sysnav.ui.adapter
 
 import android.graphics.Color
+import android.view.View
+import android.widget.TextView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
+import com.zjl.base.utils.ext.getAttrColor
 import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.data.model.NavigationVO
 
 /**
  * @author Xiaoc
  * @since 2022-04-11
+ *
+ * 导航内容左侧的Tab Adapter
  */
 class NavigationTabAdapter(
     private val tabClicked: (NavigationTab, Int) -> Unit
@@ -30,10 +35,14 @@ class NavigationTabAdapter(
     }
 
     private fun handleSelectedState(selected: Boolean, holder: BaseViewHolder){
+        val tvTitle = holder.getView<TextView>(R.id.tv_title)
+        val container = holder.getView<View>(R.id.container_tab_title)
         if(selected){
-            holder.setTextColor(R.id.tv_title, Color.RED)
+            container.setBackgroundResource(R.drawable.shape_navigation_tab_s)
+            holder.setTextColor(R.id.tv_title, Color.WHITE)
         } else {
-            holder.setTextColor(R.id.tv_title, Color.BLACK)
+            container.setBackgroundResource(0)
+            holder.setTextColor(R.id.tv_title, context.getAttrColor(R.attr.colorOnSurface))
         }
     }
 
