@@ -1,27 +1,20 @@
 package com.zjl.finalarchitecture.module.mine.ui.fragment
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import com.zjl.finalarchitecture.R
+import com.zjl.base.fragment.BaseFragment
+import com.zjl.finalarchitecture.databinding.FragmentMineBinding
 
 
-class MineFragment : Fragment() {
+class MineFragment : BaseFragment<FragmentMineBinding>() {
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
+    override fun bindView(): FragmentMineBinding {
+        return FragmentMineBinding.inflate(layoutInflater)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_mine, container, false)
+    override fun initViewAndEvent() {
+    }
+
+    override fun createObserver() {
+
     }
 
 }
