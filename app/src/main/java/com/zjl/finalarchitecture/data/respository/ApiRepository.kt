@@ -107,4 +107,12 @@ object ApiRepository {
         return mApiService.getNavigationList()
     }
 
+    /**
+     * 获取每日一问数据
+     */
+    suspend fun requestAskArticleListDataByPage(pageNo: Int): ApiResult<PageVO<ArticleListVO>> {
+        return mApiService.getAskArticleListByPage(pageNo)
+    }
+
+
 }

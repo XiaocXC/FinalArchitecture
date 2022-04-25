@@ -62,4 +62,10 @@ interface ApiService {
     suspend fun getNavigationList(): ApiResult<List<NavigationVO>>
 
 
+    /**
+     * 获取文章列表
+     */
+    @GET("/wenda/list/{pageNum}/json")
+    suspend fun getAskArticleListByPage(@Path("pageNum") pageNum: Int): ApiResult<PageVO<ArticleListVO>>
+
 }

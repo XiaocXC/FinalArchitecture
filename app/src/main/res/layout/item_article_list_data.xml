@@ -57,7 +57,7 @@
             android:paddingLeft="3dp"
             android:paddingRight="3dp"
             android:text="@string/new_ask"
-            android:textColor="@android:color/holo_green_dark"
+            android:textColor="@color/base_blue_100"
             android:textSize="11sp" />
 
         <View

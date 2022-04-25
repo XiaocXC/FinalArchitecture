@@ -17,20 +17,22 @@ import com.zjl.base.exception.ApiException
  *
  * 该类主要是用于告诉Paging3，获取到内容后，下一页（或上一页）要加载的具体逻辑和页码等内容
  */
-abstract class IntegerPagingSource<V: Any>: PagingSource<Int, V>() {
+abstract class IntegerPagingSource<V : Any> : PagingSource<Int, V>() {
+
+    val defaultPage = 0;
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, V> {
         // 获取当前页码，如果为空就是默认第1页
         val nextPage = params.key ?: 0
 
         try {
-            when(val result = loadData(nextPage)){
-                is ApiResult.Success ->{
+            when (val result = loadData(nextPage)) {
+                is ApiResult.Success -> {
                     // 如果服务器返回了正确数据，则我们准备下一页数据相关配置
                     // 1.取得当前分页数据
                     val data = result.data
                     // 如果页数已经over
-                    val nextPageResult = if(!data.over){
+                    val nextPageResult = if (!data.over) {
                         data.currentPage
                     } else {
                         null
@@ -42,13 +44,13 @@ abstract class IntegerPagingSource<V: Any>: PagingSource<Int, V>() {
                         nextPageResult
                     )
                 }
-                is ApiResult.Failure ->{
+                is ApiResult.Failure -> {
                     return LoadResult.Error(
                         ApiException(result.error)
                     )
                 }
             }
-        } catch (e: Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
             return LoadResult.Error(
                 ApiException(ApiError.unknownError)
@@ -70,4 +72,6 @@ abstract class IntegerPagingSource<V: Any>: PagingSource<Int, V>() {
      * 这才是真正需要重写的网络请求数据的方法
      */
     abstract suspend fun loadData(currentPage: Int): ApiResult<PageVO<V>>
+
+
 }
