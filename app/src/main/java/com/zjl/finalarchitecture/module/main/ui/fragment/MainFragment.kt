@@ -9,9 +9,9 @@ import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.databinding.FragmentMainBinding
 import com.zjl.finalarchitecture.module.discovery.ui.fragment.DiscoveryFragment
 import com.zjl.finalarchitecture.module.mine.ui.fragment.MineFragment
-import com.zjl.finalarchitecture.module.navigation.ui.fragment.BlankFragment
 import com.zjl.finalarchitecture.module.sysnav.ui.fragment.SysAndNavFragment
 import com.zjl.finalarchitecture.module.home.ui.fragment.HomeFragment
+import com.zjl.finalarchitecture.module.toolbox.ToolboxFragment
 
 
 /**
@@ -34,7 +34,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
                 0 -> HomeFragment()
                 1 -> SysAndNavFragment()
                 2 -> DiscoveryFragment()
-                3 -> BlankFragment()
+                3 -> ToolboxFragment()
                 4 -> MineFragment()
                 else -> HomeFragment()
             }
@@ -56,7 +56,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
                 R.id.discovery -> {
                     switchFragment(2)
                 }
-                R.id.navigation -> {
+                R.id.toolbox -> {
                     switchFragment(3)
                 }
                 R.id.mine -> {

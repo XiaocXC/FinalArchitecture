@@ -14,9 +14,9 @@
         android:icon="@mipmap/menu_discover"
         android:title="@string/discovery" />
     <item
-        android:id="@+id/navigation"
-        android:icon="@mipmap/menu_navigation"
-        android:title="@string/navigation" />
+        android:id="@+id/toolbox"
+        android:icon="@drawable/icon_tool_box"
+        android:title="@string/toolbox" />
     <item
         android:id="@+id/mine"
         android:icon="@mipmap/menu_mine"

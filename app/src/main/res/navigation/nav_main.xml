@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_mainFragment_to_addPlazaArticleFragment"
             app:destination="@id/addPlazaArticleFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_multiListFragment"
+            app:destination="@id/multiListFragment" />
     </fragment>
 
 
@@ -50,6 +53,10 @@
         android:name="com.zjl.finalarchitecture.module.addPlaza.ui.fragment.AddPlazaArticleFragment"
         android:label="fragment_add_plaza_article"
         tools:layout="@layout/fragment_add_plaza_article" />
+    <fragment
+        android:id="@+id/multiListFragment"
+        android:name="com.zjl.finalarchitecture.module.toolbox.multilist.MultiListFragment"
+        android:label="MultiListFragment" />
 
 
 </navigation>

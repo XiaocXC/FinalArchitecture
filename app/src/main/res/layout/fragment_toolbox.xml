@@ -5,9 +5,10 @@
     android:layout_height="match_parent"
     tools:context=".module.navigation.ui.fragment.BlankFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_multi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="多列表"/>
 
 </FrameLayout>
