@@ -2,23 +2,23 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/home"
-        android:icon="@drawable/homes"
+        android:icon="@mipmap/menu_home"
         android:title="@string/home" />
 
     <item
         android:id="@+id/system"
-        android:icon="@drawable/system"
+        android:icon="@mipmap/menu_system"
         android:title="@string/system" />
     <item
         android:id="@+id/discovery"
-        android:icon="@drawable/discover"
+        android:icon="@mipmap/menu_discover"
         android:title="@string/discovery" />
     <item
         android:id="@+id/navigation"
-        android:icon="@drawable/navigation"
+        android:icon="@mipmap/menu_navigation"
         android:title="@string/navigation" />
     <item
         android:id="@+id/mine"
-        android:icon="@drawable/mine"
+        android:icon="@mipmap/menu_mine"
         android:title="@string/mine" />
 </menu>

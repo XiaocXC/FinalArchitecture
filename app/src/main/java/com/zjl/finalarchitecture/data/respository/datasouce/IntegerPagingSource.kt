@@ -19,14 +19,11 @@ import com.zjl.base.exception.ApiException
  */
 abstract class IntegerPagingSource<V : Any> : PagingSource<Int, V>() {
 
-    val defaultPage = 0;
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, V> {
-        // 获取当前页码，如果为空就是默认第1页
-        val nextPage = params.key ?: 0
 
         try {
-            when (val result = loadData(nextPage)) {
+            when (val result = loadData(getInitPage(params))) {
                 is ApiResult.Success -> {
                     // 如果服务器返回了正确数据，则我们准备下一页数据相关配置
                     // 1.取得当前分页数据
@@ -73,5 +70,10 @@ abstract class IntegerPagingSource<V : Any> : PagingSource<Int, V>() {
      */
     abstract suspend fun loadData(currentPage: Int): ApiResult<PageVO<V>>
 
+
+    open fun getInitPage(params: LoadParams<Int>): Int {
+        // 获取当前页码，如果为空就是默认第1页
+        return params.key ?: 0
+    }
 
 }
