@@ -24,7 +24,7 @@ abstract class IntegerPagingSource<V : Any> : PagingSource<Int, V>() {
         val nextPage = getInitPage(params)
 
         try {
-            when (val result = loadData(nextPage)) {
+            when (val result = loadData(getNextPage(params))) {
                 is ApiResult.Success -> {
                     // 如果服务器返回了正确数据，则我们准备下一页数据相关配置
                     // 1.取得当前分页数据
@@ -80,4 +80,7 @@ abstract class IntegerPagingSource<V : Any> : PagingSource<Int, V>() {
         return params.key ?: 0
     }
 
+    open fun getNextPage(params: LoadParams<Int>): Int {
+        return params.key ?: 0
+    }
 }

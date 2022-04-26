@@ -56,7 +56,6 @@ class SystemFragment : BaseFragment<FragmentSystemBinding>() {
     override fun createObserver() {
 
         launchAndRepeatWithViewLifecycle {
-
             // 监听状态
             launch {
                 systemViewModel.rootViewState.collectLatest {

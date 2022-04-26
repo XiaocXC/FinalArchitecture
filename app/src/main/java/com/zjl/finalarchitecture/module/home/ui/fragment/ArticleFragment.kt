@@ -85,28 +85,27 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding>(), OnRefreshListene
                     )
                 }
             }
-        }
 
-        // 文章分页数据
-        viewLifecycleOwner.lifecycleScope.launch {
-            mArticleViewModel.articlePagingFlow.collect {
-                mArticleAdapter.submitData(it)
+            // 文章分页数据
+            launch {
+                mArticleViewModel.articlePagingFlow.collect {
+                    mArticleAdapter.submitData(it)
+                }
             }
-        }
 
-        // 下拉刷新,上拉分页,LEC状态观察
-        viewLifecycleOwner.lifecycleScope.launch {
-            mArticleAdapter.loadStateFlow.collectLatest {
-                // 处理SmartLayout与Paging3相关状态联动
-                mBinding.refreshLayout.handleWithPaging3(it)
-                // 处理Paging3状态与整个布局状态相关联动
-                uiRootState.handleWithPaging3(it,
-                    mArticleAdapter.itemCount <= 0){
-                    refresh()
+            // 下拉刷新,上拉分页,LEC状态观察
+            launch {
+                mArticleAdapter.loadStateFlow.collectLatest {
+                    // 处理SmartLayout与Paging3相关状态联动
+                    //处理下拉刷新的状态
+                    mBinding.refreshLayout.handleWithPaging3(it)
+                    // 处理Paging3状态与整个布局状态相关联动
+                    uiRootState.handleWithPaging3(it, mArticleAdapter.itemCount <= 0){
+                        refresh()
+                    }
                 }
             }
         }
-
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout) {

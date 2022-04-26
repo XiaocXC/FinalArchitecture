@@ -12,7 +12,7 @@ import com.zjl.finalarchitecture.data.respository.ApiRepository
  */
 class AskPagingSource : IntegerPagingSource<ArticleListVO>() {
 
-    override fun getInitPage(params: LoadParams<Int>): Int {
+    override fun getNextPage(params: LoadParams<Int>): Int {
         return params.key ?: 1
     }
 

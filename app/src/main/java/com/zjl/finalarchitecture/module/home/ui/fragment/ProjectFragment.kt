@@ -12,6 +12,7 @@ import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.databinding.FragmentProjectBinding
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleAdapter
 import com.zjl.finalarchitecture.module.home.viewmodel.AskViewModel
+import com.zjl.finalarchitecture.module.home.viewmodel.ProjectViewModel
 
 /**
  * @description:首页项目
@@ -25,7 +26,7 @@ class ProjectFragment: BaseFragment<FragmentProjectBinding>() {
         fun newInstance() = ProjectFragment()
     }
 
-    private val mAskViewModel by viewModels<AskViewModel>()
+    private val mProjectViewModel by viewModels<ProjectViewModel>()
 
     private var mArticleAdapter by autoCleared<ArticleAdapter>()
 
