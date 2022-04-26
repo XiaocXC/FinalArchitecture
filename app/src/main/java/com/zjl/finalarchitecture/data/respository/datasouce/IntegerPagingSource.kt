@@ -30,7 +30,10 @@ abstract class IntegerPagingSource<V : Any> : PagingSource<Int, V>() {
                     val data = result.data
                     // 如果页数已经over
                     val nextPageResult = if (!data.over) {
-                        data.currentPage
+                        //以前
+//                        data.currentPage
+                        //现在
+                        getInitPage(params) + 1
                     } else {
                         null
                     }
