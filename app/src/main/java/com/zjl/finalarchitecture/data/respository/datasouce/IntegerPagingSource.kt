@@ -21,9 +21,10 @@ abstract class IntegerPagingSource<V : Any> : PagingSource<Int, V>() {
 
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, V> {
+        val nextPage = getInitPage(params)
 
         try {
-            when (val result = loadData(getInitPage(params))) {
+            when (val result = loadData(nextPage)) {
                 is ApiResult.Success -> {
                     // 如果服务器返回了正确数据，则我们准备下一页数据相关配置
                     // 1.取得当前分页数据
@@ -33,7 +34,7 @@ abstract class IntegerPagingSource<V : Any> : PagingSource<Int, V>() {
                         //以前
 //                        data.currentPage
                         //现在
-                        getInitPage(params) + 1
+                        nextPage + 1
                     } else {
                         null
                     }
