@@ -45,9 +45,9 @@ buildscript {
         // Glide图片加载框架
         glide_version = "4.13.1"
         // Coil图片加载框架
-        coil_version = "1.4.0"
+        coil_version = "2.0.0-rc03"
         // Coil 图片加载框架后置处理器
-        coil_transformers_version = "1.0.3"
+        coil_transformers_version = "1.0.6"
 
         // 防止数据倒灌的LiveData
         unpeek_livedata = "7.2.0-beta1"
@@ -72,6 +72,8 @@ buildscript {
         autosize_version = "1.2.1"
         // 工具类
         tools_version = "1.30.6"
+        // immersionBar状态栏管理
+        immersionBar_version = "3.2.2"
         // SmartRefreshLayout 刷新加载
         smart_refresh_Layout_version = "2.0.5"
         // AgentWeb

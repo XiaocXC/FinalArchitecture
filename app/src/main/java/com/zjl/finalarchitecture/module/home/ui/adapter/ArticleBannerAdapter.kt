@@ -1,9 +1,9 @@
 package com.zjl.finalarchitecture.module.home.ui.adapter
 
 import android.widget.ImageView
+import coil.load
 import com.zhpan.bannerview.BaseBannerAdapter
 import com.zhpan.bannerview.BaseViewHolder
-import com.zjl.base.utils.ext.load
 import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.data.model.BannerVO
 

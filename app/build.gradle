@@ -60,7 +60,7 @@ dependencies {
 
 //    implementation project(':module_domain')
 
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.7'
+//    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.7'
 
 
     implementation project(':library_base')

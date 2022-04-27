@@ -8,6 +8,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import timber.log.Timber
 import android.content.Context
+import android.os.Build
+import coil.ImageLoader
+import coil.ImageLoaderFactory
+import coil.decode.GifDecoder
+import coil.decode.ImageDecoderDecoder
 import com.scwang.smart.refresh.footer.ClassicsFooter
 import com.scwang.smart.refresh.header.ClassicsHeader
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
@@ -38,7 +43,7 @@ val globalCoroutineScope by lazy {
  * @author Xiaoc
  * @since 2022-01-07
  */
-class FinalArchitectureApplication: Application() {
+class FinalArchitectureApplication: Application(), ImageLoaderFactory {
 
 
     companion object {
@@ -86,5 +91,18 @@ class FinalArchitectureApplication: Application() {
 
         initSDK()
 
+    }
+
+    override fun newImageLoader(): ImageLoader {
+        // Coil配置
+        return ImageLoader.Builder(this)
+            .components {
+                if (Build.VERSION.SDK_INT >= 28) {
+                    add(ImageDecoderDecoder.Factory())
+                } else {
+                    add(GifDecoder.Factory())
+                }
+            }
+            .build()
     }
 }

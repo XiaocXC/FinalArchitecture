@@ -15,4 +15,9 @@
     <string name="new_ask">问答</string>
     <string name="send_to_plaza">发表文章到广场</string>
     <string name="love">我爱你</string>
+
+    <string name="multi_list_title">多列表样式</string>
+    <string name="multi_list_expand_title">推荐新闻</string>
+    <string name="multi_list_expand_des">展开</string>
+    <string name="multi_list_collapse_des">折叠</string>
 </resources>

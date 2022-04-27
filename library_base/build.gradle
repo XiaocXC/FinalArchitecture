@@ -42,7 +42,9 @@ dependencies {
     api "androidx.navigation:navigation-ui-ktx:$navigation_version"
 
     // Glide
-    api "com.github.bumptech.glide:glide:$glide_version"
+    api "io.coil-kt:coil:$coil_version"
+    api "io.coil-kt:coil-gif:$coil_version"
+    api "jp.wasabeef.transformers:coil:$coil_transformers_version"
     // BaseRecyclerViewAdapterHelper
     api "com.github.CymChad:BaseRecyclerViewAdapterHelper:$BaseRecyclerViewAdapterHelper_version"
     api "com.google.android.flexbox:flexbox:$flexbox_version"
@@ -50,6 +52,10 @@ dependencies {
     api "com.kunminx.arch:unpeek-livedata:$unpeek_livedata"
     // 动态替换BaseUrl库 使用可参考 https://github.com/JessYanCoding/RetrofitUrlManager
     api 'me.jessyan:retrofit-url-manager:1.4.0'
+
+    // immersionBar
+    api "com.geyifeng.immersionbar:immersionbar:$immersionBar_version"
+    api "com.geyifeng.immersionbar:immersionbar-ktx:$immersionBar_version"
 
     // 日志打印
     api "com.jakewharton.timber:timber:$timber_version"

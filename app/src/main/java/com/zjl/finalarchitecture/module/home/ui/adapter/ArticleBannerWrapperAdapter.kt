@@ -24,7 +24,7 @@ class ArticleBannerWrapperAdapter(
 
     override fun convert(holder: BaseViewHolder, item: BannerVOWrapper) {
         val bannerViewPager = holder.getView<BannerViewPager<BannerVO>>(R.id.article_banner)
-        bannerViewPager.create(item.bannerList)
+        bannerViewPager.refreshData(item.bannerList)
     }
 
     override fun onItemViewHolderCreated(viewHolder: BaseViewHolder, viewType: Int) {
@@ -33,6 +33,7 @@ class ArticleBannerWrapperAdapter(
         bannerViewPager.setIndicatorSliderWidth(10, 10)
         // Banner轮播图设置lifecycle
         bannerViewPager.setLifecycleRegistry(lifecycle)
+        bannerViewPager.create()
     }
 
 }

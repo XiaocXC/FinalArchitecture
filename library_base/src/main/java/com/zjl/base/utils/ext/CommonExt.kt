@@ -2,6 +2,8 @@ package com.zjl.base.utils.ext
 
 import android.content.ClipData
 import android.content.Context
+import android.content.res.Configuration
+import android.content.res.Resources
 import android.provider.Settings
 import android.text.Html
 import android.text.Spanned
@@ -136,4 +138,14 @@ fun String.toHtml(flag: Int = Html.FROM_HTML_MODE_LEGACY): Spanned {
     }
 }
 
+
+/**
+ * 判断是否为暗黑模式
+ */
+fun Resources.isNightMode(): Boolean{
+    return when(configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK){
+        Configuration.UI_MODE_NIGHT_YES -> true
+        else -> false
+    }
+}
 
