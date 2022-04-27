@@ -28,9 +28,6 @@ class ProjectFragment: BaseFragment<FragmentProjectBinding>() {
 
     private val mProjectViewModel by viewModels<ProjectViewModel>()
 
-    private var mArticleAdapter by autoCleared<ArticleAdapter>()
-
-
     override fun bindView() = FragmentProjectBinding.inflate(layoutInflater)
 
     override fun initViewAndEvent() {

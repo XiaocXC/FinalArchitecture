@@ -62,6 +62,8 @@
     <color name="base_textColorPrimary">#1B1B1D</color>
     <color name="base_textColorThird">#9297A2</color>
     <color name="base_bgColorSecondary">#F8F8F8</color>
+    <color name="base_bgColorThird">#E8E8E8</color>
+
     <!-- 黑色 -->
     <color name="base_black95">#F2000000</color>
     <color name="base_black90">#E6000000</color>
