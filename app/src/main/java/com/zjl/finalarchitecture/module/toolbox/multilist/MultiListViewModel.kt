@@ -73,8 +73,9 @@ class MultiListViewModel: BaseViewModel() {
             _multiList.value = listOf(
                 ExampleMultiEntity.MultiBannerData(
                     listOf(
-                        "https://t7.baidu.com/it/u=963301259,1982396977&fm=193&f=GIF",
-                        "https://t7.baidu.com/it/u=737555197,308540855&fm=193&f=GIF",
+                        "https://im.ruzhihan.com/duanshipin/2022/03/halo_social_1200x627_5.jpg",
+                        "https://im.ruzhihan.com/duanshipin/2022/04/Spy-x-Family-Teaser-Image.jpg",
+                        "https://im.ruzhihan.com/duanshipin/2022/04/better-call-saul-season-6-poster.jpg",
                         "https://t7.baidu.com/it/u=3655946603,4193416998&fm=193&f=GIF",
                         "https://t7.baidu.com/it/u=12235476,3874255656&fm=193&f=GIF",
                         "http://f.sinaimg.cn/sinakd20220121s/96/w540h356/20220121/96c6-c994bc45927a02a9dc5379a9869ff202.gif"

@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit
  *
  * Retrofit 客户端
  */
-private const val BASE_URL = "https://www.wanandroid.com/"
+private const val BASE_URL = "https://www.wanandroid.com"
 
 private val okHttpClient = OkHttpClient.Builder().apply {
     if(BuildConfig.DEBUG){

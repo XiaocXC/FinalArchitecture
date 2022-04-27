@@ -87,11 +87,10 @@ fun Context.copyToClipboard(text: String, label: String = "JetpackMvvm") {
  * 检查是否启用无障碍服务
  */
 fun Context.checkAccessibilityServiceEnabled(serviceName: String): Boolean {
-    val settingValue =
-        Settings.Secure.getString(
-            applicationContext.contentResolver,
-            Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES
-        )
+    Settings.Secure.getString(
+        applicationContext.contentResolver,
+        Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES
+    )
     var result = false
     val splitter = TextUtils.SimpleStringSplitter(':')
     while (splitter.hasNext()) {

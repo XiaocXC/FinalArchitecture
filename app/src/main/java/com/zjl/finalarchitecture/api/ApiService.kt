@@ -17,7 +17,7 @@ interface ApiService {
     /**
      * 获取文章栏目相关Banner数据
      */
-    @GET("banner/json")
+    @GET("/banner/json")
     suspend fun getBanner(): ApiResult<List<BannerVO>>
 
     /**
@@ -30,7 +30,7 @@ interface ApiService {
     /**
      * 获取置顶文章集合数据
      */
-    @GET("article/top/json")
+    @GET("/article/top/json")
     suspend fun getTopArticleList(): ApiResult<ArrayList<ArticleListVO>>
 
 
@@ -43,13 +43,13 @@ interface ApiService {
     /**
      * 获取体系数据
      */
-    @GET("tree/json")
+    @GET("/tree/json")
     suspend fun getSystemList(): ApiResult<List<SystemVO>>
 
     /**
      * 知识体系下的文章数据
      */
-    @GET("article/list/{page}/json")
+    @GET("/article/list/{page}/json")
     suspend fun getSystemChildData(
         @Path("page") pageNo: Int,
         @Query("cid") id: String
@@ -58,7 +58,7 @@ interface ApiService {
     /**
      * 获取导航数据
      */
-    @GET("navi/json")
+    @GET("/navi/json")
     suspend fun getNavigationList(): ApiResult<List<NavigationVO>>
 
 
@@ -67,5 +67,21 @@ interface ApiService {
      */
     @GET("/wenda/list/{pageNum}/json")
     suspend fun getAskArticleListByPage(@Path("pageNum") pageNum: Int): ApiResult<PageVO<ArticleListVO>>
+
+    /**
+     * 获取项目分类
+     */
+    @GET("/project/tree/json")
+    suspend fun getProjectCategoriesList(): ApiResult<MutableList<CategoryVO>>
+
+    /**
+     * 获取项目列表
+     */
+    @GET("/project/list/{page}/json")
+    suspend fun getProjectArticleListByPage(
+        @Path("page") pageNum: Int,
+        @Query("cid") cid: Int
+    ): ApiResult<PageVO<ArticleListVO>>
+
 
 }

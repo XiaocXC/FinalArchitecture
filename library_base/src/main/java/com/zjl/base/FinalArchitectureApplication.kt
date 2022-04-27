@@ -55,11 +55,11 @@ class FinalArchitectureApplication: Application(), ImageLoaderFactory {
                 ClassicsHeader(context) //.setTimeFormat(new DynamicTimeFormat("更新于 %s"));//指定为经典Header，默认是 贝塞尔雷达Header
             }
             // 设置全局的 Footer 构建器
-            SmartRefreshLayout.setDefaultRefreshFooterCreator{ context: Context, layout: RefreshLayout ->
+            SmartRefreshLayout.setDefaultRefreshFooterCreator{ context: Context, _: RefreshLayout ->
                 ClassicsFooter(context)
             }
             // 设置全局初始化器
-            SmartRefreshLayout.setDefaultRefreshInitializer { context: Context, layout: RefreshLayout ->
+            SmartRefreshLayout.setDefaultRefreshInitializer { _: Context, layout: RefreshLayout ->
                 // 刷新头部是否跟随内容偏移
                 layout.setEnableHeaderTranslationContent(true)
                     // 刷新尾部是否跟随内容偏移
