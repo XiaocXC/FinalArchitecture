@@ -14,10 +14,12 @@ import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleDividerItemDecora
 import com.zjl.finalarchitecture.module.home.ui.adapter.ProjectAdapter
 import com.zjl.finalarchitecture.module.home.ui.adapter.ProjectCategoryAdapter
 import com.zjl.finalarchitecture.module.home.viewmodel.ProjectViewModel
+import com.zjl.finalarchitecture.module.sysnav.ui.adapter.NavigationTabAdapter
 import com.zjl.finalarchitecture.utils.multistate.handleWithPaging3
 import com.zjl.finalarchitecture.utils.smartrefresh.handleWithPaging3
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 /**
  * @description:首页项目
@@ -52,7 +54,7 @@ class ProjectFragment : BaseFragment<FragmentProjectBinding>(), OnRefreshListene
         mProjectCategoryAdapter = ProjectCategoryAdapter()
         mBinding.rvCategory.adapter = mProjectCategoryAdapter
         mProjectCategoryAdapter.setCheckClick {
-            ToastUtils.showShort("$it")
+            Timber.e("收到的id是：${it}")
             mProjectViewModel.cid = it
             // 刷新Paging
             refresh()

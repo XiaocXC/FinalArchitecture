@@ -1,6 +1,7 @@
 package com.zjl.finalarchitecture.module.home.ui.adapter
 
 import android.widget.CheckedTextView
+import com.blankj.utilcode.util.LogUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.zhpan.bannerview.BannerViewPager
@@ -8,6 +9,7 @@ import com.zjl.base.utils.ext.toHtml
 import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.data.model.BannerVO
 import com.zjl.finalarchitecture.data.model.CategoryVO
+import timber.log.Timber
 
 /**
  * @description:
@@ -33,7 +35,8 @@ class ProjectCategoryAdapter :
             setOnClickListener {
                 val position = holder.absoluteAdapterPosition
                 check(position)
-                onCheckedListener?.invoke(position)
+                onCheckedListener?.invoke(item.id)
+                Timber.e("选中的id是：${item.id}")
             }
         }
     }

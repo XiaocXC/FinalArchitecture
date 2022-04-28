@@ -31,7 +31,7 @@
                 android:id="@+id/item_project_author"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/base_panda"
+                android:textColor="@color/base_black80"
                 android:textSize="13sp"
                 tools:text="有何高见" />
 
