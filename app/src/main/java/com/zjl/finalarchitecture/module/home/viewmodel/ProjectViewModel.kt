@@ -30,7 +30,7 @@ class ProjectViewModel() : BaseViewModel() {
     /**
      * 点击id
      */
-    var cid = -1
+    var cid = 0
 
     /**
      * 项目分类列表数据

@@ -10,6 +10,10 @@ class ProjectArticlePagingSource(
     private val id: Int
 ): IntegerPagingSource<ArticleListVO>() {
 
+    override fun getInitPage(params: LoadParams<Int>): Int {
+        return params.key ?: 1
+    }
+
     override suspend fun loadData(currentPage: Int): ApiResult<PageVO<ArticleListVO>> {
         return ApiRepository.requestProjectDetailListDataByPage(currentPage, id)
     }
