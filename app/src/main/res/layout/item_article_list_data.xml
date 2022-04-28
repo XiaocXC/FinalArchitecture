@@ -109,6 +109,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:src="@drawable/collect_selector" />
+
     </RelativeLayout>
 
 <!--    <com.google.android.material.divider.MaterialDivider-->

@@ -79,7 +79,7 @@
                 android:layout_weight="1" />
 
             <TextView
-                android:id="@+id/item_home_date"
+                android:id="@+id/item_project_date"
                 tools:text="1小时前"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -143,7 +143,7 @@
             android:gravity="center_vertical">
 
             <TextView
-                android:id="@+id/item_home_type2"
+                android:id="@+id/item_project_type2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
@@ -158,7 +158,7 @@
                 android:layout_weight="1" />
 
             <ImageView
-                android:id="@+id/item_home_collect"
+                android:id="@+id/item_project_collect"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/collect_selector" />

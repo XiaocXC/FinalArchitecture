@@ -72,7 +72,7 @@ interface ApiService {
      * 获取项目分类
      */
     @GET("/project/tree/json")
-    suspend fun getProjectCategoriesList(): ApiResult<MutableList<CategoryVO>>
+    suspend fun getProjectCategoriesList(): ApiResult<List<CategoryVO>>
 
     /**
      * 获取项目列表

@@ -114,5 +114,23 @@ object ApiRepository {
         return mApiService.getAskArticleListByPage(pageNo)
     }
 
+    /**
+     * 获取项目分类
+     */
+    suspend fun requestProjectListData(): ApiResult<List<CategoryVO>> {
+        return mApiService.getProjectCategoriesList()
+    }
+
+    /**
+     * 获取项目详情列表
+     * @param pageNo 页码
+     * @param cid 栏目ID
+     */
+    suspend fun requestProjectDetailListDataByPage(
+        pageNo: Int,
+        cid: Int
+    ): ApiResult<PageVO<ArticleListVO>> {
+        return mApiService.getProjectArticleListByPage(pageNo, cid)
+    }
 
 }

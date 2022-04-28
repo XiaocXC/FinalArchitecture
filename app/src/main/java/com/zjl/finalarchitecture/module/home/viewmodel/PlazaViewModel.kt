@@ -5,13 +5,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
 import com.zjl.base.viewmodel.BaseViewModel
-import com.zjl.finalarchitecture.data.model.ArticleListVO
-import com.zjl.finalarchitecture.data.respository.ApiRepository
 import com.zjl.finalarchitecture.data.respository.datasouce.PlazaPagingSource
-import com.zjl.finalarchitecture.data.respository.datasouce.SystemArticlePagingSource
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 
 class PlazaViewModel: BaseViewModel()  {
 
