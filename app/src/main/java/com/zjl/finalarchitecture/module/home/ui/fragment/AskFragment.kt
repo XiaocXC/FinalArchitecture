@@ -1,10 +1,5 @@
 package com.zjl.finalarchitecture.module.home.ui.fragment
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,15 +8,12 @@ import com.scwang.smart.refresh.layout.listener.OnRefreshListener
 import com.zjl.base.adapter.DefaultLoadStateAdapter
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.utils.autoCleared
-import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.databinding.FragmentAskBinding
-import com.zjl.finalarchitecture.databinding.FragmentPlazaBinding
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleAdapter
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleDividerItemDecoration
 import com.zjl.finalarchitecture.module.home.viewmodel.AskViewModel
-import com.zjl.finalarchitecture.module.home.viewmodel.PlazaViewModel
-import com.zjl.finalarchitecture.utils.multistate.handleWithPaging3
-import com.zjl.finalarchitecture.utils.smartrefresh.handleWithPaging3
+import com.zjl.finalarchitecture.utils.ext.multistate.handleWithPaging3
+import com.zjl.finalarchitecture.utils.ext.smartrefresh.handleWithPaging3
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 

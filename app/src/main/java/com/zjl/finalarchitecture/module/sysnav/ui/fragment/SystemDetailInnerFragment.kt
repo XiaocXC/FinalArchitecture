@@ -11,7 +11,7 @@ import com.zjl.finalarchitecture.databinding.FragmentSystemDetailInnerBinding
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleAdapter
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleDividerItemDecoration
 import com.zjl.finalarchitecture.module.sysnav.viewmodel.SystemDetailInnerViewModel
-import com.zjl.finalarchitecture.utils.multistate.handleWithPaging3
+import com.zjl.finalarchitecture.utils.ext.multistate.handleWithPaging3
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 

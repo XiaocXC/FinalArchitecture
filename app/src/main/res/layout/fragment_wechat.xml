@@ -6,13 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="微信"
-        android:gravity="center"
-        android:textColor="@color/base_darkgreen"
-        android:textSize="48dp"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

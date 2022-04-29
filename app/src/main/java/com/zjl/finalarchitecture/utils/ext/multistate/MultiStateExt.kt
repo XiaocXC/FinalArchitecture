@@ -1,4 +1,4 @@
-package com.zjl.finalarchitecture.utils.multistate
+package com.zjl.finalarchitecture.utils.ext.multistate
 
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState

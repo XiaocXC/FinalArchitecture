@@ -1,5 +1,6 @@
 package com.zjl.finalarchitecture.module.toolbox
 
+import android.app.Activity
 import androidx.navigation.fragment.findNavController
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.finalarchitecture.databinding.FragmentToolboxBinding
@@ -21,9 +22,18 @@ class ToolboxFragment: BaseFragment<FragmentToolboxBinding>() {
         mBinding.btnMulti.setOnClickListener {
             findNavController().navigate(MainFragmentDirections.actionMainFragmentToMultiListFragment())
         }
+
+        mBinding.btnDropPop.setOnClickListener {
+
+
+        }
+
     }
 
     override fun createObserver() {
 
     }
+
+
+
 }

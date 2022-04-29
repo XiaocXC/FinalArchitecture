@@ -4,9 +4,9 @@
     android:id="@+id/ctvCategory"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="7dp"
+    android:layout_margin="5dp"
     android:background="@drawable/selector_bg_category_item"
     android:checked="false"
     android:textColor="@color/selector_color_category_item"
-    android:textSize="13sp"
+    android:textSize="12sp"
     tools:text="iOS" />

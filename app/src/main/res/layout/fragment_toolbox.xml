@@ -2,13 +2,19 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".module.navigation.ui.fragment.BlankFragment">
+    android:layout_height="match_parent">
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_multi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="多列表"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnDropPop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:text="下拉框"/>
 
 </FrameLayout>

@@ -33,13 +33,13 @@ class SysAndNavFragment : BaseFragment<FragmentSysAndNavBinding>() {
     override fun createObserver() {
     }
 
-    private fun initViewPager2(){
+    private fun initViewPager2() {
         //ViewPager2初始化
         mBinding.mViewPager2.init(this, mFragmentList)
         mBinding.mViewPager2.reduceDragSensitivity()
         //绑定TabLayout ViewPager2
         tabLayoutMediator =
-            TabLayoutMediator(mBinding.mTabLayout,mBinding.mViewPager2)
+            TabLayoutMediator(mBinding.mTabLayout, mBinding.mViewPager2)
             { tab, position ->
                 tab.text = mTitleArrayData[position]
             }.apply {
@@ -52,7 +52,7 @@ class SysAndNavFragment : BaseFragment<FragmentSysAndNavBinding>() {
         tabLayoutMediator?.detach()
         tabLayoutMediator = null
         super.onDestroyView()
-        LogUtils.eTag("zhou::","onDestroyView")
+        LogUtils.eTag("zhou::", "onDestroyView")
     }
 
 }

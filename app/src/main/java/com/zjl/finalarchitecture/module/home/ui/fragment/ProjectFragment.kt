@@ -2,7 +2,6 @@ package com.zjl.finalarchitecture.module.home.ui.fragment
 
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.blankj.utilcode.util.ToastUtils
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
 import com.zjl.base.adapter.DefaultLoadStateAdapter
@@ -14,9 +13,8 @@ import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleDividerItemDecora
 import com.zjl.finalarchitecture.module.home.ui.adapter.ProjectAdapter
 import com.zjl.finalarchitecture.module.home.ui.adapter.ProjectCategoryAdapter
 import com.zjl.finalarchitecture.module.home.viewmodel.ProjectViewModel
-import com.zjl.finalarchitecture.module.sysnav.ui.adapter.NavigationTabAdapter
-import com.zjl.finalarchitecture.utils.multistate.handleWithPaging3
-import com.zjl.finalarchitecture.utils.smartrefresh.handleWithPaging3
+import com.zjl.finalarchitecture.utils.ext.multistate.handleWithPaging3
+import com.zjl.finalarchitecture.utils.ext.smartrefresh.handleWithPaging3
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import timber.log.Timber

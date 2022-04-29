@@ -1,4 +1,4 @@
-package com.zjl.finalarchitecture.utils.smartrefresh
+package com.zjl.finalarchitecture.utils.ext.smartrefresh
 
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState

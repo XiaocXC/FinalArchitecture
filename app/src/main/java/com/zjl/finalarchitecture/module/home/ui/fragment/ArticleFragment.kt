@@ -1,7 +1,6 @@
 package com.zjl.finalarchitecture.module.home.ui.fragment
 
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.scwang.smart.refresh.layout.api.RefreshLayout
@@ -16,8 +15,8 @@ import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleBannerWrapperAdap
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleDividerItemDecoration
 import com.zjl.finalarchitecture.module.home.ui.adapter.BannerVOWrapper
 import com.zjl.finalarchitecture.module.home.viewmodel.ArticleViewModel
-import com.zjl.finalarchitecture.utils.multistate.handleWithPaging3
-import com.zjl.finalarchitecture.utils.smartrefresh.handleWithPaging3
+import com.zjl.finalarchitecture.utils.ext.multistate.handleWithPaging3
+import com.zjl.finalarchitecture.utils.ext.smartrefresh.handleWithPaging3
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 

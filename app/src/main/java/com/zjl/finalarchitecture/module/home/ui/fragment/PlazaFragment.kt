@@ -15,8 +15,8 @@ import com.zjl.finalarchitecture.databinding.FragmentPlazaBinding
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleAdapter
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleDividerItemDecoration
 import com.zjl.finalarchitecture.module.home.viewmodel.PlazaViewModel
-import com.zjl.finalarchitecture.utils.multistate.handleWithPaging3
-import com.zjl.finalarchitecture.utils.smartrefresh.handleWithPaging3
+import com.zjl.finalarchitecture.utils.ext.multistate.handleWithPaging3
+import com.zjl.finalarchitecture.utils.ext.smartrefresh.handleWithPaging3
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
