@@ -1,6 +1,7 @@
 package com.zjl.finalarchitecture.module.sysnav.ui.fragment
 
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.zjl.base.fragment.BaseFragment
@@ -9,6 +10,7 @@ import com.zjl.base.ui.onLoading
 import com.zjl.base.ui.onSuccess
 import com.zjl.base.utils.autoCleared
 import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
+import com.zjl.finalarchitecture.NavMainDirections
 import com.zjl.finalarchitecture.databinding.FragmentNavigationBinding
 import com.zjl.finalarchitecture.module.sysnav.ui.adapter.NavigationGroupAdapter
 import com.zjl.finalarchitecture.module.sysnav.viewmodel.NavigationViewModel
@@ -42,7 +44,8 @@ class NavigationFragment : BaseFragment<FragmentNavigationBinding>() {
 
     override fun initViewAndEvent() {
         navigationGroupAdapter = NavigationGroupAdapter{ vo, position ->
-
+            val articleVo = vo.articles[position]
+            findNavController().navigate(NavMainDirections.actionGlobalToWebFragment(articleVo))
         }
 
         navigationTabAdapter = NavigationTabAdapter{ tabWrapper, position ->
@@ -72,8 +75,8 @@ class NavigationFragment : BaseFragment<FragmentNavigationBinding>() {
 
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 if (shouldScroll) {
-                    shouldScroll = false;
-                    moveToPosition(mBinding.rvNavigation.layoutManager as LinearLayoutManager, mBinding.rvNavigation, scrollToPosition);
+                    shouldScroll = false
+                    moveToPosition(mBinding.rvNavigation.layoutManager as LinearLayoutManager, mBinding.rvNavigation, scrollToPosition)
                 }
             }
         })

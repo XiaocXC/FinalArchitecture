@@ -57,6 +57,18 @@
         android:id="@+id/multiListFragment"
         android:name="com.zjl.finalarchitecture.module.toolbox.multilist.MultiListFragment"
         android:label="MultiListFragment" />
+    <fragment
+        android:id="@+id/webViewFragment"
+        android:name="com.zjl.finalarchitecture.module.webview.ui.fragment.WebViewFragment"
+        android:label="fragment_web_view"
+        tools:layout="@layout/fragment_web_view" />
 
+    <action android:id="@+id/action_global_to_webFragment"
+        app:destination="@+id/webViewFragment">
+
+        <argument
+            android:name="data"
+            app:argType="android.os.Parcelable" app:nullable="false"/>
+    </action>
 
 </navigation>

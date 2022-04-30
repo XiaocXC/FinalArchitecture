@@ -5,50 +5,45 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import androidx.fragment.app.viewModels
+import com.just.agentweb.AgentWeb
 import com.zjl.base.fragment.BaseFragment
+import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
 import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.databinding.FragmentArticleBinding
 import com.zjl.finalarchitecture.databinding.FragmentWebViewBinding
+import com.zjl.finalarchitecture.module.webview.viewmodel.WebViewModel
+import kotlinx.coroutines.flow.collectLatest
 
 class WebViewFragment : BaseFragment<FragmentWebViewBinding>() {
 
-    companion object {
-        const val EXTRA_TITLE = "extra_title"
-        const val EXTRA_URL = "extra_url"
-
-        @JvmStatic
-        fun newInstance(title: String, url: String) =
-            WebViewFragment().apply {
-                arguments = Bundle().apply {
-                    putString(EXTRA_TITLE, title)
-                    putString(EXTRA_URL, url)
-                }
-            }
-    }
-
-    //data
-    private val mLoadUrl by lazy { arguments?.getString(EXTRA_URL) ?: "" }
-    private val mTitle by lazy { arguments?.getString(EXTRA_TITLE) ?: "" }
-
+    private val webViewModel by viewModels<WebViewModel>()
 
     override fun bindView() = FragmentWebViewBinding.inflate(layoutInflater)
 
+    private lateinit var preWeb: AgentWeb.PreAgentWeb
+
+    private var mAgentWeb: AgentWeb? = null
+
     override fun initViewAndEvent() {
+        preWeb = AgentWeb.with(this@WebViewFragment)
+            .setAgentWebParent(mBinding.containerWeb, LinearLayout.LayoutParams(-1, -1))
+            .useDefaultIndicator()
+            .createAgentWeb()
+            .ready()
     }
 
     override fun createObserver() {
-    }
 
-
-    override fun onPause() {
-        super.onPause()
-    }
-
-    override fun onResume() {
-        super.onResume()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
+        launchAndRepeatWithViewLifecycle {
+            webViewModel.webUrl.collectLatest {
+                if(it.isEmpty()){
+                    return@collectLatest
+                }
+                //加载网页
+                mAgentWeb = preWeb.go(it)
+            }
+        }
     }
 }
