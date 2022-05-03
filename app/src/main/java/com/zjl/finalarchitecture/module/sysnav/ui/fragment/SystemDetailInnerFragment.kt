@@ -12,6 +12,7 @@ import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleAdapter
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleDividerItemDecoration
 import com.zjl.finalarchitecture.module.sysnav.viewmodel.SystemDetailInnerViewModel
 import com.zjl.finalarchitecture.utils.ext.multistate.handleWithPaging3
+import com.zjl.finalarchitecture.utils.ext.paging.withLoadState
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -40,9 +41,7 @@ class SystemDetailInnerFragment: BaseFragment<FragmentSystemDetailInnerBinding>(
 
         mArticleAdapter = ArticleAdapter()
 
-        mBinding.rvSystemChild.adapter = mArticleAdapter.withLoadStateFooter(DefaultLoadStateAdapter{
-            mArticleAdapter.retry()
-        })
+        mBinding.rvSystemChild.adapter = mArticleAdapter.withLoadState()
         // 分割线
         mBinding.rvSystemChild.addItemDecoration(
             ArticleDividerItemDecoration(

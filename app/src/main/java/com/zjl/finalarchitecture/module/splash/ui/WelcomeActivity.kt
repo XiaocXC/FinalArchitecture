@@ -4,7 +4,7 @@ import android.content.Intent
 import androidx.activity.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.zjl.base.activity.BaseActivity
-import com.zjl.base.utils.CacheUtil
+import com.zjl.finalarchitecture.utils.CacheUtil
 import com.zjl.base.utils.ext.gone
 import com.zjl.base.utils.ext.visible
 import com.zjl.finalarchitecture.databinding.ActivityWelcomeBinding

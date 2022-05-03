@@ -20,4 +20,8 @@
     <string name="multi_list_expand_title">推荐新闻</string>
     <string name="multi_list_expand_des">展开</string>
     <string name="multi_list_collapse_des">折叠</string>
+
+    <string name="hint_search_des">输入搜索的关键词</string>
+    <string name="search_hot_des">热门搜索</string>
+    <string name="search_history_des">历史搜索</string>
 </resources>

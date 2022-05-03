@@ -34,4 +34,7 @@
         <!-- 禁用强制暗黑模式  -->
         <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
     </style>
+
+    <!-- 输入框背景颜色 -->
+    <color name="textInputLayout_bg" tools:ignore="ResourceName">@color/base_grey_light_700</color>
 </resources>

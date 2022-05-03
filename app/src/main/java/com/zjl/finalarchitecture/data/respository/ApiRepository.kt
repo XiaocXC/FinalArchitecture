@@ -2,7 +2,7 @@ package com.zjl.finalarchitecture.data.respository
 
 import com.zjl.base.ApiResult
 import com.zjl.base.onSuccess
-import com.zjl.base.utils.CacheUtil
+import com.zjl.finalarchitecture.utils.CacheUtil
 import com.zjl.finalarchitecture.api.ApiService
 import com.zjl.finalarchitecture.data.model.*
 
@@ -133,4 +133,17 @@ object ApiRepository {
         return mApiService.getProjectArticleListByPage(pageNo, cid)
     }
 
+    /**
+     * 获取热门搜索
+     */
+    suspend fun getSearchHot(): ApiResult<List<SearchHotVO>> {
+        return mApiService.getSearchHot()
+    }
+
+    /**
+     * 根据关键词搜索数据
+     */
+    suspend fun requestSearchDataByKey(page: Int, key: String): ApiResult<PageVO<ArticleListVO>> {
+        return mApiService.getSearchDataByKey(page, key)
+    }
 }

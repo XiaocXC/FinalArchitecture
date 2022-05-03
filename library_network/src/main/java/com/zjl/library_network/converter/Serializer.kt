@@ -1,12 +1,9 @@
 package com.zjl.library_network.converter
 
-import com.zjl.library_network.utils.globalJson
-import com.zjl.library_network.utils.toJsonString
+import com.zjl.base.utils.globalJson
+import com.zjl.base.utils.toJsonString
 import kotlinx.serialization.*
-import kotlinx.serialization.json.contentOrNull
-import kotlinx.serialization.json.intOrNull
 import kotlinx.serialization.json.jsonObject
-import kotlinx.serialization.json.jsonPrimitive
 import okhttp3.MediaType
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody

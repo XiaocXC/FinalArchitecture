@@ -71,7 +71,7 @@ buildscript {
         // 屏幕适配
         autosize_version = "1.2.1"
         // 工具类
-        tools_version = "1.30.6"
+        tools_version = "1.31.0"
         // immersionBar状态栏管理
         immersionBar_version = "3.2.2"
         // SmartRefreshLayout 刷新加载
@@ -83,6 +83,10 @@ buildscript {
 
     }
     repositories {
+        maven { url 'https://maven.aliyun.com/repository/central' }
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/google' }
         mavenCentral()
         maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
         google()
@@ -104,11 +108,12 @@ buildscript {
 
 allprojects {
     repositories {
-        mavenCentral()
-        // 阿里云云效仓库，提升编译速度：https://maven.aliyun.com/mvn/guide
+        maven { url 'https://maven.aliyun.com/repository/central' }
         maven { url 'https://maven.aliyun.com/repository/jcenter' }
         maven { url 'https://maven.aliyun.com/repository/public' }
         maven { url 'https://maven.aliyun.com/repository/google' }
+        mavenCentral()
+        // 阿里云云效仓库，提升编译速度：https://maven.aliyun.com/mvn/guide
         google()
         maven {
             url 'https://jitpack.io'

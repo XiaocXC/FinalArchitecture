@@ -1,6 +1,5 @@
 package com.zjl.library_network.converter
 
-import com.zjl.library_network.utils.globalJson
 import kotlinx.serialization.BinaryFormat
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.StringFormat

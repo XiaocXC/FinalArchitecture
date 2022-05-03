@@ -13,6 +13,7 @@ import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleAdapter
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleDividerItemDecoration
 import com.zjl.finalarchitecture.module.home.viewmodel.AskViewModel
 import com.zjl.finalarchitecture.utils.ext.multistate.handleWithPaging3
+import com.zjl.finalarchitecture.utils.ext.paging.withLoadState
 import com.zjl.finalarchitecture.utils.ext.smartrefresh.handleWithPaging3
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -44,9 +45,7 @@ class AskFragment: BaseFragment<FragmentAskBinding>(), OnRefreshListener {
 
 
         // 给ArticleAdapter加上分页的状态尾
-        val articleWithFooterAdapter = mArticleAdapter.withLoadStateFooter(DefaultLoadStateAdapter {
-            mArticleAdapter.retry()
-        })
+        val articleWithFooterAdapter = mArticleAdapter.withLoadState()
 
         mBinding.recyclerView.adapter = articleWithFooterAdapter
 

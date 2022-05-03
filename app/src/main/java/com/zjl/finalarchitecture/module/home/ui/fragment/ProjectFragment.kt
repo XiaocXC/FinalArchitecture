@@ -18,6 +18,7 @@ import com.zjl.finalarchitecture.module.home.ui.adapter.ProjectCategoryAdapter
 import com.zjl.finalarchitecture.module.home.viewmodel.ProjectViewModel
 import com.zjl.finalarchitecture.module.main.viewmodel.MainViewModel
 import com.zjl.finalarchitecture.utils.ext.multistate.handleWithPaging3
+import com.zjl.finalarchitecture.utils.ext.paging.withLoadState
 import com.zjl.finalarchitecture.utils.ext.smartrefresh.handleWithPaging3
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -67,9 +68,7 @@ class ProjectFragment : BaseFragment<FragmentProjectBinding>(), OnRefreshListene
          */
         mProjectListAdapter = ProjectAdapter()
         // 给ArticleAdapter加上分页的状态尾
-        val mFooterAdapter = mProjectListAdapter.withLoadStateFooter(DefaultLoadStateAdapter {
-            mProjectListAdapter.retry()
-        })
+        val mFooterAdapter = mProjectListAdapter.withLoadState()
         mBinding.rvProject.adapter = mFooterAdapter
         // 分割线
         mBinding.rvProject.addItemDecoration(

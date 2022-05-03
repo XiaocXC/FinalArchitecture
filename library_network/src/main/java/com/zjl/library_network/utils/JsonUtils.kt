@@ -1,4 +1,4 @@
-package com.zjl.library_network.utils
+package com.zjl.base.utils
 
 import kotlinx.serialization.SerializationStrategy
 import kotlinx.serialization.encodeToString

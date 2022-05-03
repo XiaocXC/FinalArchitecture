@@ -2,9 +2,9 @@ package com.zjl.library_network.client
 
 import com.zjl.lib_base.BuildConfig
 import com.zjl.library_network.calladapter.ApiResultCallAdapterFactory
-import com.zjl.library_network.converter.asConverterFactory
 import com.zjl.library_network.interceptor.BusinessErrorInterceptor
-import com.zjl.library_network.utils.globalJson
+import com.zjl.base.utils.globalJson
+import com.zjl.library_network.converter.asConverterFactory
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

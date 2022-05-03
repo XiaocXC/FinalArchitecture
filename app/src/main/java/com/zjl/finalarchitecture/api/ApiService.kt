@@ -3,6 +3,7 @@ package com.zjl.finalarchitecture.api
 import com.zjl.base.ApiResult
 import com.zjl.finalarchitecture.data.model.*
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -81,6 +82,21 @@ interface ApiService {
     suspend fun getProjectArticleListByPage(
         @Path("page") pageNum: Int,
         @Query("cid") cid: Int
+    ): ApiResult<PageVO<ArticleListVO>>
+
+    /**
+     * 获取热门搜索
+     */
+    @GET("hotkey/json")
+    suspend fun getSearchHot(): ApiResult<List<SearchHotVO>>
+
+    /**
+     * 根据关键词搜索数据
+     */
+    @POST("article/query/{page}/json")
+    suspend fun getSearchDataByKey(
+        @Path("page") pageNo: Int,
+        @Query("k") searchKey: String
     ): ApiResult<PageVO<ArticleListVO>>
 
 }

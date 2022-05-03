@@ -5,7 +5,6 @@ import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
-import com.zjl.base.adapter.DefaultLoadStateAdapter
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.utils.autoCleared
 import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
@@ -16,6 +15,7 @@ import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleDividerItemDecora
 import com.zjl.finalarchitecture.module.home.ui.adapter.BannerVOWrapper
 import com.zjl.finalarchitecture.module.home.viewmodel.ArticleViewModel
 import com.zjl.finalarchitecture.utils.ext.multistate.handleWithPaging3
+import com.zjl.finalarchitecture.utils.ext.paging.withLoadState
 import com.zjl.finalarchitecture.utils.ext.smartrefresh.handleWithPaging3
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -50,9 +50,7 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding>(), OnRefreshListene
         mArticleAdapter = ArticleAdapter()
 
         // 给ArticleAdapter加上分页的状态尾
-        val withFooterAdapter = mArticleAdapter.withLoadStateFooter(DefaultLoadStateAdapter{
-            mArticleAdapter.retry()
-        })
+        val withFooterAdapter = mArticleAdapter.withLoadState()
 
         // 将BannerAdapter和ArticleAdapter整合为一个Adapter
         mBinding.rvArticle.adapter = ConcatAdapter(mBannerAdapter, withFooterAdapter)
