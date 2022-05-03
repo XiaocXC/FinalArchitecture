@@ -1,6 +1,8 @@
 package com.zjl.finalarchitecture.module.home.ui.fragment
 
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
@@ -8,11 +10,13 @@ import com.zjl.base.adapter.DefaultLoadStateAdapter
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.utils.autoCleared
 import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
+import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.databinding.FragmentProjectBinding
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleDividerItemDecoration
 import com.zjl.finalarchitecture.module.home.ui.adapter.ProjectAdapter
 import com.zjl.finalarchitecture.module.home.ui.adapter.ProjectCategoryAdapter
 import com.zjl.finalarchitecture.module.home.viewmodel.ProjectViewModel
+import com.zjl.finalarchitecture.module.main.viewmodel.MainViewModel
 import com.zjl.finalarchitecture.utils.ext.multistate.handleWithPaging3
 import com.zjl.finalarchitecture.utils.ext.smartrefresh.handleWithPaging3
 import kotlinx.coroutines.flow.collectLatest
@@ -113,8 +117,6 @@ class ProjectFragment : BaseFragment<FragmentProjectBinding>(), OnRefreshListene
     }
 
     private fun refresh() {
-        // 重新请求，如果列表没有数据，则整个界面会重新显示loading状态（当然这里意义不大，没有用处）
-        mProjectViewModel.initData(mProjectListAdapter.itemCount <= 0)
         // 刷新Paging
         mProjectListAdapter.refresh()
     }

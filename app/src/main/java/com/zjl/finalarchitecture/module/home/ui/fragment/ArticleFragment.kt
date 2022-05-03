@@ -104,6 +104,7 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding>(), OnRefreshListene
                     }
                 }
             }
+
         }
     }
 
