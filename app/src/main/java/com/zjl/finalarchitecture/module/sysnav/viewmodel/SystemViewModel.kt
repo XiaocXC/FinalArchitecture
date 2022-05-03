@@ -22,7 +22,7 @@ class SystemViewModel: BaseViewModel() {
     val systemList: StateFlow<List<SystemVO>> = _systemList
 
     init {
-        toRefresh()
+        initData()
     }
 
     /**

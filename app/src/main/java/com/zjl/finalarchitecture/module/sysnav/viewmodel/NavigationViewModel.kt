@@ -25,7 +25,7 @@ class NavigationViewModel: BaseViewModel() {
     val navigationList: StateFlow<List<NavigationVO>> = _navigationList
 
     init {
-        toRefresh()
+        initData()
     }
 
     override fun refresh() {

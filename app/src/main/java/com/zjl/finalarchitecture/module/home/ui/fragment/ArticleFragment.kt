@@ -113,7 +113,7 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding>(), OnRefreshListene
 
     private fun refresh(){
         // 重新请求，如果文章列表没有数据，则整个界面会重新显示loading状态（当然这里意义不大，没有用处）
-        mArticleViewModel.toRefresh(mArticleAdapter.itemCount <= 0)
+        mArticleViewModel.initData(mArticleAdapter.itemCount <= 0)
         // 刷新Paging
         mArticleAdapter.refresh()
     }

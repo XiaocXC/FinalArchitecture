@@ -26,7 +26,7 @@ class SystemDetailInnerViewModel(
     }.flow.cachedIn(viewModelScope)
 
     init {
-        toRefresh()
+        initData()
     }
 
     override fun refresh() {}

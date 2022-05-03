@@ -28,7 +28,7 @@ class NavigationFragment : BaseFragment<FragmentNavigationBinding>() {
     private var navigationGroupAdapter by autoCleared<NavigationGroupAdapter>()
     private var navigationTabAdapter by autoCleared<NavigationTabAdapter>()
 
-    private val navigationViewModel by viewModels<NavigationViewModel>()
+    private val navigationViewModel by viewModels<NavigationViewModel>(ownerProducer = {requireParentFragment()})
 
     private var shouldScroll = false
     private var scrollToPosition = RecyclerView.NO_POSITION

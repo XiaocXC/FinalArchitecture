@@ -35,7 +35,7 @@ class MultiListViewModel: BaseViewModel() {
     val bitmap = MutableStateFlow<Bitmap?>(null)
 
     init {
-        toRefresh()
+        initData()
     }
 
     fun parseImageToPrimaryColor(imgUrl: String){

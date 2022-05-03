@@ -114,7 +114,7 @@ class ProjectFragment : BaseFragment<FragmentProjectBinding>(), OnRefreshListene
 
     private fun refresh() {
         // 重新请求，如果列表没有数据，则整个界面会重新显示loading状态（当然这里意义不大，没有用处）
-        mProjectViewModel.toRefresh(mProjectListAdapter.itemCount <= 0)
+        mProjectViewModel.initData(mProjectListAdapter.itemCount <= 0)
         // 刷新Paging
         mProjectListAdapter.refresh()
     }

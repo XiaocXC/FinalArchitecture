@@ -35,11 +35,12 @@ abstract class BaseViewModel: ViewModel(){
     val rootViewState: SharedFlow<UiModel<Any>> =  _rootViewState
 
     /**
-     * 刷新
+     * 初始化数据
+     * 当需要页面刷新或页面初始化的时候，调用此方法
      * @param resetState 是否重置加载状态
      * 如果重置加载状态，那么会将整个布局的状态更改为加载状态
      */
-    fun toRefresh(resetState: Boolean = true){
+    fun initData(resetState: Boolean = true){
         if(resetState){
             _rootViewState.tryEmit(UiModel.Loading())
         }

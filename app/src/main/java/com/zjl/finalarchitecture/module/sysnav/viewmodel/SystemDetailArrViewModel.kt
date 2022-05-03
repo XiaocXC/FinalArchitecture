@@ -26,7 +26,7 @@ class SystemDetailArrViewModel(
     val systemChild: StateFlow<Pair<Int, List<ClassifyVO>>> = _systemChild
 
     init {
-        toRefresh()
+        initData()
     }
 
     override fun refresh() {

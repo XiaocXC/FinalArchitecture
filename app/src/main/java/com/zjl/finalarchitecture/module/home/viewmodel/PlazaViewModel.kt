@@ -67,7 +67,7 @@ class PlazaViewModel: BaseViewModel()  {
     }.flow.cachedIn(viewModelScope)
 
     init {
-        toRefresh()
+        initData()
     }
 
     override fun refresh() {
