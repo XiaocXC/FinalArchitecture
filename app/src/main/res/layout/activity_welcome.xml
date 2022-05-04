@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".module.splash.ui.WelcomeActivity">
+    tools:context=".module.splash.ui.WelcomeActivity"
+    android:background="@color/base_teal">
 
     <com.zhpan.bannerview.BannerViewPager
         android:id="@+id/mViewPager"
@@ -47,9 +48,9 @@
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/imgLogo"
-        android:layout_width="108dp"
-        android:layout_height="108dp"
-        android:src="@mipmap/logo"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/dddd"
         app:shapeAppearanceOverlay="@style/ShapeAppearance.Architecture.MediumComponent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
