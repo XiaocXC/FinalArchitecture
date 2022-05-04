@@ -24,7 +24,7 @@ class WechatViewModel : BaseViewModel() {
     private val _categoryList = MutableStateFlow<List<CategoryVO>>(emptyList())
     val categoryList: StateFlow<List<CategoryVO>> = _categoryList
 
-    private val _cid = MutableStateFlow(2)
+    private val _cid = MutableStateFlow(0)
 
     //微信公众号分类选中下表
     var checkPosition = 0
@@ -66,6 +66,9 @@ class WechatViewModel : BaseViewModel() {
                 // 状态更改为成功
                 _rootViewState.emit(UiModel.Success(data))
                 _categoryList.value = data
+                if(!data.isNullOrEmpty()){
+                    _cid.value = data[0].id
+                }
             },failureBlock = { error ->
                 // 状态更改为错误
                 _rootViewState.emit(UiModel.Error(ApiException(error)))
