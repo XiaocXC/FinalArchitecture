@@ -4,16 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     tools:context=".module.search.ui.fragment.SearchFragment">
 
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/zzzzz"
+        android:alpha="0.7"
+        android:scaleType="centerCrop"/>
+
     <com.google.android.material.textfield.TextInputLayout
+        android:layout_marginTop="45dp"
         android:id="@+id/edit_search"
         style="@style/Widget.Architecture.TextInputLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:hint="@string/hint_search_des"
+        app:hintTextColor="@color/base_panda"
         app:endIconCheckable="true"
         app:endIconDrawable="@drawable/ic_search"
         app:endIconMode="custom"

@@ -80,7 +80,5 @@ abstract class IntegerPagingSource<V : Any> : PagingSource<Int, V>() {
         return params.key ?: 0
     }
 
-    open fun getNextPage(params: LoadParams<Int>): Int {
-        return params.key ?: 0
-    }
+
 }

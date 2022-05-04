@@ -64,13 +64,17 @@ class ProjectAdapter : ViewBoundPagingListAdapter<ArticleListVO, ItemProjectBind
 
             binding.itemProjectDate.text = niceDate
 
-            binding.itemProjectImageview.load(envelopePic) {
-                placeholder(R.drawable.default_project_img)
+            if (envelopePic.isEmpty()) {
+                binding.itemProjectImageview.load(R.drawable.rrrrr)
+            } else {
+                binding.itemProjectImageview.load(envelopePic) {
+                    placeholder(R.drawable.default_project_img)
+                }
             }
+
             binding.itemProjectTitle.text = title.toHtml()
             binding.itemProjectContent.text = desc.toHtml()
             binding.itemProjectType2.text = "$superChapterName·$chapterName".toHtml()
-
 
 
         }

@@ -52,10 +52,13 @@ class ProjectFragment : BaseFragment<FragmentProjectBinding>(), OnRefreshListene
          */
         mProjectCategoryAdapter = ProjectCategoryAdapter()
         mBinding.rvCategory.adapter = mProjectCategoryAdapter
+
         mProjectCategoryAdapter.check(mProjectViewModel.checkPosition)
+
         mProjectCategoryAdapter.setCheckClick { id, position ->
             Timber.e("收到的id是：${id}")
             mProjectViewModel.onCidChanged(id)
+
             mProjectViewModel.checkPosition = position
         }
 

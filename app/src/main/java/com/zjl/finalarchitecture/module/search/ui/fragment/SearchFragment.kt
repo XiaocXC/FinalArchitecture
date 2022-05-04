@@ -1,9 +1,12 @@
 package com.zjl.finalarchitecture.module.search.ui.fragment
 
+import android.graphics.Color
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.chip.Chip
+import com.gyf.immersionbar.ktx.immersionBar
 import com.zjl.base.fragment.BaseFragment
+import com.zjl.base.utils.ext.isNightMode
 import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
 import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.data.model.SearchHotVO
@@ -22,6 +25,9 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
     }
 
     override fun initViewAndEvent() {
+
+
+
         mBinding.editSearch.addOnEditTextAttachedListener { inputLayout ->
             inputLayout.setEndIconOnClickListener {
                 if(inputLayout.editText?.text.isNullOrEmpty()){

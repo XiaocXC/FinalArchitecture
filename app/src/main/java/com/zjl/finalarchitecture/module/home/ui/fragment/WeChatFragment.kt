@@ -50,6 +50,9 @@ class WeChatFragment : BaseFragment<FragmentProjectBinding>(), OnRefreshListener
          */
         mWechatCategoryAdapter = ProjectCategoryAdapter()
         mBinding.rvCategory.adapter = mWechatCategoryAdapter
+
+        mWechatCategoryAdapter.check(mWechatViewModel.checkPosition)
+
         mWechatCategoryAdapter.setCheckClick { id, position ->
             mWechatViewModel.onCidChanged(id)
             mWechatViewModel.checkPosition = position
@@ -91,19 +94,19 @@ class WeChatFragment : BaseFragment<FragmentProjectBinding>(), OnRefreshListener
                     mWechatListAdapter.submitData(it)
                 }
             }
-//
-//            // 下拉刷新,上拉分页,LEC状态观察
-//            launch {
-//                mWechatListAdapter.loadStateFlow.collectLatest {
-//                    // 处理SmartLayout与Paging3相关状态联动
-//                    //处理下拉刷新的状态
-//                    mBinding.refreshLayout.handleWithPaging3(it)
-//                    // 处理Paging3状态与整个布局状态相关联动
-//                    uiRootState.handleWithPaging3(it, mWechatListAdapter.itemCount <= 0) {
-//                        refresh()
-//                    }
-//                }
-//            }
+
+            // 下拉刷新,上拉分页,LEC状态观察
+            launch {
+                mWechatListAdapter.loadStateFlow.collectLatest {
+                    // 处理SmartLayout与Paging3相关状态联动
+                    //处理下拉刷新的状态
+                    mBinding.refreshLayout.handleWithPaging3(it)
+                    // 处理Paging3状态与整个布局状态相关联动
+                    uiRootState.handleWithPaging3(it, mWechatListAdapter.itemCount <= 0) {
+                        refresh()
+                    }
+                }
+            }
 
         }
 
