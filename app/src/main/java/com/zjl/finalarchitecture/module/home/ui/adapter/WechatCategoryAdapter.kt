@@ -1,28 +1,19 @@
 package com.zjl.finalarchitecture.module.home.ui.adapter
 
 import android.widget.CheckedTextView
-import androidx.recyclerview.widget.RecyclerView
-import com.blankj.utilcode.util.LogUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
-import com.zhpan.bannerview.BannerViewPager
 import com.zjl.base.utils.ext.toHtml
 import com.zjl.finalarchitecture.R
-import com.zjl.finalarchitecture.data.model.BannerVO
 import com.zjl.finalarchitecture.data.model.CategoryVO
 import timber.log.Timber
 
-/**
- * @description:
- * @author: zhou
- * @date : 2022/4/28 18:52
- */
-class ProjectCategoryAdapter :
+class WechatCategoryAdapter  :
     BaseQuickAdapter<CategoryVO, BaseViewHolder>(R.layout.item_category_sub) {
 
-    private var checkPosition = RecyclerView.NO_POSITION
+    private var checkPosition = 0
 
-    var onCheckedListener: ((id: Int, position: Int) -> Unit)? = null
+    var onCheckedListener: ((Int) -> Unit)? = null
 
     override fun convert(holder: BaseViewHolder, item: CategoryVO) {
         val ctvCategory = holder.getView<CheckedTextView>(R.id.ctvCategory)
@@ -33,7 +24,7 @@ class ProjectCategoryAdapter :
                 val position = holder.absoluteAdapterPosition
                 check(position)
                 // 传入选中的id
-                onCheckedListener?.invoke(item.id,position)
+                onCheckedListener?.invoke(item.id)
                 Timber.e("选中的id是：${item.id}")
             }
         }
@@ -42,7 +33,7 @@ class ProjectCategoryAdapter :
     /**
      * 选中的id 回调到外面
      */
-    fun setCheckClick(onChecked: ((id: Int, position: Int) -> Unit)) {
+    fun setCheckClick(onChecked: ((Int) -> Unit)) {
         this.onCheckedListener = onChecked
     }
 

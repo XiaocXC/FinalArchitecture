@@ -99,4 +99,20 @@ interface ApiService {
         @Query("k") searchKey: String
     ): ApiResult<PageVO<ArticleListVO>>
 
+
+    /**
+     * 获取微信公众号分类
+     */
+    @GET("/wxarticle/chapters/json")
+    suspend fun getWechatCategoriesList(): ApiResult<List<CategoryVO>>
+
+    /**
+     * 获取微信公众号列表
+     */
+    @GET("/wxarticle/list/{id}/{page}/json")
+    suspend fun getWechatArticleListByPage(
+        @Path("id") id: Int,
+        @Path("page") page: Int
+    ): ApiResult<PageVO<ArticleListVO>>
+
 }

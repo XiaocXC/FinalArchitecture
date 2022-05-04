@@ -134,6 +134,25 @@ object ApiRepository {
     }
 
     /**
+     * 获取微信公众号分类
+     */
+    suspend fun requestWechatListData(): ApiResult<List<CategoryVO>> {
+        return mApiService.getWechatCategoriesList()
+    }
+
+    /**
+     * 获取微信公众号详情列表
+     * @param pageNo 页码
+     * @param id 栏目ID
+     */
+    suspend fun requestWechatDetailListDataByPage(
+        id: Int,
+        page: Int
+    ): ApiResult<PageVO<ArticleListVO>> {
+        return mApiService.getWechatArticleListByPage(id, page)
+    }
+
+    /**
      * 获取热门搜索
      */
     suspend fun getSearchHot(): ApiResult<List<SearchHotVO>> {

@@ -1,8 +1,6 @@
 package com.zjl.finalarchitecture.module.home.ui.fragment
 
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
@@ -10,13 +8,11 @@ import com.zjl.base.adapter.DefaultLoadStateAdapter
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.utils.autoCleared
 import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
-import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.databinding.FragmentProjectBinding
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleDividerItemDecoration
 import com.zjl.finalarchitecture.module.home.ui.adapter.ProjectAdapter
 import com.zjl.finalarchitecture.module.home.ui.adapter.ProjectCategoryAdapter
 import com.zjl.finalarchitecture.module.home.viewmodel.ProjectViewModel
-import com.zjl.finalarchitecture.module.main.viewmodel.MainViewModel
 import com.zjl.finalarchitecture.utils.ext.multistate.handleWithPaging3
 import com.zjl.finalarchitecture.utils.ext.paging.withLoadState
 import com.zjl.finalarchitecture.utils.ext.smartrefresh.handleWithPaging3
@@ -52,20 +48,23 @@ class ProjectFragment : BaseFragment<FragmentProjectBinding>(), OnRefreshListene
         mBinding.refreshLayout.setOnRefreshListener(this)
 
         /**
-         * 项目分类
+         * 项目分类 rv adapter
          */
         mProjectCategoryAdapter = ProjectCategoryAdapter()
         mBinding.rvCategory.adapter = mProjectCategoryAdapter
-        mProjectCategoryAdapter.setCheckClick {
-            Timber.e("收到的id是：${it}")
-            mProjectViewModel.onCidChanged(it)
+        mProjectCategoryAdapter.check(mProjectViewModel.checkPosition)
+        mProjectCategoryAdapter.setCheckClick { id, position ->
+            Timber.e("收到的id是：${id}")
+            mProjectViewModel.onCidChanged(id)
+            mProjectViewModel.checkPosition = position
         }
 
+
         /**
-         * 项目详情列表
+         * 项目详情列表 rv adapter
          */
         mProjectListAdapter = ProjectAdapter()
-        // 给ArticleAdapter加上分页的状态尾
+        // 给adapter添加尾部页
         val mFooterAdapter = mProjectListAdapter.withLoadState()
         mBinding.rvProject.adapter = mFooterAdapter
         // 分割线
