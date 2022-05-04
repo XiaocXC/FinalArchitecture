@@ -18,6 +18,7 @@ import com.zjl.finalarchitecture.data.respository.datasouce.ProjectArticlePaging
 import com.zjl.finalarchitecture.data.respository.datasouce.SystemArticlePagingSource
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
 
 /**
@@ -25,12 +26,7 @@ import kotlinx.coroutines.launch
  * @author: zhou
  * @date : 2022/4/25 19:46
  */
-class ProjectViewModel() : BaseViewModel() {
-
-    /**
-     * 点击id
-     */
-    var cid = 0
+class ProjectViewModel: BaseViewModel() {
 
     /**
      * 项目分类列表数据
@@ -38,13 +34,25 @@ class ProjectViewModel() : BaseViewModel() {
     private val _categoryList = MutableStateFlow<List<CategoryVO>>(emptyList())
     val categoryList: StateFlow<List<CategoryVO>> = _categoryList
 
+    private val _cid = MutableStateFlow(0)
 
     /**
      * 项目列表数据
+     * 当Cid发生变化时，会自动重新请求Paging数据
      */
-    val projectArticlePagingFlow = Pager(PagingConfig(pageSize = 20)) {
-        ProjectArticlePagingSource(cid)
-    }.flow.cachedIn(viewModelScope)
+    val projectArticlePagingFlow = _cid.flatMapLatest {
+        Pager(PagingConfig(pageSize = 20)) {
+            ProjectArticlePagingSource(it)
+        }.flow
+    }.cachedIn(viewModelScope)
+
+    /**
+     * 点击后更改的Cid
+     * Cid更改会触发 [flatMapLatest] 请求分页
+     */
+    fun onCidChanged(cid: Int){
+        _cid.value = cid
+    }
 
     init {
         requestCategory()

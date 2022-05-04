@@ -58,9 +58,7 @@ class ProjectFragment : BaseFragment<FragmentProjectBinding>(), OnRefreshListene
         mBinding.rvCategory.adapter = mProjectCategoryAdapter
         mProjectCategoryAdapter.setCheckClick {
             Timber.e("收到的id是：${it}")
-            mProjectViewModel.cid = it
-            // 刷新Paging
-            refresh()
+            mProjectViewModel.onCidChanged(it)
         }
 
         /**
