@@ -6,6 +6,7 @@
     app:chipBackgroundColor="?attr/colorPrimary"
     app:chipStrokeWidth="0dp"
     app:chipCornerRadius="16dp"
-    android:textColor="?attr/colorOnPrimary"
+    app:closeIconTint="@color/base_white"
+    android:textColor="@color/base_white"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"/>
