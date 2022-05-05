@@ -1,12 +1,13 @@
 package com.zjl.finalarchitecture.module.search.ui.fragment
 
-import android.graphics.Color
+import android.view.ViewGroup
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.chip.Chip
-import com.gyf.immersionbar.ktx.immersionBar
 import com.zjl.base.fragment.BaseFragment
-import com.zjl.base.utils.ext.isNightMode
+import com.zjl.base.utils.ext.doOnApplyWindowInsets
 import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
 import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.data.model.SearchHotVO
@@ -25,8 +26,18 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
     }
 
     override fun initViewAndEvent() {
+        mBinding.toolbarSearch.doOnApplyWindowInsets { view, insets, padding ->
+            val systemInsets = insets.getInsets(
+                WindowInsetsCompat.Type.systemBars()
+            )
+            view.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                topMargin = systemInsets.top
+            }
+        }
 
-
+        mBinding.toolbarSearch.setNavigationOnClickListener {
+            findNavController().navigateUp()
+        }
 
         mBinding.editSearch.addOnEditTextAttachedListener { inputLayout ->
             inputLayout.setEndIconOnClickListener {
