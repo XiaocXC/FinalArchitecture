@@ -5,6 +5,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.blankj.utilcode.util.KeyboardUtils
 import com.google.android.material.chip.Chip
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.utils.ext.doOnApplyWindowInsets
@@ -113,5 +114,13 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
             }
             mBinding.chipSearchHistory.addView(chip)
         }
+    }
+
+    override fun onDestroyView() {
+        // 隐藏输入法
+        KeyboardUtils.hideSoftInput(mBinding.editSearch)
+
+        super.onDestroyView()
+
     }
 }
