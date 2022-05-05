@@ -29,9 +29,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private var mTitleArrayData = arrayListOf("文章", "广场", "问答", "项目","微信")
     private var mFragmentList: ArrayList<Fragment> = arrayListOf()
 
-    //数据ViewModel
-    private val mViewModel : HomeViewModel by viewModels()
-
     private var tabLayoutMediator: TabLayoutMediator? = null
 
     //无参构造方法
