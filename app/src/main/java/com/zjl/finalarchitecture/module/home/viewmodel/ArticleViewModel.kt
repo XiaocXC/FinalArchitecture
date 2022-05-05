@@ -29,7 +29,7 @@ class ArticleViewModel : BaseViewModel() {
     private val _bannerList = MutableStateFlow<List<BannerVO>>(emptyList())
     val bannerList: StateFlow<List<BannerVO>> = _bannerList
 
-    private val modificationEvents = MutableStateFlow<MutableList<ArticleListEvent>>(mutableListOf())
+    private val modificationEvents = MutableStateFlow<List<ArticleListEvent>>(mutableListOf())
 
     // 文章
     private val _articlePagingFlow = Pager(PagingConfig(pageSize = 20)) {
@@ -52,9 +52,7 @@ class ArticleViewModel : BaseViewModel() {
     }
 
     fun updateCollectState(id: Int, isCollect: Boolean){
-        val newList = modificationEvents.value.toMutableList()
-        newList.add(ArticleListEvent.ArticleCollectEvent(id, isCollect))
-        modificationEvents.value = newList
+        modificationEvents.value += ArticleListEvent.ArticleCollectEvent(id, isCollect)
     }
 
     /**
