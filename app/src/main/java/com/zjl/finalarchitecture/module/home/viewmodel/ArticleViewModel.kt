@@ -1,4 +1,5 @@
 package com.zjl.finalarchitecture.module.home.viewmodel
+
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.asLiveData
@@ -34,10 +35,16 @@ class ArticleViewModel : BaseViewModel() {
     // 文章
     private val _articlePagingFlow = Pager(PagingConfig(pageSize = 20)) {
         ArticlePagingSource()
-    }.flow.cachedIn(viewModelScope).combine(modificationEvents){ pagingData, modifications ->
-            modifications.fold(pagingData){ acc, event ->
-                handleArticleEvent(acc, event)
-            }
+    }.flow.cachedIn(viewModelScope).combine(modificationEvents) { pagingData, modifications ->
+        modifications.fold(pagingData) { acc, event ->
+            handleArticleEvent(acc, event)
+        }
+        // 等价于
+//        var resultData = pagingData
+//        for(item in modifications){
+//            resultData = handleArticleEvent(pagingData,item)
+//        }
+//        resultData
     }
 
     val articlePagingFlow: LiveData<PagingData<ArticleListVO>> = _articlePagingFlow.asLiveData()
@@ -51,14 +58,14 @@ class ArticleViewModel : BaseViewModel() {
         refreshBanner()
     }
 
-    fun updateCollectState(id: Int, isCollect: Boolean){
+    fun updateCollectState(id: Int, isCollect: Boolean) {
         modificationEvents.value += ArticleListEvent.ArticleCollectEvent(id, isCollect)
     }
 
     /**
      * 刷新Banner数据
      */
-    private fun refreshBanner(){
+    private fun refreshBanner() {
         viewModelScope.launch {
             launchRequestByNormal({
                 ApiRepository.requestBanner()
