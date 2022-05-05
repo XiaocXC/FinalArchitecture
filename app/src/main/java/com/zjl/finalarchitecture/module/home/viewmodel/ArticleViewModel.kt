@@ -1,15 +1,19 @@
 package com.zjl.finalarchitecture.module.home.viewmodel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.asFlow
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.cachedIn
+import androidx.paging.*
+import com.zjl.base.utils.WhileViewSubscribed
 import com.zjl.base.viewmodel.BaseViewModel
+import com.zjl.finalarchitecture.data.model.ArticleListVO
 import com.zjl.finalarchitecture.data.model.BannerVO
+import com.zjl.finalarchitecture.data.model.event.ArticleListEvent
 import com.zjl.finalarchitecture.data.respository.ApiRepository
 import com.zjl.finalarchitecture.data.respository.datasouce.ArticlePagingSource
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 /**
  * @author Xiaoc
@@ -25,10 +29,18 @@ class ArticleViewModel : BaseViewModel() {
     private val _bannerList = MutableStateFlow<List<BannerVO>>(emptyList())
     val bannerList: StateFlow<List<BannerVO>> = _bannerList
 
+    private val modificationEvents = MutableStateFlow<MutableList<ArticleListEvent>>(mutableListOf())
+
     // 文章
-    val articlePagingFlow = Pager(PagingConfig(pageSize = 20)) {
+    private val _articlePagingFlow = Pager(PagingConfig(pageSize = 20)) {
         ArticlePagingSource()
-    }.flow.cachedIn(viewModelScope)
+    }.flow.cachedIn(viewModelScope).combine(modificationEvents){ pagingData, modifications ->
+        modifications.fold(pagingData){ acc, event ->
+            handleArticleEvent(acc, event)
+        }
+    }
+
+    val articlePagingFlow: LiveData<PagingData<ArticleListVO>> = _articlePagingFlow.asLiveData()
 
     init {
         initData()
@@ -39,6 +51,12 @@ class ArticleViewModel : BaseViewModel() {
         refreshBanner()
     }
 
+    fun updateCollectState(id: Int, isCollect: Boolean){
+        val newList = modificationEvents.value.toMutableList()
+        newList.add(ArticleListEvent.ArticleCollectEvent(id, isCollect))
+        modificationEvents.value = newList
+    }
+
     /**
      * 刷新Banner数据
      */
@@ -47,9 +65,22 @@ class ArticleViewModel : BaseViewModel() {
             launchRequestByNormal({
                 ApiRepository.requestBanner()
             }, successBlock = {
-//            _bannerListUiModel.value = it
                 _bannerList.value = it
             })
+        }
+    }
+
+    private fun handleArticleEvent(pagingData: PagingData<ArticleListVO>, event: ArticleListEvent): PagingData<ArticleListVO>{
+        return when(event){
+            is ArticleListEvent.ArticleCollectEvent ->{
+                pagingData.map {
+                    if(it.id == event.id){
+                        return@map it.copy(collect = event.isCollect)
+                    } else {
+                        return@map it
+                    }
+                }
+            }
         }
     }
 }

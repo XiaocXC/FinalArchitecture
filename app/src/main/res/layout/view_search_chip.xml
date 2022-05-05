@@ -3,5 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/Widget.Material3.Chip.Assist"
+    app:chipBackgroundColor="?attr/colorPrimary"
+    app:chipStrokeWidth="0dp"
+    app:chipCornerRadius="16dp"
+    android:textColor="?attr/colorOnPrimary"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"/>

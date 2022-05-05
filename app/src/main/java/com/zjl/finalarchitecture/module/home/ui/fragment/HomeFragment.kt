@@ -3,6 +3,8 @@ package com.zjl.finalarchitecture.module.home.ui.fragment
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -10,6 +12,7 @@ import com.blankj.utilcode.util.LogUtils
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.zjl.base.fragment.BaseFragment
+import com.zjl.base.utils.ext.doOnApplyWindowInsets
 import com.zjl.base.utils.ext.init
 import com.zjl.base.utils.ext.reduceDragSensitivity
 import com.zjl.finalarchitecture.R
@@ -27,9 +30,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private var mTitleArrayData = arrayListOf("文章", "广场", "问答", "项目","微信")
     private var mFragmentList: ArrayList<Fragment> = arrayListOf()
 
-    //数据ViewModel
-    private val mViewModel : HomeViewModel by viewModels()
-
     private var tabLayoutMediator: TabLayoutMediator? = null
 
     //无参构造方法
@@ -44,6 +44,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     override fun bindView() = FragmentHomeBinding.inflate(layoutInflater)
 
     override fun initViewAndEvent() {
+        // 给整个布局加上一个状态栏的高度
+        mBinding.root.doOnApplyWindowInsets { view, insets, _ ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.run {
+                updatePadding(top = systemBars.top)
+            }
+        }
+
         //mAppBarLayout
         mBinding.mAppBarLayout.addOnOffsetChangedListener(object :
             AppBarLayout.OnOffsetChangedListener {

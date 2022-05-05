@@ -17,8 +17,10 @@ import com.zjl.finalarchitecture.module.home.viewmodel.ArticleViewModel
 import com.zjl.finalarchitecture.utils.ext.multistate.handleWithPaging3
 import com.zjl.finalarchitecture.utils.ext.paging.withLoadState
 import com.zjl.finalarchitecture.utils.ext.smartrefresh.handleWithPaging3
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 /**
  * @description:首页文章
@@ -47,7 +49,9 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding>(), OnRefreshListene
         mBannerAdapter = ArticleBannerWrapperAdapter(viewLifecycleOwner.lifecycle)
 
         // 列表适配器
-        mArticleAdapter = ArticleAdapter()
+        mArticleAdapter = ArticleAdapter(){
+            mArticleViewModel.updateCollectState(it.id, !it.collect)
+        }
 
         // 给ArticleAdapter加上分页的状态尾
         val withFooterAdapter = mArticleAdapter.withLoadState()
@@ -74,6 +78,10 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding>(), OnRefreshListene
 //            )
 //        }
 
+        mArticleViewModel.articlePagingFlow.observe(viewLifecycleOwner) {
+            mArticleAdapter.submitData(viewLifecycleOwner.lifecycle, it)
+        }
+
         launchAndRepeatWithViewLifecycle {
             launch {
                 mArticleViewModel.bannerList.collect { bannerList ->
@@ -83,12 +91,13 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding>(), OnRefreshListene
                 }
             }
 
-            // 文章分页数据
-            launch {
-                mArticleViewModel.articlePagingFlow.collect {
-                    mArticleAdapter.submitData(it)
-                }
-            }
+//            // 文章分页数据
+//            launch {
+//                mArticleViewModel.articlePagingFlow.collect {
+//                    Timber.i("事件触发3")
+//                    mArticleAdapter.submitData(it)
+//                }
+//            }
 
             // 下拉刷新,上拉分页,LEC状态观察
             launch {

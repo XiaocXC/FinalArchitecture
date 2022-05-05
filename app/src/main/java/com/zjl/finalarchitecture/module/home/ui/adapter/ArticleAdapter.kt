@@ -1,6 +1,8 @@
 package com.zjl.finalarchitecture.module.home.ui.adapter
 
 import android.annotation.SuppressLint
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,14 +17,16 @@ import com.zjl.finalarchitecture.data.model.ArticleListVO
  * @author Xiaoc
  * @since 2022-02-02
  */
-class ArticleAdapter: ViewBoundPagingListAdapter<ArticleListVO, ItemArticleListDataBinding>(
+class ArticleAdapter(
+    val collectClicked: (ArticleListVO) -> Unit = {}
+): ViewBoundPagingListAdapter<ArticleListVO, ItemArticleListDataBinding>(
     diffCallback = object: DiffUtil.ItemCallback<ArticleListVO>(){
         override fun areItemsTheSame(oldItem: ArticleListVO, newItem: ArticleListVO): Boolean {
             return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(oldItem: ArticleListVO, newItem: ArticleListVO): Boolean {
-            return oldItem.title == newItem.title
+            return oldItem.title == newItem.title && oldItem.collect == newItem.collect
         }
     }) {
 
@@ -30,9 +34,13 @@ class ArticleAdapter: ViewBoundPagingListAdapter<ArticleListVO, ItemArticleListD
         parent: ViewGroup,
         viewType: Int
     ): ViewBoundViewHolder<ArticleListVO, ItemArticleListDataBinding> {
-        return ViewBoundViewHolder(
+        return ViewBoundViewHolder<ArticleListVO, ItemArticleListDataBinding>(
             ItemArticleListDataBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        )
+        ).apply {
+            binding.itemHomeCollect.setOnClickListener {
+                collectClicked(item)
+            }
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -64,6 +72,12 @@ class ArticleAdapter: ViewBoundPagingListAdapter<ArticleListVO, ItemArticleListD
                 binding.itemHomeType1.visibility = View.GONE
             }
 
+            // 是否点赞
+            if(collect){
+                binding.itemHomeCollect.imageTintList = ColorStateList.valueOf(Color.RED)
+            } else {
+                binding.itemHomeCollect.imageTintList = null
+            }
         }
 
     }
