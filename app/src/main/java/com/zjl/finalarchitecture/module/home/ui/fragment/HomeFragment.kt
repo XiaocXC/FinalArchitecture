@@ -3,6 +3,7 @@ package com.zjl.finalarchitecture.module.home.ui.fragment
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -10,6 +11,7 @@ import com.blankj.utilcode.util.LogUtils
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.zjl.base.fragment.BaseFragment
+import com.zjl.base.utils.ext.doOnApplyWindowInsets
 import com.zjl.base.utils.ext.init
 import com.zjl.base.utils.ext.reduceDragSensitivity
 import com.zjl.finalarchitecture.R
@@ -44,6 +46,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     override fun bindView() = FragmentHomeBinding.inflate(layoutInflater)
 
     override fun initViewAndEvent() {
+        // 给整个布局加上一个状态栏的高度
+        mBinding.root.doOnApplyWindowInsets { view, insets, _ ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.run {
+                setPadding(paddingStart, systemBars.top, paddingEnd, paddingBottom)
+                requestLayout()
+            }
+        }
+
         //mAppBarLayout
         mBinding.mAppBarLayout.addOnOffsetChangedListener(object :
             AppBarLayout.OnOffsetChangedListener {

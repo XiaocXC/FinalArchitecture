@@ -32,8 +32,6 @@ class MultiListViewModel: BaseViewModel() {
     private val _toolbarColor = MutableStateFlow<ColorContainerData?>(null)
     val toolbarColor: StateFlow<ColorContainerData?> get() = _toolbarColor
 
-    val bitmap = MutableStateFlow<Bitmap?>(null)
-
     init {
         initData()
     }

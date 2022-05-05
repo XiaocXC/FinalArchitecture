@@ -7,6 +7,8 @@ import android.util.TypedValue
 import android.view.View
 import androidx.annotation.*
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
@@ -166,3 +168,48 @@ fun TabLayout.bindViewPager2(
     })
 }
 
+
+data class ViewPaddingState(
+    val left: Int,
+    val top: Int,
+    val right: Int,
+    val bottom: Int,
+    val start: Int,
+    val end: Int
+)
+
+/**
+ * 当Window发生变化时，对View进行对应内容的Insets等处理
+ */
+fun View.doOnApplyWindowInsets(f: (View, WindowInsetsCompat, ViewPaddingState) -> Unit) {
+    // Create a snapshot of the view's padding state
+    val paddingState = createStateForView(this)
+    ViewCompat.setOnApplyWindowInsetsListener(this) { v, insets ->
+        f(v, insets, paddingState)
+        insets
+    }
+    requestApplyInsetsWhenAttached()
+}
+
+fun View.requestApplyInsetsWhenAttached() {
+    if (isAttachedToWindow) {
+        requestApplyInsets()
+    } else {
+        addOnAttachStateChangeListener(object : View.OnAttachStateChangeListener {
+            override fun onViewAttachedToWindow(v: View) {
+                v.requestApplyInsets()
+            }
+
+            override fun onViewDetachedFromWindow(v: View) = Unit
+        })
+    }
+}
+
+private fun createStateForView(view: View) = ViewPaddingState(
+    view.paddingLeft,
+    view.paddingTop,
+    view.paddingRight,
+    view.paddingBottom,
+    view.paddingStart,
+    view.paddingEnd
+)

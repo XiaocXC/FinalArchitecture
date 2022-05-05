@@ -2,6 +2,8 @@ package com.zjl.finalarchitecture.module.toolbox.multilist
 
 import android.graphics.Color
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.google.android.material.appbar.AppBarLayout
 import com.gyf.immersionbar.ktx.immersionBar
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.utils.autoCleared
@@ -30,6 +32,10 @@ class MultiListFragment: BaseFragment<FragmentMultiListBinding>() {
     }
 
     override fun initViewAndEvent() {
+        mBinding.toolbarMulti.setNavigationOnClickListener {
+            findNavController().navigateUp()
+        }
+
         multiAdapter = MultiListAdapter {
             multiListViewModel.parseImageToPrimaryColor(it)
         }
@@ -53,15 +59,10 @@ class MultiListFragment: BaseFragment<FragmentMultiListBinding>() {
 
                     // 更改状态栏颜色
                     immersionBar {
+                        navigationBarColorInt(Color.TRANSPARENT)
                         statusBarColorInt(colorData.primaryColor)
                         statusBarDarkFont(!resources.isNightMode())
                     }
-                }
-            }
-
-            launch {
-                multiListViewModel.bitmap.collectLatest {
-                    mBinding.ivTest.setImageBitmap(it)
                 }
             }
         }
@@ -73,6 +74,7 @@ class MultiListFragment: BaseFragment<FragmentMultiListBinding>() {
 
         // 恢复状态栏颜色
         immersionBar {
+            navigationBarColorInt(Color.TRANSPARENT)
             statusBarColorInt(Color.TRANSPARENT)
             statusBarDarkFont(!resources.isNightMode())
         }
