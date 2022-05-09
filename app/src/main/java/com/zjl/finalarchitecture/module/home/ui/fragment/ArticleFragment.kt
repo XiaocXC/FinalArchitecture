@@ -49,7 +49,7 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding>(), OnRefreshListene
         mBannerAdapter = ArticleBannerWrapperAdapter(viewLifecycleOwner.lifecycle)
 
         // 列表适配器
-        mArticleAdapter = ArticleAdapter(){
+        mArticleAdapter = ArticleAdapter {
             mArticleViewModel.updateCollectState(it.id, !it.collect)
         }
 

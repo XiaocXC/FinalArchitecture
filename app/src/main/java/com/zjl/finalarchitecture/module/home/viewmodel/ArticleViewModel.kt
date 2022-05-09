@@ -1,4 +1,5 @@
 package com.zjl.finalarchitecture.module.home.viewmodel
+
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.asLiveData
@@ -29,15 +30,21 @@ class ArticleViewModel : BaseViewModel() {
     private val _bannerList = MutableStateFlow<List<BannerVO>>(emptyList())
     val bannerList: StateFlow<List<BannerVO>> = _bannerList
 
-    private val modificationEvents = MutableStateFlow<MutableList<ArticleListEvent>>(mutableListOf())
+    private val modificationEvents = MutableStateFlow<List<ArticleListEvent>>(mutableListOf())
 
     // 文章
     private val _articlePagingFlow = Pager(PagingConfig(pageSize = 20)) {
         ArticlePagingSource()
-    }.flow.cachedIn(viewModelScope).combine(modificationEvents){ pagingData, modifications ->
-        modifications.fold(pagingData){ acc, event ->
+    }.flow.cachedIn(viewModelScope).combine(modificationEvents) { pagingData, modifications ->
+        modifications.fold(pagingData) { acc, event ->
             handleArticleEvent(acc, event)
         }
+        // 等价于
+//        var resultData = pagingData
+//        for(item in modifications){
+//            resultData = handleArticleEvent(pagingData,item)
+//        }
+//        resultData
     }
 
     val articlePagingFlow: LiveData<PagingData<ArticleListVO>> = _articlePagingFlow.asLiveData()
@@ -51,16 +58,14 @@ class ArticleViewModel : BaseViewModel() {
         refreshBanner()
     }
 
-    fun updateCollectState(id: Int, isCollect: Boolean){
-        val newList = modificationEvents.value.toMutableList()
-        newList.add(ArticleListEvent.ArticleCollectEvent(id, isCollect))
-        modificationEvents.value = newList
+    fun updateCollectState(id: Int, isCollect: Boolean) {
+        modificationEvents.value += ArticleListEvent.ArticleCollectEvent(id, isCollect)
     }
 
     /**
      * 刷新Banner数据
      */
-    private fun refreshBanner(){
+    private fun refreshBanner() {
         viewModelScope.launch {
             launchRequestByNormal({
                 ApiRepository.requestBanner()
@@ -70,11 +75,14 @@ class ArticleViewModel : BaseViewModel() {
         }
     }
 
-    private fun handleArticleEvent(pagingData: PagingData<ArticleListVO>, event: ArticleListEvent): PagingData<ArticleListVO>{
-        return when(event){
-            is ArticleListEvent.ArticleCollectEvent ->{
+    private fun handleArticleEvent(
+        pagingData: PagingData<ArticleListVO>,
+        event: ArticleListEvent
+    ): PagingData<ArticleListVO> {
+        return when (event) {
+            is ArticleListEvent.ArticleCollectEvent -> {
                 pagingData.map {
-                    if(it.id == event.id){
+                    if (it.id == event.id) {
                         return@map it.copy(collect = event.isCollect)
                     } else {
                         return@map it
@@ -82,5 +90,6 @@ class ArticleViewModel : BaseViewModel() {
                 }
             }
         }
+
     }
 }
