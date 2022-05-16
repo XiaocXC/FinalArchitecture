@@ -89,4 +89,10 @@
             app:argType="string" />
     </fragment>
 
+    <include app:graph="@navigation/nav_auth" />
+
+    <action
+        android:id="@+id/action_global_sign_in"
+        app:destination="@id/nav_auth" />
+
 </navigation>

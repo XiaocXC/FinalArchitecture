@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- 带加载条的按钮 -->
+    <declare-styleable name="ProgressButton" tools:ignore="ResourceName">
+        <!-- 进度条颜色  -->
+        <attr name="progressColor" format="color"/>
+        <!-- 进度条圆角  -->
+        <attr name="progressRadius" format="dimension"/>
+        <!-- 进度条显示位置  -->
+        <attr name="progressGravity">
+            <enum name="TEXT_START" value="3"/>
+            <enum name="TEXT_END" value="1"/>
+            <enum name="TEXT_CENTER" value="2"/>
+        </attr>
+        <!-- 进度条与文字间的Padding  -->
+        <attr name="progressPadding" format="dimension"/>
+    </declare-styleable>
+</resources>

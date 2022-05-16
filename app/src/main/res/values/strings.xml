@@ -24,4 +24,12 @@
     <string name="hint_search_des">输入搜索的关键词</string>
     <string name="search_hot_des">热门搜索</string>
     <string name="search_history_des">历史搜索</string>
+
+    <string name="description_app_setting">APP设置</string>
+
+    <!-- 登录 -->
+    <string name="description_login">登录</string>
+    <string name="description_login_phone_hint">请输入手机号</string>
+    <string name="description_login_password_hint">请输入密码</string>
+    <string name="description_login_next_step">下一步</string>
 </resources>

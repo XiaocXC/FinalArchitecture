@@ -55,11 +55,25 @@
         <item name="cornerSize">20dp</item>
     </style>
 
+    <!-- 圆形 -->
+    <style name="ShapeAppearance.Architecture.Circle" parent="ShapeAppearance.Material3.LargeComponent" tools:ignore="ResourceName">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
     <!-- 极小样式的加载条 -->
     <style name="Widget.Architecture.Progress.ExtraSmall" parent="Widget.Material3.CircularProgressIndicator.ExtraSmall" tools:ignore="ResourceName">
         <item name="trackThickness">2.5dp</item>
         <item name="indicatorSize">20dp</item>
         <item name="indicatorInset">2dp</item>
+    </style>
+
+    <!-- Gather统一按钮样式（填充样式） -->
+    <style name="Widget.Architecture.BaseButton" parent="Widget.Material3.Button" tools:ignore="ResourceName">
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.Architecture.MediumComponent</item>
     </style>
 
     <!-- Icon（无边衬）样式按钮 -->
