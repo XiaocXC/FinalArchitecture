@@ -28,6 +28,10 @@ class ToolboxFragment: BaseFragment<FragmentToolboxBinding>() {
 
         }
 
+        mBinding.btnTreeCheck.setOnClickListener {
+            findNavController().navigate(MainFragmentDirections.actionMainFragmentToTreeCheckFragment())
+        }
+
     }
 
     override fun createObserver() {

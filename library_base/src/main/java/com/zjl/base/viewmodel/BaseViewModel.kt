@@ -74,6 +74,7 @@ abstract class BaseViewModel: ViewModel(){
                 failureBlock(coroutineContext,it)
             }
         }.onFailure {
+            it.printStackTrace()
             failureBlock(coroutineContext, Error(errorCode = 0, errorMsg = it.message))
         }
     }

@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_mainFragment_to_multiListFragment"
             app:destination="@id/multiListFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_treeCheckFragment"
+            app:destination="@id/treeCheckFragment" />
     </fragment>
 
 
@@ -94,5 +97,9 @@
     <action
         android:id="@+id/action_global_sign_in"
         app:destination="@id/nav_auth" />
+    <fragment
+        android:id="@+id/treeCheckFragment"
+        android:name="com.zjl.finalarchitecture.module.toolbox.treeCheck.TreeCheckFragment"
+        android:label="TreeCheckFragment" />
 
 </navigation>
