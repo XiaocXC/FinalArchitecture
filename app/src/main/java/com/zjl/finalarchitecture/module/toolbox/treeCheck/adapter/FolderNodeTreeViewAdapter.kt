@@ -10,6 +10,7 @@ import android.widget.CompoundButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.updateLayoutParams
 import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.module.toolbox.treeCheck.data.FolderNode
 import com.zjl.finalarchitecture.widget.treeview.AbstractTreeViewAdapter
@@ -70,7 +71,9 @@ class FolderNodeTreeViewAdapter(
         val viewLayout = if(treeNodeInfo.id is FolderNode.RootFolderNode){
             layoutInflater.inflate(R.layout.item_folder_root, null)
         } else {
-            layoutInflater.inflate(R.layout.item_folder_child, null)
+            layoutInflater.inflate(R.layout.item_folder_child, null).apply {
+                visibility = View.GONE
+            }
         }
         viewLayout.setOnClickListener(itemClickAction)
         return updateView(viewLayout, treeNodeInfo)

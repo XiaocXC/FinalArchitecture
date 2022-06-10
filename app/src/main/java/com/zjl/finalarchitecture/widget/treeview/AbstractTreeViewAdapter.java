@@ -10,6 +10,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.Transformation;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
@@ -20,6 +21,8 @@ import android.widget.ListAdapter;
 import androidx.annotation.Nullable;
 
 import com.zjl.finalarchitecture.R;
+
+import java.util.List;
 
 /**
  * Adapter used to feed the table view.
@@ -78,6 +81,63 @@ public abstract class AbstractTreeViewAdapter<T> extends BaseAdapter implements
             treeStateManager.collapseChildren(id);
         } else {
             treeStateManager.expandDirectChildren(id);
+            treeViewList.post(new Runnable() {
+                @Override
+                public void run() {
+                    List<T> children = treeStateManager.getChildren(id);
+                    int startPosition = parent.getPositionForView(view) + 1;
+                    int lastPosition = startPosition + children.size() - 1;
+                    for(int i = startPosition; i <= lastPosition; i++){
+                        View childView = parent.getChildAt(i);
+                        if(childView == null){
+                            return;
+                        }
+//                        childView.measure(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                        final int targetHeight = 161;
+
+                        childView.getLayoutParams().height = 0;
+                        childView.setVisibility(View.VISIBLE);
+                        Animation a = new Animation() {
+                            @Override
+                            protected void applyTransformation(float interpolatedTime, Transformation t) {
+                                childView.getLayoutParams().height = interpolatedTime == 1
+                                        ? LinearLayout.LayoutParams.WRAP_CONTENT
+                                        : (int) (targetHeight * interpolatedTime);
+                                childView.requestLayout();
+                            }
+
+                            @Override
+                            public boolean willChangeBounds() {
+                                return true;
+                            }
+                        };
+
+                        a.setAnimationListener(new Animation.AnimationListener() {
+                            @Override
+                            public void onAnimationStart(Animation animation) {
+
+                            }
+
+                            @Override
+                            public void onAnimationEnd(Animation animation) {
+
+
+                            }
+
+                            @Override
+                            public void onAnimationRepeat(Animation animation) {
+
+                            }
+                        });
+                        // 1dp/ms
+                        a.setDuration(1000);
+                        childView.startAnimation(a);
+                    }
+                }
+            });
+
+//            startAnimation(ADD_ANIM_TYPE, parent, position, treeStateManager.getVisibleCount() - 1, id);
+
         }
     }
 
@@ -263,7 +323,7 @@ public abstract class AbstractTreeViewAdapter<T> extends BaseAdapter implements
         final FrameLayout frameLayout = (FrameLayout) layout
                 .findViewById(R.id.treeview_list_item_frame);
         final LayoutParams childParams = new LayoutParams(
-                LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
+                LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         if (newChildView) {
             frameLayout.addView(childView, childParams);
         }
@@ -329,53 +389,6 @@ public abstract class AbstractTreeViewAdapter<T> extends BaseAdapter implements
     @SuppressWarnings("unchecked")
     public void handleItemClick(final View view, final Object id) {
         expandCollapse(treeViewList, (T) id, view);
-    }
-
-    void startAnimation(int type, AdapterView<?> parent, int position, int visibleCount, T id) {
-        int offset = parent.getFirstVisiblePosition();
-        int start = position - offset + 1;
-        int end = (start + visibleCount) <= parent.getChildCount() ? (start + visibleCount - 1) : parent.getChildCount();
-        for (int i = start; i <= end; i++) {
-            addAnimation(type, parent, i, id);
-        }
-    }
-
-    void addAnimation(int type, ViewGroup parent, int index, T id) {
-        Animation anim = null;
-        if (type == ADD_ANIM_TYPE) {
-            anim = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
-        } else if (type == REMOVE_ANIM_TYPE) {
-            anim = AnimationUtils.loadAnimation(context, android.R.anim.slide_out_right);
-        }
-        assert anim != null;
-        anim.setDuration(500);
-
-        try {
-            parent.getChildAt(index).startAnimation(anim);
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
-
-        anim.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                //notify change
-//                adapter.setNodesList(TreeUtils.getVisibleNodesD(root));
-//                TreeView.this.refresh(null);
-                if(type == ADD_ANIM_TYPE){
-                    treeStateManager.expandDirectChildren(id);
-                }
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-            }
-        });
     }
 
 }
