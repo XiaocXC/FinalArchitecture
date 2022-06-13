@@ -6,9 +6,12 @@ import androidx.documentfile.provider.DocumentFile
 import androidx.lifecycle.viewModelScope
 import com.zjl.base.globalContext
 import com.zjl.base.viewmodel.BaseViewModel
+import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.module.toolbox.treeCheck.data.FolderNode
 import com.zjl.finalarchitecture.widget.treeview.InMemoryTreeStateManager
 import com.zjl.finalarchitecture.widget.treeview.TreeBuilder
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
 import java.util.concurrent.atomic.AtomicLong
 
@@ -34,7 +37,10 @@ class TreeCheckViewModel : BaseViewModel() {
 
     private val atomicLong = AtomicLong(0)
 
-    private val folderRootUris = listOf<Uri>()
+    private val folderRootUris = mutableListOf<Uri>()
+
+    private val _message = MutableSharedFlow<Int>()
+    val message: SharedFlow<Int> = _message
 
     val nodeManager = InMemoryTreeStateManager<FolderNode>()
     private val treeBuilder = TreeBuilder(nodeManager)
@@ -46,9 +52,10 @@ class TreeCheckViewModel : BaseViewModel() {
             val treeDocumentId = DocumentsContract.getTreeDocumentId(folderRootUri)
             val documentIdPrefix = treeDocumentId.split("/").getOrNull(0) ?: ""
             val find = folderRootUris.find {
-                it.toString().startsWith(documentIdPrefix)
+                it.lastPathSegment?.startsWith(documentIdPrefix) ?: false
             }
             if (find != null) {
+                _message.emit(R.string.description_already_tree)
                 return@launch
             }
 
@@ -63,6 +70,7 @@ class TreeCheckViewModel : BaseViewModel() {
                     1
                 )
                 treeBuilder.sequentiallyAddNextNode(folderRootNode, 0)
+                folderRootUris.add(folderRootUri)
             }
         }
     }

@@ -11,6 +11,7 @@ import java.util.List;
  *            type of the identifier used by the tree
  */
 class InMemoryTreeNode<T> implements Serializable {
+
     private static final long serialVersionUID = 1L;
     private final T id;
     private final T parent;
@@ -112,5 +113,4 @@ class InMemoryTreeNode<T> implements Serializable {
     int getLevel() {
         return level;
     }
-
 }

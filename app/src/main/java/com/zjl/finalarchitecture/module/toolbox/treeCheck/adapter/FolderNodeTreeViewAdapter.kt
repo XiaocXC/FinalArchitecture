@@ -2,7 +2,6 @@ package com.zjl.finalarchitecture.module.toolbox.treeCheck.adapter
 
 import android.content.Context
 import android.graphics.Paint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.CheckBox
@@ -10,7 +9,6 @@ import android.widget.CompoundButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.updateLayoutParams
 import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.module.toolbox.treeCheck.data.FolderNode
 import com.zjl.finalarchitecture.widget.treeview.AbstractTreeViewAdapter
@@ -71,9 +69,7 @@ class FolderNodeTreeViewAdapter(
         val viewLayout = if(treeNodeInfo.id is FolderNode.RootFolderNode){
             layoutInflater.inflate(R.layout.item_folder_root, null)
         } else {
-            layoutInflater.inflate(R.layout.item_folder_child, null).apply {
-                visibility = View.GONE
-            }
+            layoutInflater.inflate(R.layout.item_folder_child, null)
         }
         viewLayout.setOnClickListener(itemClickAction)
         return updateView(viewLayout, treeNodeInfo)

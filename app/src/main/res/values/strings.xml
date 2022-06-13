@@ -32,4 +32,7 @@
     <string name="description_login_phone_hint">请输入手机号</string>
     <string name="description_login_password_hint">请输入密码</string>
     <string name="description_login_next_step">下一步</string>
+
+    <!-- 文件选择树 -->
+    <string name="description_already_tree">已经包含了该文件夹</string>
 </resources>

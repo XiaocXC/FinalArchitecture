@@ -7,6 +7,7 @@ package com.zjl.finalarchitecture.widget.treeview;
  *            type of the id for the tree
  */
 public class TreeNodeInfo<T> {
+
     private final T id;
     private final int level;
     private final boolean withChildren;
