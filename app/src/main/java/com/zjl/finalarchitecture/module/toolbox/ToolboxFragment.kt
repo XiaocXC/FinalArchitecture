@@ -32,6 +32,10 @@ class ToolboxFragment: BaseFragment<FragmentToolboxBinding>() {
             findNavController().navigate(MainFragmentDirections.actionMainFragmentToTreeCheckFragment())
         }
 
+        mBinding.btnDragSimple.setOnClickListener {
+            findNavController().navigate(MainFragmentDirections.actionMainFragmentToRecyclerViewDragFragment())
+        }
+
     }
 
     override fun createObserver() {

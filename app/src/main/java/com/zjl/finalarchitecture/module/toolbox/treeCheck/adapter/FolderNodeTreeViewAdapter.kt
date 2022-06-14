@@ -16,24 +16,47 @@ import com.zjl.finalarchitecture.widget.treeview.InMemoryTreeStateManager
 import com.zjl.finalarchitecture.widget.treeview.TreeNodeInfo
 import com.zjl.finalarchitecture.widget.treeview.TreeViewList
 
+/**
+ * @author Xiaoc
+ * @since 2022-06-12
+ *
+ * 文件夹显示Adapter
+ */
 class FolderNodeTreeViewAdapter(
     context: Context,
     treeStateManager: InMemoryTreeStateManager<FolderNode>,
     treeViewList: TreeViewList,
+
+    /**
+     * 加载对应子文件夹 回调
+     */
     private val loadChild: (FolderNode) -> Unit,
+
+    /**
+     * 勾选或取消勾选了对应文件夹 回调
+     */
     private val selectFolder: (Boolean, FolderNode) -> Unit,
+
+    /**
+     * 取消勾选了整个父节点 回调
+     */
     private val cancelParent: (FolderNode, Boolean) -> Unit
 ): AbstractTreeViewAdapter<FolderNode>(context, treeViewList, treeStateManager, 5) {
 
+    /**
+     * 点击Item的点击事件响应
+     */
     private val itemClickAction = View.OnClickListener {
         val node = it.tag as FolderNode
         val nodeInfo = manager.getNodeInfo(node)
-        // 如果节点有孩子
+        // 如果该Item节点有孩子
         if(node.haveChildren){
             when {
+                // 节点下有孩子数据，我们直接展开
                 nodeInfo.isWithChildren -> {
                     super.handleItemClick(it, node)
                 }
+                // 如果层级小于4级，我们
                 nodeInfo.level < 4 -> {
                     loadChild(node)
                 }
@@ -79,6 +102,7 @@ class FolderNodeTreeViewAdapter(
         view.tag = treeNodeInfo.id
         val folderNode = treeNodeInfo.id
         val root = view as ConstraintLayout
+        // 视图分为根Item和子Item两种内容，我们分别绘制
         if(folderNode is FolderNode.RootFolderNode){
             val tvFolderName = root.findViewById<TextView>(R.id.tv_folder_name)
             val ivFolderStatus = root.findViewById<ImageView>(R.id.iv_folder_status)

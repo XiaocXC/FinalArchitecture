@@ -25,4 +25,11 @@
         android:layout_marginStart="200dp"
         android:text="树状选择器"/>
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_drag_simple"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:text="拖拽案例（RecyclerView）"/>
+
 </FrameLayout>

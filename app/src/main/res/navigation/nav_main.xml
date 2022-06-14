@@ -28,6 +28,9 @@
         <action
             android:id="@+id/action_mainFragment_to_treeCheckFragment"
             app:destination="@id/treeCheckFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_recyclerViewDragFragment"
+            app:destination="@id/recyclerViewDragFragment" />
     </fragment>
 
 
@@ -101,5 +104,9 @@
         android:id="@+id/treeCheckFragment"
         android:name="com.zjl.finalarchitecture.module.toolbox.treeCheck.TreeCheckFragment"
         android:label="TreeCheckFragment" />
+    <fragment
+        android:id="@+id/recyclerViewDragFragment"
+        android:name="com.zjl.finalarchitecture.module.toolbox.draghelper.RecyclerViewDragFragment"
+        android:label="RecyclerViewDragFragment" />
 
 </navigation>

@@ -37,14 +37,24 @@ class TreeCheckViewModel : BaseViewModel() {
 
     private val atomicLong = AtomicLong(0)
 
+    /**
+     * 已经添加的根Uri
+     */
     private val folderRootUris = mutableListOf<Uri>()
 
     private val _message = MutableSharedFlow<Int>()
     val message: SharedFlow<Int> = _message
 
+    /**
+     * 节点管理器
+     */
     val nodeManager = InMemoryTreeStateManager<FolderNode>()
     private val treeBuilder = TreeBuilder(nodeManager)
 
+    /**
+     * 添加根Uri
+     * @param folderRootUri 根路径Uri
+     */
     fun addFolderRoot(folderRootUri: Uri) {
         viewModelScope.launch {
 
@@ -69,24 +79,34 @@ class TreeCheckViewModel : BaseViewModel() {
                     true,
                     1
                 )
+                // 将根Node节点加入到TreeBuilder中
                 treeBuilder.sequentiallyAddNextNode(folderRootNode, 0)
                 folderRootUris.add(folderRootUri)
             }
         }
     }
 
+    /**
+     * 加载对应父节点下的子节点
+     * @param parentNode 父Node
+     */
     fun loadChildrenByParentFolder(parentNode: FolderNode) {
         viewModelScope.launch {
+            // 构建父节点的DocumentFile
             val parentFolderUri = Uri.parse(parentNode.folderUri)
             val documentFile =
                 DocumentFile.fromTreeUri(globalContext, parentFolderUri) ?: return@launch
 
+            /**
+             * 根据父节点的DocumentFile构建子节点查询的DocumentFile
+             */
             val childrenUri = DocumentsContract.buildChildDocumentsUriUsingTree(
                 documentFile.uri,
                 DocumentsContract.getDocumentId(documentFile.uri)
             )
             val childFolderNode = mutableListOf<FolderNode.ChildFolderNode>()
 
+            // 查询
             globalContext.contentResolver.query(
                 childrenUri,
                 safDocumentProjection,
@@ -104,6 +124,7 @@ class TreeCheckViewModel : BaseViewModel() {
 
                 while (it.moveToNext()) {
                     val mimeType = it.getString(mimeTypeColumnIndex)
+                    // 判断是否是文件夹类型，如果不是，则不加入到列表中
                     val isDirectory = mimeType == DocumentsContract.Document.MIME_TYPE_DIR
                     if (!isDirectory) {
                         continue
@@ -115,6 +136,7 @@ class TreeCheckViewModel : BaseViewModel() {
                         documentId
                     )
 
+                    // 将子文件夹加入到列表中
                     childFolderNode.add(
                         FolderNode.ChildFolderNode(
                             atomicLong.addAndGet(1),
@@ -133,6 +155,7 @@ class TreeCheckViewModel : BaseViewModel() {
                 return@launch
             }
 
+            // 告知manager将子节点加入到对应父节点的内容下
             childFolderNode.forEach {
                 treeBuilder.addRelation(parentNode, it)
             }
@@ -140,13 +163,21 @@ class TreeCheckViewModel : BaseViewModel() {
 
     }
 
-
+    /**
+     * 更改了子节点的选择状态，我们需要更新对应所有父节点的选择状态
+     * @param childNode 子节点
+     * @param targetSelect 是否为选中，true：选中 | false：取消
+     */
     fun setStatusParentByChild(childNode: FolderNode, targetSelect: Boolean) {
         // 找到该节点的父节点，如果目标是取消勾选，则将父亲进行取消选择操作
         findAndStatusParentNode(childNode, targetSelect)
         nodeManager.refresh()
     }
 
+    /**
+     * 找到并更改对应节点的所有父节点，并更新其状态
+     * 这是一个递归方法，直到完全遍历完成
+     */
     private fun findAndStatusParentNode(node: FolderNode, select: Boolean) {
         val parentFatherNode = nodeManager.getParent(node)
         if (parentFatherNode != null) {
@@ -174,6 +205,11 @@ class TreeCheckViewModel : BaseViewModel() {
     }
 
 
+    /**
+     * 更改了父节点的选择状态，我们需要更新对应所有子节点的选择状态
+     * @param parentNode 父节点
+     * @param targetSelect 是否为选中，true：选中 | false：取消
+     */
     fun handleSelectedChildren(targetSelect: Boolean, parentNode: FolderNode) {
         viewModelScope.launch {
             findAndStatusChildNode(parentNode, targetSelect)
@@ -181,6 +217,10 @@ class TreeCheckViewModel : BaseViewModel() {
         }
     }
 
+    /**
+     * 找到并更改对应节点的所有子节点，并更新其状态
+     * 这是一个递归方法，直到完全遍历完成
+     */
     private fun findAndStatusChildNode(node: FolderNode, selected: Boolean) {
         // 找到该父节点的所有子节点
         val children = nodeManager.getChildren(node)

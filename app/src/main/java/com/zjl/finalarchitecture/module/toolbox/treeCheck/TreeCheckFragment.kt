@@ -47,6 +47,7 @@ class TreeCheckFragment: BaseFragment<FragmentTreeCheckBinding>() {
     }
 
     override fun initViewAndEvent() {
+        // 启动SAF选择可访问路径
         mBinding.btnSelectTree.setOnClickListener {
             actionOpenDocumentTree.launch(Intent(Intent.ACTION_OPEN_DOCUMENT_TREE))
         }
