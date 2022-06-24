@@ -32,4 +32,11 @@
         android:layout_marginTop="52dp"
         android:text="拖拽案例（RecyclerView）"/>
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_rv_select"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="104dp"
+        android:text="单多选案例（RecyclerView）"/>
+
 </FrameLayout>

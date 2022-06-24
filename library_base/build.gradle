@@ -84,6 +84,8 @@ dependencies {
     api  "io.github.scwang90:refresh-footer-ball:$smart_refresh_Layout_version"        //球脉冲加载
     api  "io.github.scwang90:refresh-footer-classics:$smart_refresh_Layout_version"    //经典加载
 
+    api "com.github.kongzue.DialogX:DialogX:${dialogx_version}"
+
 
     api "com.github.Justson.AgentWeb:agentweb-core:$agent_web_core_version" // (必选)
     api "com.github.Justson.AgentWeb:agentweb-filechooser:$agent_web_filechooser_version" // (可选)

@@ -36,6 +36,10 @@ class ToolboxFragment: BaseFragment<FragmentToolboxBinding>() {
             findNavController().navigate(MainFragmentDirections.actionMainFragmentToRecyclerViewDragFragment())
         }
 
+        mBinding.btnRvSelect.setOnClickListener {
+            findNavController().navigate(MainFragmentDirections.actionMainFragmentToSelectSingleOrMultiFragment())
+        }
+
     }
 
     override fun createObserver() {

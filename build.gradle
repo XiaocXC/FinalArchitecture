@@ -81,6 +81,8 @@ buildscript {
         agent_web_filechooser_version = "v5.0.0-alpha.1-androidx"
         agent_web_downloader_version = "v5.0.0-androidx"
 
+        dialogx_version = "0.0.45.beta18"
+
     }
     repositories {
         maven { url 'https://maven.aliyun.com/repository/central' }

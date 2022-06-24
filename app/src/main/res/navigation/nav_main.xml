@@ -31,6 +31,9 @@
         <action
             android:id="@+id/action_mainFragment_to_recyclerViewDragFragment"
             app:destination="@id/recyclerViewDragFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_selectSingleOrMultiFragment"
+            app:destination="@id/selectSingleOrMultiFragment" />
     </fragment>
 
 
@@ -108,5 +111,9 @@
         android:id="@+id/recyclerViewDragFragment"
         android:name="com.zjl.finalarchitecture.module.toolbox.draghelper.RecyclerViewDragFragment"
         android:label="RecyclerViewDragFragment" />
+    <fragment
+        android:id="@+id/selectSingleOrMultiFragment"
+        android:name="com.zjl.finalarchitecture.module.toolbox.selectRv.SelectSingleOrMultiFragment"
+        android:label="SelectSingleOrMultiFragment" />
 
 </navigation>
