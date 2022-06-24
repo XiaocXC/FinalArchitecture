@@ -18,6 +18,9 @@ class SelectMultiAdapter: BaseQuickAdapter<String, BaseViewHolder>(
     R.layout.item_single_or_multi_select
 ) {
 
+    /**
+     * 当前已选择的数据集
+     */
     var currentSelectSet = mutableSetOf<String>()
     @SuppressLint("NotifyDataSetChanged")
     set(value) {
@@ -30,9 +33,14 @@ class SelectMultiAdapter: BaseQuickAdapter<String, BaseViewHolder>(
         holder.itemView.tag = item
 
         holder.setText(R.id.tv_title, item)
+        // 判断该Item是否在已选择的数据集中，更新其选择状态
         handleSelectStatus(holder, currentSelectSet.contains(item))
     }
 
+    /**
+     * 局部更新
+     * @param payloads 额外参数值
+     */
     override fun convert(holder: BaseViewHolder, item: String, payloads: List<Any>) {
         if(payloads.isEmpty()){
             return
@@ -52,11 +60,13 @@ class SelectMultiAdapter: BaseQuickAdapter<String, BaseViewHolder>(
         cbSelect.setOnClickListener {
             val data = (viewHolder.itemView.tag as? String) ?: return@setOnClickListener
             val changedSelected = cbSelect.isChecked
+            // 如果是选中，将其加入到已选数据集，如果是取消选中，将其从里面移除
             if(changedSelected){
                 currentSelectSet.add(data)
             } else {
                 currentSelectSet.remove(data)
             }
+            // 通知对应Item进行局部更新是否选中状态
             notifyItemChanged(viewHolder.absoluteAdapterPosition, changedSelected)
         }
 
@@ -64,11 +74,13 @@ class SelectMultiAdapter: BaseQuickAdapter<String, BaseViewHolder>(
             val data = (viewHolder.itemView.tag as? String) ?: return@setOnClickListener
             val changedSelected = !cbSelect.isChecked
 
+            // 如果是选中，将其加入到已选数据集，如果是取消选中，将其从里面移除
             if(changedSelected){
                 currentSelectSet.add(data)
             } else {
                 currentSelectSet.remove(data)
             }
+            // 通知对应Item进行局部更新是否选中状态
             notifyItemChanged(viewHolder.absoluteAdapterPosition, changedSelected)
         }
     }

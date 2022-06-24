@@ -21,6 +21,9 @@ class SelectMultiDialog: DialogFragment() {
 
     private lateinit var multiAdapter: SelectMultiAdapter
 
+    /**
+     * 确认后的回调
+     */
     var confirmCallback: (selectData: List<String>) -> Unit = {}
 
     override fun onStart() {
@@ -55,6 +58,7 @@ class SelectMultiDialog: DialogFragment() {
 
         multiAdapter.setList(generateData())
 
+        // 确定后将已选择的数据返回
         mBinding.btnConfirm.setOnClickListener {
             val currentSelectData = multiAdapter.currentSelectSet.toList()
             confirmCallback(currentSelectData)

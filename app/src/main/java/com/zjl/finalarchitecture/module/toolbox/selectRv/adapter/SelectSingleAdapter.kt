@@ -22,12 +22,12 @@ class SelectSingleAdapter: BaseQuickAdapter<String, BaseViewHolder>(
      */
     var currentSelect: Int = RecyclerView.NO_POSITION
     set(value) {
-        // 通知前一个内容取消勾选
+        // 通知更新前一个内容取消勾选
         getItemOrNull(currentSelect)?.let {
             notifyItemChanged(currentSelect, false)
         }
         field = value
-        // 通知当前选中的更新
+        // 通知更新当前选中的状态
         getItemOrNull(currentSelect)?.let {
             notifyItemChanged(currentSelect, true)
         }
@@ -60,6 +60,7 @@ class SelectSingleAdapter: BaseQuickAdapter<String, BaseViewHolder>(
         // 监听CheckBox的点击事件（我们这不监听状态变化，因为会有问题BUG）
         cbSelect.setOnClickListener {
             val changedSelected = cbSelect.isChecked
+            // 更新当前的选中下标
             currentSelect = if(changedSelected){
                 viewHolder.absoluteAdapterPosition
             } else {
@@ -69,6 +70,7 @@ class SelectSingleAdapter: BaseQuickAdapter<String, BaseViewHolder>(
 
         viewHolder.itemView.setOnClickListener {
             val changedSelected = !cbSelect.isChecked
+            // 更新当前的选中下标
             currentSelect = if(changedSelected){
                 viewHolder.absoluteAdapterPosition
             } else {

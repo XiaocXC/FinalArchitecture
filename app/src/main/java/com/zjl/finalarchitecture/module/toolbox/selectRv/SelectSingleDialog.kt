@@ -20,6 +20,9 @@ class SelectSingleDialog: DialogFragment() {
 
     private lateinit var singleAdapter: SelectSingleAdapter
 
+    /**
+     * 确认后的回调
+     */
     var confirmCallback: (selectData: String) -> Unit = {}
 
     override fun onStart() {
@@ -54,6 +57,7 @@ class SelectSingleDialog: DialogFragment() {
 
         singleAdapter.setList(generateData())
 
+        // 确定后将已选择的数据返回
         mBinding.btnConfirm.setOnClickListener {
             val currentSelectData = singleAdapter.getItemOrNull(singleAdapter.currentSelect) ?: return@setOnClickListener
             confirmCallback(currentSelectData)
