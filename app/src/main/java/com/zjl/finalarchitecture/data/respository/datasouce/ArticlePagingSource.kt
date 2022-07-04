@@ -13,6 +13,7 @@ import com.zjl.finalarchitecture.data.respository.ApiRepository
  *
  * 文章分页数据源请求
  */
+@Deprecated("已废弃，Paging3目前被放弃使用")
 class ArticlePagingSource: IntegerPagingSource<ArticleListVO>() {
 
     override suspend fun loadData(currentPage: Int): ApiResult<PageVO<ArticleListVO>> {

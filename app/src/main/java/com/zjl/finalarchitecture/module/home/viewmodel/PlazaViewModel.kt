@@ -4,10 +4,18 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
+import com.zjl.base.exception.ApiException
+import com.zjl.base.ui.PagingUiModel
 import com.zjl.base.viewmodel.BaseViewModel
+import com.zjl.base.viewmodel.PagingBaseViewModel
+import com.zjl.finalarchitecture.data.model.ArticleListVO
+import com.zjl.finalarchitecture.data.respository.ApiRepository
 import com.zjl.finalarchitecture.data.respository.datasouce.PlazaPagingSource
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 
-class PlazaViewModel: BaseViewModel()  {
+class PlazaViewModel: PagingBaseViewModel()  {
 
 //    val coldFlow = flow {
 //        emit(1)
@@ -59,20 +67,28 @@ class PlazaViewModel: BaseViewModel()  {
 //
 //    private var currentPage = 0
 
-
-    // 广场文章
-    val plazaPagingFlow  = Pager(
-        PagingConfig(pageSize = 20)){
-        PlazaPagingSource()
-    }.flow.cachedIn(viewModelScope)
+    private val _plazaList = MutableStateFlow<PagingUiModel<ArticleListVO>>(PagingUiModel.Loading(true))
+    val plazaList: StateFlow<PagingUiModel<ArticleListVO>> = _plazaList
 
     init {
         initData()
     }
 
-    override fun refresh() {
-//        currentPage = 0
-//        requestPlazaData()
+    override fun loadMoreInner(currentIndex: Int) {
+        viewModelScope.launch {
+            // 先置为加载中
+            if(currentIndex == initPageIndex()){
+                _plazaList.value = PagingUiModel.Loading(true)
+            }
+
+            launchRequestByPaging({
+                ApiRepository.requestPlazaArticleDataByPage(currentIndex)
+            }, successBlock = {
+                _plazaList.value = PagingUiModel.Success(it.dataList, currentIndex == initPageIndex(), !it.over)
+            }, failureBlock = {
+                _plazaList.value = PagingUiModel.Error(ApiException(it), currentIndex == initPageIndex())
+            })
+        }
     }
 
 //    /**

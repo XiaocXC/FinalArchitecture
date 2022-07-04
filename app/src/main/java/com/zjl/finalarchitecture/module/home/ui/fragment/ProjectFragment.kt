@@ -14,6 +14,7 @@ import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleDividerItemDecora
 import com.zjl.finalarchitecture.module.home.ui.adapter.ProjectAdapter
 import com.zjl.finalarchitecture.module.home.ui.adapter.ProjectCategoryAdapter
 import com.zjl.finalarchitecture.module.home.viewmodel.ProjectViewModel
+import com.zjl.finalarchitecture.utils.ext.handlePagingStatus
 import com.zjl.finalarchitecture.utils.ext.multistate.handleWithPaging3
 import com.zjl.finalarchitecture.utils.ext.paging.withLoadState
 import com.zjl.finalarchitecture.utils.ext.smartrefresh.handleWithPaging3
@@ -48,6 +49,7 @@ class ProjectFragment : BaseFragment<FragmentProjectBinding, ProjectViewModel>()
          * 项目分类 rv adapter
          */
         mProjectCategoryAdapter = ProjectCategoryAdapter()
+
         mBinding.rvCategory.adapter = mProjectCategoryAdapter
 
         mProjectCategoryAdapter.check(mViewModel.checkPosition)
@@ -64,9 +66,12 @@ class ProjectFragment : BaseFragment<FragmentProjectBinding, ProjectViewModel>()
          * 项目详情列表 rv adapter
          */
         mProjectListAdapter = ProjectAdapter()
-        // 给adapter添加尾部页
-        val mFooterAdapter = mProjectListAdapter.withLoadState()
-        mBinding.rvProject.adapter = mFooterAdapter
+        // 加载更多
+        mProjectListAdapter.loadMoreModule.setOnLoadMoreListener {
+            mViewModel.loadMore()
+        }
+
+        mBinding.rvProject.adapter = mProjectListAdapter
         // 分割线
         mBinding.rvProject.addItemDecoration(
             ArticleDividerItemDecoration(
@@ -78,43 +83,31 @@ class ProjectFragment : BaseFragment<FragmentProjectBinding, ProjectViewModel>()
 
     override fun createObserver() {
         launchAndRepeatWithViewLifecycle {
-
             launch {
                 mViewModel.categoryList.collectLatest {
                     mProjectCategoryAdapter.setList(it)
                 }
             }
 
-            //项目分页数据
             launch {
-                mViewModel.projectArticlePagingFlow.collect {
-                    mProjectListAdapter.submitData(it)
-                }
-            }
-
-            // 下拉刷新,上拉分页,LEC状态观察
-            launch {
-                mProjectListAdapter.loadStateFlow.collectLatest {
-                    // 处理SmartLayout与Paging3相关状态联动
-                    //处理下拉刷新的状态
-                    mBinding.refreshLayout.handleWithPaging3(it)
-                    // 处理Paging3状态与整个布局状态相关联动
-                    uiRootState.handleWithPaging3(it, mProjectListAdapter.itemCount <= 0) {
+                mViewModel.articleList.collectLatest {
+                    it.handlePagingStatus(mProjectListAdapter, null, mBinding.refreshLayout){
                         refresh()
                     }
                 }
             }
 
+
         }
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout) {
-        refresh()
+        mViewModel.onCidChanged(mViewModel.cid.value)
     }
 
     private fun refresh() {
         // 刷新Paging
-        mProjectListAdapter.refresh()
+        mViewModel.initData()
     }
 
 }

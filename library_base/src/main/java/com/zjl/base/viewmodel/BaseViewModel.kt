@@ -9,6 +9,7 @@ import com.zjl.base.onSuccess
 import com.zjl.base.transToUiModel
 import com.zjl.base.ui.UiModel
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
@@ -41,7 +42,9 @@ abstract class BaseViewModel: ViewModel(){
      */
     fun initData(resetState: Boolean = true){
         if(resetState){
-            _rootViewState.tryEmit(UiModel.Loading())
+            viewModelScope.launch {
+                _rootViewState.emit(UiModel.Loading())
+            }
         }
         // 调用重写子类的刷新方法
         refresh()

@@ -5,11 +5,11 @@ import android.view.ViewGroup
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.blankj.utilcode.util.KeyboardUtils
 import com.google.android.material.chip.Chip
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.utils.ext.doOnApplyWindowInsets
+import com.zjl.base.utils.findNavController
 import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
 import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.data.model.SearchHotVO

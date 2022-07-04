@@ -1,21 +1,13 @@
 package com.zjl.finalarchitecture.module.auth
 
 import android.os.Bundle
-import android.text.Spannable
-import android.text.SpannableStringBuilder
-import android.text.style.ForegroundColorSpan
 import androidx.activity.OnBackPressedCallback
-import androidx.activity.addCallback
 import androidx.core.view.isVisible
-import androidx.core.widget.doAfterTextChanged
-import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionManager
 import com.google.android.material.transition.MaterialSharedAxis
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.viewmodel.EmptyViewModel
 import com.zjl.finalarchitecture.databinding.FragmentLoginBinding
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 /**
  * @author Xiaoc

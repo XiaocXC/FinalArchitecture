@@ -2,13 +2,11 @@ package com.zjl.finalarchitecture.module.toolbox.multilist
 
 import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
-import com.google.android.material.appbar.AppBarLayout
 import com.gyf.immersionbar.ktx.immersionBar
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.utils.autoCleared
 import com.zjl.base.utils.ext.isNightMode
+import com.zjl.base.utils.findNavController
 import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
 import com.zjl.finalarchitecture.databinding.FragmentMultiListBinding
 import com.zjl.finalarchitecture.module.toolbox.multilist.adapter.MultiListAdapter

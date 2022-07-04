@@ -1,83 +1,41 @@
 package com.zjl.finalarchitecture.module.home.ui.adapter
 
-import android.annotation.SuppressLint
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
+import android.widget.ImageView
 import coil.load
-import com.zjl.base.adapter.ViewBoundPagingListAdapter
-import com.zjl.base.adapter.ViewBoundViewHolder
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.module.LoadMoreModule
+import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.zjl.base.utils.ext.toHtml
 import com.zjl.finalarchitecture.R
-import com.zjl.finalarchitecture.databinding.ItemArticleListDataBinding
 import com.zjl.finalarchitecture.data.model.ArticleListVO
-import com.zjl.finalarchitecture.databinding.ItemProjectBinding
 
 
-class ProjectAdapter : ViewBoundPagingListAdapter<ArticleListVO, ItemProjectBinding>(
-    diffCallback = object : DiffUtil.ItemCallback<ArticleListVO>() {
-        override fun areItemsTheSame(oldItem: ArticleListVO, newItem: ArticleListVO): Boolean {
-            return oldItem.id == newItem.id
-        }
+class ProjectAdapter : BaseQuickAdapter<ArticleListVO, BaseViewHolder>(
+    R.layout.item_project
+), LoadMoreModule {
 
-        override fun areContentsTheSame(oldItem: ArticleListVO, newItem: ArticleListVO): Boolean {
-            return oldItem.title == newItem.title
-        }
-    }) {
-
-    override fun createBinding(
-        parent: ViewGroup,
-        viewType: Int
-    ): ViewBoundViewHolder<ArticleListVO, ItemProjectBinding> {
-        return ViewBoundViewHolder(
-            ItemProjectBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        )
-    }
-
-    @SuppressLint("SetTextI18n")
-    override fun bind(
-        binding: ItemProjectBinding,
-        item: ArticleListVO,
-        position: Int,
-        payloads: MutableList<Any>?
-    ) {
-
+    override fun convert(holder: BaseViewHolder, item: ArticleListVO) {
         item.run {
-            binding.itemProjectAuthor.text = if (author.isNotEmpty()) author else shareUser
-
-
-            if (type == 1) {
-                binding.itemProjectTop.visibility = View.VISIBLE
-            } else {
-                binding.itemProjectTop.visibility = View.GONE
-            }
-
-            binding.itemProjectNew.visibility = if (fresh) View.VISIBLE else View.GONE
-
+            holder.setText(R.id.item_project_author, if (author.isNotEmpty()) author else shareUser)
+            holder.setGone(R.id.item_project_top, type != 1)
+            holder.setGone(R.id.item_project_top, !fresh)
             if (tags.isNotEmpty()) {
-                binding.itemProjectType1.visibility = View.VISIBLE
-                binding.itemProjectType1.text = tags[0].name
+                holder.setGone(R.id.item_project_type1, false)
+                holder.setText(R.id.item_project_type1, tags[0].name)
             } else {
-                binding.itemProjectType1.visibility = View.GONE
+                holder.setGone(R.id.item_project_type1, true)
             }
 
-            binding.itemProjectDate.text = niceDate
-
-            if (envelopePic.isEmpty()) {
-                binding.itemProjectImageview.load(R.drawable.rrrrr)
-            } else {
-                binding.itemProjectImageview.load(envelopePic) {
-                    placeholder(R.drawable.default_project_img)
-                }
+            holder.setText(R.id.item_project_date, niceDate)
+            val itemProjectImageView = holder.getView<ImageView>(R.id.item_project_imageview)
+            itemProjectImageView.load(envelopePic) {
+                placeholder(R.drawable.default_project_img)
             }
 
-            binding.itemProjectTitle.text = title.toHtml()
-            binding.itemProjectContent.text = desc.toHtml()
-            binding.itemProjectType2.text = "$superChapterName·$chapterName".toHtml()
-
+            holder.setText(R.id.item_project_title, title.toHtml())
+            holder.setText(R.id.item_project_content, desc.toHtml())
+            holder.setText(R.id.item_project_type2, "$superChapterName·$chapterName".toHtml())
 
         }
-
     }
 }

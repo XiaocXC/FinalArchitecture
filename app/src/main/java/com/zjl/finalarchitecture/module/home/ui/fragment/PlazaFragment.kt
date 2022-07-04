@@ -3,7 +3,6 @@ package com.zjl.finalarchitecture.module.home.ui.fragment
 import android.os.Bundle
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ToastUtils
 import com.scwang.smart.refresh.layout.api.RefreshLayout
@@ -11,14 +10,15 @@ import com.scwang.smart.refresh.layout.listener.OnRefreshListener
 import com.zjl.base.adapter.DefaultLoadStateAdapter
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.utils.autoCleared
+import com.zjl.base.utils.findNavController
+import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
 import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.databinding.FragmentPlazaBinding
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleAdapter
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleDividerItemDecoration
+import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleOldAdapter
 import com.zjl.finalarchitecture.module.home.viewmodel.PlazaViewModel
-import com.zjl.finalarchitecture.utils.ext.multistate.handleWithPaging3
-import com.zjl.finalarchitecture.utils.ext.paging.withLoadState
-import com.zjl.finalarchitecture.utils.ext.smartrefresh.handleWithPaging3
+import com.zjl.finalarchitecture.utils.ext.handlePagingStatus
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -34,8 +34,6 @@ class PlazaFragment : BaseFragment<FragmentPlazaBinding, PlazaViewModel>(), OnRe
         fun newInstance() = PlazaFragment()
     }
 
-    private val mPlazaViewModel by viewModels<PlazaViewModel>()
-
     private var mArticleAdapter by autoCleared<ArticleAdapter>()
 
     override fun initViewAndEvent(savedInstanceState: Bundle?) {
@@ -46,10 +44,11 @@ class PlazaFragment : BaseFragment<FragmentPlazaBinding, PlazaViewModel>(), OnRe
         // 列表适配器
         mArticleAdapter = ArticleAdapter()
 
-        // 给ArticleAdapter加上分页的状态尾
-        val articleWithFooterAdapter = mArticleAdapter.withLoadState()
+        mArticleAdapter.loadMoreModule.setOnLoadMoreListener {
+            mViewModel.loadMore()
+        }
 
-        mBinding.recyclerView.adapter = articleWithFooterAdapter
+        mBinding.recyclerView.adapter = mArticleAdapter
 
         // 分割线
         mBinding.recyclerView.addItemDecoration(
@@ -66,34 +65,13 @@ class PlazaFragment : BaseFragment<FragmentPlazaBinding, PlazaViewModel>(), OnRe
     }
 
     override fun createObserver() {
-//        launchAndRepeatWithViewLifecycle {
-//            launch {
-//                mViewModel.mPlazaListFlow.collect {
-//                    mPlazaArticleAdapter.addData(it)
-//                }
-//            }
-//
-//            launch {
-//                mViewModel.mAddPlazaListFlow.collect {
-//                    mPlazaArticleAdapter.addData(it)
-//                }
-//            }
-//        }
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            mPlazaViewModel.plazaPagingFlow.collectLatest {
-                mArticleAdapter.submitData(it)
-            }
-        }
-
-        // 下拉刷新,上拉分页,LEC状态观察
-        viewLifecycleOwner.lifecycleScope.launch {
-            mArticleAdapter.loadStateFlow.collectLatest {
-                // 处理SmartLayout与Paging3相关状态联动
-                mBinding.refreshLayout.handleWithPaging3(it)
-                // 处理Paging3状态与整个布局状态相关联动
-                uiRootState.handleWithPaging3(it, mArticleAdapter.itemCount <= 0) {
-                    refresh()
+        launchAndRepeatWithViewLifecycle {
+            launch {
+                mViewModel.plazaList.collectLatest {
+                    it.handlePagingStatus(mArticleAdapter, uiRootState, mBinding.refreshLayout){
+                        refresh()
+                    }
                 }
             }
         }
@@ -105,8 +83,7 @@ class PlazaFragment : BaseFragment<FragmentPlazaBinding, PlazaViewModel>(), OnRe
     }
 
     private fun refresh() {
-        // 刷新Paging
-        mArticleAdapter.refresh()
+        mViewModel.initData(mArticleAdapter.itemCount <= 0)
     }
 
 

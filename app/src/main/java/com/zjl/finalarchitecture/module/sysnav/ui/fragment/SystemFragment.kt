@@ -1,13 +1,12 @@
 package com.zjl.finalarchitecture.module.sysnav.ui.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.ui.onFailure
 import com.zjl.base.ui.onLoading
 import com.zjl.base.ui.onSuccess
 import com.zjl.base.utils.autoCleared
+import com.zjl.base.utils.findNavController
 import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
 import com.zjl.finalarchitecture.databinding.FragmentSystemBinding
 import com.zjl.finalarchitecture.module.main.ui.fragment.MainFragmentDirections

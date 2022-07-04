@@ -1,16 +1,14 @@
 package com.zjl.finalarchitecture.module.home.ui.adapter
 
-import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.graphics.Color
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
-import com.zjl.base.adapter.ViewBoundPagingListAdapter
-import com.zjl.base.adapter.ViewBoundViewHolder
+import android.widget.ImageView
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.module.LoadMoreModule
+import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.zjl.base.utils.ext.toHtml
-import com.zjl.finalarchitecture.databinding.ItemArticleListDataBinding
+import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.data.model.ArticleListVO
 
 /**
@@ -19,66 +17,37 @@ import com.zjl.finalarchitecture.data.model.ArticleListVO
  */
 class ArticleAdapter(
     val collectClicked: (ArticleListVO) -> Unit = {}
-): ViewBoundPagingListAdapter<ArticleListVO, ItemArticleListDataBinding>(
-    diffCallback = object: DiffUtil.ItemCallback<ArticleListVO>(){
-        override fun areItemsTheSame(oldItem: ArticleListVO, newItem: ArticleListVO): Boolean {
-            return oldItem.id == newItem.id
-        }
+): BaseQuickAdapter<ArticleListVO, BaseViewHolder>(R.layout.item_article_list_data), LoadMoreModule {
 
-        override fun areContentsTheSame(oldItem: ArticleListVO, newItem: ArticleListVO): Boolean {
-            return oldItem.title == newItem.title && oldItem.collect == newItem.collect
-        }
-    }) {
-
-    override fun createBinding(
-        parent: ViewGroup,
-        viewType: Int
-    ): ViewBoundViewHolder<ArticleListVO, ItemArticleListDataBinding> {
-        return ViewBoundViewHolder<ArticleListVO, ItemArticleListDataBinding>(
-            ItemArticleListDataBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        ).apply {
-            binding.itemHomeCollect.setOnClickListener {
-                collectClicked(item)
-            }
-        }
-    }
-
-    @SuppressLint("SetTextI18n")
-    override fun bind(
-        binding: ItemArticleListDataBinding,
-        item: ArticleListVO,
-        position: Int,
-        payloads: MutableList<Any>?
+    override fun convert(
+        holder: BaseViewHolder,
+        item: ArticleListVO
     ) {
-
         item.run{
-            binding.itemHomeAuthor.text = if(author.isNotEmpty()) author else shareUser
-            binding.itemHomeContent.text = title.toHtml()
-            binding.itemHomeType2.text = "$superChapterName·$chapterName"
-            binding.itemHomeDate.text = niceDate
-            binding.itemHomeNew.visibility = if(fresh) View.VISIBLE else View.GONE
-            binding.itemHomeType1.text = niceDate
+            holder.setText(R.id.item_home_author, if(author.isNotEmpty()) author else shareUser)
+            holder.setText(R.id.item_home_content, title.toHtml())
+            holder.setText(R.id.item_home_type2, "$superChapterName·$chapterName")
+            holder.setText(R.id.item_home_date, niceDate)
+            holder.setGone(R.id.item_home_new, !fresh)
+            holder.setText(R.id.item_home_type1, niceDate)
 
-            if(type == 1){
-                binding.itemHomeTop.visibility = View.VISIBLE
-            }else{
-                binding.itemHomeTop.visibility = View.GONE
-            }
+            holder.setGone(R.id.item_home_top, type != 1)
 
+            holder.setGone(R.id.item_home_type1, tags.isEmpty())
             if (tags.isNotEmpty()) {
-                binding.itemHomeType1.visibility = View.VISIBLE
-                binding.itemHomeType1.text = tags[0].name
+                holder.setGone(R.id.item_home_type1, false)
+                holder.setText(R.id.item_home_type1, tags[0].name)
             } else {
-                binding.itemHomeType1.visibility = View.GONE
+                holder.setGone(R.id.item_home_type1, true)
             }
 
+            val itemHomeCollect = holder.getView<ImageView>(R.id.item_home_collect)
             // 是否点赞
             if(collect){
-                binding.itemHomeCollect.imageTintList = ColorStateList.valueOf(Color.RED)
+                itemHomeCollect.imageTintList = ColorStateList.valueOf(Color.RED)
             } else {
-                binding.itemHomeCollect.imageTintList = null
+                itemHomeCollect.imageTintList = null
             }
         }
-
     }
 }

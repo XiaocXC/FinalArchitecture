@@ -2,6 +2,7 @@ package com.zjl.finalarchitecture.utils.ext.multistate
 
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
+import com.zjl.base.ui.PagingUiModel
 import com.zjl.base.viewmodel.BaseViewModel
 import com.zy.multistatepage.MultiStateContainer
 import com.zy.multistatepage.state.EmptyState
@@ -13,7 +14,7 @@ import com.zy.multistatepage.state.SuccessState
  * @author Xiaoc
  * @since 2022-02-14
  *
- * 处理[MultiStateContainer]整个视图页面与Paging3相关状态联动
+ * 处理[MultiStateContainer]整个视图页面与Paging3加载相关状态联动
  * 该扩展方法可以控制细颗粒度的状态
  * 因为有些界面可能与Paging相关状态相关联来控制整个视图
  * 所以[BaseViewModel]中的rootState倒显得不那么重要
@@ -52,6 +53,41 @@ fun MultiStateContainer.handleWithPaging3(
             } else {
                 // enabledHandle为false传给show方法作为不展示渐变动画的选择
                 show(SuccessState(), enabledHandle)
+            }
+        }
+    }
+}
+
+/**
+ * 处理[MultiStateContainer]整个视图页面与分页加载相关状态联动
+ * 该扩展方法可以控制细颗粒度的状态
+ */
+fun MultiStateContainer.handleWithPaging(
+    pagingUiModel: PagingUiModel<*>,
+    /**
+     * 重试回调
+     */
+    retry: () -> Unit
+){
+    // 不是刷新状态不管
+    if(!pagingUiModel.refresh){
+        return
+    }
+    when(pagingUiModel){
+        is PagingUiModel.Loading ->{
+            show(LoadingState())
+        }
+        is PagingUiModel.Error ->{
+            show<ErrorState> {
+                it.setErrorMsg(pagingUiModel.error.message ?: "")
+                it.retry(retry)
+            }
+        }
+        is PagingUiModel.Success ->{
+            if(pagingUiModel.data.isEmpty()){
+                show(EmptyState())
+            } else {
+                show(SuccessState())
             }
         }
     }

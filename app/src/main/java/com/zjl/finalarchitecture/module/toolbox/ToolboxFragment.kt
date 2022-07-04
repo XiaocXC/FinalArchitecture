@@ -1,12 +1,8 @@
 package com.zjl.finalarchitecture.module.toolbox
 
-import android.app.Activity
 import android.os.Bundle
-import androidx.navigation.fragment.findNavController
-import com.blankj.utilcode.util.GsonUtils
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.zjl.base.fragment.BaseFragment
+import com.zjl.base.utils.findNavController
 import com.zjl.base.viewmodel.EmptyViewModel
 import com.zjl.finalarchitecture.databinding.FragmentToolboxBinding
 import com.zjl.finalarchitecture.module.main.ui.fragment.MainFragmentDirections

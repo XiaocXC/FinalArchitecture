@@ -6,9 +6,12 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
 import com.zjl.base.exception.ApiException
+import com.zjl.base.ui.PagingUiModel
 import com.zjl.base.ui.UiModel
 import com.zjl.base.viewmodel.BaseViewModel
+import com.zjl.base.viewmodel.PagingBaseViewModel
 import com.zjl.finalarchitecture.api.ApiService
+import com.zjl.finalarchitecture.data.model.ArticleListVO
 import com.zjl.finalarchitecture.data.model.CategoryVO
 import com.zjl.finalarchitecture.data.model.SystemVO
 import com.zjl.finalarchitecture.data.respository.ApiRepository
@@ -26,7 +29,7 @@ import kotlinx.coroutines.launch
  * @author: zhou
  * @date : 2022/4/25 19:46
  */
-class ProjectViewModel: BaseViewModel() {
+class ProjectViewModel: PagingBaseViewModel() {
 
     /**
      * 项目分类列表数据
@@ -34,20 +37,17 @@ class ProjectViewModel: BaseViewModel() {
     private val _categoryList = MutableStateFlow<List<CategoryVO>>(emptyList())
     val categoryList: StateFlow<List<CategoryVO>> = _categoryList
 
+    /**
+     * 项目分类列表数据
+     */
+    private val _articleList = MutableStateFlow<PagingUiModel<ArticleListVO>>(PagingUiModel.Loading(true))
+    val articleList: StateFlow<PagingUiModel<ArticleListVO>> = _articleList
+
     private val _cid = MutableStateFlow(0)
+    val cid: StateFlow<Int> = _cid
 
     //项目分类选中下表
     var checkPosition = 0
-
-    /**
-     * 项目列表数据
-     * 当Cid发生变化时，会自动重新请求Paging数据
-     */
-    val projectArticlePagingFlow = _cid.flatMapLatest {
-        Pager(PagingConfig(pageSize = 20)) {
-            ProjectArticlePagingSource(it)
-        }.flow
-    }.cachedIn(viewModelScope)
 
     /**
      * 点击后更改的Cid
@@ -55,14 +55,30 @@ class ProjectViewModel: BaseViewModel() {
      */
     fun onCidChanged(cid: Int){
         _cid.value = cid
+
+        // 重置分页Index
+        currentPageIndex = initPageIndex()
+        loadMore()
     }
 
     init {
         requestCategory()
     }
 
-    override fun refresh() {
+    override fun loadMoreInner(currentIndex: Int) {
+        viewModelScope.launch {
+            launchRequestByPaging({
+                ApiRepository.requestProjectDetailListDataByPage(currentIndex, _cid.value)
+            }, successBlock = {
+                _articleList.value = PagingUiModel.Success(it.dataList, currentIndex == initPageIndex(), !it.over)
+            }, failureBlock = {
+                _articleList.value = PagingUiModel.Error(ApiException(it), currentIndex == initPageIndex())
+            })
+        }
+    }
 
+    override fun initPageIndex(): Int {
+        return 1
     }
 
     /**
@@ -70,12 +86,18 @@ class ProjectViewModel: BaseViewModel() {
      */
     private fun requestCategory() {
         viewModelScope.launch {
+            _rootViewState.emit(UiModel.Loading())
+
             launchRequestByNormal({
                 ApiRepository.requestProjectListData()
             }, successBlock = { data ->
                 // 状态更改为成功
                 _rootViewState.emit(UiModel.Success(data))
                 _categoryList.value = data
+                // 默认选中一个
+                if(data.isNotEmpty()){
+                    onCidChanged(data[0].id)
+                }
             },failureBlock = { error ->
                 // 状态更改为错误
                 _rootViewState.emit(UiModel.Error(ApiException(error)))

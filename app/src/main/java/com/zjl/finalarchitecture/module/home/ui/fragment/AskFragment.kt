@@ -9,10 +9,13 @@ import com.scwang.smart.refresh.layout.listener.OnRefreshListener
 import com.zjl.base.adapter.DefaultLoadStateAdapter
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.utils.autoCleared
+import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
 import com.zjl.finalarchitecture.databinding.FragmentAskBinding
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleAdapter
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleDividerItemDecoration
+import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleOldAdapter
 import com.zjl.finalarchitecture.module.home.viewmodel.AskViewModel
+import com.zjl.finalarchitecture.utils.ext.handlePagingStatus
 import com.zjl.finalarchitecture.utils.ext.multistate.handleWithPaging3
 import com.zjl.finalarchitecture.utils.ext.paging.withLoadState
 import com.zjl.finalarchitecture.utils.ext.smartrefresh.handleWithPaging3
@@ -39,9 +42,12 @@ class AskFragment: BaseFragment<FragmentAskBinding, AskViewModel>(), OnRefreshLi
         // 列表适配器
         mArticleAdapter = ArticleAdapter()
 
+        mArticleAdapter.loadMoreModule.setOnLoadMoreListener {
+            mViewModel.loadMore()
+        }
 
         // 给ArticleAdapter加上分页的状态尾
-        val articleWithFooterAdapter = mArticleAdapter.withLoadState()
+        val articleWithFooterAdapter = mArticleAdapter
 
         mBinding.recyclerView.adapter = articleWithFooterAdapter
 
@@ -55,21 +61,12 @@ class AskFragment: BaseFragment<FragmentAskBinding, AskViewModel>(), OnRefreshLi
     }
 
     override fun createObserver() {
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            mViewModel.askPagingFlow.collectLatest {
-                mArticleAdapter.submitData(it)
-            }
-        }
-
-        // 下拉刷新,上拉分页,LEC状态观察
-        viewLifecycleOwner.lifecycleScope.launch {
-            mArticleAdapter.loadStateFlow.collectLatest {
-                // 处理SmartLayout与Paging3相关状态联动
-                mBinding.refreshLayout.handleWithPaging3(it)
-                // 处理Paging3状态与整个布局状态相关联动
-                uiRootState.handleWithPaging3(it, mArticleAdapter.itemCount <= 0) {
-                    refresh()
+        launchAndRepeatWithViewLifecycle {
+            launch {
+                mViewModel.askList.collectLatest {
+                    it.handlePagingStatus(mArticleAdapter, uiRootState, mBinding.refreshLayout){
+                        refresh()
+                    }
                 }
             }
         }
@@ -82,7 +79,6 @@ class AskFragment: BaseFragment<FragmentAskBinding, AskViewModel>(), OnRefreshLi
 
 
     private fun refresh() {
-        // 刷新Paging
-        mArticleAdapter.refresh()
+        mViewModel.initData()
     }
 }

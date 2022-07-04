@@ -6,14 +6,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.utils.ext.init
 import com.zjl.base.utils.ext.reduceDragSensitivity
+import com.zjl.base.utils.findNavController
 import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
+import com.zjl.base.utils.navArgs
 import com.zjl.finalarchitecture.data.model.ClassifyVO
 import com.zjl.finalarchitecture.databinding.FragmentSystemDetailArrBinding
 import com.zjl.finalarchitecture.module.sysnav.viewmodel.SystemDetailArrViewModel

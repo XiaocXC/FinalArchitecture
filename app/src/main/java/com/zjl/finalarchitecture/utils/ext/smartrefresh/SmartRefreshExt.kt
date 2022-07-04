@@ -3,6 +3,7 @@ package com.zjl.finalarchitecture.utils.ext.smartrefresh
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
+import com.zjl.base.ui.PagingUiModel
 
 /**
  * 处理[SmartRefreshLayout]与Paging3相关状态联动
@@ -45,6 +46,38 @@ fun SmartRefreshLayout.handleWithPaging3(
             }
             is LoadState.NotLoading ->{
                 finishLoadMore()
+            }
+        }
+    }
+}
+
+/**
+ * 处理[SmartRefreshLayout]与分页相关状态联动
+ * 该扩展方法可以控制细颗粒度的状态
+ */
+fun SmartRefreshLayout.handleWithPaging(
+    pagingUiModel: PagingUiModel<*>,
+){
+    when(pagingUiModel){
+        is PagingUiModel.Success ->{
+            if(pagingUiModel.refresh){
+                finishRefresh()
+            } else {
+                finishLoadMore()
+            }
+        }
+        is PagingUiModel.Loading ->{
+            if(pagingUiModel.refresh){
+                autoRefresh()
+            } else {
+                autoLoadMore()
+            }
+        }
+        is PagingUiModel.Error ->{
+            if(pagingUiModel.refresh){
+                finishRefresh(false)
+            } else {
+                finishLoadMore(false)
             }
         }
     }

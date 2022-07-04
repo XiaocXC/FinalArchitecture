@@ -38,8 +38,11 @@ dependencies {
     api "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
 
     // Navigation
-    api "androidx.navigation:navigation-fragment-ktx:$navigation_version"
+    api("androidx.navigation:navigation-fragment-ktx:$navigation_version") {
+        exclude group: 'androidx.navigation', module: "navigation-fragment"
+    }
     api "androidx.navigation:navigation-ui-ktx:$navigation_version"
+    api 'com.kunminx.arch:smooth-navigation:4.0.0-beta1'
 
     // Glide
     api "io.coil-kt:coil:$coil_version"

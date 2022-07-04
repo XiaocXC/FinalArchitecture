@@ -14,6 +14,7 @@ import com.zjl.finalarchitecture.module.home.ui.adapter.ProjectAdapter
 import com.zjl.finalarchitecture.module.home.ui.adapter.ProjectCategoryAdapter
 import com.zjl.finalarchitecture.module.home.ui.adapter.WechatCategoryAdapter
 import com.zjl.finalarchitecture.module.home.viewmodel.WechatViewModel
+import com.zjl.finalarchitecture.utils.ext.handlePagingStatus
 import com.zjl.finalarchitecture.utils.ext.multistate.handleWithPaging3
 import com.zjl.finalarchitecture.utils.ext.paging.withLoadState
 import com.zjl.finalarchitecture.utils.ext.smartrefresh.handleWithPaging3
@@ -60,9 +61,11 @@ class WeChatFragment : BaseFragment<FragmentProjectBinding, WechatViewModel>(), 
          * 微信公众号详情列表 rv adapter
          */
         mWechatListAdapter = ProjectAdapter()
-        // 给adapter添加尾部页
-        val mFooterAdapter = mWechatListAdapter.withLoadState()
-        mBinding.rvProject.adapter = mFooterAdapter
+        mWechatListAdapter.loadMoreModule.setOnLoadMoreListener {
+            mViewModel.loadMore()
+        }
+
+        mBinding.rvProject.adapter = mWechatListAdapter
         // 分割线
         mBinding.rvProject.addItemDecoration(
             ArticleDividerItemDecoration(
@@ -75,47 +78,31 @@ class WeChatFragment : BaseFragment<FragmentProjectBinding, WechatViewModel>(), 
     }
 
     override fun createObserver() {
-
         launchAndRepeatWithViewLifecycle {
-
-            /* 微信公众号分类 */
             launch {
                 mViewModel.categoryList.collectLatest {
                     mWechatCategoryAdapter.setList(it)
                 }
             }
 
-            /* 微信公众号列表数据 */
             launch {
-                mViewModel.wechatArticlePagingFlow.collect {
-                    mWechatListAdapter.submitData(it)
-                }
-            }
-
-            // 下拉刷新,上拉分页,LEC状态观察
-            launch {
-                mWechatListAdapter.loadStateFlow.collectLatest {
-                    // 处理SmartLayout与Paging3相关状态联动
-                    //处理下拉刷新的状态
-                    mBinding.refreshLayout.handleWithPaging3(it)
-                    // 处理Paging3状态与整个布局状态相关联动
-                    uiRootState.handleWithPaging3(it, mWechatListAdapter.itemCount <= 0) {
+                mViewModel.articleList.collectLatest {
+                    it.handlePagingStatus(mWechatListAdapter, null, mBinding.refreshLayout){
                         refresh()
                     }
                 }
             }
-
         }
 
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout) {
-        refresh()
+        mViewModel.onCidChanged(mViewModel.cid.value)
     }
 
     private fun refresh() {
         // 刷新Paging
-        mWechatListAdapter.refresh()
+        mViewModel.initData()
     }
 
 

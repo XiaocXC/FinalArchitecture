@@ -89,11 +89,11 @@ abstract class BaseFragment<V: ViewBinding, VM: BaseViewModel>: Fragment() {
         // 如果可取消，显示的是替换整个界面的加载内容
         // 如果不可取消，则显示的是加载弹出，禁止关闭
         if(cancelable){
-            WaitDialog.show(getString(R.string.base_ui_description_status_view_empty)).apply {
+            uiRootState.show(LoadingState())
+        } else {
+            WaitDialog.show(getString(R.string.base_ui_description_status_view_loading)).apply {
                 isCancelable = false
             }
-        } else {
-            uiRootState.show(LoadingState())
         }
     }
 

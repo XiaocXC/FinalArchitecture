@@ -7,7 +7,6 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.blankj.utilcode.util.LogUtils
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -15,6 +14,7 @@ import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.utils.ext.doOnApplyWindowInsets
 import com.zjl.base.utils.ext.init
 import com.zjl.base.utils.ext.reduceDragSensitivity
+import com.zjl.base.utils.findNavController
 import com.zjl.base.viewmodel.EmptyViewModel
 import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.databinding.FragmentHomeBinding
@@ -84,52 +84,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, EmptyViewModel>() {
         }
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        LogUtils.eTag("zhou::","onAttach")
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        LogUtils.eTag("zhou::","onCreate")
-    }
-
-    override fun onStart() {
-        super.onStart()
-        LogUtils.eTag("zhou::","onStart")
-    }
-
-    override fun onResume() {
-        super.onResume()
-        LogUtils.eTag("zhou::","onResume")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        LogUtils.eTag("zhou::","onPause")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        LogUtils.eTag("zhou::","onStop")
-    }
-
     override fun onDestroyView() {
         tabLayoutMediator?.detach()
         tabLayoutMediator = null
         mBinding.mViewPager2.adapter = null
         super.onDestroyView()
         LogUtils.eTag("zhou::","onDestroyView")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        LogUtils.eTag("zhou::","onDestroy")
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        LogUtils.eTag("zhou::","onDetach")
     }
 
 }

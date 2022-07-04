@@ -11,6 +11,7 @@ import com.zjl.base.utils.autoCleared
 import com.zjl.finalarchitecture.databinding.FragmentSystemDetailInnerBinding
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleAdapter
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleDividerItemDecoration
+import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleOldAdapter
 import com.zjl.finalarchitecture.module.sysnav.viewmodel.SystemDetailInnerViewModel
 import com.zjl.finalarchitecture.utils.ext.multistate.handleWithPaging3
 import com.zjl.finalarchitecture.utils.ext.paging.withLoadState
@@ -30,11 +31,11 @@ class SystemDetailInnerFragment: BaseFragment<FragmentSystemDetailInnerBinding, 
     }
 
     //这里用的也是 ArticleAdapter
-    private var mArticleAdapter by autoCleared<ArticleAdapter>()
+    private var mArticleAdapter by autoCleared<ArticleOldAdapter>()
 
     override fun initViewAndEvent(savedInstanceState: Bundle?) {
 
-        mArticleAdapter = ArticleAdapter()
+        mArticleAdapter = ArticleOldAdapter()
 
         mBinding.rvSystemChild.adapter = mArticleAdapter.withLoadState()
         // 分割线

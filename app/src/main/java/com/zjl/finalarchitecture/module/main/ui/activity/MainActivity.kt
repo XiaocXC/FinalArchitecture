@@ -19,13 +19,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
     var mExitTime = 0L
 
-    override fun bindView(): ActivityMainBinding = ActivityMainBinding.inflate(layoutInflater)
-
-    override fun bindViewModel(): MainViewModel{
-        val vm by viewModels<MainViewModel>()
-        return vm
-    }
-
     override fun initViewAndEvent(savedInstanceState: Bundle?) {
         // 配置Navigation
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {

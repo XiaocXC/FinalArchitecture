@@ -11,6 +11,7 @@ import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
 import com.zjl.finalarchitecture.databinding.FragmentSearchResultBinding
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleAdapter
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleDividerItemDecoration
+import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleOldAdapter
 import com.zjl.finalarchitecture.module.search.viewmodel.SearchResultViewModel
 import com.zjl.finalarchitecture.utils.ext.multistate.handleWithPaging3
 import com.zjl.finalarchitecture.utils.ext.paging.withLoadState
@@ -25,11 +26,11 @@ import kotlinx.coroutines.launch
  **/
 class SearchResultFragment: BaseFragment<FragmentSearchResultBinding, SearchResultViewModel>() {
 
-    private var mArticleAdapter by autoCleared<ArticleAdapter>()
+    private var mArticleAdapter by autoCleared<ArticleOldAdapter>()
 
     override fun initViewAndEvent(savedInstanceState: Bundle?) {
         // 列表适配器
-        mArticleAdapter = ArticleAdapter()
+        mArticleAdapter = ArticleOldAdapter()
 
         // 给ArticleAdapter加上分页的状态尾
         val withFooterAdapter = mArticleAdapter.withLoadState()
