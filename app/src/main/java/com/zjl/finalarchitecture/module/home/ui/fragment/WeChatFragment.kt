@@ -1,5 +1,6 @@
 package com.zjl.finalarchitecture.module.home.ui.fragment
 
+import android.os.Bundle
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.scwang.smart.refresh.layout.api.RefreshLayout
@@ -25,13 +26,11 @@ import timber.log.Timber
  * @author: zhou
  * @date : 2022/1/20 18:07
  */
-class WeChatFragment : BaseFragment<FragmentProjectBinding>(), OnRefreshListener {
+class WeChatFragment : BaseFragment<FragmentProjectBinding, WechatViewModel>(), OnRefreshListener {
 
     companion object {
         fun newInstance() = WeChatFragment()
     }
-
-    private val mWechatViewModel by viewModels<WechatViewModel>()
 
     /* 微信公众号分类 */
     private var mWechatCategoryAdapter by autoCleared<ProjectCategoryAdapter>()
@@ -39,9 +38,7 @@ class WeChatFragment : BaseFragment<FragmentProjectBinding>(), OnRefreshListener
     /* 微信公众号详情列表 */
     private var mWechatListAdapter by autoCleared<ProjectAdapter>()
 
-    override fun bindView() = FragmentProjectBinding.inflate(layoutInflater)
-
-    override fun initViewAndEvent() {
+    override fun initViewAndEvent(savedInstanceState: Bundle?) {
         // 下拉刷新
         mBinding.refreshLayout.setOnRefreshListener(this)
 
@@ -51,11 +48,11 @@ class WeChatFragment : BaseFragment<FragmentProjectBinding>(), OnRefreshListener
         mWechatCategoryAdapter = ProjectCategoryAdapter()
         mBinding.rvCategory.adapter = mWechatCategoryAdapter
 
-        mWechatCategoryAdapter.check(mWechatViewModel.checkPosition)
+        mWechatCategoryAdapter.check(mViewModel.checkPosition)
 
         mWechatCategoryAdapter.setCheckClick { id, position ->
-            mWechatViewModel.onCidChanged(id)
-            mWechatViewModel.checkPosition = position
+            mViewModel.onCidChanged(id)
+            mViewModel.checkPosition = position
         }
 
 
@@ -83,14 +80,14 @@ class WeChatFragment : BaseFragment<FragmentProjectBinding>(), OnRefreshListener
 
             /* 微信公众号分类 */
             launch {
-                mWechatViewModel.categoryList.collectLatest {
+                mViewModel.categoryList.collectLatest {
                     mWechatCategoryAdapter.setList(it)
                 }
             }
 
             /* 微信公众号列表数据 */
             launch {
-                mWechatViewModel.wechatArticlePagingFlow.collect {
+                mViewModel.wechatArticlePagingFlow.collect {
                     mWechatListAdapter.submitData(it)
                 }
             }

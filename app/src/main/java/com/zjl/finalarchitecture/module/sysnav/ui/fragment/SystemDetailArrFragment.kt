@@ -1,6 +1,7 @@
 package com.zjl.finalarchitecture.module.sysnav.ui.fragment
 
 import android.annotation.SuppressLint
+import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
@@ -19,11 +20,9 @@ import com.zjl.finalarchitecture.module.sysnav.viewmodel.SystemDetailArrViewMode
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class SystemDetailArrFragment : BaseFragment<FragmentSystemDetailArrBinding>() {
+class SystemDetailArrFragment : BaseFragment<FragmentSystemDetailArrBinding, SystemDetailArrViewModel>() {
 
     private val args by navArgs<SystemDetailArrFragmentArgs>()
-
-    private val systemDetailArrViewModel by viewModels<SystemDetailArrViewModel>()
 
     private var mTitleArrayData : ArrayList<String> = arrayListOf()
     private var mFragmentList: ArrayList<Fragment> = arrayListOf()
@@ -35,9 +34,7 @@ class SystemDetailArrFragment : BaseFragment<FragmentSystemDetailArrBinding>() {
      */
     private var tabLayoutMediator: TabLayoutMediator? = null
 
-    override fun bindView() = FragmentSystemDetailArrBinding.inflate(layoutInflater)
-
-    override fun initViewAndEvent() {
+    override fun initViewAndEvent(savedInstanceState: Bundle?) {
         //标题
         mBinding.toolbarSystemArr.title = args.detailData.name
 
@@ -71,7 +68,7 @@ class SystemDetailArrFragment : BaseFragment<FragmentSystemDetailArrBinding>() {
 
         launchAndRepeatWithViewLifecycle {
             launch {
-                systemDetailArrViewModel.systemChild.collectLatest {
+                mViewModel.systemChild.collectLatest {
                     // 展示ViewPager内容
                     val (index, ids) = it
                     //用法1

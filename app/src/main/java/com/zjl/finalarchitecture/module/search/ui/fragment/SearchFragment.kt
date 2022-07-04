@@ -1,5 +1,6 @@
 package com.zjl.finalarchitecture.module.search.ui.fragment
 
+import android.os.Bundle
 import android.view.ViewGroup
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
@@ -18,15 +19,9 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 
-class SearchFragment : BaseFragment<FragmentSearchBinding>() {
+class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>() {
 
-    private val searchViewModel by viewModels<SearchViewModel>()
-
-    override fun bindView(): FragmentSearchBinding {
-        return FragmentSearchBinding.inflate(layoutInflater)
-    }
-
-    override fun initViewAndEvent() {
+    override fun initViewAndEvent(savedInstanceState: Bundle?) {
         mBinding.toolbarSearch.doOnApplyWindowInsets { view, insets, padding ->
             val systemInsets = insets.getInsets(
                 WindowInsetsCompat.Type.systemBars()
@@ -46,7 +41,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
                     return@setEndIconOnClickListener
                 }
                 // 存储搜索的内容
-                searchViewModel.saveSearchKey(inputLayout.editText?.text.toString())
+                mViewModel.saveSearchKey(inputLayout.editText?.text.toString())
 
                 // 进入下一个页面
                 findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToSearchResultFragment(
@@ -60,13 +55,13 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         launchAndRepeatWithViewLifecycle {
             launch {
                 // 热门搜索
-                searchViewModel.searchHotKeys.collectLatest {
+                mViewModel.searchHotKeys.collectLatest {
                     generateSearchHotChip(it)
                 }
             }
             launch {
                 // 历史记录
-                searchViewModel.searchHistoryKeys.collectLatest {
+                mViewModel.searchHistoryKeys.collectLatest {
                     generateSearchHistoryChip(it)
                 }
             }
@@ -86,7 +81,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
             // 每一项的点击事件
             chip.setOnClickListener {
                 // 存储搜索的内容
-                searchViewModel.saveSearchKey(chip.text.toString())
+                mViewModel.saveSearchKey(chip.text.toString())
 
                 // 进入下一个页面
                 findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToSearchResultFragment(chip.text.toString(), chip.text.toString()))
@@ -104,13 +99,13 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
             chip.isCloseIconVisible = true
             chip.setOnClickListener {
                 // 存储搜索的内容
-                searchViewModel.saveSearchKey(chip.text.toString())
+                mViewModel.saveSearchKey(chip.text.toString())
 
                 // 进入下一个页面
                 findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToSearchResultFragment(chip.text.toString(), chip.text.toString()))
             }
             chip.setOnCloseIconClickListener {
-                searchViewModel.removeSearchKey(chip.text.toString())
+                mViewModel.removeSearchKey(chip.text.toString())
             }
             mBinding.chipSearchHistory.addView(chip)
         }

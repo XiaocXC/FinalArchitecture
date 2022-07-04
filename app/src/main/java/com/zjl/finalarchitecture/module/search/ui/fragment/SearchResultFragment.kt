@@ -1,5 +1,6 @@
 package com.zjl.finalarchitecture.module.search.ui.fragment
 
+import android.os.Bundle
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,17 +23,11 @@ import kotlinx.coroutines.launch
  *
  * 搜索结果页面
  **/
-class SearchResultFragment: BaseFragment<FragmentSearchResultBinding>() {
-
-    private val searchResultViewModel by viewModels<SearchResultViewModel>()
+class SearchResultFragment: BaseFragment<FragmentSearchResultBinding, SearchResultViewModel>() {
 
     private var mArticleAdapter by autoCleared<ArticleAdapter>()
 
-    override fun bindView(): FragmentSearchResultBinding {
-        return FragmentSearchResultBinding.inflate(layoutInflater)
-    }
-
-    override fun initViewAndEvent() {
+    override fun initViewAndEvent(savedInstanceState: Bundle?) {
         // 列表适配器
         mArticleAdapter = ArticleAdapter()
 
@@ -53,7 +48,7 @@ class SearchResultFragment: BaseFragment<FragmentSearchResultBinding>() {
     override fun createObserver() {
         launchAndRepeatWithViewLifecycle {
             launch {
-                searchResultViewModel.searchResultPagingFlow.collectLatest {
+                mViewModel.searchResultPagingFlow.collectLatest {
                     mArticleAdapter.submitData(it)
                 }
             }
@@ -67,7 +62,7 @@ class SearchResultFragment: BaseFragment<FragmentSearchResultBinding>() {
             }
 
             launch {
-                searchResultViewModel.title.collectLatest {
+                mViewModel.title.collectLatest {
                     mBinding.toolbarSearchResult.title = it
                 }
             }

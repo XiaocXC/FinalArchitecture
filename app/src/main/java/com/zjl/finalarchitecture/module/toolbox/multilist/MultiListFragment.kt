@@ -1,6 +1,7 @@
 package com.zjl.finalarchitecture.module.toolbox.multilist
 
 import android.graphics.Color
+import android.os.Bundle
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.appbar.AppBarLayout
@@ -21,23 +22,17 @@ import kotlinx.coroutines.launch
  * 一个多ItemType支持的列表页
  * 并且支持Banner变色状态栏和展开折叠内容
  */
-class MultiListFragment: BaseFragment<FragmentMultiListBinding>() {
-
-    private val multiListViewModel by viewModels<MultiListViewModel>()
+class MultiListFragment: BaseFragment<FragmentMultiListBinding, MultiListViewModel>() {
 
     private var multiAdapter by autoCleared<MultiListAdapter>()
 
-    override fun bindView(): FragmentMultiListBinding {
-        return FragmentMultiListBinding.inflate(layoutInflater)
-    }
-
-    override fun initViewAndEvent() {
+    override fun initViewAndEvent(savedInstanceState: Bundle?) {
         mBinding.toolbarMulti.setNavigationOnClickListener {
             findNavController().navigateUp()
         }
 
         multiAdapter = MultiListAdapter {
-            multiListViewModel.parseImageToPrimaryColor(it)
+            mViewModel.parseImageToPrimaryColor(it)
         }
         mBinding.rvMultiList.adapter = multiAdapter
     }
@@ -45,13 +40,13 @@ class MultiListFragment: BaseFragment<FragmentMultiListBinding>() {
     override fun createObserver() {
         launchAndRepeatWithViewLifecycle {
             launch {
-                multiListViewModel.multiList.collectLatest {
+                mViewModel.multiList.collectLatest {
                     multiAdapter.setList(it)
                 }
             }
 
             launch {
-                multiListViewModel.toolbarColor.collectLatest {
+                mViewModel.toolbarColor.collectLatest {
                     val colorData = it ?: return@collectLatest
                     mBinding.toolbarMulti.setBackgroundColor(colorData.primaryColor)
                     mBinding.toolbarMulti.setTitleTextColor(colorData.onPrimaryColor)

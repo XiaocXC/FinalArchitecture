@@ -1,6 +1,8 @@
 package com.zjl.finalarchitecture.module.home.ui.fragment
 
+import android.os.Bundle
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.SavedStateHandle
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.scwang.smart.refresh.layout.api.RefreshLayout
@@ -27,13 +29,11 @@ import timber.log.Timber
  * @author: zhou
  * @date : 2022/1/20 17:52
  */
-class ArticleFragment : BaseFragment<FragmentArticleBinding>(), OnRefreshListener{
+class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel>(), OnRefreshListener{
 
     companion object {
         fun newInstance() = ArticleFragment()
     }
-
-    private val mArticleViewModel by viewModels<ArticleViewModel>()
 
     /**
      * 经测试，Adapter需要在视图清空时释放，否则可能持有导致内存泄漏
@@ -41,16 +41,14 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding>(), OnRefreshListene
     private var mBannerAdapter by autoCleared<ArticleBannerWrapperAdapter>()
     private var mArticleAdapter by autoCleared<ArticleAdapter>()
 
-    override fun bindView() = FragmentArticleBinding.inflate(layoutInflater)
-
-    override fun initViewAndEvent() {
+    override fun initViewAndEvent(savedInstanceState: Bundle?) {
         // Banner适配器
         // 开了弟弟的眼界
         mBannerAdapter = ArticleBannerWrapperAdapter(viewLifecycleOwner.lifecycle)
 
         // 列表适配器
         mArticleAdapter = ArticleAdapter {
-            mArticleViewModel.updateCollectState(it.id, !it.collect)
+            mViewModel.updateCollectState(it.id, !it.collect)
         }
 
         // 给ArticleAdapter加上分页的状态尾
@@ -78,13 +76,13 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding>(), OnRefreshListene
 //            )
 //        }
 
-        mArticleViewModel.articlePagingFlow.observe(viewLifecycleOwner) {
+        mViewModel.articlePagingFlow.observe(viewLifecycleOwner) {
             mArticleAdapter.submitData(viewLifecycleOwner.lifecycle, it)
         }
 
         launchAndRepeatWithViewLifecycle {
             launch {
-                mArticleViewModel.bannerList.collect { bannerList ->
+                mViewModel.bannerList.collect { bannerList ->
                     mBannerAdapter.setList(
                         listOf(BannerVOWrapper(bannerList))
                     )
@@ -121,7 +119,7 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding>(), OnRefreshListene
 
     private fun refresh(){
         // 重新请求，如果文章列表没有数据，则整个界面会重新显示loading状态（当然这里意义不大，没有用处）
-        mArticleViewModel.initData(mArticleAdapter.itemCount <= 0)
+        mViewModel.initData(mArticleAdapter.itemCount <= 0)
         // 刷新Paging
         mArticleAdapter.refresh()
     }

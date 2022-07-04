@@ -1,6 +1,6 @@
 package com.zjl.finalarchitecture.module.main.ui.activity
 
-import android.app.Activity
+import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.navigation.findNavController
@@ -26,7 +26,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         return vm
     }
 
-    override fun initViewAndEvent() {
+    override fun initViewAndEvent(savedInstanceState: Bundle?) {
         // 配置Navigation
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {

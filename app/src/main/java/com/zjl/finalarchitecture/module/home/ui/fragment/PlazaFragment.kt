@@ -1,5 +1,6 @@
 package com.zjl.finalarchitecture.module.home.ui.fragment
 
+import android.os.Bundle
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -26,7 +27,7 @@ import kotlinx.coroutines.launch
  * @author: zhou
  * @date : 2022/1/20 17:56
  */
-class PlazaFragment : BaseFragment<FragmentPlazaBinding>(), OnRefreshListener {
+class PlazaFragment : BaseFragment<FragmentPlazaBinding, PlazaViewModel>(), OnRefreshListener {
 
 
     companion object {
@@ -37,9 +38,7 @@ class PlazaFragment : BaseFragment<FragmentPlazaBinding>(), OnRefreshListener {
 
     private var mArticleAdapter by autoCleared<ArticleAdapter>()
 
-    override fun bindView() = FragmentPlazaBinding.inflate(layoutInflater)
-
-    override fun initViewAndEvent() {
+    override fun initViewAndEvent(savedInstanceState: Bundle?) {
 
         // 下拉刷新
         mBinding.refreshLayout.setOnRefreshListener(this)

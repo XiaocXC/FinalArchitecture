@@ -1,10 +1,10 @@
 package com.zjl.finalarchitecture.module.main.ui.fragment
-import android.content.res.ColorStateList
-import android.graphics.Color
+import android.os.Bundle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.utils.ext.getAttrColor
+import com.zjl.base.viewmodel.EmptyViewModel
 import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.databinding.FragmentMainBinding
 import com.zjl.finalarchitecture.module.discovery.ui.fragment.DiscoveryFragment
@@ -19,11 +19,9 @@ import com.zjl.finalarchitecture.module.toolbox.ToolboxFragment
  * @author: zhou
  * @date : 2022/1/14 15:42
  */
-class MainFragment : BaseFragment<FragmentMainBinding>() {
+class MainFragment : BaseFragment<FragmentMainBinding, EmptyViewModel>() {
 
-    override fun bindView(): FragmentMainBinding = FragmentMainBinding.inflate(layoutInflater)
-
-    override fun initViewAndEvent() {
+    override fun initViewAndEvent(savedInstanceState: Bundle?) {
         //viewpager2是否可以滑动
         mBinding.mViewPager2.isUserInputEnabled = false
         //全部缓存,避免切换回重新加载

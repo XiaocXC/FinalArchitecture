@@ -1,5 +1,6 @@
 package com.zjl.finalarchitecture.module.home.ui.fragment
 
+import android.os.Bundle
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,20 +24,15 @@ import kotlinx.coroutines.launch
  * @author: zhou
  * @date : 2022/1/20 17:58
  */
-class AskFragment: BaseFragment<FragmentAskBinding>(), OnRefreshListener {
+class AskFragment: BaseFragment<FragmentAskBinding, AskViewModel>(), OnRefreshListener {
 
     companion object {
         fun newInstance() = AskFragment()
     }
 
-    private val mAskViewModel by viewModels<AskViewModel>()
-
     private var mArticleAdapter by autoCleared<ArticleAdapter>()
 
-    override fun bindView() = FragmentAskBinding.inflate(layoutInflater)
-
-
-    override fun initViewAndEvent() {
+    override fun initViewAndEvent(savedInstanceState: Bundle?) {
         // 下拉刷新
         mBinding.refreshLayout.setOnRefreshListener(this)
 
@@ -61,7 +57,7 @@ class AskFragment: BaseFragment<FragmentAskBinding>(), OnRefreshListener {
     override fun createObserver() {
 
         viewLifecycleOwner.lifecycleScope.launch {
-            mAskViewModel.askPagingFlow.collectLatest {
+            mViewModel.askPagingFlow.collectLatest {
                 mArticleAdapter.submitData(it)
             }
         }

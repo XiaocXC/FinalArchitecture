@@ -1,6 +1,8 @@
 package com.zjl.finalarchitecture.module.toolbox.selectRv
 
+import android.os.Bundle
 import com.zjl.base.fragment.BaseFragment
+import com.zjl.base.viewmodel.EmptyViewModel
 import com.zjl.finalarchitecture.databinding.FragmentSelectSingleOrMultiBinding
 import com.zjl.finalarchitecture.module.toolbox.selectRv.adapter.SelectData
 import com.zjl.finalarchitecture.module.toolbox.selectRv.adapter.SelectMultiAdapter
@@ -12,13 +14,9 @@ import com.zjl.finalarchitecture.module.toolbox.selectRv.adapter.SelectSingleAda
  *
  * 单选或多选的启动页面
  */
-class SelectSingleOrMultiFragment: BaseFragment<FragmentSelectSingleOrMultiBinding>() {
+class SelectSingleOrMultiFragment: BaseFragment<FragmentSelectSingleOrMultiBinding, EmptyViewModel>() {
 
-    override fun bindView(): FragmentSelectSingleOrMultiBinding {
-        return FragmentSelectSingleOrMultiBinding.inflate(layoutInflater)
-    }
-
-    override fun initViewAndEvent() {
+    override fun initViewAndEvent(savedInstanceState: Bundle?) {
         // 单选
         mBinding.btnShowSelectSingle.setOnClickListener {
             val dialog = SelectSingleDialog()

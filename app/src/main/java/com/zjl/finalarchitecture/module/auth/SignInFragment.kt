@@ -1,5 +1,6 @@
 package com.zjl.finalarchitecture.module.auth
 
+import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
@@ -11,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionManager
 import com.google.android.material.transition.MaterialSharedAxis
 import com.zjl.base.fragment.BaseFragment
+import com.zjl.base.viewmodel.EmptyViewModel
 import com.zjl.finalarchitecture.databinding.FragmentLoginBinding
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -21,7 +23,7 @@ import kotlinx.coroutines.launch
  *
  * 登录Fragment（密码登录）
  */
-class SignInFragment: BaseFragment<FragmentLoginBinding>() {
+class SignInFragment: BaseFragment<FragmentLoginBinding, EmptyViewModel>() {
 
 //    private val signInViewModel by hiltNavGraphViewModels<SignInViewModel>(R.id.nav_auth)
 
@@ -30,11 +32,7 @@ class SignInFragment: BaseFragment<FragmentLoginBinding>() {
     private var agreePrivacyPass: Boolean = false
     private var phoneNumberPass: Boolean = false
 
-    override fun bindView(): FragmentLoginBinding {
-        return FragmentLoginBinding.inflate(layoutInflater)
-    }
-
-    override fun initViewAndEvent() {
+    override fun initViewAndEvent(savedInstanceState: Bundle?) {
 
 //        binding.toolbarSignIn.setNavigationOnClickListener {
 //            requireActivity().onBackPressedDispatcher.onBackPressed()

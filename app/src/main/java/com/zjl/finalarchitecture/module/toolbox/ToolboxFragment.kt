@@ -1,11 +1,13 @@
 package com.zjl.finalarchitecture.module.toolbox
 
 import android.app.Activity
+import android.os.Bundle
 import androidx.navigation.fragment.findNavController
 import com.blankj.utilcode.util.GsonUtils
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.zjl.base.fragment.BaseFragment
+import com.zjl.base.viewmodel.EmptyViewModel
 import com.zjl.finalarchitecture.databinding.FragmentToolboxBinding
 import com.zjl.finalarchitecture.module.main.ui.fragment.MainFragmentDirections
 
@@ -15,13 +17,9 @@ import com.zjl.finalarchitecture.module.main.ui.fragment.MainFragmentDirections
  *
  * 工具集Box Fragment
  */
-class ToolboxFragment: BaseFragment<FragmentToolboxBinding>() {
+class ToolboxFragment: BaseFragment<FragmentToolboxBinding, EmptyViewModel>() {
 
-    override fun bindView(): FragmentToolboxBinding {
-        return FragmentToolboxBinding.inflate(layoutInflater)
-    }
-
-    override fun initViewAndEvent() {
+    override fun initViewAndEvent(savedInstanceState: Bundle?) {
         mBinding.btnMulti.setOnClickListener {
             findNavController().navigate(MainFragmentDirections.actionMainFragmentToMultiListFragment())
         }
@@ -47,7 +45,6 @@ class ToolboxFragment: BaseFragment<FragmentToolboxBinding>() {
     override fun createObserver() {
 
     }
-
 
 
 }

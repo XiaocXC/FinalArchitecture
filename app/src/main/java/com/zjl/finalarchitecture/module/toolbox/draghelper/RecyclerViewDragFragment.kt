@@ -1,5 +1,6 @@
 package com.zjl.finalarchitecture.module.toolbox.draghelper
 
+import android.os.Bundle
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.zjl.base.fragment.BaseFragment
@@ -17,17 +18,11 @@ import kotlinx.coroutines.launch
  * RecyclerView拖拽Item 最佳实践
  * 该内容支持长按拖拽卡片到指定位置
  */
-class RecyclerViewDragFragment: BaseFragment<FragmentRecyclerViewDragBinding>() {
-
-    private val recyclerViewDragViewModel by viewModels<RecyclerViewDragViewModel>()
+class RecyclerViewDragFragment: BaseFragment<FragmentRecyclerViewDragBinding, RecyclerViewDragViewModel>() {
 
     private lateinit var dragStringItemAdapter: DragStringItemAdapter
 
-    override fun bindView(): FragmentRecyclerViewDragBinding {
-        return FragmentRecyclerViewDragBinding.inflate(layoutInflater)
-    }
-
-    override fun initViewAndEvent() {
+    override fun initViewAndEvent(savedInstanceState: Bundle?) {
 
         dragStringItemAdapter = DragStringItemAdapter()
 
@@ -48,7 +43,7 @@ class RecyclerViewDragFragment: BaseFragment<FragmentRecyclerViewDragBinding>() 
 
         launchAndRepeatWithViewLifecycle {
             launch {
-                recyclerViewDragViewModel.items.collectLatest {
+                mViewModel.items.collectLatest {
                     dragStringItemAdapter.setList(it)
                 }
             }

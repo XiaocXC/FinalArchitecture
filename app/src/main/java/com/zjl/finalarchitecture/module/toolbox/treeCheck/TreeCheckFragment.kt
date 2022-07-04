@@ -2,6 +2,7 @@ package com.zjl.finalarchitecture.module.toolbox.treeCheck
 
 import android.app.Activity
 import android.content.Intent
+import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -22,9 +23,7 @@ import kotlinx.coroutines.launch
  * 这是一个使用SAF文件选择框架显示一个树状文件夹内容的Fragment
  * 它是一个树状文件夹多选的最佳案例
  */
-class TreeCheckFragment: BaseFragment<FragmentTreeCheckBinding>() {
-
-    private val startScannerViewModel by viewModels<TreeCheckViewModel>()
+class TreeCheckFragment: BaseFragment<FragmentTreeCheckBinding, TreeCheckViewModel>() {
 
     private lateinit var folderNodeTreeViewAdapter: FolderNodeTreeViewAdapter
 
@@ -41,27 +40,23 @@ class TreeCheckFragment: BaseFragment<FragmentTreeCheckBinding>() {
                 Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
             )
             // 加入到内存中
-            startScannerViewModel.addFolderRoot(directoryUri)
+            mViewModel.addFolderRoot(directoryUri)
         }
     }
 
-    override fun bindView(): FragmentTreeCheckBinding {
-        return FragmentTreeCheckBinding.inflate(layoutInflater)
-    }
-
-    override fun initViewAndEvent() {
+    override fun initViewAndEvent(savedInstanceState: Bundle?) {
         // 启动SAF选择可访问路径
         mBinding.btnSelectTree.setOnClickListener {
             actionOpenDocumentTree.launch(Intent(Intent.ACTION_OPEN_DOCUMENT_TREE))
         }
 
         folderNodeTreeViewAdapter = FolderNodeTreeViewAdapter(
-            requireContext(), startScannerViewModel.nodeManager, mBinding.treeViewFolder, {
-                startScannerViewModel.loadChildrenByParentFolder(it)
+            requireContext(), mViewModel.nodeManager, mBinding.treeViewFolder, {
+                mViewModel.loadChildrenByParentFolder(it)
             },{ select, parentNode ->
-                startScannerViewModel.handleSelectedChildren(select, parentNode)
+                mViewModel.handleSelectedChildren(select, parentNode)
             },{ node, select ->
-                startScannerViewModel.setStatusParentByChild(node, select)
+                mViewModel.setStatusParentByChild(node, select)
             }
         )
 
@@ -71,7 +66,7 @@ class TreeCheckFragment: BaseFragment<FragmentTreeCheckBinding>() {
     override fun createObserver() {
         launchAndRepeatWithViewLifecycle {
             launch {
-                startScannerViewModel.message.collectLatest {
+                mViewModel.message.collectLatest {
                     Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
                 }
             }

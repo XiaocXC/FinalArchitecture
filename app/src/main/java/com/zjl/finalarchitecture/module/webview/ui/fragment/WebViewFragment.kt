@@ -16,17 +16,13 @@ import com.zjl.finalarchitecture.databinding.FragmentWebViewBinding
 import com.zjl.finalarchitecture.module.webview.viewmodel.WebViewModel
 import kotlinx.coroutines.flow.collectLatest
 
-class WebViewFragment : BaseFragment<FragmentWebViewBinding>() {
-
-    private val webViewModel by viewModels<WebViewModel>()
-
-    override fun bindView() = FragmentWebViewBinding.inflate(layoutInflater)
+class WebViewFragment : BaseFragment<FragmentWebViewBinding, WebViewModel>() {
 
     private lateinit var preWeb: AgentWeb.PreAgentWeb
 
     private var mAgentWeb: AgentWeb? = null
 
-    override fun initViewAndEvent() {
+    override fun initViewAndEvent(savedInstanceState: Bundle?) {
         preWeb = AgentWeb.with(this@WebViewFragment)
             .setAgentWebParent(mBinding.containerWeb, LinearLayout.LayoutParams(-1, -1))
             .useDefaultIndicator()
@@ -37,7 +33,7 @@ class WebViewFragment : BaseFragment<FragmentWebViewBinding>() {
     override fun createObserver() {
 
         launchAndRepeatWithViewLifecycle {
-            webViewModel.webUrl.collectLatest {
+            mViewModel.webUrl.collectLatest {
                 if(it.isEmpty()){
                     return@collectLatest
                 }

@@ -1,15 +1,17 @@
 package com.zjl.finalarchitecture.module.sysnav.ui.fragment
 
+import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.blankj.utilcode.util.LogUtils
 import com.google.android.material.tabs.TabLayoutMediator
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.utils.ext.init
 import com.zjl.base.utils.ext.reduceDragSensitivity
+import com.zjl.base.viewmodel.EmptyViewModel
 import com.zjl.finalarchitecture.databinding.FragmentSysAndNavBinding
 
 
-class SysAndNavFragment : BaseFragment<FragmentSysAndNavBinding>() {
+class SysAndNavFragment : BaseFragment<FragmentSysAndNavBinding, EmptyViewModel>() {
 
     //体系,导航
     private var mTitleArrayData = arrayListOf("体系", "导航")
@@ -23,9 +25,7 @@ class SysAndNavFragment : BaseFragment<FragmentSysAndNavBinding>() {
         mFragmentList.add(NavigationFragment.newInstance())
     }
 
-    override fun bindView() = FragmentSysAndNavBinding.inflate(layoutInflater)
-
-    override fun initViewAndEvent() {
+    override fun initViewAndEvent(savedInstanceState: Bundle?) {
         //初始化viewpager2
         initViewPager2()
     }

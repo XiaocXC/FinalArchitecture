@@ -1,5 +1,6 @@
 package com.zjl.finalarchitecture.module.sysnav.ui.fragment
 
+import android.os.Bundle
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,12 +24,10 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 
-class NavigationFragment : BaseFragment<FragmentNavigationBinding>() {
+class NavigationFragment : BaseFragment<FragmentNavigationBinding, NavigationViewModel>() {
 
     private var navigationGroupAdapter by autoCleared<NavigationGroupAdapter>()
     private var navigationTabAdapter by autoCleared<NavigationTabAdapter>()
-
-    private val navigationViewModel by viewModels<NavigationViewModel>(ownerProducer = {requireParentFragment()})
 
     private var shouldScroll = false
     private var scrollToPosition = RecyclerView.NO_POSITION
@@ -38,11 +37,12 @@ class NavigationFragment : BaseFragment<FragmentNavigationBinding>() {
         fun newInstance() = NavigationFragment()
     }
 
-    override fun bindView(): FragmentNavigationBinding {
-        return FragmentNavigationBinding.inflate(layoutInflater)
+    override fun createViewModel(): NavigationViewModel {
+        val viewModel by viewModels<NavigationViewModel>(ownerProducer = {requireParentFragment()})
+        return viewModel
     }
 
-    override fun initViewAndEvent() {
+    override fun initViewAndEvent(savedInstanceState: Bundle?) {
         navigationGroupAdapter = NavigationGroupAdapter{ vo, position ->
             val articleVo = vo.articles[position]
             findNavController().navigate(NavMainDirections.actionGlobalToWebFragment(articleVo))
@@ -109,7 +109,7 @@ class NavigationFragment : BaseFragment<FragmentNavigationBinding>() {
 
             // 监听状态
             launch {
-                navigationViewModel.rootViewState.collectLatest {
+                mViewModel.rootViewState.collectLatest {
                     it.onSuccess {
                         uiRootState.show(SuccessState())
                     }.onLoading {
@@ -122,7 +122,7 @@ class NavigationFragment : BaseFragment<FragmentNavigationBinding>() {
 
             // 更新数据
             launch {
-                navigationViewModel.navigationList.collectLatest {
+                mViewModel.navigationList.collectLatest {
                     navigationGroupAdapter.setList(it)
                     navigationTabAdapter.setList(it.map {
                         NavigationTab(false, it)

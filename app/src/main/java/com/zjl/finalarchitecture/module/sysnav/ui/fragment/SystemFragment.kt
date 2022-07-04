@@ -1,5 +1,6 @@
 package com.zjl.finalarchitecture.module.sysnav.ui.fragment
 
+import android.os.Bundle
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.zjl.base.fragment.BaseFragment
@@ -21,21 +22,15 @@ import kotlinx.coroutines.launch
 /**
  * 体系Fragment
  */
-class SystemFragment : BaseFragment<FragmentSystemBinding>() {
+class SystemFragment : BaseFragment<FragmentSystemBinding, SystemViewModel>() {
 
     private var systemGroupAdapter by autoCleared<SystemGroupAdapter>()
-
-    private val systemViewModel by viewModels<SystemViewModel>()
 
     companion object {
         fun newInstance() = SystemFragment()
     }
 
-    override fun bindView(): FragmentSystemBinding {
-        return FragmentSystemBinding.inflate(layoutInflater)
-    }
-
-    override fun initViewAndEvent() {
+    override fun initViewAndEvent(savedInstanceState: Bundle?) {
         systemGroupAdapter = SystemGroupAdapter{ systemVO, position ->
             // 点击内部的子栏目按钮跳转
             findNavController().navigate(
@@ -58,7 +53,7 @@ class SystemFragment : BaseFragment<FragmentSystemBinding>() {
         launchAndRepeatWithViewLifecycle {
             // 监听状态
             launch {
-                systemViewModel.rootViewState.collectLatest {
+                mViewModel.rootViewState.collectLatest {
                     it.onSuccess {
                         uiRootState.show(SuccessState())
                     }.onLoading {
@@ -71,7 +66,7 @@ class SystemFragment : BaseFragment<FragmentSystemBinding>() {
 
             // 更新数据
             launch {
-                systemViewModel.systemList.collectLatest {
+                mViewModel.systemList.collectLatest {
                     systemGroupAdapter.setList(it)
                 }
             }

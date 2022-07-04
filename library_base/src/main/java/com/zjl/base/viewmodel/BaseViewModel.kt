@@ -20,8 +20,7 @@ import kotlin.coroutines.coroutineContext
  *
  * 基类ViewModel，提供基本的封装内容进行统一
  * 规定一个Fragment要基于ViewBinding
- * Fragment可能会同时依赖多个ViewModel或者干脆不使用ViewModel
- * 所以我们没有在Fragment中强制规定ViewModel的使用
+ * 根据MVI或MVVM规定，一个界面由一个ViewModel所绑定，我们这里需要一个VM的绑定
  */
 abstract class BaseViewModel: ViewModel(){
 

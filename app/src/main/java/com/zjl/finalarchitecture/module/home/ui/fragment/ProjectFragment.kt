@@ -1,5 +1,6 @@
 package com.zjl.finalarchitecture.module.home.ui.fragment
 
+import android.os.Bundle
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.scwang.smart.refresh.layout.api.RefreshLayout
@@ -25,14 +26,12 @@ import timber.log.Timber
  * @author: zhou
  * @date : 2022/1/20 18:04
  */
-class ProjectFragment : BaseFragment<FragmentProjectBinding>(), OnRefreshListener {
+class ProjectFragment : BaseFragment<FragmentProjectBinding, ProjectViewModel>(), OnRefreshListener {
 
 
     companion object {
         fun newInstance() = ProjectFragment()
     }
-
-    private val mProjectViewModel by viewModels<ProjectViewModel>()
 
     /* 项目分类 */
     private var mProjectCategoryAdapter by autoCleared<ProjectCategoryAdapter>()
@@ -40,9 +39,7 @@ class ProjectFragment : BaseFragment<FragmentProjectBinding>(), OnRefreshListene
     /* 项目详情列表 */
     private var mProjectListAdapter by autoCleared<ProjectAdapter>()
 
-    override fun bindView() = FragmentProjectBinding.inflate(layoutInflater)
-
-    override fun initViewAndEvent() {
+    override fun initViewAndEvent(savedInstanceState: Bundle?) {
 
         // 下拉刷新
         mBinding.refreshLayout.setOnRefreshListener(this)
@@ -53,13 +50,13 @@ class ProjectFragment : BaseFragment<FragmentProjectBinding>(), OnRefreshListene
         mProjectCategoryAdapter = ProjectCategoryAdapter()
         mBinding.rvCategory.adapter = mProjectCategoryAdapter
 
-        mProjectCategoryAdapter.check(mProjectViewModel.checkPosition)
+        mProjectCategoryAdapter.check(mViewModel.checkPosition)
 
         mProjectCategoryAdapter.setCheckClick { id, position ->
             Timber.e("收到的id是：${id}")
-            mProjectViewModel.onCidChanged(id)
+            mViewModel.onCidChanged(id)
 
-            mProjectViewModel.checkPosition = position
+            mViewModel.checkPosition = position
         }
 
 
@@ -83,14 +80,14 @@ class ProjectFragment : BaseFragment<FragmentProjectBinding>(), OnRefreshListene
         launchAndRepeatWithViewLifecycle {
 
             launch {
-                mProjectViewModel.categoryList.collectLatest {
+                mViewModel.categoryList.collectLatest {
                     mProjectCategoryAdapter.setList(it)
                 }
             }
 
             //项目分页数据
             launch {
-                mProjectViewModel.projectArticlePagingFlow.collect {
+                mViewModel.projectArticlePagingFlow.collect {
                     mProjectListAdapter.submitData(it)
                 }
             }

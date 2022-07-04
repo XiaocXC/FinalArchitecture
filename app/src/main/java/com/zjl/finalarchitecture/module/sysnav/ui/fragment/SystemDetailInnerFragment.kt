@@ -1,5 +1,6 @@
 package com.zjl.finalarchitecture.module.sysnav.ui.fragment
 
+import android.os.Bundle
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -16,7 +17,7 @@ import com.zjl.finalarchitecture.utils.ext.paging.withLoadState
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class SystemDetailInnerFragment: BaseFragment<FragmentSystemDetailInnerBinding>() {
+class SystemDetailInnerFragment: BaseFragment<FragmentSystemDetailInnerBinding, SystemDetailInnerViewModel>() {
 
     companion object{
         fun newInstance(id: String): SystemDetailInnerFragment{
@@ -28,16 +29,10 @@ class SystemDetailInnerFragment: BaseFragment<FragmentSystemDetailInnerBinding>(
         }
     }
 
-    private val systemDetailInnerViewModel by viewModels<SystemDetailInnerViewModel>()
-
     //这里用的也是 ArticleAdapter
     private var mArticleAdapter by autoCleared<ArticleAdapter>()
 
-    override fun bindView(): FragmentSystemDetailInnerBinding {
-        return FragmentSystemDetailInnerBinding.inflate(layoutInflater)
-    }
-
-    override fun initViewAndEvent() {
+    override fun initViewAndEvent(savedInstanceState: Bundle?) {
 
         mArticleAdapter = ArticleAdapter()
 
@@ -54,7 +49,7 @@ class SystemDetailInnerFragment: BaseFragment<FragmentSystemDetailInnerBinding>(
     override fun createObserver() {
 
         viewLifecycleOwner.lifecycleScope.launch {
-            systemDetailInnerViewModel.systemArticlePagingFlow.collectLatest {
+            mViewModel.systemArticlePagingFlow.collectLatest {
                 mArticleAdapter.submitData(it)
             }
         }
