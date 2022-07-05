@@ -10,6 +10,7 @@ import com.zjl.finalarchitecture.data.respository.ApiRepository
  * @author: zhou
  * @date : 2022/4/11 17:22
  */
+@Deprecated("已废弃，Paging3目前被放弃使用")
 class AskPagingSource : IntegerPagingSource<ArticleListVO>() {
 
     override fun getInitPage(params: LoadParams<Int>): Int {

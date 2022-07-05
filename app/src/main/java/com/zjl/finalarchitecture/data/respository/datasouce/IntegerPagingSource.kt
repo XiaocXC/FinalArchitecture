@@ -17,6 +17,7 @@ import com.zjl.base.exception.ApiException
  *
  * 该类主要是用于告诉Paging3，获取到内容后，下一页（或上一页）要加载的具体逻辑和页码等内容
  */
+@Deprecated("已废弃，Paging3目前被放弃使用")
 abstract class IntegerPagingSource<V : Any> : PagingSource<Int, V>() {
 
 

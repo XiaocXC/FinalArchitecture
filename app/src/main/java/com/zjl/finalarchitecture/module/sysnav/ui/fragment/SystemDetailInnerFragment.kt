@@ -8,11 +8,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.zjl.base.adapter.DefaultLoadStateAdapter
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.utils.autoCleared
+import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
 import com.zjl.finalarchitecture.databinding.FragmentSystemDetailInnerBinding
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleAdapter
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleDividerItemDecoration
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleOldAdapter
 import com.zjl.finalarchitecture.module.sysnav.viewmodel.SystemDetailInnerViewModel
+import com.zjl.finalarchitecture.utils.ext.handlePagingStatus
 import com.zjl.finalarchitecture.utils.ext.multistate.handleWithPaging3
 import com.zjl.finalarchitecture.utils.ext.paging.withLoadState
 import kotlinx.coroutines.flow.collectLatest
@@ -31,13 +33,17 @@ class SystemDetailInnerFragment: BaseFragment<FragmentSystemDetailInnerBinding, 
     }
 
     //这里用的也是 ArticleAdapter
-    private var mArticleAdapter by autoCleared<ArticleOldAdapter>()
+    private var mArticleAdapter by autoCleared<ArticleAdapter>()
 
     override fun initViewAndEvent(savedInstanceState: Bundle?) {
 
-        mArticleAdapter = ArticleOldAdapter()
+        mArticleAdapter = ArticleAdapter()
 
-        mBinding.rvSystemChild.adapter = mArticleAdapter.withLoadState()
+        mArticleAdapter.loadMoreModule.setOnLoadMoreListener {
+            mViewModel.loadMore()
+        }
+
+        mBinding.rvSystemChild.adapter = mArticleAdapter
         // 分割线
         mBinding.rvSystemChild.addItemDecoration(
             ArticleDividerItemDecoration(
@@ -49,20 +55,12 @@ class SystemDetailInnerFragment: BaseFragment<FragmentSystemDetailInnerBinding, 
 
     override fun createObserver() {
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            mViewModel.systemArticlePagingFlow.collectLatest {
-                mArticleAdapter.submitData(it)
-            }
-        }
-
-
-        // 下拉刷新,上拉分页,LEC状态观察
-        viewLifecycleOwner.lifecycleScope.launch {
-            mArticleAdapter.loadStateFlow.collectLatest {
-                // 处理Paging3状态与整个布局状态相关联动
-                uiRootState.handleWithPaging3(it,
-                    mArticleAdapter.itemCount <= 0){
-                    refresh()
+        launchAndRepeatWithViewLifecycle {
+            launch {
+                mViewModel.systemArticleList.collectLatest {
+                    it.handlePagingStatus(mArticleAdapter, uiRootState, null){
+                        refresh()
+                    }
                 }
             }
         }
@@ -70,6 +68,6 @@ class SystemDetailInnerFragment: BaseFragment<FragmentSystemDetailInnerBinding, 
 
     private fun refresh(){
         // 刷新Paging
-        mArticleAdapter.refresh()
+        mViewModel.initData()
     }
 }

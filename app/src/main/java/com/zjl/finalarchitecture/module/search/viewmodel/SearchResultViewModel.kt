@@ -5,10 +5,16 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
+import com.zjl.base.exception.ApiException
+import com.zjl.base.ui.PagingUiModel
 import com.zjl.base.viewmodel.BaseViewModel
+import com.zjl.base.viewmodel.PagingBaseViewModel
+import com.zjl.finalarchitecture.data.model.ArticleListVO
+import com.zjl.finalarchitecture.data.respository.ApiRepository
 import com.zjl.finalarchitecture.data.respository.datasouce.SearchResultPagingSource
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 
 /**
  * @author Xiaoc
@@ -16,7 +22,7 @@ import kotlinx.coroutines.flow.StateFlow
  **/
 class SearchResultViewModel(
     savedStateHandle: SavedStateHandle
-): BaseViewModel() {
+): PagingBaseViewModel() {
 
     private val key: String = savedStateHandle["key"] ?: ""
 
@@ -25,16 +31,27 @@ class SearchResultViewModel(
     private val _title = MutableStateFlow(key)
     val title: StateFlow<String> get() = _title
 
-    // 文章
-    val searchResultPagingFlow = Pager(PagingConfig(pageSize = 20)) {
-        SearchResultPagingSource(name)
-    }.flow.cachedIn(viewModelScope)
+    private val _searchResults = MutableStateFlow<PagingUiModel<ArticleListVO>>(PagingUiModel.Loading(true))
+    val searchResults: StateFlow<PagingUiModel<ArticleListVO>> = _searchResults
 
     init {
         initData()
     }
 
-    override fun refresh() {
+    override fun loadMoreInner(currentIndex: Int) {
+        viewModelScope.launch {
+            // 先置为加载中
+            if(currentIndex == initPageIndex()){
+                _searchResults.value = PagingUiModel.Loading(true)
+            }
 
+            launchRequestByPaging({
+                ApiRepository.requestSearchDataByKey(currentIndex, key)
+            }, successBlock = {
+                _searchResults.value = PagingUiModel.Success(it.dataList, currentIndex == initPageIndex(), !it.over)
+            }, failureBlock = {
+                _searchResults.value = PagingUiModel.Error(ApiException(it), currentIndex == initPageIndex())
+            })
+        }
     }
 }

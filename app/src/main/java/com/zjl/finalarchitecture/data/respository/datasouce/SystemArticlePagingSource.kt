@@ -12,6 +12,7 @@ import com.zjl.finalarchitecture.data.respository.ApiRepository
  * 体系文章分页数据源请求
  * @param id 对应不同体系的栏目ID
  */
+@Deprecated("已废弃，Paging3目前被放弃使用")
 class SystemArticlePagingSource(
     private val id: String
 ): IntegerPagingSource<ArticleListVO>() {

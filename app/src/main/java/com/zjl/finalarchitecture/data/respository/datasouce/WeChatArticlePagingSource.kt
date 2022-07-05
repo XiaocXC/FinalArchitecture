@@ -5,6 +5,7 @@ import com.zjl.finalarchitecture.data.model.ArticleListVO
 import com.zjl.finalarchitecture.data.model.PageVO
 import com.zjl.finalarchitecture.data.respository.ApiRepository
 
+@Deprecated("已废弃，Paging3目前被放弃使用")
 class WeChatArticlePagingSource(
     private val id: Int
 ) : IntegerPagingSource<ArticleListVO>() {
