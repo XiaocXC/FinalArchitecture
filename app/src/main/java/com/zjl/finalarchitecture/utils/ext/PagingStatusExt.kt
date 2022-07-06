@@ -17,24 +17,22 @@ import com.zy.multistatepage.state.SuccessState
  * @param adapter 列表适配器
  * @param stateContainer 状态容器，为null则不处理
  * @param refreshLayout smartRefresh，为null则不处理
+ * @param retry 重试回调
  **/
 fun <T> PagingUiModel<T>.handlePagingStatus(
     adapter: BaseQuickAdapter<T, *>,
     stateContainer: MultiStateContainer? = null,
     refreshLayout: SmartRefreshLayout? = null,
-    /**
-     * 重试回调
-     */
     retry: () -> Unit = {},
-){
+) {
 
-    when(this){
+    when (this) {
         // 如果是成功
-        is PagingUiModel.Success ->{
+        is PagingUiModel.Success -> {
             // 如果是重新刷新
-            if(this.refresh){
+            if (this.refresh) {
                 // 如果数据集为空，显示空布局
-                if(this.data.isEmpty()){
+                if (this.data.isEmpty()) {
                     stateContainer?.show(EmptyState())
                 } else {
                     // 设置数据到Adapter中
@@ -42,24 +40,26 @@ fun <T> PagingUiModel<T>.handlePagingStatus(
                     // 否则显示成功布局（即正常视图）
                     stateContainer?.show(SuccessState())
                 }
-                refreshLayout?.finishRefresh()
+                // 结束下拉刷新
+                refreshLayout?.finishRefresh(500)
             } else {
                 // 如果不是重新刷新，将数据加入到Adapter中
                 adapter.addData(this.data)
-                refreshLayout?.finishLoadMore()
+                // 结束加载更多
+                refreshLayout?.finishLoadMore(500)
             }
-            // 是否加载更多
-            if(this.hasMore){
-                adapter.loadMoreModule.loadMoreComplete()
-            } else {
-                adapter.loadMoreModule.loadMoreEnd()
-            }
+//            // 是否加载更多
+//            if(this.hasMore){
+//                adapter.loadMoreModule.loadMoreComplete()
+//            } else {
+//                adapter.loadMoreModule.loadMoreEnd()
+//            }
         }
 
         // 如果是失败
-        is PagingUiModel.Error ->{
+        is PagingUiModel.Error -> {
             // 如果是重新刷新
-            if(this.refresh){
+            if (this.refresh) {
                 refreshLayout?.finishRefresh(false)
                 // 显示错误布局
                 stateContainer?.show<ErrorState> {
@@ -68,16 +68,16 @@ fun <T> PagingUiModel<T>.handlePagingStatus(
                 }
             } else {
                 refreshLayout?.finishLoadMore(false)
-                adapter.loadMoreModule.loadMoreFail()
+//                adapter.loadMoreModule.loadMoreFail()
             }
         }
-        
-        // 如果是加载中
-        is PagingUiModel.Loading ->{
 
-            if(this.refresh){
+        // 如果是加载中
+        is PagingUiModel.Loading -> {
+
+            if (this.refresh) {
                 refreshLayout?.autoRefresh()
-                if(adapter.itemCount <= 0){
+                if (adapter.itemCount <= 0) {
                     stateContainer?.show(LoadingState())
                 }
             } else {

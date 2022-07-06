@@ -34,6 +34,6 @@ fun main(){
 
     val split: Array<String> = price.split(".").toTypedArray()
 
-    println(split.size)
+    println(split.contentToString())
 
 }

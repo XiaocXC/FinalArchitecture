@@ -28,7 +28,7 @@ abstract class PagingBaseViewModel: BaseViewModel() {
     }
 
 
-    open fun pageSize() = DEFAULT_PAGE_SIZE
+    open fun pageSize() = 15
 
     open fun initPageIndex() = 0
 
@@ -37,15 +37,17 @@ abstract class PagingBaseViewModel: BaseViewModel() {
     var currentPageIndex = initPageIndex()
     protected set
 
-    fun loadMore(){
-        loadMoreInner(currentPageIndex)
-    }
 
     final override fun refresh() {
         // 重置页码数
         currentPageIndex = initPageIndex()
         loadMore()
     }
+
+    fun loadMore(){
+        loadMoreInner(currentPageIndex)
+    }
+
 
     protected abstract fun loadMoreInner(currentIndex: Int)
 

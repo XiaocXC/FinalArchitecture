@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
+import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.utils.autoCleared
 import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
@@ -27,7 +28,8 @@ import timber.log.Timber
  * @author: zhou
  * @date : 2022/1/20 17:52
  */
-class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel>(), OnRefreshListener{
+class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel>(), OnRefreshListener,
+    OnRefreshLoadMoreListener {
 
     companion object {
         fun newInstance() = ArticleFragment()
@@ -50,6 +52,8 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel>()
 //            mViewModel.updateCollectState(it.id, !it.collect)
         }
 
+//        val mArticleAdapter2: ArticleAdapter by lazy { ArticleAdapter() }
+
         // 加载更多
         mArticleAdapter.loadMoreModule.setOnLoadMoreListener {
             mViewModel.loadMore()
@@ -66,7 +70,10 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel>()
         )
 
         // 下拉刷新
-        mBinding.refreshLayout.setOnRefreshListener(this)
+//        mBinding.refreshLayout.setOnRefreshListener(this)
+
+        mBinding.refreshLayout.setOnRefreshLoadMoreListener(this)
+
     }
 
     override fun createObserver() {
@@ -84,7 +91,11 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel>()
             // 文章分页数据
             launch {
                 mViewModel.articleList.collectLatest { uiModel ->
-                    uiModel.handlePagingStatus(mArticleAdapter, uiRootState, mBinding.refreshLayout){
+                    uiModel.handlePagingStatus(
+                        mArticleAdapter,
+                        uiRootState,
+                        mBinding.refreshLayout
+                    ) {
                         refresh()
                     }
                 }
@@ -97,7 +108,11 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel>()
         refresh()
     }
 
-    private fun refresh(){
+    override fun onLoadMore(refreshLayout: RefreshLayout) {
+        mViewModel.loadMore()
+    }
+
+    private fun refresh() {
         // 重新请求，如果文章列表没有数据，则整个界面会重新显示loading状态
         mViewModel.initData(mArticleAdapter.itemCount <= 0)
     }
