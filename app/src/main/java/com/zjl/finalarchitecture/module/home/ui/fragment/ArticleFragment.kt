@@ -72,6 +72,7 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel>()
     override fun createObserver() {
 
         launchAndRepeatWithViewLifecycle {
+            // Banner数据
             launch {
                 mViewModel.bannerList.collect { bannerList ->
                     mBannerAdapter.setList(
@@ -80,6 +81,7 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel>()
                 }
             }
 
+            // 文章分页数据
             launch {
                 mViewModel.articleList.collectLatest { uiModel ->
                     uiModel.handlePagingStatus(mArticleAdapter, uiRootState, mBinding.refreshLayout){
@@ -96,7 +98,7 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel>()
     }
 
     private fun refresh(){
-        // 重新请求，如果文章列表没有数据，则整个界面会重新显示loading状态（当然这里意义不大，没有用处）
+        // 重新请求，如果文章列表没有数据，则整个界面会重新显示loading状态
         mViewModel.initData(mArticleAdapter.itemCount <= 0)
     }
 

@@ -34,8 +34,8 @@ class ProjectViewModel: PagingBaseViewModel() {
     /**
      * 项目分类列表数据
      */
-    private val _categoryList = MutableStateFlow<List<CategoryVO>>(emptyList())
-    val categoryList: StateFlow<List<CategoryVO>> = _categoryList
+    private val _categoryList = MutableStateFlow<UiModel<List<CategoryVO>>>(UiModel.Loading())
+    val categoryList: StateFlow<UiModel<List<CategoryVO>>> = _categoryList
 
     /**
      * 项目分类列表数据
@@ -67,6 +67,10 @@ class ProjectViewModel: PagingBaseViewModel() {
 
     override fun loadMoreInner(currentIndex: Int) {
         viewModelScope.launch {
+            // 如果是重新刷新，则显示加载中
+            if(currentIndex == initPageIndex()){
+                _articleList.value = PagingUiModel.Loading(true)
+            }
             launchRequestByPaging({
                 ApiRepository.requestProjectDetailListDataByPage(currentIndex, _cid.value)
             }, successBlock = {
@@ -86,22 +90,16 @@ class ProjectViewModel: PagingBaseViewModel() {
      */
     private fun requestCategory() {
         viewModelScope.launch {
-            _rootViewState.emit(UiModel.Loading())
-
-            launchRequestByNormal({
+            launchRequestByNormalWithUiState({
                 ApiRepository.requestProjectListData()
-            }, successBlock = { data ->
-                // 状态更改为成功
-                _rootViewState.emit(UiModel.Success(data))
-                _categoryList.value = data
+            }, _categoryList, true, true, successBlock = { data ->
+
                 // 默认选中一个
                 if(data.isNotEmpty()){
                     onCidChanged(data[0].id)
                 }
-            },failureBlock = { error ->
-                // 状态更改为错误
-                _rootViewState.emit(UiModel.Error(ApiException(error)))
             })
+
         }
     }
 

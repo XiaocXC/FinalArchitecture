@@ -62,6 +62,7 @@ class AskFragment: BaseFragment<FragmentAskBinding, AskViewModel>(), OnRefreshLi
 
     override fun createObserver() {
         launchAndRepeatWithViewLifecycle {
+            // 文章分页数据
             launch {
                 mViewModel.askList.collectLatest {
                     it.handlePagingStatus(mArticleAdapter, uiRootState, mBinding.refreshLayout){

@@ -18,8 +18,8 @@ class WechatViewModel : PagingBaseViewModel() {
     /**
      * 微信公众号分类列表数据
      */
-    private val _categoryList = MutableStateFlow<List<CategoryVO>>(emptyList())
-    val categoryList: StateFlow<List<CategoryVO>> = _categoryList
+    private val _categoryList = MutableStateFlow<UiModel<List<CategoryVO>>>(UiModel.Loading())
+    val categoryList: StateFlow<UiModel<List<CategoryVO>>> = _categoryList
 
     /**
      * 微信分类列表数据
@@ -43,8 +43,13 @@ class WechatViewModel : PagingBaseViewModel() {
 
     override fun loadMoreInner(currentIndex: Int) {
         viewModelScope.launch {
+            // 如果是重新刷新，则显示加载中
+            if(currentIndex == initPageIndex()){
+                _articleList.value = PagingUiModel.Loading(true)
+            }
+
             launchRequestByPaging({
-                ApiRepository.requestWechatDetailListDataByPage(currentIndex, _cid.value)
+                ApiRepository.requestWechatDetailListDataByPage(_cid.value, currentIndex)
             }, successBlock = {
                 _articleList.value = PagingUiModel.Success(it.dataList, currentIndex == initPageIndex(), !it.over)
             }, failureBlock = {
@@ -70,19 +75,13 @@ class WechatViewModel : PagingBaseViewModel() {
      */
     private fun requestCategory() {
         viewModelScope.launch {
-            launchRequestByNormal({
+            launchRequestByNormalWithUiState({
                 ApiRepository.requestWechatListData()
-            }, successBlock = { data ->
-                // 状态更改为成功
-                _rootViewState.emit(UiModel.Success(data))
-                _categoryList.value = data
+            }, _categoryList, true, true, successBlock = { data ->
                 // 默认选中一个
                 if(data.isNotEmpty()){
                     onCidChanged(data[0].id)
                 }
-            },failureBlock = { error ->
-                // 状态更改为错误
-                _rootViewState.emit(UiModel.Error(ApiException(error)))
             })
         }
     }

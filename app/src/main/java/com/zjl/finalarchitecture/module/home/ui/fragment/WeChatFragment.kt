@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
 import com.zjl.base.fragment.BaseFragment
+import com.zjl.base.ui.data
 import com.zjl.base.utils.autoCleared
 import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
 import com.zjl.finalarchitecture.databinding.FragmentProjectBinding
@@ -18,6 +19,8 @@ import com.zjl.finalarchitecture.utils.ext.handlePagingStatus
 import com.zjl.finalarchitecture.utils.ext.multistate.handleWithPaging3
 import com.zjl.finalarchitecture.utils.ext.paging.withLoadState
 import com.zjl.finalarchitecture.utils.ext.smartrefresh.handleWithPaging3
+import com.zy.multistatepage.MultiStateContainer
+import com.zy.multistatepage.bindMultiState
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -33,6 +36,8 @@ class WeChatFragment : BaseFragment<FragmentProjectBinding, WechatViewModel>(), 
         fun newInstance() = WeChatFragment()
     }
 
+    private lateinit var articleStateContainer: MultiStateContainer
+
     /* 微信公众号分类 */
     private var mWechatCategoryAdapter by autoCleared<ProjectCategoryAdapter>()
 
@@ -40,6 +45,10 @@ class WeChatFragment : BaseFragment<FragmentProjectBinding, WechatViewModel>(), 
     private var mWechatListAdapter by autoCleared<ProjectAdapter>()
 
     override fun initViewAndEvent(savedInstanceState: Bundle?) {
+
+        // 将文章列表绑定到状态布局上
+        articleStateContainer = mBinding.refreshLayout.bindMultiState()
+
         // 下拉刷新
         mBinding.refreshLayout.setOnRefreshListener(this)
 
@@ -79,15 +88,17 @@ class WeChatFragment : BaseFragment<FragmentProjectBinding, WechatViewModel>(), 
 
     override fun createObserver() {
         launchAndRepeatWithViewLifecycle {
+            // 对应分类的数据
             launch {
                 mViewModel.categoryList.collectLatest {
-                    mWechatCategoryAdapter.setList(it)
+                    mWechatCategoryAdapter.setList(it.data)
                 }
             }
 
+            // 对应分类的数据
             launch {
                 mViewModel.articleList.collectLatest {
-                    it.handlePagingStatus(mWechatListAdapter, null, mBinding.refreshLayout){
+                    it.handlePagingStatus(mWechatListAdapter, articleStateContainer, mBinding.refreshLayout){
                         refresh()
                     }
                 }

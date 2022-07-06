@@ -17,6 +17,8 @@ import com.zjl.finalarchitecture.module.search.viewmodel.SearchResultViewModel
 import com.zjl.finalarchitecture.utils.ext.handlePagingStatus
 import com.zjl.finalarchitecture.utils.ext.multistate.handleWithPaging3
 import com.zjl.finalarchitecture.utils.ext.paging.withLoadState
+import com.zy.multistatepage.MultiStateContainer
+import com.zy.multistatepage.bindMultiState
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -28,12 +30,16 @@ import kotlinx.coroutines.launch
  **/
 class SearchResultFragment: BaseFragment<FragmentSearchResultBinding, SearchResultViewModel>() {
 
+    private lateinit var searchResultStateContainer: MultiStateContainer
+
     private var mArticleAdapter by autoCleared<ArticleAdapter>()
 
     override fun initViewAndEvent(savedInstanceState: Bundle?) {
         mBinding.toolbarSearchResult.setNavigationOnClickListener {
             findNavController().navigateUp()
         }
+
+        searchResultStateContainer = mBinding.rvSearchResult.bindMultiState()
 
         // 列表适配器
         mArticleAdapter = ArticleAdapter()
@@ -59,7 +65,7 @@ class SearchResultFragment: BaseFragment<FragmentSearchResultBinding, SearchResu
         launchAndRepeatWithViewLifecycle {
             launch {
                 mViewModel.searchResults.collectLatest {
-                    it.handlePagingStatus(mArticleAdapter, uiRootState, null){
+                    it.handlePagingStatus(mArticleAdapter, searchResultStateContainer, null){
                         refresh()
                     }
                 }

@@ -67,6 +67,7 @@ class PlazaFragment : BaseFragment<FragmentPlazaBinding, PlazaViewModel>(), OnRe
     override fun createObserver() {
 
         launchAndRepeatWithViewLifecycle {
+            // 文章分页数据
             launch {
                 mViewModel.plazaList.collectLatest {
                     it.handlePagingStatus(mArticleAdapter, uiRootState, mBinding.refreshLayout){

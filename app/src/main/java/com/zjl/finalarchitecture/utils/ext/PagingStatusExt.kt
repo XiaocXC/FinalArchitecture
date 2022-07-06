@@ -14,6 +14,9 @@ import com.zy.multistatepage.state.SuccessState
  * @since  2022-07-04
  *
  * PagingUiModel分页数据与视图状态的处理
+ * @param adapter 列表适配器
+ * @param stateContainer 状态容器，为null则不处理
+ * @param refreshLayout smartRefresh，为null则不处理
  **/
 fun <T> PagingUiModel<T>.handlePagingStatus(
     adapter: BaseQuickAdapter<T, *>,
@@ -52,6 +55,7 @@ fun <T> PagingUiModel<T>.handlePagingStatus(
                 adapter.loadMoreModule.loadMoreEnd()
             }
         }
+
         // 如果是失败
         is PagingUiModel.Error ->{
             // 如果是重新刷新
@@ -67,6 +71,7 @@ fun <T> PagingUiModel<T>.handlePagingStatus(
                 adapter.loadMoreModule.loadMoreFail()
             }
         }
+        
         // 如果是加载中
         is PagingUiModel.Loading ->{
 
