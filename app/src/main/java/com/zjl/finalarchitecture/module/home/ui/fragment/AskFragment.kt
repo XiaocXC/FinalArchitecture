@@ -6,6 +6,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
+import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import com.zjl.base.adapter.DefaultLoadStateAdapter
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.utils.autoCleared
@@ -27,7 +28,7 @@ import kotlinx.coroutines.launch
  * @author: zhou
  * @date : 2022/1/20 17:58
  */
-class AskFragment: BaseFragment<FragmentAskBinding, AskViewModel>(), OnRefreshListener {
+class AskFragment: BaseFragment<FragmentAskBinding, AskViewModel>(), OnRefreshLoadMoreListener {
 
     companion object {
         fun newInstance() = AskFragment()
@@ -42,14 +43,16 @@ class AskFragment: BaseFragment<FragmentAskBinding, AskViewModel>(), OnRefreshLi
         // 列表适配器
         mArticleAdapter = ArticleAdapter()
 
-        mArticleAdapter.loadMoreModule.setOnLoadMoreListener {
-            mViewModel.loadMore()
-        }
+//        mArticleAdapter.loadMoreModule.setOnLoadMoreListener {
+//            mViewModel.loadMore()
+//        }
 
         // 给ArticleAdapter加上分页的状态尾
         val articleWithFooterAdapter = mArticleAdapter
 
         mBinding.recyclerView.adapter = articleWithFooterAdapter
+
+        mBinding.refreshLayout.setOnRefreshLoadMoreListener(this)
 
         // 分割线
         mBinding.recyclerView.addItemDecoration(
@@ -76,6 +79,10 @@ class AskFragment: BaseFragment<FragmentAskBinding, AskViewModel>(), OnRefreshLi
 
     override fun onRefresh(refreshLayout: RefreshLayout) {
         refresh()
+    }
+
+    override fun onLoadMore(refreshLayout: RefreshLayout) {
+        mViewModel.loadMore()
     }
 
 

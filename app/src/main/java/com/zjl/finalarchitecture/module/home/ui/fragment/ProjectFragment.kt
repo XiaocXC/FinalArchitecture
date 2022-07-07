@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
+import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import com.zjl.base.adapter.DefaultLoadStateAdapter
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.ui.data
@@ -26,7 +27,7 @@ import timber.log.Timber
  * @author: zhou
  * @date : 2022/1/20 18:04
  */
-class ProjectFragment : BaseFragment<FragmentProjectBinding, ProjectViewModel>(), OnRefreshListener {
+class ProjectFragment : BaseFragment<FragmentProjectBinding, ProjectViewModel>(), OnRefreshLoadMoreListener {
 
     companion object {
         fun newInstance() = ProjectFragment()
@@ -69,12 +70,14 @@ class ProjectFragment : BaseFragment<FragmentProjectBinding, ProjectViewModel>()
          * 项目详情列表 rv adapter
          */
         mProjectListAdapter = ProjectAdapter()
-        // 加载更多
-        mProjectListAdapter.loadMoreModule.setOnLoadMoreListener {
-            mViewModel.loadMore()
-        }
+//        // 加载更多
+//        mProjectListAdapter.loadMoreModule.setOnLoadMoreListener {
+//            mViewModel.loadMore()
+//        }
 
         mBinding.rvProject.adapter = mProjectListAdapter
+        mBinding.refreshLayout.setOnRefreshLoadMoreListener(this)
+
         // 分割线
         mBinding.rvProject.addItemDecoration(
             ArticleDividerItemDecoration(
@@ -108,6 +111,10 @@ class ProjectFragment : BaseFragment<FragmentProjectBinding, ProjectViewModel>()
 
     override fun onRefresh(refreshLayout: RefreshLayout) {
         mViewModel.onCidChanged(mViewModel.cid.value)
+    }
+
+    override fun onLoadMore(refreshLayout: RefreshLayout) {
+        mViewModel.loadMore()
     }
 
     private fun refresh() {

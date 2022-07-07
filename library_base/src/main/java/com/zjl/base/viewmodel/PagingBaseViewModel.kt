@@ -17,16 +17,10 @@ import kotlin.coroutines.coroutineContext
  *
  * 你可以重写[pageSize]方法和[initPageIndex]来规定请求页码大小和初始页码索引大小
  * 同时提供[launchRequestByPaging]等分页请求方法，让你专心处理网络逻辑
+ * 一个PagingBaseViewModel只能自动处理一个分页数据加载
+ * 如果你一个界面含有多个分页，另一个分页需要你自行管理或者重新创建一个新的PagingBaseViewModel进行管理
  **/
 abstract class PagingBaseViewModel: BaseViewModel() {
-
-    companion object {
-        /**
-         * 默认一页15
-         */
-        const val DEFAULT_PAGE_SIZE = 15
-    }
-
 
     open fun pageSize() = 15
 

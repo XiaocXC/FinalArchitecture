@@ -3,10 +3,10 @@ package com.zjl.finalarchitecture.utils.ext
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.zjl.base.ui.PagingUiModel
+import com.zjl.base.ui.state.LoadingState
 import com.zy.multistatepage.MultiStateContainer
 import com.zy.multistatepage.state.EmptyState
 import com.zy.multistatepage.state.ErrorState
-import com.zy.multistatepage.state.LoadingState
 import com.zy.multistatepage.state.SuccessState
 
 /**

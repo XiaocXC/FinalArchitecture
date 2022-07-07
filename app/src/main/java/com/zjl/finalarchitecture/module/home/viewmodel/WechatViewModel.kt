@@ -60,7 +60,7 @@ class WechatViewModel : PagingBaseViewModel() {
 
     /**
      * 点击后更改的Cid
-     * Cid更改会触发 [flatMapLatest] 请求分页
+     * 更改会会触发加载数据
      */
     fun onCidChanged(cid: Int){
         _cid.value = cid

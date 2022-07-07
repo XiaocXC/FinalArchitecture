@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ToastUtils
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
+import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import com.zjl.base.adapter.DefaultLoadStateAdapter
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.utils.autoCleared
@@ -27,7 +28,7 @@ import kotlinx.coroutines.launch
  * @author: zhou
  * @date : 2022/1/20 17:56
  */
-class PlazaFragment : BaseFragment<FragmentPlazaBinding, PlazaViewModel>(), OnRefreshListener {
+class PlazaFragment : BaseFragment<FragmentPlazaBinding, PlazaViewModel>(), OnRefreshLoadMoreListener {
 
 
     companion object {
@@ -44,11 +45,12 @@ class PlazaFragment : BaseFragment<FragmentPlazaBinding, PlazaViewModel>(), OnRe
         // 列表适配器
         mArticleAdapter = ArticleAdapter()
 
-        mArticleAdapter.loadMoreModule.setOnLoadMoreListener {
-            mViewModel.loadMore()
-        }
+//        mArticleAdapter.loadMoreModule.setOnLoadMoreListener {
+//            mViewModel.loadMore()
+//        }
 
         mBinding.recyclerView.adapter = mArticleAdapter
+        mBinding.refreshLayout.setOnRefreshLoadMoreListener(this)
 
         // 分割线
         mBinding.recyclerView.addItemDecoration(
@@ -81,6 +83,10 @@ class PlazaFragment : BaseFragment<FragmentPlazaBinding, PlazaViewModel>(), OnRe
 
     override fun onRefresh(refreshLayout: RefreshLayout) {
         refresh()
+    }
+
+    override fun onLoadMore(refreshLayout: RefreshLayout) {
+        mViewModel.loadMore()
     }
 
     private fun refresh() {

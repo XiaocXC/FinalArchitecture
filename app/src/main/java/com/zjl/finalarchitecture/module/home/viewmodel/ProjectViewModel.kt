@@ -1,27 +1,15 @@
 package com.zjl.finalarchitecture.module.home.viewmodel
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.cachedIn
 import com.zjl.base.exception.ApiException
 import com.zjl.base.ui.PagingUiModel
 import com.zjl.base.ui.UiModel
-import com.zjl.base.viewmodel.BaseViewModel
 import com.zjl.base.viewmodel.PagingBaseViewModel
-import com.zjl.finalarchitecture.api.ApiService
 import com.zjl.finalarchitecture.data.model.ArticleListVO
 import com.zjl.finalarchitecture.data.model.CategoryVO
-import com.zjl.finalarchitecture.data.model.SystemVO
 import com.zjl.finalarchitecture.data.respository.ApiRepository
-import com.zjl.finalarchitecture.data.respository.datasouce.AskPagingSource
-import com.zjl.finalarchitecture.data.respository.datasouce.PlazaPagingSource
-import com.zjl.finalarchitecture.data.respository.datasouce.ProjectArticlePagingSource
-import com.zjl.finalarchitecture.data.respository.datasouce.SystemArticlePagingSource
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
 
 /**
@@ -32,7 +20,7 @@ import kotlinx.coroutines.launch
 class ProjectViewModel: PagingBaseViewModel() {
 
     /**
-     * 项目分类列表数据
+     * 项目分类数据
      */
     private val _categoryList = MutableStateFlow<UiModel<List<CategoryVO>>>(UiModel.Loading())
     val categoryList: StateFlow<UiModel<List<CategoryVO>>> = _categoryList
@@ -51,7 +39,7 @@ class ProjectViewModel: PagingBaseViewModel() {
 
     /**
      * 点击后更改的Cid
-     * Cid更改会触发 [flatMapLatest] 请求分页
+     * 更改会会触发加载数据
      */
     fun onCidChanged(cid: Int){
         _cid.value = cid

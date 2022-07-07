@@ -5,6 +5,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
+import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.ui.data
 import com.zjl.base.utils.autoCleared
@@ -30,7 +31,7 @@ import timber.log.Timber
  * @author: zhou
  * @date : 2022/1/20 18:07
  */
-class WeChatFragment : BaseFragment<FragmentProjectBinding, WechatViewModel>(), OnRefreshListener {
+class WeChatFragment : BaseFragment<FragmentProjectBinding, WechatViewModel>(), OnRefreshLoadMoreListener {
 
     companion object {
         fun newInstance() = WeChatFragment()
@@ -70,11 +71,12 @@ class WeChatFragment : BaseFragment<FragmentProjectBinding, WechatViewModel>(), 
          * 微信公众号详情列表 rv adapter
          */
         mWechatListAdapter = ProjectAdapter()
-        mWechatListAdapter.loadMoreModule.setOnLoadMoreListener {
-            mViewModel.loadMore()
-        }
+//        mWechatListAdapter.loadMoreModule.setOnLoadMoreListener {
+//            mViewModel.loadMore()
+//        }
 
         mBinding.rvProject.adapter = mWechatListAdapter
+        mBinding.refreshLayout.setOnRefreshLoadMoreListener(this)
         // 分割线
         mBinding.rvProject.addItemDecoration(
             ArticleDividerItemDecoration(
@@ -109,6 +111,10 @@ class WeChatFragment : BaseFragment<FragmentProjectBinding, WechatViewModel>(), 
 
     override fun onRefresh(refreshLayout: RefreshLayout) {
         mViewModel.onCidChanged(mViewModel.cid.value)
+    }
+
+    override fun onLoadMore(refreshLayout: RefreshLayout) {
+        mViewModel.loadMore()
     }
 
     private fun refresh() {

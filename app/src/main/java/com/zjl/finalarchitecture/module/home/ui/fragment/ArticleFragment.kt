@@ -55,9 +55,9 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel>()
 //        val mArticleAdapter2: ArticleAdapter by lazy { ArticleAdapter() }
 
         // 加载更多
-        mArticleAdapter.loadMoreModule.setOnLoadMoreListener {
-            mViewModel.loadMore()
-        }
+//        mArticleAdapter.loadMoreModule.setOnLoadMoreListener {
+//            mViewModel.loadMore()
+//        }
 
         // 将BannerAdapter和ArticleAdapter整合为一个Adapter
         mBinding.rvArticle.adapter = mArticleAdapter
