@@ -28,9 +28,16 @@ class ProjectAdapter : BaseQuickAdapter<ArticleListVO, BaseViewHolder>(
 
             holder.setText(R.id.item_project_date, niceDate)
             val itemProjectImageView = holder.getView<ImageView>(R.id.item_project_imageview)
-            itemProjectImageView.load(envelopePic) {
-                placeholder(R.drawable.default_project_img)
+
+            if (envelopePic.isEmpty()) {
+                itemProjectImageView.load(R.drawable.holyshit)
+            }else{
+                itemProjectImageView.load(envelopePic) {
+                    placeholder(R.drawable.xiaocaidan)
+                }
             }
+
+
 
             holder.setText(R.id.item_project_title, title.toHtml())
             holder.setText(R.id.item_project_content, desc.toHtml())

@@ -8,6 +8,7 @@ plugins {
     id 'androidx.navigation.safeargs.kotlin'
 }
 
+
 android {
     compileSdkVersion rootProject.compileSdkVersion
     buildToolsVersion rootProject.buildToolVersion
@@ -79,5 +80,7 @@ dependencies {
 
     implementation 'com.google.code.gson:gson:2.9.0'
 
+    def dialogx_version = "0.0.45.beta12"
+    implementation "com.github.kongzue.DialogX:DialogX:${dialogx_version}"
 //    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.8.1'
 }

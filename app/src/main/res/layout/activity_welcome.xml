@@ -24,6 +24,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
+
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imgLogo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/realsex5"
+        android:scaleType="centerCrop"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.Architecture.MediumComponent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.hjq.shape.view.ShapeTextView
         android:id="@+id/txtEnter"
         android:layout_width="120dp"
@@ -46,15 +60,5 @@
         android:gravity="center"/>
 
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/imgLogo"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:src="@drawable/dddd"
-        app:shapeAppearanceOverlay="@style/ShapeAppearance.Architecture.MediumComponent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

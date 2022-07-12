@@ -8,7 +8,7 @@ import com.zjl.finalarchitecture.data.respository.ApiRepository
 
 @Deprecated("已废弃，Paging3目前被放弃使用")
 class ProjectArticlePagingSource(
-    private val id: Int
+    private val cId: Int
 ): IntegerPagingSource<ArticleListVO>() {
 
     override fun getInitPage(params: LoadParams<Int>): Int {
@@ -16,6 +16,6 @@ class ProjectArticlePagingSource(
     }
 
     override suspend fun loadData(currentPage: Int): ApiResult<PageVO<ArticleListVO>> {
-        return ApiRepository.requestProjectDetailListDataByPage(currentPage, id)
+        return ApiRepository.requestProjectDetailListDataByPage(currentPage, cId)
     }
 }

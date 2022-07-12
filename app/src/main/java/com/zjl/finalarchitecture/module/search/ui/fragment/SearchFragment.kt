@@ -37,16 +37,20 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>() {
 
         mBinding.editSearch.addOnEditTextAttachedListener { inputLayout ->
             inputLayout.setEndIconOnClickListener {
-                if(inputLayout.editText?.text.isNullOrEmpty()){
+                if (inputLayout.editText?.text.isNullOrEmpty()) {
                     return@setEndIconOnClickListener
                 }
                 // 存储搜索的内容
                 mViewModel.saveSearchKey(inputLayout.editText?.text.toString())
 
                 // 进入下一个页面
-                findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToSearchResultFragment(
-                    inputLayout.editText?.text.toString(), inputLayout.editText?.text.toString())
+                findNavController().navigate(
+                    SearchFragmentDirections.actionSearchFragmentToSearchResultFragment(
+                        inputLayout.editText?.text.toString(),
+                        inputLayout.editText?.text.toString()
+                    )
                 )
+
             }
         }
     }
@@ -71,11 +75,15 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>() {
     /**
      * 生成搜索热词Chip
      */
-    private fun generateSearchHotChip(data: List<SearchHotVO>){
+    private fun generateSearchHotChip(data: List<SearchHotVO>) {
         mBinding.chipSearchHot.removeAllViews()
         data.forEach { searchHot ->
             val chip =
-                layoutInflater.inflate(R.layout.view_search_chip, mBinding.chipSearchHot, false) as Chip
+                layoutInflater.inflate(
+                    R.layout.view_search_chip,
+                    mBinding.chipSearchHot,
+                    false
+                ) as Chip
             chip.text = searchHot.name
             chip.tag = searchHot
             // 每一项的点击事件
@@ -84,17 +92,26 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>() {
                 mViewModel.saveSearchKey(chip.text.toString())
 
                 // 进入下一个页面
-                findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToSearchResultFragment(chip.text.toString(), chip.text.toString()))
+                findNavController().navigate(
+                    SearchFragmentDirections.actionSearchFragmentToSearchResultFragment(
+                        chip.text.toString(),
+                        chip.text.toString()
+                    )
+                )
             }
 
             mBinding.chipSearchHot.addView(chip)
         }
     }
 
-    private fun generateSearchHistoryChip(data: List<String>){
+    private fun generateSearchHistoryChip(data: List<String>) {
         mBinding.chipSearchHistory.removeAllViews()
         data.forEach { text ->
-            val chip = layoutInflater.inflate(R.layout.view_search_chip, mBinding.chipSearchHistory, false) as Chip
+            val chip = layoutInflater.inflate(
+                R.layout.view_search_chip,
+                mBinding.chipSearchHistory,
+                false
+            ) as Chip
             chip.text = text
             chip.isCloseIconVisible = true
             chip.setOnClickListener {
@@ -102,7 +119,12 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>() {
                 mViewModel.saveSearchKey(chip.text.toString())
 
                 // 进入下一个页面
-                findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToSearchResultFragment(chip.text.toString(), chip.text.toString()))
+                findNavController().navigate(
+                    SearchFragmentDirections.actionSearchFragmentToSearchResultFragment(
+                        chip.text.toString(),
+                        chip.text.toString()
+                    )
+                )
             }
             chip.setOnCloseIconClickListener {
                 mViewModel.removeSearchKey(chip.text.toString())
