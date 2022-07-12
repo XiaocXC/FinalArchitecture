@@ -4,8 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import androidx.fragment.app.DialogFragment
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.listener.OnItemClickListener
+import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.databinding.DialogSelectSingleOrMultiBinding
+import com.zjl.finalarchitecture.module.toolbox.selectRv.adapter.JavaSelectMultiAdapter
 import com.zjl.finalarchitecture.module.toolbox.selectRv.adapter.SelectMultiAdapter
 import com.zjl.finalarchitecture.module.toolbox.selectRv.adapter.SelectSingleAdapter
 
@@ -19,7 +24,7 @@ class SelectMultiDialog: DialogFragment() {
 
     private lateinit var mBinding: DialogSelectSingleOrMultiBinding
 
-    private lateinit var multiAdapter: SelectMultiAdapter
+    private lateinit var multiAdapter: JavaSelectMultiAdapter
 
     /**
      * 确认后的回调
@@ -53,7 +58,16 @@ class SelectMultiDialog: DialogFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        multiAdapter = SelectMultiAdapter()
+        multiAdapter = JavaSelectMultiAdapter()
+
+        multiAdapter.setOnItemClickListener { _, itemView, position ->
+            // 更新当前的多选状态
+            val item = multiAdapter.getItem(position)
+            val checkBox = itemView.findViewById<CheckBox>(R.id.cb_select)
+            val selected = !checkBox.isChecked
+            multiAdapter.setSelectContent(item, selected, position)
+        }
+
         mBinding.rvSelect.adapter = multiAdapter
 
         multiAdapter.setList(generateData())

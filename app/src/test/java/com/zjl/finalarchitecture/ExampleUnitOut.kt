@@ -1,6 +1,7 @@
 package com.zjl.finalarchitecture
 
 import android.text.TextUtils
+import com.kongzue.baseokhttp.util.JsonMap
 import org.junit.Test
 
 /**
@@ -12,10 +13,11 @@ class ExampleUnitOut {
     @Test
     fun addition_isCorrect() {
 
-        println(secondToHour("0"))
-        println(secondToHour("60"))
-        println(secondToHour("111"))
-        println(secondToHour("3700"))
+//        println(secondToHour("0"))
+//        println(secondToHour("60"))
+//        println(secondToHour("111"))
+//        println(secondToHour("3700"))
+
     }
 
     fun secondToHour(second: String?): String {

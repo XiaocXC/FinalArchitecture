@@ -5,7 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.zjl.finalarchitecture.databinding.DialogSelectSingleOrMultiBinding
+import com.zjl.finalarchitecture.module.toolbox.selectRv.adapter.JavaSelectSingleAdapter
 import com.zjl.finalarchitecture.module.toolbox.selectRv.adapter.SelectSingleAdapter
 
 /**
@@ -18,7 +21,7 @@ class SelectSingleDialog: DialogFragment() {
 
     private lateinit var mBinding: DialogSelectSingleOrMultiBinding
 
-    private lateinit var singleAdapter: SelectSingleAdapter
+    private lateinit var singleAdapter: JavaSelectSingleAdapter
 
     /**
      * 确认后的回调
@@ -52,14 +55,19 @@ class SelectSingleDialog: DialogFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        singleAdapter = SelectSingleAdapter()
+        singleAdapter = JavaSelectSingleAdapter()
+        singleAdapter.setOnItemClickListener { _, _, position ->
+            // 点击后设置当前选中的位置
+            singleAdapter.setCurrentSelectPosition(position)
+        }
+
         mBinding.rvSelect.adapter = singleAdapter
 
         singleAdapter.setList(generateData())
 
         // 确定后将已选择的数据返回
         mBinding.btnConfirm.setOnClickListener {
-            val currentSelectData = singleAdapter.getItemOrNull(singleAdapter.currentSelect) ?: return@setOnClickListener
+            val currentSelectData = singleAdapter.getItemOrNull(singleAdapter.currentSelectPosition) ?: return@setOnClickListener
             confirmCallback(currentSelectData)
             dismiss()
         }

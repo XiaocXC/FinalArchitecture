@@ -52,6 +52,6 @@ fun main() {
         "${list2.add("M")}"
     )
     println(list2.size)
-    println(split.contentToString())
+//    println(split.contentToString())
 
 }

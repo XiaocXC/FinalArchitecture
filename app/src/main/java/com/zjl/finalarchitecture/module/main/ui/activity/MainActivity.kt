@@ -1,12 +1,9 @@
 package com.zjl.finalarchitecture.module.main.ui.activity
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.OnBackPressedCallback
-import androidx.activity.viewModels
 import androidx.navigation.findNavController
 import com.blankj.utilcode.util.ToastUtils
-import com.kongzue.baseokhttp.util.JsonMap
 import com.zjl.base.activity.BaseActivity
 import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.module.main.viewmodel.MainViewModel

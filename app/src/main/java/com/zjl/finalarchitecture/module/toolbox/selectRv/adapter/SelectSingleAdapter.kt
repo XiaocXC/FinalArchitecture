@@ -39,17 +39,23 @@ class SelectSingleAdapter: BaseQuickAdapter<String, BaseViewHolder>(
     }
 
     /**
-     * 局部更新
+     * 局部更新，
+     * 当调用 notifyItemChanged(pos, payloads) 方法时会调用到此处
+     * 我们将payloads取出然后无损更新视图
      * @param payloads 额外参数值
      */
     override fun convert(holder: BaseViewHolder, item: String, payloads: List<Any>) {
         if(payloads.isEmpty()){
             return
         }
-        val selected = payloads[0] as Boolean
-        handleSelectStatus(holder, selected)
+        payloads.forEach {
+            handleSelectStatus(holder, it as Boolean)
+        }
     }
 
+    /**
+     * 更新选中状态
+     */
     private fun handleSelectStatus(holder: BaseViewHolder, selected: Boolean){
         val cbSelect = holder.getView<CheckBox>(R.id.cb_select)
         cbSelect.isChecked = selected
@@ -57,26 +63,8 @@ class SelectSingleAdapter: BaseQuickAdapter<String, BaseViewHolder>(
 
     override fun onItemViewHolderCreated(viewHolder: BaseViewHolder, viewType: Int) {
         val cbSelect = viewHolder.getView<CheckBox>(R.id.cb_select)
-        // 监听CheckBox的点击事件（我们这不监听状态变化，因为会有问题BUG）
-        cbSelect.setOnClickListener {
-            val changedSelected = cbSelect.isChecked
-            // 更新当前的选中下标
-            currentSelect = if(changedSelected){
-                viewHolder.absoluteAdapterPosition
-            } else {
-                RecyclerView.NO_POSITION
-            }
-        }
-
-        viewHolder.itemView.setOnClickListener {
-            val changedSelected = !cbSelect.isChecked
-            // 更新当前的选中下标
-            currentSelect = if(changedSelected){
-                viewHolder.absoluteAdapterPosition
-            } else {
-                RecyclerView.NO_POSITION
-            }
-        }
+        // 禁用掉CheckBox自己的点击效果
+        cbSelect.isClickable = false
     }
 
 }

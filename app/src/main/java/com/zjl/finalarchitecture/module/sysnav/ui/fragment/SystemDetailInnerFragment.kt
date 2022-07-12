@@ -19,6 +19,7 @@ import com.zjl.finalarchitecture.utils.ext.multistate.handleWithPaging3
 import com.zjl.finalarchitecture.utils.ext.paging.withLoadState
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.net.SocketTimeoutException
 
 class SystemDetailInnerFragment: BaseFragment<FragmentSystemDetailInnerBinding, SystemDetailInnerViewModel>() {
 
