@@ -34,6 +34,9 @@
         <action
             android:id="@+id/action_mainFragment_to_selectSingleOrMultiFragment"
             app:destination="@id/selectSingleOrMultiFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_imeAnimFragment"
+            app:destination="@id/imeAnimFragment" />
     </fragment>
 
 
@@ -115,5 +118,9 @@
         android:id="@+id/selectSingleOrMultiFragment"
         android:name="com.zjl.finalarchitecture.module.toolbox.selectRv.SelectSingleOrMultiFragment"
         android:label="SelectSingleOrMultiFragment" />
+    <fragment
+        android:id="@+id/imeAnimFragment"
+        android:name="com.zjl.finalarchitecture.module.toolbox.imeAnim.ImeAnimFragment"
+        android:label="ImeAnimFragment" />
 
 </navigation>

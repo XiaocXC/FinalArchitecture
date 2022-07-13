@@ -43,12 +43,13 @@ abstract class BaseActivity<V : ViewBinding, VM : BaseViewModel> : AppCompatActi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // 设置沉浸式状态栏，此操作会去掉透明遮罩等内容
-//        WindowCompat.setDecorFitsSystemWindows(window, false)
-
 
         mBinding = bindView()
         setContentView(mBinding.root)
+
+        // 设置沉浸式状态栏，此操作会去掉透明遮罩等内容
+        // 类似于使用了 view.setSystemUiVisibility(LAYOUT_STABLE | LAYOUT_FULLSCREEN | LAYOUT_FULLSCREEN)
+//        WindowCompat.setDecorFitsSystemWindows(window, false)
 
 
         mViewModel = bindViewModel()
