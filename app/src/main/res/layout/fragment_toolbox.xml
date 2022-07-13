@@ -12,39 +12,39 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="btnMulti,btnDropPop,btnTreeCheck,btnDragSimple,btnRvSelect"
+        app:constraint_referenced_ids="btnMulti,btnDropPop,btnTreeCheck,btnDragSimple,btnRvSelect,btnImeAnim"
         app:flow_horizontalGap="5dp"
         app:flow_verticalGap="5dp"
         app:flow_wrapMode="chain" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnMulti"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="多列表" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnDropPop"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="下拉框" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnTreeCheck"
-        android:layout_width="120dp"
-        android:layout_height="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="树状选择器" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnDragSimple"
-        android:layout_width="220dp"
-        android:layout_height="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="拖拽案例（RecyclerView）" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnRvSelect"
-        android:layout_width="240dp"
-        android:layout_height="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="单多选案例（RecyclerView）" />
 
 
