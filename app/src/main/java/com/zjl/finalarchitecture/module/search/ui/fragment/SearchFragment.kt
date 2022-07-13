@@ -22,14 +22,14 @@ import kotlinx.coroutines.launch
 class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>() {
 
     override fun initViewAndEvent(savedInstanceState: Bundle?) {
-        mBinding.toolbarSearch.doOnApplyWindowInsets { view, insets, padding ->
-            val systemInsets = insets.getInsets(
-                WindowInsetsCompat.Type.systemBars()
-            )
-            view.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                topMargin = systemInsets.top
-            }
-        }
+//        mBinding.toolbarSearch.doOnApplyWindowInsets { view, insets, padding ->
+//            val systemInsets = insets.getInsets(
+//                WindowInsetsCompat.Type.systemBars()
+//            )
+//            view.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+//                topMargin = systemInsets.top
+//            }
+//        }
 
         mBinding.toolbarSearch.setNavigationOnClickListener {
             findNavController().navigateUp()

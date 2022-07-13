@@ -1,16 +1,18 @@
 package com.zjl.finalarchitecture.module.main.ui.fragment
+
 import android.os.Bundle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
+import com.gyf.immersionbar.ImmersionBar
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.utils.ext.getAttrColor
 import com.zjl.base.viewmodel.EmptyViewModel
 import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.databinding.FragmentMainBinding
 import com.zjl.finalarchitecture.module.discovery.ui.fragment.DiscoveryFragment
+import com.zjl.finalarchitecture.module.home.ui.fragment.HomeFragment
 import com.zjl.finalarchitecture.module.mine.ui.fragment.MineFragment
 import com.zjl.finalarchitecture.module.sysnav.ui.fragment.SysAndNavFragment
-import com.zjl.finalarchitecture.module.home.ui.fragment.HomeFragment
 import com.zjl.finalarchitecture.module.toolbox.ToolboxFragment
 
 
@@ -21,22 +23,25 @@ import com.zjl.finalarchitecture.module.toolbox.ToolboxFragment
  */
 class MainFragment : BaseFragment<FragmentMainBinding, EmptyViewModel>() {
 
+    protected var mImmersionBar: ImmersionBar? = null
+
     override fun initViewAndEvent(savedInstanceState: Bundle?) {
         //viewpager2是否可以滑动
         mBinding.mViewPager2.isUserInputEnabled = false
         //全部缓存,避免切换回重新加载
         mBinding.mViewPager2.offscreenPageLimit = 5
-        mBinding.mViewPager2.adapter = object : FragmentStateAdapter(childFragmentManager, viewLifecycleOwner.lifecycle) {
-            override fun getItemCount() = 5
-            override fun createFragment(position: Int) = when (position) {
-                0 -> HomeFragment()
-                1 -> SysAndNavFragment()
-                2 -> DiscoveryFragment()
-                3 -> ToolboxFragment()
-                4 -> MineFragment()
-                else -> HomeFragment()
+        mBinding.mViewPager2.adapter =
+            object : FragmentStateAdapter(childFragmentManager, viewLifecycleOwner.lifecycle) {
+                override fun getItemCount() = 5
+                override fun createFragment(position: Int) = when (position) {
+                    0 -> HomeFragment()
+                    1 -> SysAndNavFragment()
+                    2 -> DiscoveryFragment()
+                    3 -> ToolboxFragment()
+                    4 -> MineFragment()
+                    else -> HomeFragment()
+                }
             }
-        }
 
         // 不按照默认BottomNavigation的Tint色调显示
         mBinding.mBottomNavigationView.itemIconTintList = null
@@ -84,6 +89,5 @@ class MainFragment : BaseFragment<FragmentMainBinding, EmptyViewModel>() {
         mBinding.mViewPager2.setCurrentItem(position, false)
         return true
     }
-
 
 }

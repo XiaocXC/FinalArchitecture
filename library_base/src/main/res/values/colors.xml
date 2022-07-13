@@ -37,6 +37,11 @@
     <color name="base_transparent">#00000000</color>
     <!-- 熊猫色（黑白背景通吃） -->
     <color name="base_panda">#FF757575</color>
+    <!--正文文字颜色-->
+    <color name="base_panda2">#ff333333</color>
+    <!--Flexbox颜色-->
+    <color name="base_panda3">#F1F3F4</color>
+
 
     <!-- 白色 -->
     <color name="base_white95">#F2FFFFFF</color>

@@ -8,6 +8,7 @@ import androidx.annotation.CallSuper
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
+import com.gyf.immersionbar.ImmersionBar
 import com.kongzue.dialogx.dialogs.WaitDialog
 import com.zjl.base.ui.onFailure
 import com.zjl.base.ui.onLoading
@@ -34,7 +35,7 @@ import kotlinx.coroutines.launch
  * 根据MVI或MVVM规定，一个界面由一个ViewModel所绑定，我们这里需要一个VM的绑定
  * 如果该界面需要用到多个VM，则请将负责界面状态的作为主要的VM，或者自行实现状态管理
  */
-abstract class BaseFragment<V: ViewBinding, VM: BaseViewModel>: Fragment() {
+abstract class BaseFragment<V : ViewBinding, VM : BaseViewModel> : Fragment() {
 
     private var _mBinding: V? = null
     protected val mBinding get() = _mBinding!!
@@ -49,6 +50,8 @@ abstract class BaseFragment<V: ViewBinding, VM: BaseViewModel>: Fragment() {
      */
     private var _uiRootState: MultiStateContainer? = null
     protected val uiRootState get() = _uiRootState!!
+
+
 
     @CallSuper
     override fun onCreateView(
@@ -66,14 +69,19 @@ abstract class BaseFragment<V: ViewBinding, VM: BaseViewModel>: Fragment() {
      * 默认实现通过反射实现
      * 你也可以重写该方法进行自行创建
      */
-    open fun bindView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): V{
-        return inflateBindingWithGeneric(inflater,container,false)
+    open fun bindView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): V {
+        return inflateBindingWithGeneric(inflater, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         isFirst = true
         mViewModel = createViewModel()
+
 
         initViewAndEvent(savedInstanceState)
         createDefObserver()
@@ -85,10 +93,10 @@ abstract class BaseFragment<V: ViewBinding, VM: BaseViewModel>: Fragment() {
      * 提供一个默认实现，展示弹窗加载或者是界面加载
      * @param cancelable 是否支持取消，默认为true可取消
      */
-    open fun showUiLoading(cancelable: Boolean = true){
+    open fun showUiLoading(cancelable: Boolean = true) {
         // 如果可取消，显示的是替换整个界面的加载内容
         // 如果不可取消，则显示的是加载弹出，禁止关闭
-        if(cancelable){
+        if (cancelable) {
             uiRootState.show(LoadingState())
         } else {
             WaitDialog.show(getString(R.string.base_ui_description_status_view_loading)).apply {
@@ -102,7 +110,7 @@ abstract class BaseFragment<V: ViewBinding, VM: BaseViewModel>: Fragment() {
      * 提供一个默认实现，根据UiModel展示具体错误和重试逻辑
      * @param uiModel 错误状态信息
      */
-    open fun showUiError(throwable: Throwable){
+    open fun showUiError(throwable: Throwable) {
         WaitDialog.dismiss()
         uiRootState.show<ErrorState> {
             it.setErrorMsg(throwable.message)
@@ -114,7 +122,7 @@ abstract class BaseFragment<V: ViewBinding, VM: BaseViewModel>: Fragment() {
      * 展示成功页面
      * 提供一个默认实现，及展示正确的视图，隐藏掉所有负面内容
      */
-    open fun showUiSuccess(){
+    open fun showUiSuccess() {
         WaitDialog.dismiss()
         uiRootState.show(SuccessState())
     }
@@ -122,7 +130,7 @@ abstract class BaseFragment<V: ViewBinding, VM: BaseViewModel>: Fragment() {
     /**
      * 重试刷新全部内容的方法，默认直接调用viewModel的初始化方法
      */
-    open fun retryAll(){
+    open fun retryAll() {
         mViewModel.initData(true)
     }
 
@@ -130,7 +138,7 @@ abstract class BaseFragment<V: ViewBinding, VM: BaseViewModel>: Fragment() {
      * 创建默认的监听器内容
      * 主要用于界面状态的监听
      */
-    open fun createDefObserver(){
+    open fun createDefObserver() {
         launchAndRepeatWithViewLifecycle {
             launch {
                 mViewModel.rootViewState.collectLatest { uiModel ->
@@ -150,7 +158,7 @@ abstract class BaseFragment<V: ViewBinding, VM: BaseViewModel>: Fragment() {
      * 利用反射创建ViewModel实例
      * 该ViewModel默认实现为当前Fragment作用域，如果你需要自定义作用域，请重写该方法
      */
-    open fun createViewModel(): VM{
+    open fun createViewModel(): VM {
         return ViewModelProvider(this)[getVmClazz(this)]
     }
 

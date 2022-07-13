@@ -1,44 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:layout_height="match_parent">
+
+    <!-- 演示 约束布局的flow的用法 -->
+    <androidx.constraintlayout.helper.widget.Flow
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="btnMulti,btnDropPop,btnTreeCheck,btnDragSimple,btnRvSelect"
+        app:flow_horizontalGap="5dp"
+        app:flow_verticalGap="5dp"
+        app:flow_wrapMode="chain" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_multi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="多列表"/>
+        android:id="@+id/btnMulti"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="多列表" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnDropPop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:text="下拉框"/>
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="下拉框" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_tree_check"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="200dp"
-        android:text="树状选择器"/>
+        android:id="@+id/btnTreeCheck"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:text="树状选择器" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_drag_simple"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
-        android:text="拖拽案例（RecyclerView）"/>
+        android:id="@+id/btnDragSimple"
+        android:layout_width="220dp"
+        android:layout_height="50dp"
+        android:text="拖拽案例（RecyclerView）" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_rv_select"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="104dp"
-        android:text="单多选案例（RecyclerView）"/>
+        android:id="@+id/btnRvSelect"
+        android:layout_width="240dp"
+        android:layout_height="50dp"
+        android:text="单多选案例（RecyclerView）" />
 
 
-
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

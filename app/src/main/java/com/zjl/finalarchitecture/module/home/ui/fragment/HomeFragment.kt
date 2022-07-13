@@ -44,12 +44,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, EmptyViewModel>() {
 
     override fun initViewAndEvent(savedInstanceState: Bundle?) {
         // 给整个布局加上一个状态栏的高度
-        mBinding.root.doOnApplyWindowInsets { view, insets, _ ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            view.run {
-                updatePadding(top = systemBars.top)
-            }
-        }
+//        mBinding.root.doOnApplyWindowInsets { view, insets, _ ->
+//            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+//            view.run {
+//                updatePadding(top = systemBars.top)
+//            }
+//        }
 
         //mAppBarLayout
         mBinding.mAppBarLayout.addOnOffsetChangedListener(object :
