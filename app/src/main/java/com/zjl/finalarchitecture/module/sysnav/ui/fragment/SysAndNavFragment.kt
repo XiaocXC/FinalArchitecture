@@ -22,7 +22,8 @@ class SysAndNavFragment : BaseFragment<FragmentSysAndNavBinding, EmptyViewModel>
     //无参构造方法
     init {
         mFragmentList.add(SystemFragment.newInstance())
-        mFragmentList.add(NavigationFragment.newInstance())
+//        mFragmentList.add(NavigationFragment.newInstance())
+        mFragmentList.add(FuckNavigationFragment.newInstance())
     }
 
     override fun initViewAndEvent(savedInstanceState: Bundle?) {

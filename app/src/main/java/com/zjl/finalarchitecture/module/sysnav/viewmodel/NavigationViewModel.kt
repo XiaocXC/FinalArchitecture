@@ -16,13 +16,15 @@ import kotlinx.coroutines.launch
  *
  * 导航界面 ViewModel
  */
-class NavigationViewModel: BaseViewModel() {
+class NavigationViewModel : BaseViewModel() {
 
-    /**
-     * 体系列表数据
-     */
+
     private val _navigationList = MutableStateFlow<List<NavigationVO>>(emptyList())
     val navigationList: StateFlow<List<NavigationVO>> = _navigationList
+
+    private val _fuckNavigationList =
+        MutableStateFlow<UiModel<List<NavigationVO>>>(UiModel.Loading())
+    val fuckNavigationList: StateFlow<UiModel<List<NavigationVO>>> = _fuckNavigationList
 
     init {
         initData()
@@ -33,14 +35,21 @@ class NavigationViewModel: BaseViewModel() {
         viewModelScope.launch {
             launchRequestByNormal({
                 ApiRepository.requestNavigationListData()
-            },{ data ->
+            }, { data ->
                 // 状态更改为成功
                 _rootViewState.emit(UiModel.Success(data))
                 _navigationList.value = data
-            },{ error ->
+            }, { error ->
                 // 状态更改为错误
                 _rootViewState.emit(UiModel.Error(ApiException(error)))
             })
+
+
+            launchRequestByNormalWithUiState({
+                ApiRepository.requestNavigationListData()
+            }, _fuckNavigationList, true, true)
+
         }
+
     }
 }

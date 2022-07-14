@@ -24,9 +24,16 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 
+/**
+ * 先用NavigationFragment2
+ * @see NavigationFragment
+ */
+@Deprecated("有bug")
 class NavigationFragment : BaseFragment<FragmentNavigationBinding, NavigationViewModel>() {
 
     private var navigationGroupAdapter by autoCleared<NavigationGroupAdapter>()
+
+    /* 导航左侧 adapter */
     private var navigationTabAdapter by autoCleared<NavigationTabAdapter>()
 
     private var shouldScroll = false
@@ -37,12 +44,14 @@ class NavigationFragment : BaseFragment<FragmentNavigationBinding, NavigationVie
         fun newInstance() = NavigationFragment()
     }
 
-    override fun createViewModel(): NavigationViewModel {
-        val viewModel by viewModels<NavigationViewModel>(ownerProducer = {requireParentFragment()})
-        return viewModel
-    }
+    //这个吊NavigationViewModel还有其他地方用到吗？
+//    override fun createViewModel(): NavigationViewModel {
+//        val viewModel by viewModels<NavigationViewModel>(ownerProducer = {requireParentFragment()})
+//        return viewModel
+//    }
 
     override fun initViewAndEvent(savedInstanceState: Bundle?) {
+
         navigationGroupAdapter = NavigationGroupAdapter{ vo, position ->
             val articleVo = vo.articles[position]
             findNavController().navigate(NavMainDirections.actionGlobalToWebFragment(articleVo))
@@ -51,6 +60,7 @@ class NavigationFragment : BaseFragment<FragmentNavigationBinding, NavigationVie
         navigationTabAdapter = NavigationTabAdapter{ tabWrapper, position ->
             moveToPosition(mBinding.rvNavigation.layoutManager as LinearLayoutManager, mBinding.rvNavigation, position)
         }
+
         mBinding.rvNavigation.adapter = navigationGroupAdapter
         mBinding.rvNavigationTab.adapter = navigationTabAdapter
 
@@ -82,31 +92,10 @@ class NavigationFragment : BaseFragment<FragmentNavigationBinding, NavigationVie
         })
     }
 
-    fun moveToPosition(manager: LinearLayoutManager, mRecyclerView: RecyclerView, position: Int) {
-        // 第一个可见的view的位置
-        val firstItem = manager.findFirstVisibleItemPosition()
-        // 最后一个可见的view的位置
-        val lastItem = manager.findLastVisibleItemPosition()
-        if (position <= firstItem) {
-            // 如果跳转位置firstItem 之前(滑出屏幕的情况)，就smoothScrollToPosition可以直接跳转，
-            mRecyclerView.smoothScrollToPosition(position)
-        } else if (position <= lastItem) {
-            // 跳转位置在firstItem 之后，lastItem 之间（显示在当前屏幕），smoothScrollBy来滑动到指定位置
-            val top = mRecyclerView.getChildAt(position - firstItem).top
-            mRecyclerView.smoothScrollBy(0, top)
-        } else {
-            // 如果要跳转的位置在lastItem 之后，则先调用smoothScrollToPosition将要跳转的位置滚动到可见位置
-            // 再通过onScrollStateChanged控制再次调用当前moveToPosition方法，执行上一个判断中的方法
-            mRecyclerView.smoothScrollToPosition(position)
-            scrollToPosition = position
-            shouldScroll = true
-        }
-    }
 
     override fun createObserver() {
 
         launchAndRepeatWithViewLifecycle {
-
             // 监听状态
             launch {
                 mViewModel.rootViewState.collectLatest {
@@ -129,6 +118,27 @@ class NavigationFragment : BaseFragment<FragmentNavigationBinding, NavigationVie
                     })
                 }
             }
+        }
+    }
+
+    fun moveToPosition(manager: LinearLayoutManager, mRecyclerView: RecyclerView, position: Int) {
+        // 第一个可见的view的位置
+        val firstItem = manager.findFirstVisibleItemPosition()
+        // 最后一个可见的view的位置
+        val lastItem = manager.findLastVisibleItemPosition()
+        if (position <= firstItem) {
+            // 如果跳转位置firstItem 之前(滑出屏幕的情况)，就smoothScrollToPosition可以直接跳转，
+            mRecyclerView.smoothScrollToPosition(position)
+        } else if (position <= lastItem) {
+            // 跳转位置在firstItem 之后，lastItem 之间（显示在当前屏幕），smoothScrollBy来滑动到指定位置
+            val top = mRecyclerView.getChildAt(position - firstItem).top
+            mRecyclerView.smoothScrollBy(0, top)
+        } else {
+            // 如果要跳转的位置在lastItem 之后，则先调用smoothScrollToPosition将要跳转的位置滚动到可见位置
+            // 再通过onScrollStateChanged控制再次调用当前moveToPosition方法，执行上一个判断中的方法
+            mRecyclerView.smoothScrollToPosition(position)
+            scrollToPosition = position
+            shouldScroll = true
         }
     }
 }

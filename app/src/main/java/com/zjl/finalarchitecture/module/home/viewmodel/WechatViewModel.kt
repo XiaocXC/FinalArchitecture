@@ -24,7 +24,8 @@ class WechatViewModel : PagingBaseViewModel() {
     /**
      * 微信分类列表数据
      */
-    private val _articleList = MutableStateFlow<PagingUiModel<ArticleListVO>>(PagingUiModel.Loading(true))
+    private val _articleList =
+        MutableStateFlow<PagingUiModel<ArticleListVO>>(PagingUiModel.Loading(true))
     val articleList: StateFlow<PagingUiModel<ArticleListVO>> = _articleList
 
     private val _cid = MutableStateFlow(0)
@@ -44,16 +45,18 @@ class WechatViewModel : PagingBaseViewModel() {
     override fun loadMoreInner(currentIndex: Int) {
         viewModelScope.launch {
             // 如果是重新刷新，则显示加载中
-            if(currentIndex == initPageIndex()){
+            if (currentIndex == initPageIndex()) {
                 _articleList.value = PagingUiModel.Loading(true)
             }
 
             launchRequestByPaging({
                 ApiRepository.requestWechatDetailListDataByPage(_cid.value, currentIndex)
             }, successBlock = {
-                _articleList.value = PagingUiModel.Success(it.dataList, currentIndex == initPageIndex(), !it.over)
+                _articleList.value =
+                    PagingUiModel.Success(it.dataList, currentIndex == initPageIndex(), !it.over)
             }, failureBlock = {
-                _articleList.value = PagingUiModel.Error(ApiException(it), currentIndex == initPageIndex())
+                _articleList.value =
+                    PagingUiModel.Error(ApiException(it), currentIndex == initPageIndex())
             })
         }
     }
@@ -62,7 +65,7 @@ class WechatViewModel : PagingBaseViewModel() {
      * 点击后更改的Cid
      * 更改会会触发加载数据
      */
-    fun onCidChanged(cid: Int){
+    fun onCidChanged(cid: Int) {
         _cid.value = cid
 
         // 重置分页Index
@@ -77,12 +80,15 @@ class WechatViewModel : PagingBaseViewModel() {
         viewModelScope.launch {
             launchRequestByNormalWithUiState({
                 ApiRepository.requestWechatListData()
-            }, _categoryList, true, true, successBlock = { data ->
-                // 默认选中一个
-                if(data.isNotEmpty()){
-                    onCidChanged(data[0].id)
-                }
-            })
+            }, _categoryList,
+                true,
+                true,
+                successBlock = { data ->
+                    // 默认选中一个
+                    if (data.isNotEmpty()) {
+                        onCidChanged(data[0].id)
+                    }
+                })
         }
     }
 

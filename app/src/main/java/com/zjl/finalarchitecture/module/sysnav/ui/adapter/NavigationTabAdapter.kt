@@ -17,9 +17,8 @@ import com.zjl.finalarchitecture.data.model.NavigationVO
  */
 class NavigationTabAdapter(
     private val tabClicked: (NavigationTab, Int) -> Unit
-): BaseQuickAdapter<NavigationTab, BaseViewHolder>(
-    R.layout.item_navigation_tab
-) {
+): BaseQuickAdapter<NavigationTab, BaseViewHolder>(R.layout.item_navigation_tab) {
+
     override fun convert(holder: BaseViewHolder, item: NavigationTab) {
         holder.itemView.tag = item
         holder.setText(R.id.tv_title, item.navigationVO.name)

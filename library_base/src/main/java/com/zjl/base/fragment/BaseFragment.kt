@@ -42,9 +42,6 @@ abstract class BaseFragment<V : ViewBinding, VM : BaseViewModel> : Fragment() {
 
     protected lateinit var mViewModel: VM
 
-    //是否第一次加载
-    private var isFirst: Boolean = true
-
     /**
      * 整个Fragment的状态控制器
      */
@@ -79,7 +76,6 @@ abstract class BaseFragment<V : ViewBinding, VM : BaseViewModel> : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        isFirst = true
         mViewModel = createViewModel()
 
 

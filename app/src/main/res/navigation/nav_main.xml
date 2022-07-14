@@ -83,6 +83,7 @@
             android:name="data"
             app:argType="android.os.Parcelable" app:nullable="false"/>
     </action>
+
     <fragment
         android:id="@+id/searchResultFragment"
         android:name="com.zjl.finalarchitecture.module.search.ui.fragment.SearchResultFragment"
