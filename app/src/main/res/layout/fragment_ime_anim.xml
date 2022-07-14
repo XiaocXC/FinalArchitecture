@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.Material3.Toolbar.Surface"
+        app:title="IME动画"
+        android:elevation="4dp"
+        app:navigationIcon="@drawable/ic_arrow_back"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvImeMessage"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        app:reverseLayout="true"
+        tools:itemCount="20"
+        android:clipToPadding="false"
+        tools:listitem="@layout/item_ime_anim_message_bubble_me"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+    <LinearLayout
+        android:id="@+id/messageHolder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorSurface"
+        android:elevation="4dp"
+        android:padding="8dp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:layout_weight="1">
+
+            <EditText
+                android:id="@+id/message_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="发送消息" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ImageButton
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:minWidth="48dp"
+            android:minHeight="48dp"
+            android:padding="16dp"
+            app:srcCompat="@drawable/ic_add"
+            app:tint="?attr/colorPrimary" />
+
+    </LinearLayout>
+</LinearLayout>

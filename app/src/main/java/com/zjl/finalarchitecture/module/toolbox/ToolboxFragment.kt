@@ -36,6 +36,10 @@ class ToolboxFragment: BaseFragment<FragmentToolboxBinding, EmptyViewModel>() {
         mBinding.btnRvSelect.setOnClickListener {
             findNavController().navigate(MainFragmentDirections.actionMainFragmentToSelectSingleOrMultiFragment())
         }
+
+        mBinding.btnImeAnim.setOnClickListener {
+            findNavController().navigate(MainFragmentDirections.actionMainFragmentToImeAnimFragment())
+        }
     }
 
     override fun createObserver() {

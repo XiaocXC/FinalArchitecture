@@ -50,12 +50,12 @@ class MultiListFragment: BaseFragment<FragmentMultiListBinding, MultiListViewMod
                     mBinding.toolbarMulti.setTitleTextColor(colorData.onPrimaryColor)
                     mBinding.toolbarMulti.setNavigationIconTint(colorData.onPrimaryColor)
 
-                    // 更改状态栏颜色
-                    immersionBar {
-                        navigationBarColorInt(Color.TRANSPARENT)
-                        statusBarColorInt(colorData.primaryColor)
-                        statusBarDarkFont(!resources.isNightMode())
-                    }
+//                    // 更改状态栏颜色
+//                    immersionBar {
+//                        navigationBarColorInt(Color.TRANSPARENT)
+//                        statusBarColorInt(colorData.primaryColor)
+//                        statusBarDarkFont(!resources.isNightMode())
+//                    }
                 }
             }
         }
@@ -65,11 +65,11 @@ class MultiListFragment: BaseFragment<FragmentMultiListBinding, MultiListViewMod
     override fun onDestroyView() {
         super.onDestroyView()
 
-        // 恢复状态栏颜色
-        immersionBar {
-            navigationBarColorInt(Color.TRANSPARENT)
-            statusBarColorInt(Color.TRANSPARENT)
-            statusBarDarkFont(!resources.isNightMode())
-        }
+//        // 恢复状态栏颜色
+//        immersionBar {
+//            navigationBarColorInt(Color.TRANSPARENT)
+//            statusBarColorInt(Color.TRANSPARENT)
+//            statusBarDarkFont(!resources.isNightMode())
+//        }
     }
 }
