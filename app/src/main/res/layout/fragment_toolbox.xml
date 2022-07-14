@@ -12,10 +12,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="btnMulti,btnDropPop,btnTreeCheck,btnDragSimple,btnRvSelect,btnImeAnim"
+        app:constraint_referenced_ids="btnMulti,btnDropPop,btnTreeCheck,btnDragSimple,btnRvSelect,btnImeAnim,btnBgChange"
         app:flow_horizontalGap="5dp"
         app:flow_verticalGap="5dp"
-        app:flow_wrapMode="chain" />
+        app:flow_wrapMode="chain2" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnMulti"
@@ -53,5 +53,11 @@
         android:layout_height="wrap_content"
         android:text="Ime动画" />
 
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnBgChange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="背景渐变" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

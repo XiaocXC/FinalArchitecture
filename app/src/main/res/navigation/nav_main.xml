@@ -9,12 +9,12 @@
         android:id="@+id/mainFragment"
         android:name="com.zjl.finalarchitecture.module.main.ui.fragment.MainFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_main" >
+        tools:layout="@layout/fragment_main">
         <action
             android:id="@+id/action_mainFragment_to_searchFragment"
             app:destination="@id/searchFragment"
             app:enterAnim="@anim/zoom_small_in"
-            app:exitAnim="@anim/zoom_small_out"/>
+            app:exitAnim="@anim/zoom_small_out" />
         <action
             android:id="@+id/action_mainFragment_to_systemDetailArrFragment"
             app:destination="@id/systemDetailArrFragment" />
@@ -37,6 +37,9 @@
         <action
             android:id="@+id/action_mainFragment_to_imeAnimFragment"
             app:destination="@id/imeAnimFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_backgroundChangeFragment"
+            app:destination="@id/backgroundChangeFragment" />
     </fragment>
 
 
@@ -44,7 +47,7 @@
         android:id="@+id/searchFragment"
         android:name="com.zjl.finalarchitecture.module.search.ui.fragment.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" >
+        tools:layout="@layout/fragment_search">
         <action
             android:id="@+id/action_searchFragment_to_searchResultFragment"
             app:destination="@id/searchResultFragment" />
@@ -57,11 +60,11 @@
 
         <argument
             android:name="detailData"
-            app:argType="com.zjl.finalarchitecture.data.model.SystemVO"/>
+            app:argType="com.zjl.finalarchitecture.data.model.SystemVO" />
 
         <argument
             android:name="index"
-            app:argType="integer"/>
+            app:argType="integer" />
 
     </fragment>
     <fragment
@@ -79,12 +82,14 @@
         android:label="fragment_web_view"
         tools:layout="@layout/fragment_web_view" />
 
-    <action android:id="@+id/action_global_to_webFragment"
+    <action
+        android:id="@+id/action_global_to_webFragment"
         app:destination="@+id/webViewFragment">
 
         <argument
             android:name="data"
-            app:argType="android.os.Parcelable" app:nullable="false"/>
+            app:argType="android.os.Parcelable"
+            app:nullable="false" />
     </action>
 
     <fragment
@@ -123,5 +128,9 @@
         android:id="@+id/imeAnimFragment"
         android:name="com.zjl.finalarchitecture.module.toolbox.imeAnim.ImeAnimFragment"
         android:label="ImeAnimFragment" />
+    <fragment
+        android:id="@+id/backgroundChangeFragment"
+        android:name="com.zjl.finalarchitecture.module.toolbox.change.BackgroundChangeFragment"
+        android:label="BackgroundChangeFragment" />
 
 </navigation>

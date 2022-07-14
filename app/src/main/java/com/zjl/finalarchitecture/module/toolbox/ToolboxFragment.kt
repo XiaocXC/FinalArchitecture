@@ -13,7 +13,7 @@ import com.zjl.finalarchitecture.module.main.ui.fragment.MainFragmentDirections
  *
  * 工具集Box Fragment
  */
-class ToolboxFragment: BaseFragment<FragmentToolboxBinding, EmptyViewModel>() {
+class ToolboxFragment : BaseFragment<FragmentToolboxBinding, EmptyViewModel>() {
 
     override fun initViewAndEvent(savedInstanceState: Bundle?) {
         mBinding.btnMulti.setOnClickListener {
@@ -39,6 +39,10 @@ class ToolboxFragment: BaseFragment<FragmentToolboxBinding, EmptyViewModel>() {
 
         mBinding.btnImeAnim.setOnClickListener {
             findNavController().navigate(MainFragmentDirections.actionMainFragmentToImeAnimFragment())
+        }
+
+        mBinding.btnBgChange.setOnClickListener {
+            findNavController().navigate(MainFragmentDirections.actionMainFragmentToBackgroundChangeFragment())
         }
     }
 
