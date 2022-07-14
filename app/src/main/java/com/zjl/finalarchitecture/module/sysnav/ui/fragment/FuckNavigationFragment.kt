@@ -25,7 +25,7 @@ class FuckNavigationFragment : BaseFragment<FragmentFuckNavigationBinding, Navig
     }
 
     override fun initViewAndEvent(savedInstanceState: Bundle?) {
-        mAdapter = FuckNavigationGroupAdapter()
+        mAdapter = FuckNavigationGroupAdapter(this)
         mBinding.rv.adapter = mAdapter
         mAdapter.setOnItemClickListener(this)
     }

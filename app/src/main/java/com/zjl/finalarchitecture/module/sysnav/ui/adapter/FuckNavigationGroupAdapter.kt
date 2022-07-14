@@ -2,6 +2,7 @@ package com.zjl.finalarchitecture.module.sysnav.ui.adapter
 
 import android.view.View
 import android.widget.AdapterView
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -19,7 +20,7 @@ import com.zjl.finalarchitecture.data.model.NavigationVO
  * @author: zhou
  * @date : 2022/7/14 18:29
  */
-class FuckNavigationGroupAdapter :
+class FuckNavigationGroupAdapter(private var fargment: Fragment) :
     BaseQuickAdapter<NavigationVO, BaseViewHolder>(R.layout.item_system_group) {
 
     private lateinit var rv: RecyclerView
@@ -42,14 +43,12 @@ class FuckNavigationGroupAdapter :
         rv.adapter = adapter
         adapter.setList(item.articles)
 
-        adapter.setOnItemClickListener(object : OnItemClickListener {
-            override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
-                val articleVo = item.articles[position]
-                NavHostFragment().findNavController().navigate(
-                    NavMainDirections.actionGlobalToWebFragment(articleVo)
-                )
-            }
-        })
+        adapter.setOnItemClickListener { adapter, view, position ->
+            val articleVo = item.articles[position]
+            fargment.findNavController().navigate(
+                NavMainDirections.actionGlobalToWebFragment(articleVo)
+            )
+        }
     }
 
 }
