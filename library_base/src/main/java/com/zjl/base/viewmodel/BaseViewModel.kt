@@ -2,17 +2,16 @@ package com.zjl.base.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.zjl.base.ApiResult
+import com.zjl.base.*
 import com.zjl.base.error.Error
 import com.zjl.base.exception.ApiException
-import com.zjl.base.onFailure
-import com.zjl.base.onSuccess
-import com.zjl.base.transToUiModel
+import com.zjl.base.network.NetworkManager
 import com.zjl.base.ui.UiModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.coroutineContext
 
@@ -35,18 +34,22 @@ abstract class BaseViewModel: ViewModel(){
     protected val _rootViewState = MutableSharedFlow<UiModel<Any>>()
     val rootViewState: SharedFlow<UiModel<Any>> =  _rootViewState
 
+    init {
+        viewModelScope.launch {
+            // 监听网络状态值的变化
+            NetworkManager.networkState.collectLatest {
+                val hasNetwork = NetworkManager.isConnectNetwork(globalContext)
+                Timber.i("BaseViewModel：网络状态发生变化，是否有网络：%s", hasNetwork)
+                networkStateChanged(hasNetwork)
+            }
+        }
+    }
+
     /**
      * 初始化数据
      * 当需要页面刷新或页面初始化的时候，调用此方法
-     * @param resetState 是否重置加载状态
-     * 如果重置加载状态，那么会将整个布局的状态更改为加载状态
      */
-    fun initData(resetState: Boolean = true){
-        if(resetState){
-            viewModelScope.launch {
-                _rootViewState.emit(UiModel.Loading())
-            }
-        }
+    fun initData(){
         // 调用重写子类的刷新方法
         refresh()
     }
@@ -56,6 +59,12 @@ abstract class BaseViewModel: ViewModel(){
      * 该方法仅供ViewModel中使用
      */
     protected abstract fun refresh()
+
+    /**
+     * 当网络状态发生变化时回调，你可以重写此方法来进行逻辑操作
+     * @param hasNetwork 是否有网络
+     */
+    open fun networkStateChanged(hasNetwork: Boolean){}
 
     /**
      * 普通的协程请求
@@ -149,24 +158,6 @@ abstract class BaseViewModel: ViewModel(){
             resultState.value = UiModel.Error(ApiException(error))
             // 回调失败方法
             failureBlock(coroutineContext, error)
-        }
-    }
-
-    /**
-     * 普通的协程请求（转换为UiModel）
-     * @param requestAction 请求行为函数
-     * 需要返回一个由ApiResult包裹的数据集
-     * @param resultBlock （可选）结果操作
-     */
-    protected suspend fun <T> launchRequestByNormalOnlyResult(
-        requestAction: suspend CoroutineContext.() -> ApiResult<T>,
-        resultBlock: suspend CoroutineContext.(UiModel<T>) -> Unit = {}
-    ){
-        runCatching {
-            val result = requestAction(coroutineContext)
-            resultBlock(coroutineContext, result.transToUiModel())
-        }.onFailure {
-            resultBlock(coroutineContext, UiModel.Error(it))
         }
     }
 }

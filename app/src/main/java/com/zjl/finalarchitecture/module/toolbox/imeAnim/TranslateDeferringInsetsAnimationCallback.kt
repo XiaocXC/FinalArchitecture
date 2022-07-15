@@ -22,21 +22,17 @@ import androidx.core.view.WindowInsetsAnimationCompat
 import androidx.core.view.WindowInsetsCompat
 
 /**
- * A [WindowInsetsAnimationCompat.Callback] which will translate/move the given view during any
- * inset animations of the given inset type.
+ * 该类是 [WindowInsetsAnimationCompat.Callback] 的子类
+ * 它主要负责给具体视图加入边衬变化的动画效果
  *
- * This class works in tandem with [RootViewDeferringInsetsCallback] to support the deferring of
- * certain [WindowInsetsCompat.Type] values during a [WindowInsetsAnimationCompat], provided in
- * [deferredInsetTypes]. The values passed into this constructor should match those which
- * the [RootViewDeferringInsetsCallback] is created with.
+ * 该类需要配合 [RootViewDeferringInsetsCallback] 的支持才能正常工作
  *
- * @param view the view to translate from it's start to end state
- * @param persistentInsetTypes the bitmask of any inset types which were handled as part of the
- * layout
- * @param deferredInsetTypes the bitmask of insets types which should be deferred until after
- * any [WindowInsetsAnimationCompat]s have ended
- * @param dispatchMode The dispatch mode for this callback.
- * See [WindowInsetsAnimationCompat.Callback.getDispatchMode].
+ * 该类的实现原理很简单，在边衬发生改变时动态修改视图的 translationX 和 translationY 属性
+ * 来改变视图的位置
+ * 举个例子：当键盘弹起时，该类会回调边衬变化的动画回调，我们根据回调的数值，来计算视图应该处于什么位置
+ *
+ * @param view 要配合边衬动画的视图
+ * @param dispatchMode 分发模式，如果子View也要设置setWindowInsetsAnimationCallback，那就需要 DISPATCH_MODE_CONTINUE_ON_SUBTREE
  */
 class TranslateDeferringInsetsAnimationCallback(
     private val view: View,
@@ -46,8 +42,7 @@ class TranslateDeferringInsetsAnimationCallback(
 ) : WindowInsetsAnimationCompat.Callback(dispatchMode) {
     init {
         require(persistentInsetTypes and deferredInsetTypes == 0) {
-            "persistentInsetTypes and deferredInsetTypes can not contain any of " +
-                    " same WindowInsetsCompat.Type values"
+            "persistentInsetTypes and deferredInsetTypes 不能一样！"
         }
     }
 
@@ -55,21 +50,18 @@ class TranslateDeferringInsetsAnimationCallback(
         insets: WindowInsetsCompat,
         runningAnimations: List<WindowInsetsAnimationCompat>
     ): WindowInsetsCompat {
-        // onProgress() is called when any of the running animations progress...
+        // onProgress() 在边衬动画进行时调用，例如键盘弹起时
 
-        // First we get the insets which are potentially deferred
+        // 获取变化的边衬的Inset值
         val typesInset = insets.getInsets(deferredInsetTypes)
-        // Then we get the persistent inset types which are applied as padding during layout
+        // 获取固定不变的边衬的Inset值
         val otherInset = insets.getInsets(persistentInsetTypes)
 
-        // Now that we subtract the two insets, to calculate the difference. We also coerce
-        // the insets to be >= 0, to make sure we don't use negative insets.
+        // 现在我们减去两个插入，来计算差值，计算平移距离
         val diff = Insets.subtract(typesInset, otherInset).let {
             Insets.max(it, Insets.NONE)
         }
 
-        // The resulting `diff` insets contain the values for us to apply as a translation
-        // to the view
         view.translationX = (diff.left - diff.right).toFloat()
         view.translationY = (diff.top - diff.bottom).toFloat()
 
@@ -77,7 +69,7 @@ class TranslateDeferringInsetsAnimationCallback(
     }
 
     override fun onEnd(animation: WindowInsetsAnimationCompat) {
-        // Once the animation has ended, reset the translation values
+        // 动画结束后，由于根布局的Padding会被重新设置，我们这里会把位置还原
         view.translationX = 0f
         view.translationY = 0f
     }

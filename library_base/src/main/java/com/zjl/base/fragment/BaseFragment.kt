@@ -127,7 +127,7 @@ abstract class BaseFragment<V : ViewBinding, VM : BaseViewModel> : Fragment() {
      * 重试刷新全部内容的方法，默认直接调用viewModel的初始化方法
      */
     open fun retryAll() {
-        mViewModel.initData(true)
+        mViewModel.initData()
     }
 
     /**

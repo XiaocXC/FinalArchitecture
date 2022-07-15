@@ -1,5 +1,7 @@
 package com.zjl.base.activity
 
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
@@ -7,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.gyf.immersionbar.ImmersionBar
 import com.kongzue.dialogx.dialogs.WaitDialog
+import com.zjl.base.network.NetworkStateReceiver
 import com.zjl.base.ui.state.ErrorState
 import com.zjl.base.ui.state.LoadingState
 import com.zjl.base.utils.ext.getVmClazz
@@ -33,6 +36,7 @@ abstract class BaseActivity<V : ViewBinding, VM : BaseViewModel> : AppCompatActi
 
     protected lateinit var mViewModel: VM
 
+    protected lateinit var receiver: NetworkStateReceiver
 
     /**
      * 整个Activity的UiState状态控制器
@@ -51,6 +55,10 @@ abstract class BaseActivity<V : ViewBinding, VM : BaseViewModel> : AppCompatActi
         // 类似于使用了 view.setSystemUiVisibility(LAYOUT_STABLE | LAYOUT_FULLSCREEN | LAYOUT_FULLSCREEN)
 //        WindowCompat.setDecorFitsSystemWindows(window, false)
 
+        // 注册网络状态监听
+        val filter = IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
+        receiver = NetworkStateReceiver()
+        this.registerReceiver(receiver, filter)
 
         mViewModel = bindViewModel()
         initViewAndEvent(savedInstanceState)
@@ -101,7 +109,7 @@ abstract class BaseActivity<V : ViewBinding, VM : BaseViewModel> : AppCompatActi
      * 重试方法，默认不实现
      */
     open fun retryAll() {
-        mViewModel.initData(true)
+        mViewModel.initData()
     }
 
     /**
@@ -142,6 +150,11 @@ abstract class BaseActivity<V : ViewBinding, VM : BaseViewModel> : AppCompatActi
      */
     abstract fun createObserver()
 
+    override fun onDestroy() {
+        super.onDestroy()
+        // 取消网络监听
+        unregisterReceiver(receiver)
+    }
 
 
 }

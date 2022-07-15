@@ -90,7 +90,7 @@ class PlazaFragment : BaseFragment<FragmentPlazaBinding, PlazaViewModel>(), OnRe
     }
 
     private fun refresh() {
-        mViewModel.initData(mArticleAdapter.itemCount <= 0)
+        mViewModel.initData()
     }
 
 

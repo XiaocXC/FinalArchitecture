@@ -116,7 +116,7 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel>()
 
     private fun refresh() {
         // 重新请求，如果文章列表没有数据，则整个界面会重新显示loading状态
-        mViewModel.initData(mArticleAdapter.itemCount <= 0)
+        mViewModel.initData()
     }
 
 

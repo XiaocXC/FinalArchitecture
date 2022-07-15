@@ -40,10 +40,6 @@ class SystemDetailInnerFragment: BaseFragment<FragmentSystemDetailInnerBinding, 
 
         mArticleAdapter = ArticleAdapter()
 
-        mArticleAdapter.loadMoreModule.setOnLoadMoreListener {
-            mViewModel.loadMore()
-        }
-
         mBinding.rvSystemChild.adapter = mArticleAdapter
         // 分割线
         mBinding.rvSystemChild.addItemDecoration(
@@ -59,7 +55,7 @@ class SystemDetailInnerFragment: BaseFragment<FragmentSystemDetailInnerBinding, 
         launchAndRepeatWithViewLifecycle {
             launch {
                 mViewModel.systemArticleList.collectLatest {
-                    it.handlePagingStatus(mArticleAdapter, uiRootState, null){
+                    it.handlePagingStatus(mArticleAdapter, uiRootState, mBinding.smartRefresh){
                         refresh()
                     }
                 }

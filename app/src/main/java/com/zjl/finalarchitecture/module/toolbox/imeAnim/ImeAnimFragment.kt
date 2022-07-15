@@ -26,7 +26,7 @@ class ImeAnimFragment: BaseFragment<FragmentImeAnimBinding, EmptyViewModel>() {
 
         mBinding.rvImeMessage.adapter = ImeAnimMessageAdapter()
 
-        // 分以下3个步骤使用IME动画监听动作：
+        // 分以下2个步骤使用IME动画监听动作：
 
         /**
          * 1) 我们所有操作需要在开启了沉浸式状态栏后使用，例如在Activity中使用了 `window.setDecorFitsSystemWindows(false)`
@@ -51,10 +51,10 @@ class ImeAnimFragment: BaseFragment<FragmentImeAnimBinding, EmptyViewModel>() {
          * 我们给需要对这些动画做出响应的视图设置 [ViewCompat.setWindowInsetsAnimationCallback] 回调
          * 以便于对这些动画做出对应响应
          *
-         * 例如这里我们希望底部的输入栏和RecyclerView能够在IME弹起时对其做出动画响应
+         * 例如这里我们希望底部的输入栏messageHolder和RecyclerView列表rvImeMessage能够在IME弹起时对其做出动画响应
          *
          * 注意： [TranslateDeferringInsetsAnimationCallback]依赖[RootViewDeferringInsetsCallback]
-         * 不然会出现意想不到的问题（当然你可以自己做动画相关的处理，这里只是一个简单的例子）
+         * 不然会出现意想不到的问题（这里只是一个简单的例子，当然你可以自己做动画相关的处理）
          */
         ViewCompat.setWindowInsetsAnimationCallback(
             mBinding.messageHolder,
@@ -63,8 +63,8 @@ class ImeAnimFragment: BaseFragment<FragmentImeAnimBinding, EmptyViewModel>() {
                 persistentInsetTypes = WindowInsetsCompat.Type.systemBars(),
                 deferredInsetTypes = WindowInsetsCompat.Type.ime(),
                 // 如果我们要把Window的Insets边衬变化继续分配到它的子View，我们就使用 DISPATCH_MODE_CONTINUE_ON_SUBTREE
-                // 也就是说如果子View也会根据边衬变化设置setWindowInsetsAnimationCallback，那么就传入 DISPATCH_MODE_CONTINUE_ON_SUBTREE
-                // 这里我们不需要所以使用 DISPATCH_MODE_STOP
+                // 也就是说如果子View也要设置setWindowInsetsAnimationCallback，那么就传入 DISPATCH_MODE_CONTINUE_ON_SUBTREE
+                // 这里我们不需要，所以使用 DISPATCH_MODE_STOP
                 dispatchMode = WindowInsetsAnimationCompat.Callback.DISPATCH_MODE_STOP
             )
         )
@@ -77,6 +77,13 @@ class ImeAnimFragment: BaseFragment<FragmentImeAnimBinding, EmptyViewModel>() {
                 deferredInsetTypes = WindowInsetsCompat.Type.ime()
             )
         )
+
+        /**
+         * 3) 其他可选步骤，例如你想根据UI自行控制这些动画
+         * 例如你想滚动屏幕，来动态拖动IME输入法的显示
+         * 或者说通过触摸，将IME输入法展示出来等效果
+         * 此Demo暂时没有做这些内容
+         */
     }
 
     override fun createObserver() {
