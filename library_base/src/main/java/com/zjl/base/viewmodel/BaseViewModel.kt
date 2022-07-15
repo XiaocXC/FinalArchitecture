@@ -1,17 +1,11 @@
 package com.zjl.base.viewmodel
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.zjl.base.*
 import com.zjl.base.error.Error
 import com.zjl.base.exception.ApiException
-import com.zjl.base.network.NetworkManager
 import com.zjl.base.ui.UiModel
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
-import timber.log.Timber
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.coroutineContext
 
@@ -33,17 +27,6 @@ abstract class BaseViewModel: ViewModel(){
      */
     protected val _rootViewState = MutableSharedFlow<UiModel<Any>>()
     val rootViewState: SharedFlow<UiModel<Any>> =  _rootViewState
-
-    init {
-        viewModelScope.launch {
-            // 监听网络状态值的变化
-            NetworkManager.networkState.collectLatest {
-                val hasNetwork = NetworkManager.isConnectNetwork(globalContext)
-                Timber.i("BaseViewModel：网络状态发生变化，是否有网络：%s", hasNetwork)
-                networkStateChanged(hasNetwork)
-            }
-        }
-    }
 
     /**
      * 初始化数据

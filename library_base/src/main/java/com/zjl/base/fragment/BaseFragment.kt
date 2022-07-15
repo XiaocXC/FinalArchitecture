@@ -10,6 +10,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.gyf.immersionbar.ImmersionBar
 import com.kongzue.dialogx.dialogs.WaitDialog
+import com.zjl.base.globalContext
+import com.zjl.base.network.NetworkManager
 import com.zjl.base.ui.onFailure
 import com.zjl.base.ui.onLoading
 import com.zjl.base.ui.onSuccess
@@ -25,6 +27,7 @@ import com.zy.multistatepage.bindMultiState
 import com.zy.multistatepage.state.SuccessState
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 /**
  * @author Xiaoc
@@ -47,7 +50,6 @@ abstract class BaseFragment<V : ViewBinding, VM : BaseViewModel> : Fragment() {
      */
     private var _uiRootState: MultiStateContainer? = null
     protected val uiRootState get() = _uiRootState!!
-
 
 
     @CallSuper
@@ -147,8 +149,23 @@ abstract class BaseFragment<V : ViewBinding, VM : BaseViewModel> : Fragment() {
                     }
                 }
             }
+
+            launch {
+                // 监听网络状态
+                NetworkManager.networkState.collectLatest {
+                    val hasNetwork = NetworkManager.isConnectNetwork(globalContext)
+                    Timber.i("Network：网络状态发生变化，是否有网络：%s", hasNetwork)
+                    networkStateChanged(hasNetwork)
+                }
+            }
         }
     }
+
+    /**
+     * 当网络状态发生变化时回调，你可以重写此方法来进行逻辑操作
+     * @param hasNetwork 是否有网络
+     */
+    open fun networkStateChanged(hasNetwork: Boolean){}
 
     /**
      * 利用反射创建ViewModel实例

@@ -9,7 +9,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.gyf.immersionbar.ImmersionBar
 import com.kongzue.dialogx.dialogs.WaitDialog
+import com.zjl.base.globalContext
+import com.zjl.base.network.NetworkManager
 import com.zjl.base.network.NetworkStateReceiver
+import com.zjl.base.ui.onFailure
+import com.zjl.base.ui.onLoading
+import com.zjl.base.ui.onSuccess
 import com.zjl.base.ui.state.ErrorState
 import com.zjl.base.ui.state.LoadingState
 import com.zjl.base.utils.ext.getVmClazz
@@ -21,6 +26,7 @@ import com.zy.multistatepage.MultiStatePage.bindMultiState
 import com.zy.multistatepage.state.SuccessState
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 /**
  * @author Xiaoc
@@ -132,12 +138,34 @@ abstract class BaseActivity<V : ViewBinding, VM : BaseViewModel> : AppCompatActi
     open fun createDefObserver() {
         launchAndRepeatWithViewLifecycle {
             launch {
-                mViewModel.rootViewState.collectLatest {
+                // 默认监听根视图状态
+                mViewModel.rootViewState.collectLatest { uiModel ->
+                    uiModel.onSuccess {
+                        showUiSuccess()
+                    }.onLoading {
+                        showUiLoading()
+                    }.onFailure { _, throwable ->
+                        showUiError(throwable)
+                    }
+                }
+            }
 
+            launch {
+                // 监听网络状态
+                NetworkManager.networkState.collectLatest {
+                    val hasNetwork = NetworkManager.isConnectNetwork(globalContext)
+                    Timber.i("Network：网络状态发生变化，是否有网络：%s", hasNetwork)
+                    networkStateChanged(hasNetwork)
                 }
             }
         }
     }
+
+    /**
+     * 当网络状态发生变化时回调，你可以重写此方法来进行逻辑操作
+     * @param hasNetwork 是否有网络
+     */
+    open fun networkStateChanged(hasNetwork: Boolean){}
 
     /**
      * 初始化视图和事件
