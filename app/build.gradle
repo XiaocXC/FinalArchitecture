@@ -1,3 +1,6 @@
+import config.Libs
+import config.Versions
+
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
@@ -10,15 +13,15 @@ plugins {
 
 
 android {
-    compileSdkVersion rootProject.compileSdkVersion
-    buildToolsVersion rootProject.buildToolVersion
+    compileSdkVersion Versions.COMPILE_SDK
+    buildToolsVersion Versions.buildTools
 
     defaultConfig {
         applicationId "com.zjl.finalarchitecture"
-        minSdkVersion rootProject.minSdkVersion
-        targetSdkVersion rootProject.targetSdkVersion
-        versionCode 1
-        versionName "0.0.1-alpha01"
+        minSdkVersion Versions.MIN_SDK
+        targetSdkVersion Versions.TARGET_SDK
+        versionCode Versions.versionCode
+        versionName Versions.versionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -57,30 +60,17 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-
-//    implementation project(':module_domain')
-
-//    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.7'
-
+    implementation(Libs.LEGACY_SUPPORT)
 
     implementation project(':library_base')
     implementation project(':library_network')
 
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    testImplementation(Libs.JUNIT)
+    testImplementation(Libs.JUNIT_EXT)
+    testImplementation(Libs.ESPRESSO_CORE)
 
     //轮播图
-    implementation 'com.github.zhpanvip:bannerviewpager:3.5.5'
-    //圆角shape
-    implementation 'com.github.getActivity:ShapeView:6.2'
-
-    implementation "androidx.documentfile:documentfile:1.0.1"
-
-    implementation 'com.google.code.gson:gson:2.9.0'
-
-    def dialogx_version = "0.0.45.beta12"
-    implementation "com.github.kongzue.DialogX:DialogX:${dialogx_version}"
-//    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.8.1'
+    implementation(Libs.BANNER_VIEWPAGER)
+    implementation(Libs.SHAPE_VIEW)
+    implementation(Libs.DOCUMENT_FILE)
 }

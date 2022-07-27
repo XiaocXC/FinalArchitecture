@@ -5,6 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.ActivityNavigator
+import androidx.navigation.fragment.FragmentNavigator
+import com.zjl.base.utils.findNavController
 import com.zjl.finalarchitecture.R
 
 class DiscoveryFragment : Fragment() {

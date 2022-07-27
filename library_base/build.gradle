@@ -1,3 +1,5 @@
+import config.Libs
+
 apply from: "../common_config.gradle"
 
 android{
@@ -13,89 +15,79 @@ android{
 }
 
 dependencies {
-    // Core
-    api "androidx.core:core-ktx:$androidx_core_ktx_version"
-    api "androidx.appcompat:appcompat:$androidx_app_compat_version"
+    api(Libs.CORE_KTX)
+    api(Libs.APPCOMPAT)
 
-    // 协程
-    api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_coroutines_version"
+    api(Libs.KOTLIN_COROUTINES)
 
-    // Paging3
-    api "androidx.paging:paging-runtime-ktx:$paging3_version"
+    api(Libs.PAGING3)
 
     // UI
-    api "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
-    api "androidx.fragment:fragment-ktx:$fragment_version"
-    api "androidx.activity:activity-ktx:$activity_version"
-    api "com.google.android.material:material:$material_version"
+    api(Libs.CONSTRAINT_LAYOUT)
+    api(Libs.FRAGMENT_KTX)
+    api(Libs.ACTIVITY_KTX)
+    api(Libs.MATERIAL_DESIGN)
 
-    // ViewModel
-    api "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
-    // LiveData
-    api "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
-    // Lifecycle
-    api "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
-    api "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
+    // LifeCycle
+    api(Libs.VIEWMODEL_KTX)
+    api(Libs.LIVEDATA_KTX)
+    api(Libs.LIFECYCLE_RUNTIME_KTX)
+    api(Libs.LIFECYCLE_COMMON_KTX)
 
     // Navigation
-    api("androidx.navigation:navigation-fragment-ktx:$navigation_version") {
+    api(Libs.NAVIGATION_FRAGMENT_KTX) {
         exclude group: 'androidx.navigation', module: "navigation-fragment"
     }
-    api "androidx.navigation:navigation-ui-ktx:$navigation_version"
-    api 'com.kunminx.arch:smooth-navigation:4.0.0-beta1'
+    api(Libs.NAVIGATION_UI_KTX)
+    api(Libs.SMOOTH_NAVIGATION)
 
-    // Glide
-    api "io.coil-kt:coil:$coil_version"
-    api "io.coil-kt:coil-gif:$coil_version"
-    api "jp.wasabeef.transformers:coil:$coil_transformers_version"
-    // BaseRecyclerViewAdapterHelper
-    api "com.github.CymChad:BaseRecyclerViewAdapterHelper:$BaseRecyclerViewAdapterHelper_version"
-    api "com.google.android.flexbox:flexbox:$flexbox_version"
-    // UnPeekLiveData防止数据倒灌的LiveData
-    api "com.kunminx.arch:unpeek-livedata:$unpeek_livedata"
-    // 动态替换BaseUrl库 使用可参考 https://github.com/JessYanCoding/RetrofitUrlManager
-    api 'me.jessyan:retrofit-url-manager:1.4.0'
+    // Coil
+    api(Libs.COIL)
+    api(Libs.COIL_GIF)
+    api(Libs.COIL_TRANSFORMERS)
 
-    // immersionBar
-    api "com.geyifeng.immersionbar:immersionbar:$immersionBar_version"
-    api "com.geyifeng.immersionbar:immersionbar-ktx:$immersionBar_version"
+    api(Libs.BRAV_ADAPTER)
+
+    api(Libs.FLEX_BOX)
+
+    api(Libs.RETROFIT_URL_MANAGER)
+
+    api(Libs.IMMERSIONBAR_BOX)
+    api(Libs.IMMERSIONBAR_BOX_KTX)
 
     // 日志打印
-    api "com.jakewharton.timber:timber:$timber_version"
+    api(Libs.TIMBER)
 
     // MultiStatePage
-    api "com.github.Zhao-Yan-Yan:MultiStatePage:$multi_state_page_version"
+    api(Libs.MULTI_STATE_PAGE)
 
     //屏幕适配
-    api "me.jessyan:autosize:$autosize_version"
+    api(Libs.AUTO_SIZE)
 
     //微信开源项目，替代SP
-    api "com.tencent:mmkv:$mmkv_version"
+    api(Libs.MMKV)
 
-    //util
-    api "com.blankj:utilcodex:$tools_version"
+    api(Libs.ANDROID_UTIL_CODEX)
 
-    //谷歌下拉刷新
-    api 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+    api(Libs.SWIPE_REFRESH)
 
-    api  "io.github.scwang90:refresh-layout-kernel:$smart_refresh_Layout_version"      //核心必须依赖
-    api  "io.github.scwang90:refresh-header-classics:$smart_refresh_Layout_version"    //经典刷新头
-    api  "io.github.scwang90:refresh-header-radar:$smart_refresh_Layout_version"       //雷达刷新头
-    api  "io.github.scwang90:refresh-header-falsify:$smart_refresh_Layout_version"     //虚拟刷新头
-    api  "io.github.scwang90:refresh-header-material:$smart_refresh_Layout_version"    //谷歌刷新头
-    api  "io.github.scwang90:refresh-header-two-level:$smart_refresh_Layout_version"   //二级刷新头
-    api  "io.github.scwang90:refresh-footer-ball:$smart_refresh_Layout_version"        //球脉冲加载
-    api  "io.github.scwang90:refresh-footer-classics:$smart_refresh_Layout_version"    //经典加载
+    api(Libs.SMART_REFRESH)
+    api(Libs.SMART_REFRESH_HEADER_CLASSICS)
+    api(Libs.SMART_REFRESH_HEADER_RADAR)
+    api(Libs.SMART_REFRESH_HEADER_FALSIFY)
+    api(Libs.SMART_REFRESH_HEADER_MATERIAL)
+    api(Libs.SMART_REFRESH_HEADER_TWO_LEVEL)
+    api(Libs.SMART_REFRESH_FOOTER_BALL)
+    api(Libs.SMART_REFRESH_FOOTER_CLASSICS)
 
-    api "com.github.kongzue.DialogX:DialogX:${dialogx_version}"
+    api(Libs.DIALOG_X)
 
+    api(Libs.AGENT_WEB_CORE)
+    api(Libs.AGENT_WEB_FILE_CHOOSER)
+    api(Libs.AGENT_WEB_DOWNLOADER)
 
-    api "com.github.Justson.AgentWeb:agentweb-core:$agent_web_core_version" // (必选)
-    api "com.github.Justson.AgentWeb:agentweb-filechooser:$agent_web_filechooser_version" // (可选)
-    api "com.github.Justson:Downloader:$agent_web_downloader_version" // (可选)
-
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    testImplementation(Libs.JUNIT)
+    testImplementation(Libs.JUNIT_EXT)
+    testImplementation(Libs.ESPRESSO_CORE)
 
 }
