@@ -1,6 +1,6 @@
 import config.Libs
 
-apply from: "../common_config.gradle"
+apply from: "../feature_config.gradle"
 
 android{
 

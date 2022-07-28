@@ -1,0 +1,21 @@
+import config.Libs
+
+apply from: "../feature_config.gradle"
+
+android{
+
+    //统一资源前缀,规范资源引用
+    resourcePrefix "fluid_music_"
+}
+
+dependencies {
+    api project(':library_network')
+
+    implementation(Libs.MEDIA3_SESSION)
+    implementation(Libs.MEDIA3_EXOPLAYER)
+    implementation(Libs.CONCURRENT_FUTURES_KTX)
+
+    testImplementation(Libs.JUNIT)
+    testImplementation(Libs.JUNIT_EXT)
+    testImplementation(Libs.ESPRESSO_CORE)
+}

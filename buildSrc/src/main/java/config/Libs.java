@@ -123,6 +123,15 @@ public class Libs {
     // Legacy-Support
     public static final String LEGACY_SUPPORT = "androidx.legacy:legacy-support-v4:1.0.0";
 
+    // Media3
+    public static final String MEDIA3_VERSION = "1.0.0-beta02";
+    // Media3-Session会话
+    public static final String MEDIA3_SESSION = "androidx.media3:media3-session:" + MEDIA3_VERSION;
+    // Media3-ExoPlayer播放器
+    public static final String MEDIA3_EXOPLAYER = "androidx.media3:media3-exoplayer:" + MEDIA3_VERSION;
+    // FUTURES 异步调用的Ktx扩展
+    public static final String CONCURRENT_FUTURES_KTX = "androidx.concurrent:concurrent-futures-ktx:1.1.0";
+
 
     // 测试库
     public static final String JUNIT = "junit:junit:4.13.2";

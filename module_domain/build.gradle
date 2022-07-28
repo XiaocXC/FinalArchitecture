@@ -1,4 +1,4 @@
-apply from: "../common_config.gradle"
+apply from: "../feature_config.gradle"
 apply plugin: 'kotlinx-serialization'
 
 dependencies {
