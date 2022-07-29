@@ -1,6 +1,7 @@
 package com.xiaoc.feature_fluid_music.service.tree
 
 import android.content.UriMatcher
+import androidx.media3.common.MediaItem
 
 /**
  * @author Xiaoc
@@ -44,10 +45,15 @@ class MediaItemTree {
     }
 
     /**
-     * 初始化
-     * 会初始化
+     * 通过 parentId 拿到对应parentId下的媒体数据列表
+     * @param parentId 父Id
+     * @return 对应父Id下的媒体数据集
      */
-    fun init(){
+    fun getMediaItemByParentId(parentId: String): List<MediaItem> {
+
+    }
+
+    fun getRootMediaItem(): MediaItem{
 
     }
 }
