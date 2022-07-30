@@ -114,6 +114,8 @@ interface ApiService {
 
     /**
      * 登录（表单POST）
+     * @param account 账号
+     * @param password 密码
      */
     @FormUrlEncoded
     @POST("user/login")

@@ -40,6 +40,7 @@ class SignInFragment: BaseFragment<FragmentLoginBinding, SignInViewModel>() {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
+        // 点击下一步事件
         mBinding.btnNextStep.setOnClickListener {
             mBinding.btnNextStep.postDelayed({
                 // 动画效果后再更新，防止出现闪现文字的清空
@@ -53,7 +54,7 @@ class SignInFragment: BaseFragment<FragmentLoginBinding, SignInViewModel>() {
         }
 
 
-        // 监听输入手机内容更改获取验证码按钮状态
+        // 监听输入账号的输入框
         mBinding.editAccount.addOnEditTextAttachedListener {
             it.editText?.doAfterTextChanged { text ->
                 accountNumberPass = !text.isNullOrEmpty()
@@ -81,7 +82,7 @@ class SignInFragment: BaseFragment<FragmentLoginBinding, SignInViewModel>() {
             // 打开返回重新监听
             backCallback.isEnabled = true
 
-            // 如果没有正在计时，则去请求获取验证码，否则直接切换到输入验证码界面
+            //切换到输入密码界面
             switchView()
 
         }
@@ -113,6 +114,7 @@ class SignInFragment: BaseFragment<FragmentLoginBinding, SignInViewModel>() {
                     it.onSuccess {
                         mBinding.btnSignIn.setLoading(false)
                         Toast.makeText(requireContext(), R.string.description_login_success, Toast.LENGTH_SHORT).show()
+                        // 登录成功则返回上一页
                         findNavController().navigateUp()
                     }.onLoading {
                         mBinding.btnSignIn.setLoading(true)

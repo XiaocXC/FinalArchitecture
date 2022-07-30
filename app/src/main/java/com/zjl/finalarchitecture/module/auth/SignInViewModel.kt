@@ -18,11 +18,9 @@ import kotlinx.coroutines.launch
  *
  * 登录界面ViewModel
  */
-class SignInViewModel constructor(
-): BaseViewModel(){
+class SignInViewModel : BaseViewModel(){
 
     private val apiRepository = ApiRepository
-
 
     /**
      * 登录状态
@@ -46,23 +44,6 @@ class SignInViewModel constructor(
             })
         }
     }
-
-//
-//    /**
-//     * 开始倒计时
-//     */
-//    fun startCountDown(){
-//        // 取消前一次的倒计时Job
-//        countDownJob.cancelIfActive()
-//
-//        // 开始倒计时
-//        countDownJob = viewModelScope.launch {
-//
-//            countDownTimer.start {
-//                _countDownNumber.emit(it)
-//            }
-//        }
-//    }
 
     override fun refresh() {
 

@@ -167,7 +167,9 @@ object ApiRepository {
     }
 
     /**
-     * 根据关键词搜索数据
+     * 登录账户
+     * @param account 账号
+     * @param password 密码
      */
     suspend fun login(account: String, password: String): ApiResult<UserInfoVO> {
         return mApiService.login(account, password)
