@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="fluid_music_permission_about_storage">轻触我读取内置音乐</string>
+    <string name="fluid_music_permission_go_to_setting">你禁止了读取权限，请前往设置进行设置</string>
+</resources>

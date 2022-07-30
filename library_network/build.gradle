@@ -17,7 +17,7 @@ dependencies {
     api(Libs.OKHTTP)
     api(Libs.KOTLIN_SERIALIZATION)
     // Log日志拦截器
-    implementation(Libs.OKHTTP_LOGGING)
+    api(Libs.OKHTTP_LOGGING)
 
     testImplementation(Libs.JUNIT)
     testImplementation(Libs.JUNIT_EXT)

@@ -4,9 +4,9 @@ import com.zjl.base.ApiResult
 import com.zjl.base.onSuccess
 import com.zjl.finalarchitecture.utils.CacheUtil
 import com.zjl.finalarchitecture.api.ApiService
+import com.zjl.finalarchitecture.api.mRetrofit
 import com.zjl.finalarchitecture.data.model.*
 
-import com.zjl.library_network.client.mRetrofit
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
@@ -164,5 +164,12 @@ object ApiRepository {
      */
     suspend fun requestSearchDataByKey(page: Int, key: String): ApiResult<PageVO<ArticleListVO>> {
         return mApiService.getSearchDataByKey(page, key)
+    }
+
+    /**
+     * 根据关键词搜索数据
+     */
+    suspend fun login(account: String, password: String): ApiResult<UserInfoVO> {
+        return mApiService.login(account, password)
     }
 }

@@ -133,6 +133,10 @@ public class Libs {
     public static final String CONCURRENT_FUTURES_KTX = "androidx.concurrent:concurrent-futures-ktx:1.1.0";
 
 
+    // 权限申请PermissionX
+    public static final String PERMISSION_X = "com.guolindev.permissionx:permissionx:1.6.4";
+
+
     // 测试库
     public static final String JUNIT = "junit:junit:4.13.2";
     // Android测试适用扩展

@@ -2,11 +2,13 @@ package com.zjl.finalarchitecture.data.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
 
 /**
  * 账户信息
  */
 @Parcelize
+@Serializable
 data class UserInfoVO(
     var admin: Boolean = false,
     var chapterTops: List<String> = listOf(),

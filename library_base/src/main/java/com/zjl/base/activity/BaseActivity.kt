@@ -42,8 +42,6 @@ abstract class BaseActivity<V : ViewBinding, VM : BaseViewModel> : AppCompatActi
 
     protected lateinit var mViewModel: VM
 
-    protected lateinit var receiver: NetworkStateReceiver
-
     /**
      * 整个Activity的UiState状态控制器
      */
@@ -60,11 +58,6 @@ abstract class BaseActivity<V : ViewBinding, VM : BaseViewModel> : AppCompatActi
         // 设置沉浸式状态栏，此操作会去掉透明遮罩等内容
         // 类似于使用了 view.setSystemUiVisibility(LAYOUT_STABLE | LAYOUT_FULLSCREEN | LAYOUT_FULLSCREEN)
 //        WindowCompat.setDecorFitsSystemWindows(window, false)
-
-        // 注册网络状态监听
-        val filter = IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
-        receiver = NetworkStateReceiver()
-        this.registerReceiver(receiver, filter)
 
         mViewModel = bindViewModel()
         initViewAndEvent(savedInstanceState)
@@ -178,10 +171,16 @@ abstract class BaseActivity<V : ViewBinding, VM : BaseViewModel> : AppCompatActi
      */
     abstract fun createObserver()
 
-    override fun onDestroy() {
-        super.onDestroy()
-        // 取消网络监听
-        unregisterReceiver(receiver)
+    override fun onPause() {
+        super.onPause()
+        // 停止观察网络状态
+        NetworkManager.unregisterNetworkStateChanged(this)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // 恢复观察网络状态
+        NetworkManager.registerNetworkStateChanged(this)
     }
 
 

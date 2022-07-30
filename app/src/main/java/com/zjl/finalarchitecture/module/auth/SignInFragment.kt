@@ -1,13 +1,24 @@
 package com.zjl.finalarchitecture.module.auth
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
 import androidx.core.view.isVisible
+import androidx.core.widget.doAfterTextChanged
 import androidx.transition.TransitionManager
 import com.google.android.material.transition.MaterialSharedAxis
 import com.zjl.base.fragment.BaseFragment
+import com.zjl.base.ui.onFailure
+import com.zjl.base.ui.onLoading
+import com.zjl.base.ui.onSuccess
+import com.zjl.base.utils.findNavController
+import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
 import com.zjl.base.viewmodel.EmptyViewModel
+import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.databinding.FragmentLoginBinding
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 /**
  * @author Xiaoc
@@ -15,151 +26,104 @@ import com.zjl.finalarchitecture.databinding.FragmentLoginBinding
  *
  * 登录Fragment（密码登录）
  */
-class SignInFragment: BaseFragment<FragmentLoginBinding, EmptyViewModel>() {
+class SignInFragment: BaseFragment<FragmentLoginBinding, SignInViewModel>() {
 
 //    private val signInViewModel by hiltNavGraphViewModels<SignInViewModel>(R.id.nav_auth)
 
     private lateinit var backCallback: OnBackPressedCallback
 
-    private var agreePrivacyPass: Boolean = false
-    private var phoneNumberPass: Boolean = false
+    private var accountNumberPass: Boolean = false
 
     override fun initViewAndEvent(savedInstanceState: Bundle?) {
 
-//        binding.toolbarSignIn.setNavigationOnClickListener {
-//            requireActivity().onBackPressedDispatcher.onBackPressed()
-//        }
-//
-//        binding.cbAgreePrivacy.setOnCheckedChangeListener { _, isChecked ->
-//            phoneNumberPass = isChecked
-//            updateGetVerifyButtonState()
-//        }
-//
-//        binding.btnRetryGetVerify.setOnClickListener {
-//            signInViewModel.getVerifyCode(binding.editPhone.editText.toString())
-//        }
-//
-//        // 生成隐私协议等文字效果内容
-//        val textColorSpan1 = ForegroundColorSpan(requireContext().getAttrColor(R.attr.colorPrimary))
-//        val textColorSpan2 = ForegroundColorSpan(requireContext().getAttrColor(R.attr.colorPrimary))
-//        val spanBuilder = SpannableStringBuilder(getString(R.string.description_sign_in_privacy_declare))
-//        spanBuilder.setSpan(textColorSpan1, 6, 12, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
-//        spanBuilder.setSpan(textColorSpan2, 13, 19, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
-//        binding.cbAgreePrivacy.text = spanBuilder
-//
-//        // 监听输入手机内容更改获取验证码按钮状态
-//        binding.editPhone.addOnEditTextAttachedListener {
-//            it.editText?.doAfterTextChanged { text ->
-//                agreePrivacyPass = PhoneUtil.isMobile(text)
-//                updateGetVerifyButtonState()
-//            }
-//        }
-//
-//        // 监听验证码输入框
-//        binding.editVerifyCode.addOnEditTextAttachedListener {
-//            it.editText?.doAfterTextChanged { text ->
-//                binding.btnSignIn.isEnabled = !text.isNullOrEmpty()
-//            }
-//        }
-//
-//        // 登录按钮
-//        binding.btnSignIn.setOnClickListener {
-//            signInViewModel.signInByVerify(
-//                binding.editPhone.editText?.text.toString(),
-//                binding.editVerifyCode.editText?.text.toString()
-//            )
-//        }
-//
-//        // 获取验证码按钮
-//        binding.btnGetVerify.setOnClickListener {
-//            // 打开返回重新监听
-//            backCallback.isEnabled = true
-//
-//            // 如果没有正在计时，则去请求获取验证码，否则直接切换到输入验证码界面
-//            if(!signInViewModel.isCounting){
-//                signInViewModel.getVerifyCode(binding.editPhone.editText?.text.toString())
-//            } else {
-//                switchView()
-//            }
-//
-//        }
+        mBinding.toolbarSignIn.setNavigationOnClickListener {
+            requireActivity().onBackPressedDispatcher.onBackPressed()
+        }
+
+        mBinding.btnNextStep.setOnClickListener {
+            mBinding.btnNextStep.postDelayed({
+                // 动画效果后再更新，防止出现闪现文字的清空
+                mBinding.btnNextStep.setLoading(false)
+            },200L)
+            mBinding.btnSignIn.setLoading(false)
+            // 如果正在输入密码页面，不切换
+            if(mBinding.containerEditPhoneView.isVisible){
+                switchView()
+            }
+        }
+
+
+        // 监听输入手机内容更改获取验证码按钮状态
+        mBinding.editAccount.addOnEditTextAttachedListener {
+            it.editText?.doAfterTextChanged { text ->
+                accountNumberPass = !text.isNullOrEmpty()
+                updateNextStepButtonState()
+            }
+        }
+
+        // 监听密码输入框
+        mBinding.editPassword.addOnEditTextAttachedListener {
+            it.editText?.doAfterTextChanged { text ->
+                mBinding.btnSignIn.isEnabled = !text.isNullOrEmpty()
+            }
+        }
+
+        // 登录按钮
+        mBinding.btnSignIn.setOnClickListener {
+            mViewModel.signInByPassword(
+                mBinding.editAccount.editText?.text.toString(),
+                mBinding.editPassword.editText?.text.toString()
+            )
+        }
+
+        // 下一步的按钮
+        mBinding.btnNextStep.setOnClickListener {
+            // 打开返回重新监听
+            backCallback.isEnabled = true
+
+            // 如果没有正在计时，则去请求获取验证码，否则直接切换到输入验证码界面
+            switchView()
+
+        }
 
     }
 
-    private fun updateGetVerifyButtonState(){
-//        binding.btnGetVerify.isEnabled = agreePrivacyPass and phoneNumberPass
+    private fun updateNextStepButtonState(){
+        mBinding.btnNextStep.isEnabled = accountNumberPass
     }
 
     override fun createObserver() {
-//        backCallback = requireActivity().onBackPressedDispatcher.addCallback(this) {
-//            if(!binding.containerEditPhoneView.isVisible){
-//                switchView()
-//                // 清除输入的验证码输入框
-//                binding.editVerifyCode.editText?.text = null
-//                isEnabled = true
-//            } else {
-//                isEnabled = false
-//                requireActivity().onBackPressed()
-//            }
-//        }
-//
-//        launchAndRepeatWithViewLifecycle {
-//            launch {
-//                signInViewModel.countDownNumber.collectLatest {
-//                    binding.btnRetryGetVerify.isEnabled = !it.isCounting
-//                    if(it.isCounting){
-//                        binding.btnRetryGetVerify.text = it.countDownNumber.toString()
-//                    } else {
-//                        binding.btnRetryGetVerify.setText(R.string.description_login_get_verify_retry)
-//                    }
-//                }
-//            }
-//
-//            launch {
-//                // 获取验证码状态
-//                signInViewModel.eventShowVerifyState.collectLatest {
-//                    it.onSuccess {
-//                        signInViewModel.startCountDown()
-//                        binding.btnGetVerify.postDelayed({
-//                            // 动画效果后再更新 获取验证码的加载状态，防止出现闪现文字的清空
-//                            binding.btnGetVerify.setLoading(false)
-//                        },200L)
-//                        binding.btnRetryGetVerify.setLoading(false)
-//                        // 如果正在输入验证码页面，不切换
-//                        if(binding.containerEditPhoneView.isVisible){
-//                            switchView()
-//                        }
-//                    }.onLoading {
-//                        if(binding.containerEditPhoneView.isVisible){
-//                            binding.btnGetVerify.setLoading(true)
-//                        } else {
-//                            binding.btnRetryGetVerify.setLoading(true)
-//                        }
-//                    }.onFailure { _, throwable ->
-//                        binding.btnGetVerify.setLoading(false)
-//                        binding.btnRetryGetVerify.setLoading(false)
-//                        snackbar(throwable).show()
-//                    }
-//                }
-//            }
-//
-//            launch {
-//                // 登录状态
-//                signInViewModel.eventSignInState.collectLatest {
-//                    it.onSuccess {
-//                        binding.btnSignIn.setLoading(false)
-//                        snackbar(R.string.description_login_success).show()
-//                        findNavController().navigateUp()
-//                    }.onLoading {
-//                        binding.btnSignIn.setLoading(true)
-//                    }.onFailure { _, throwable ->
-//                        binding.btnSignIn.setLoading(false)
-//                        snackbar(throwable).show()
-//                    }
-//                }
-//            }
-//
-//        }
+        backCallback = requireActivity().onBackPressedDispatcher.addCallback(this) {
+            if(!mBinding.containerEditPhoneView.isVisible){
+                switchView()
+                // 清除输入的验证码输入框
+                mBinding.editPassword.editText?.text = null
+                isEnabled = true
+            } else {
+                isEnabled = false
+                requireActivity().onBackPressed()
+            }
+        }
+
+        launchAndRepeatWithViewLifecycle {
+
+            launch {
+                // 登录状态
+                mViewModel.eventSignInState.collectLatest {
+                    it.onSuccess {
+                        mBinding.btnSignIn.setLoading(false)
+                        Toast.makeText(requireContext(), R.string.description_login_success, Toast.LENGTH_SHORT).show()
+                        findNavController().navigateUp()
+                    }.onLoading {
+                        mBinding.btnSignIn.setLoading(true)
+                    }.onFailure { _, throwable ->
+                        mBinding.btnSignIn.setLoading(false)
+                        Toast.makeText(requireContext(), throwable.message ?: "未知错误", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+
+        }
     }
 
     private fun createTransition(entering: Boolean): MaterialSharedAxis {

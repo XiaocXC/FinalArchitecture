@@ -10,6 +10,7 @@ import android.content.Intent
  *
  * 监听网络变化情况
  */
+@Deprecated("现在请使用NetworkStateCallback代替广播事件监听")
 class NetworkStateReceiver: BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         NetworkManager.updateNetworkState(context)

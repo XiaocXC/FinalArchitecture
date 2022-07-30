@@ -1,6 +1,7 @@
 package com.zjl.finalarchitecture.module.mine.viewmodel
 
 import com.zjl.base.viewmodel.BaseViewModel
+import com.zjl.finalarchitecture.data.respository.datasouce.UserAuthDataSource
 
 /**
  * @author Xiaoc
@@ -10,7 +11,8 @@ import com.zjl.base.viewmodel.BaseViewModel
  **/
 class MineViewModel: BaseViewModel() {
 
-    override fun refresh() {
+    val userInfo = UserAuthDataSource.basicUserInfoVO
 
+    override fun refresh() {
     }
 }

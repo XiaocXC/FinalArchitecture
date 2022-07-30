@@ -96,7 +96,7 @@ abstract class BaseViewModel: ViewModel(){
      */
     protected suspend fun <T> launchRequestByNormalWithUiState(
         requestAction: suspend CoroutineContext.() -> ApiResult<T>,
-        resultState: MutableStateFlow<UiModel<T>>,
+        resultState: MutableSharedFlow<UiModel<T>>,
         isShowState: Boolean = false,
         isRootUiState: Boolean = true,
         successBlock: suspend CoroutineContext.(T) -> Unit = {},
@@ -118,16 +118,16 @@ abstract class BaseViewModel: ViewModel(){
                 if(isShowState && isRootUiState){
                     _rootViewState.emit(UiModel.Success(Unit))
                 }
-                resultState.value = UiModel.Success(data)
+                resultState.emit(UiModel.Success(data))
                 // 回调成功方法
                 successBlock(coroutineContext, data)
 
             }.onFailure { error ->
                 // 如果要显示状态，设置为失败
                 if(isShowState && isRootUiState){
-                    _rootViewState.emit(UiModel.Success(Unit))
+                    _rootViewState.emit(UiModel.Error(ApiException(error)))
                 }
-                resultState.value = UiModel.Error(ApiException(error))
+                resultState.emit(UiModel.Error(ApiException(error)))
                 // 回调失败方法
                 failureBlock(coroutineContext, error)
             }
@@ -138,7 +138,7 @@ abstract class BaseViewModel: ViewModel(){
                 _rootViewState.emit(UiModel.Success(Unit))
             }
             val error = Error(errorCode = 0, errorMsg = it.message)
-            resultState.value = UiModel.Error(ApiException(error))
+            resultState.emit(UiModel.Error(ApiException(error)))
             // 回调失败方法
             failureBlock(coroutineContext, error)
         }

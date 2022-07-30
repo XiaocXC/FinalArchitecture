@@ -64,6 +64,7 @@ dependencies {
 
     implementation project(':library_base')
     implementation project(':library_network')
+    implementation project(':feature-fluid-music')
 
     testImplementation(Libs.JUNIT)
     testImplementation(Libs.JUNIT_EXT)

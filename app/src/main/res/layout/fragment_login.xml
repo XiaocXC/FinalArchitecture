@@ -17,12 +17,13 @@
         app:titleCentered="true"
         app:title="@string/description_login" />
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/iv_logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
         android:layout_marginTop="32dp"
-        android:src="@drawable/ic_launcher_foreground"
+        android:src="@mipmap/logo"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.Architecture.SmallComponent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar_sign_in" />
@@ -39,24 +40,23 @@
         app:layout_constraintTop_toBottomOf="@+id/iv_logo">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/edit_phone"
+            android:id="@+id/edit_account"
             style="@style/Widget.Architecture.TextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/description_login_phone_hint"
+            android:hint="@string/description_login_account_hint"
             app:layout_constraintVertical_chainStyle="packed">
 
             <com.google.android.material.textfield.TextInputEditText
                 style="@style/Widget.Architecture.TextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="phone"
-                android:maxLength="11"/>
+                android:inputType="text"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.zjl.base.widget.progressbutton.ProgressButton
-            android:id="@+id/btn_get_verify"
+            android:id="@+id/btn_next_step"
             style="@style/Widget.Architecture.BaseButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -96,8 +96,7 @@
                 style="@style/Widget.Architecture.TextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number"
-                android:maxLength="6" />
+                android:inputType="text" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

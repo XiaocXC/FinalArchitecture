@@ -2,6 +2,7 @@ package com.zjl.base.network
 
 import android.content.Context
 import android.net.ConnectivityManager
+import android.net.Network
 import android.net.NetworkCapabilities
 import android.os.Build
 import android.telephony.TelephonyManager
@@ -21,11 +22,8 @@ object NetworkManager {
 
     @IntDef(
         NO_NETWORK,
-        NETWORK_CLOSED,
-        NETWORK_ETHERNET,
-        NETWORK_WIFI,
-        NETWORK_MOBILE,
-        NETWORK_UNKNOWN
+        NETWORK_METERED,
+        NETWORK_NOT_METERED
     )
     @Retention(AnnotationRetention.SOURCE)
     annotation class NetworkStatus
@@ -36,32 +34,41 @@ object NetworkManager {
     const val NO_NETWORK = 0
 
     /**
-     * 网络断开或关闭
+     * 网络不计费（例如Wifi等内容）
      */
-    const val NETWORK_CLOSED = 1
+    const val NETWORK_METERED = 1
 
     /**
-     * 以太网网络
+     * 网络计费（例如移动流量）
      */
-    const val NETWORK_ETHERNET = 2
-
-    /**
-     * WIFI网络
-     */
-    const val NETWORK_WIFI = 3
-
-    /**
-     * 移动网络
-     */
-    const val NETWORK_MOBILE = 4
-
-    /**
-     * 未知的网络状态
-     */
-    const val NETWORK_UNKNOWN = -1
+    const val NETWORK_NOT_METERED = 2
 
     private val _networkState = MutableSharedFlow<Int>()
     val networkState: SharedFlow<Int> = _networkState
+
+    private var networkStateCallback: NetworkStateCallback? = null
+
+    /**
+     * 注册网络状态监听事件
+     */
+    fun registerNetworkStateChanged(context: Context){
+        val connectMgr = context.applicationContext
+            .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val callback = NetworkStateCallback(context)
+        networkStateCallback = callback
+        connectMgr.registerDefaultNetworkCallback(callback)
+    }
+
+    /**
+     * 取消注册网络状态监听事件
+     */
+    fun unregisterNetworkStateChanged(context: Context){
+        val connectMgr = context.applicationContext
+            .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        networkStateCallback?.let {
+            connectMgr.unregisterNetworkCallback(it)
+        }
+    }
 
     /**
      * 判断当前网络类型
@@ -72,70 +79,48 @@ object NetworkManager {
 
         // 改为applicationContext，防止发生内存泄漏
         val connectMgr = context.applicationContext
-            .getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager ?: return NO_NETWORK
+            .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             val network = connectMgr.activeNetwork ?: return NO_NETWORK
             val capabilities = connectMgr.getNetworkCapabilities(network) ?: return NO_NETWORK
 
-            when {
-                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> {
-                    return NETWORK_MOBILE
-                }
-                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> {
-                    return NETWORK_WIFI
-                }
-                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> {
-                    return NETWORK_ETHERNET
-                }
-                !capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) -> {
-                    return NETWORK_CLOSED
-                }
+            return if(capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)){
+                NETWORK_NOT_METERED
+            } else {
+                NETWORK_METERED
             }
-            return NETWORK_UNKNOWN
         } else {
             val networkInfo = connectMgr.activeNetworkInfo
                 ?: // 没有任何网络
                 return NO_NETWORK
             if (!networkInfo.isConnected) {
                 // 网络断开或关闭
-                return NETWORK_CLOSED
+                return NO_NETWORK
             }
             when (networkInfo.type) {
-                ConnectivityManager.TYPE_ETHERNET -> {
-                    // 以太网网络
-                    return NETWORK_ETHERNET
-                }
-                ConnectivityManager.TYPE_WIFI -> {
-                    // wifi网络，当激活时，默认情况下，所有的数据流量将使用此连接
-                    return NETWORK_WIFI
+                ConnectivityManager.TYPE_WIFI, ConnectivityManager.TYPE_ETHERNET -> {
+                    // wifi网络或以太网
+                    return NETWORK_NOT_METERED
                 }
                 ConnectivityManager.TYPE_MOBILE -> {
-                    // 移动数据连接,不能与连接共存,如果wifi打开，则自动关闭
-                    when (networkInfo.subtype) {
-                        TelephonyManager.NETWORK_TYPE_GPRS,
-                        TelephonyManager.NETWORK_TYPE_EDGE,
-                        TelephonyManager.NETWORK_TYPE_CDMA,
-                        TelephonyManager.NETWORK_TYPE_1xRTT,
-                        TelephonyManager.NETWORK_TYPE_IDEN,
-                        TelephonyManager.NETWORK_TYPE_UMTS,
-                        TelephonyManager.NETWORK_TYPE_EVDO_0,
-                        TelephonyManager.NETWORK_TYPE_EVDO_A,
-                        TelephonyManager.NETWORK_TYPE_HSDPA,
-                        TelephonyManager.NETWORK_TYPE_HSUPA,
-                        TelephonyManager.NETWORK_TYPE_HSPA,
-                        TelephonyManager.NETWORK_TYPE_EVDO_B,
-                        TelephonyManager.NETWORK_TYPE_EHRPD,
-                        TelephonyManager.NETWORK_TYPE_HSPAP,
-                        TelephonyManager.NETWORK_TYPE_LTE,
-                        TelephonyManager.NETWORK_TYPE_NR ->
-                            return NETWORK_MOBILE
-                    }
+                    // 移动数据连接，视为可计费
+                    return NETWORK_METERED
                 }
             }
-            // 未知网络
-            return NETWORK_UNKNOWN
+            // 未知网络，视为不计费
+            return NETWORK_METERED
         }
 
+    }
+
+    private fun parseNetwork(connectMgr: ConnectivityManager, network: Network): Int{
+        val capabilities = connectMgr.getNetworkCapabilities(network) ?: return NO_NETWORK
+
+        return if(capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)){
+            NETWORK_NOT_METERED
+        } else {
+            NETWORK_METERED
+        }
     }
 
     /**
@@ -145,7 +130,7 @@ object NetworkManager {
     @JvmStatic
     fun isConnectNetwork(context: Context): Boolean{
         val status = getNetworkType(context)
-        return !(status == NO_NETWORK || status == NETWORK_CLOSED)
+        return status != NO_NETWORK
     }
 
     /**
@@ -155,7 +140,7 @@ object NetworkManager {
     @JvmStatic
     fun isConnectWifi(context: Context): Boolean{
         val status = getNetworkType(context)
-        return  status == NETWORK_WIFI
+        return  status == NETWORK_NOT_METERED
     }
 
     /**
@@ -165,7 +150,7 @@ object NetworkManager {
     @JvmStatic
     fun isConnectMobileNetwork(context: Context): Boolean{
         val status = getNetworkType(context)
-        return  status == NETWORK_MOBILE
+        return  status == NETWORK_METERED
     }
 
     /**
@@ -173,6 +158,22 @@ object NetworkManager {
      */
     internal fun updateNetworkState(context: Context){
         val networkType = getNetworkType(context)
+        globalCoroutineScope.launch {
+            _networkState.emit(networkType)
+        }
+    }
+
+    /**
+     * 更新网络状态全局值
+     */
+    internal fun updateNetworkState(context: Context, network: Network?){
+        val connectMgr = context.applicationContext
+            .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val networkType = if(network == null){
+            NO_NETWORK
+        } else {
+            parseNetwork(connectMgr, network)
+        }
         globalCoroutineScope.launch {
             _networkState.emit(networkType)
         }

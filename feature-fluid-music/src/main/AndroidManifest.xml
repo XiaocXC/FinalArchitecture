@@ -13,5 +13,9 @@
                 <action android:name="android.media.browse.MediaBrowserService" />
             </intent-filter>
         </service>
+
+        <activity
+            android:exported="false"
+            android:name=".service.ui.FluidMusicMainActivity"/>
     </application>
 </manifest>

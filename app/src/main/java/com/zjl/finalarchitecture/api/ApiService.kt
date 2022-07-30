@@ -2,10 +2,7 @@ package com.zjl.finalarchitecture.api
 
 import com.zjl.base.ApiResult
 import com.zjl.finalarchitecture.data.model.*
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 /**
  * @author Xiaoc
@@ -114,5 +111,15 @@ interface ApiService {
         @Path("id") id: Int,
         @Path("page") page: Int
     ): ApiResult<PageVO<ArticleListVO>>
+
+    /**
+     * 登录（表单POST）
+     */
+    @FormUrlEncoded
+    @POST("user/login")
+    suspend fun login(
+        @Field("username") account: String,
+        @Field("password") password: String
+    ): ApiResult<UserInfoVO>
 
 }

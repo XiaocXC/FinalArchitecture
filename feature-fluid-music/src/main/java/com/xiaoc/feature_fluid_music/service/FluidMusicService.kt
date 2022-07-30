@@ -10,6 +10,7 @@ import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.session.MediaLibraryService
 import androidx.media3.session.MediaSession
 import com.xiaoc.feature_fluid_music.service.callback.MediaLibrarySessionCallbackImpl
+import com.xiaoc.feature_fluid_music.service.ui.FluidMusicMainActivity
 
 /**
  * @author Xiaoc
@@ -43,7 +44,7 @@ class FluidMusicService: MediaLibraryService() {
 
         // 创建PendingIntent用于点击通知栏跳转
         val sessionActivityPendingIntent = TaskStackBuilder.create(this).run {
-//                addNextIntent(Intent(this@FluidMusicService, MainActivity::class.java))
+                addNextIntent(Intent(this@FluidMusicService, FluidMusicMainActivity::class.java))
 //                addNextIntent(Intent(this@FluidMusicService, PlayerActivity::class.java))
 
                 val immutableFlag = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) FLAG_IMMUTABLE else 0
@@ -51,7 +52,7 @@ class FluidMusicService: MediaLibraryService() {
             }
 
         mediaLibrarySession =
-            MediaLibrarySession.Builder(this, player, MediaLibrarySessionCallbackImpl(player))
+            MediaLibrarySession.Builder(this, player, MediaLibrarySessionCallbackImpl(player, this))
                 .setSessionActivity(sessionActivityPendingIntent!!)
                 .build()
     }
