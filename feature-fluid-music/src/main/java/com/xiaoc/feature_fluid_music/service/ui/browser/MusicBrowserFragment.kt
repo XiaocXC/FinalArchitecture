@@ -20,7 +20,6 @@ import kotlinx.coroutines.flow.collectLatest
 class MusicBrowserFragment: BaseFragment<FluidMusicFragmentMusicBrowserListBinding, MusicBrowserViewModel>() {
 
     private lateinit var mediaTypeAdapter: MusicTypeTabViewPagerAdapter
-    private lateinit var tabLayoutMediator: TabLayoutMediator
 
     override fun initViewAndEvent(savedInstanceState: Bundle?) {
         mediaTypeAdapter = MusicTypeTabViewPagerAdapter(emptyList(), this@MusicBrowserFragment)
@@ -62,7 +61,7 @@ class MusicBrowserFragment: BaseFragment<FluidMusicFragmentMusicBrowserListBindi
         }
 
         override fun createFragment(position: Int): Fragment {
-            return AllMusicListFragment()
+            return AllMusicListFragment.newInstance(mediaTypes[position].mediaId)
         }
     }
 }
