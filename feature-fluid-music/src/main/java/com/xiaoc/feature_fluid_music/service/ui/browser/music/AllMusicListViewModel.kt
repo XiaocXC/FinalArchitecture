@@ -6,6 +6,7 @@ import androidx.concurrent.futures.await
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.media3.common.MediaItem
+import androidx.media3.common.Player
 import androidx.media3.session.MediaBrowser
 import androidx.media3.session.SessionToken
 import com.google.common.util.concurrent.ListenableFuture
@@ -34,6 +35,12 @@ class AllMusicListViewModel(
     val browser: MediaBrowser?
         get() = if (browserFuture.isDone) browserFuture.get() else null
 
+    private val playerListener = object: Player.Listener{
+        override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
+
+        }
+    }
+
     fun initializeBrowser(context: Context){
         viewModelScope.launch {
             browserFuture =
@@ -46,6 +53,7 @@ class AllMusicListViewModel(
 
             // 获取对应parentId下的内容
             val browser = browser ?: return@launch
+            setControllerListener(browser)
 
             val childrenResult = browser.getChildren(parentId, 0, Int.MAX_VALUE, null).await()
             val children = childrenResult.value ?: return@launch
@@ -56,6 +64,18 @@ class AllMusicListViewModel(
 
     fun releaseBrowser(){
         MediaBrowser.releaseFuture(browserFuture)
+    }
+
+    private fun setControllerListener(browser: MediaBrowser){
+        // 立即更新一下当前数据
+//        updateCurrentMediaItem(browser.currentMediaItem)
+
+        // 监听数据变化
+        browser.addListener(playerListener)
+    }
+
+    private fun updateCurrentMediaItem(){
+
     }
 
     fun playByList(index: Int){

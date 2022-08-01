@@ -1,7 +1,10 @@
 package com.xiaoc.feature_fluid_music.service.ui.browser.music
 
 import android.os.Bundle
+import android.view.View
 import androidx.core.os.bundleOf
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.xiaoc.feature_fluid_music.databinding.FluidMusicFragmentAllMusicListBinding
 import com.xiaoc.feature_fluid_music.service.ui.browser.music.adapter.MusicItemAdapter
 import com.zjl.base.fragment.BaseFragment
@@ -33,9 +36,11 @@ class AllMusicListFragment: BaseFragment<FluidMusicFragmentAllMusicListBinding, 
     private lateinit var musicItemAdapter: MusicItemAdapter
 
     override fun initViewAndEvent(savedInstanceState: Bundle?) {
-        musicItemAdapter = MusicItemAdapter(clickListener = {
-            mViewModel.playByList(it)
-        })
+        musicItemAdapter = MusicItemAdapter()
+
+        musicItemAdapter.setOnItemClickListener { _, _, position ->
+            mViewModel.playByList(position)
+        }
 
         mBinding.rvMusic.adapter = musicItemAdapter
     }
