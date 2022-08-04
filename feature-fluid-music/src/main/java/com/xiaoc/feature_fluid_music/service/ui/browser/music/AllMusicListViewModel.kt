@@ -11,7 +11,9 @@ import androidx.media3.session.MediaBrowser
 import androidx.media3.session.SessionToken
 import com.google.common.util.concurrent.ListenableFuture
 import com.xiaoc.feature_fluid_music.service.FluidMusicService
+import com.xiaoc.feature_fluid_music.service.bean.UIMediaData
 import com.zjl.base.viewmodel.BaseViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -28,8 +30,8 @@ class AllMusicListViewModel(
 
     private val parentId = savedStateHandle["parentId"] ?: ""
 
-    private val _localAllMusicList = MutableStateFlow<List<MediaItem>>(emptyList())
-    val localAllMusicList: StateFlow<List<MediaItem>> = _localAllMusicList
+    private val _localAllMusicList = MutableStateFlow<List<UIMediaData>>(emptyList())
+    val localAllMusicList: StateFlow<List<UIMediaData>> = _localAllMusicList
 
     private lateinit var browserFuture: ListenableFuture<MediaBrowser>
     val browser: MediaBrowser?
@@ -37,7 +39,7 @@ class AllMusicListViewModel(
 
     private val playerListener = object: Player.Listener{
         override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
-
+            updateCurrentMediaItem(mediaItem)
         }
     }
 
@@ -53,12 +55,16 @@ class AllMusicListViewModel(
 
             // 获取对应parentId下的内容
             val browser = browser ?: return@launch
-            setControllerListener(browser)
 
             val childrenResult = browser.getChildren(parentId, 0, Int.MAX_VALUE, null).await()
             val children = childrenResult.value ?: return@launch
 
-            _localAllMusicList.value = children
+            val playMediaItems = children.map {
+                UIMediaData(it, false)
+            }
+            _localAllMusicList.value = playMediaItems
+
+            setControllerListener(browser)
         }
     }
 
@@ -68,23 +74,39 @@ class AllMusicListViewModel(
 
     private fun setControllerListener(browser: MediaBrowser){
         // 立即更新一下当前数据
-//        updateCurrentMediaItem(browser.currentMediaItem)
+        updateCurrentMediaItem(browser.currentMediaItem)
 
         // 监听数据变化
         browser.addListener(playerListener)
     }
 
-    private fun updateCurrentMediaItem(){
+    private fun updateCurrentMediaItem(mediaItem: MediaItem?){
+        viewModelScope.launch(Dispatchers.Default) {
 
+            if(mediaItem == null){
+                _localAllMusicList.value = _localAllMusicList.value.map {
+                    it.copy(isPlaying = false)
+                }
+            } else {
+                _localAllMusicList.value = _localAllMusicList.value.map {
+                    it.copy(isPlaying = mediaItem.mediaId == it.mediaItem.mediaId)
+                }
+            }
+        }
     }
 
     fun playByList(index: Int){
         val browser = browser ?: return
-        browser.setMediaItems(_localAllMusicList.value)
-        browser.shuffleModeEnabled = false
-        browser.prepare()
-        browser.seekToDefaultPosition(index)
-        browser.play()
+        viewModelScope.launch {
+            val playMediaItems = _localAllMusicList.value.map {
+                it.mediaItem
+            }
+            browser.setMediaItems(playMediaItems)
+            browser.shuffleModeEnabled = false
+            browser.prepare()
+            browser.seekToDefaultPosition(index)
+            browser.play()
+        }
     }
 
     override fun refresh() {

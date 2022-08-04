@@ -3,9 +3,9 @@ package com.xiaoc.feature_fluid_music.service.ui.browser.music
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
-import com.chad.library.adapter.base.BaseQuickAdapter
-import com.chad.library.adapter.base.listener.OnItemClickListener
+import androidx.recyclerview.widget.DiffUtil
 import com.xiaoc.feature_fluid_music.databinding.FluidMusicFragmentAllMusicListBinding
+import com.xiaoc.feature_fluid_music.service.bean.UIMediaData
 import com.xiaoc.feature_fluid_music.service.ui.browser.music.adapter.MusicItemAdapter
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.ui.state.EmptyState
@@ -37,6 +37,19 @@ class AllMusicListFragment: BaseFragment<FluidMusicFragmentAllMusicListBinding, 
 
     override fun initViewAndEvent(savedInstanceState: Bundle?) {
         musicItemAdapter = MusicItemAdapter()
+        musicItemAdapter.setDiffCallback(object: DiffUtil.ItemCallback<UIMediaData>() {
+            override fun areItemsTheSame(oldItem: UIMediaData, newItem: UIMediaData): Boolean {
+                return oldItem.mediaItem == newItem.mediaItem
+            }
+
+            override fun areContentsTheSame(oldItem: UIMediaData, newItem: UIMediaData): Boolean {
+                return oldItem.isPlaying == newItem.isPlaying
+            }
+
+            override fun getChangePayload(oldItem: UIMediaData, newItem: UIMediaData): Any? {
+                return newItem.isPlaying
+            }
+        })
 
         musicItemAdapter.setOnItemClickListener { _, _, position ->
             mViewModel.playByList(position)
@@ -54,7 +67,7 @@ class AllMusicListFragment: BaseFragment<FluidMusicFragmentAllMusicListBinding, 
                         return@collectLatest
                     }
                     uiRootState.show(SuccessState())
-                    musicItemAdapter.setList(it)
+                    musicItemAdapter.setDiffNewData(it.toMutableList())
                 }
             }
         }
