@@ -3,9 +3,12 @@ package com.xiaoc.feature_fluid_music.service.ui.browser
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.media3.common.MediaItem
+import androidx.media3.common.MediaMetadata
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.xiaoc.feature_fluid_music.databinding.FluidMusicFragmentMusicBrowserListBinding
+import com.xiaoc.feature_fluid_music.service.ui.browser.album.AllAlbumListFragment
+import com.xiaoc.feature_fluid_music.service.ui.browser.artist.AllArtistListFragment
 import com.xiaoc.feature_fluid_music.service.ui.browser.music.AllMusicListFragment
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
@@ -61,7 +64,17 @@ class MusicBrowserFragment: BaseFragment<FluidMusicFragmentMusicBrowserListBindi
         }
 
         override fun createFragment(position: Int): Fragment {
-            return AllMusicListFragment.newInstance(mediaTypes[position].mediaId)
+            return when(mediaTypes[position].mediaMetadata.folderType){
+                MediaMetadata.FOLDER_TYPE_ALBUMS ->{
+                    AllAlbumListFragment.newInstance(mediaTypes[position].mediaId)
+                }
+                MediaMetadata.FOLDER_TYPE_ARTISTS ->{
+                    AllArtistListFragment.newInstance(mediaTypes[position].mediaId)
+                }
+                else ->{
+                    AllMusicListFragment.newInstance(mediaTypes[position].mediaId)
+                }
+            }
         }
     }
 }

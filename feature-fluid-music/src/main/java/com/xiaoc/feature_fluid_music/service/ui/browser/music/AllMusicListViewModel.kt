@@ -82,19 +82,17 @@ class AllMusicListViewModel(
 
     private fun updateCurrentMediaItem(mediaItem: MediaItem?){
         viewModelScope.launch(Dispatchers.Default) {
-
-            if(mediaItem == null){
-                _localAllMusicList.value = _localAllMusicList.value.map {
-                    it.copy(isPlaying = false)
-                }
-            } else {
-                _localAllMusicList.value = _localAllMusicList.value.map {
-                    it.copy(isPlaying = mediaItem.mediaId == it.mediaItem.mediaId)
-                }
+            _localAllMusicList.value = _localAllMusicList.value.map {
+                // 如果mediaItem的Id与列表中的其中一个相同，说明该项正在播放，isPlaying置为true
+                it.copy(isPlaying = mediaItem?.mediaId == it.mediaItem.mediaId)
             }
         }
     }
 
+    /**
+     * 播放播放列表中的某一项
+     * @param index 播放列表中要播放项的index
+     */
     fun playByList(index: Int){
         val browser = browser ?: return
         viewModelScope.launch {

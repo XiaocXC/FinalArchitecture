@@ -132,6 +132,7 @@ public class Libs {
     // FUTURES 异步调用的Ktx扩展
     public static final String CONCURRENT_FUTURES_KTX = "androidx.concurrent:concurrent-futures-ktx:1.1.0";
 
+    public static final String VERTICAL_TAB_LAYOUT = "q.rorbin:VerticalTabLayout:1.2.5";
 
     // 权限申请PermissionX
     public static final String PERMISSION_X = "com.guolindev.permissionx:permissionx:1.6.4";

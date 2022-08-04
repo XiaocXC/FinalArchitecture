@@ -1,11 +1,11 @@
 package com.xiaoc.feature_fluid_music.service.ui.browser.music
 
 import android.os.Bundle
-import android.view.View
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.DiffUtil
 import com.xiaoc.feature_fluid_music.databinding.FluidMusicFragmentAllMusicListBinding
 import com.xiaoc.feature_fluid_music.service.bean.UIMediaData
+import com.xiaoc.feature_fluid_music.service.ui.browser.album.adapter.AlbumItemAdapter
 import com.xiaoc.feature_fluid_music.service.ui.browser.music.adapter.MusicItemAdapter
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.ui.state.EmptyState

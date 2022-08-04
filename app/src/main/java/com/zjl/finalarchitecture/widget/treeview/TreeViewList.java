@@ -73,7 +73,7 @@ public class TreeViewList extends ListView {
         indentWidth = a.getDimensionPixelSize(
                 R.styleable.TreeViewList_indent_width, DEFAULT_INDENT);
         indicatorGravity = a.getInteger(
-                R.styleable.TreeViewList_indicator_gravity, DEFAULT_GRAVITY);
+                R.styleable.TreeViewList_indicator_gravity_tree, DEFAULT_GRAVITY);
         indicatorBackgroundDrawable = a
                 .getDrawable(R.styleable.TreeViewList_indicator_background);
         rowBackgroundDrawable = a
