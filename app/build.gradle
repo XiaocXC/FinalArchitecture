@@ -69,11 +69,11 @@ dependencies {
     testImplementation(Libs.JUNIT)
     testImplementation(Libs.JUNIT_EXT)
     testImplementation(Libs.ESPRESSO_CORE)
+    
+    implementation(Libs.VERTICAL_TAB_LAYOUT)
 
     //轮播图
     implementation(Libs.BANNER_VIEWPAGER)
     implementation(Libs.SHAPE_VIEW)
     implementation(Libs.DOCUMENT_FILE)
-
-    implementation(Libs.VERTICAL_TAB_LAYOUT)
 }

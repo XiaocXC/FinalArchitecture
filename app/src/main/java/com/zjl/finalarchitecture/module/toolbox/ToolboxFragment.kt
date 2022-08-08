@@ -23,8 +23,7 @@ class ToolboxFragment : BaseFragment<FragmentToolboxBinding, EmptyViewModel>() {
         }
 
         mBinding.btnDropPop.setOnClickListener {
-
-
+            findNavController().navigate(MainFragmentDirections.actionMainFragmentToTestFragment())
         }
 
         mBinding.btnTreeCheck.setOnClickListener {
