@@ -40,6 +40,9 @@
         <action
             android:id="@+id/action_mainFragment_to_backgroundChangeFragment"
             app:destination="@id/backgroundChangeFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_shoppingCartFragment"
+            app:destination="@id/shoppingCartFragment" />
     </fragment>
 
 
@@ -132,5 +135,9 @@
         android:id="@+id/backgroundChangeFragment"
         android:name="com.zjl.finalarchitecture.module.toolbox.change.BackgroundChangeFragment"
         android:label="BackgroundChangeFragment" />
+    <fragment
+        android:id="@+id/shoppingCartFragment"
+        android:name="com.zjl.finalarchitecture.module.toolbox.shoppingcart.ShoppingCartFragment"
+        android:label="ShoppingCartFragment" />
 
 </navigation>

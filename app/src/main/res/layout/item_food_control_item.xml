@@ -2,49 +2,49 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:paddingHorizontal="16dp"
-    android:paddingVertical="6dp">
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="4dp"
+    android:paddingVertical="6dp"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <TextView
         android:id="@+id/tvFoodName"
-        style="@style/TextAppearance.Material3.LabelLarge"
+        style="@style/TextAppearance.Material3.BodyMedium"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toStartOf="@+id/btnFoodMinus"
+        android:layout_marginEnd="6dp"
+        tools:text="@string/app_name"
+        app:layout_constraintEnd_toStartOf="@+id/btnMinus"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Food" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnFoodAdd"
+        android:id="@+id/btnMinus"
+        style="@style/Widget.Architecture.NoInsetButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:minWidth="0dp"
+        android:text="-"
+        app:layout_constraintEnd_toStartOf="@+id/tvNum"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvNum"
+        style="@style/TextAppearance.Material3.LabelMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/btnAdd"
+        app:layout_constraintEnd_toStartOf="@+id/btnAdd"
+        app:layout_constraintTop_toTopOf="@+id/btnAdd"
+        tools:text="0" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnAdd"
         style="@style/Widget.Architecture.NoInsetButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:minWidth="0dp"
         android:text="+"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tvFoodNum"
-        style="@style/TextAppearance.Material3.LabelMedium"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="0"
-        app:layout_constraintBottom_toBottomOf="@+id/btnFoodAdd"
-        app:layout_constraintEnd_toStartOf="@+id/btnFoodAdd"
-        app:layout_constraintTop_toTopOf="@+id/btnFoodAdd" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnFoodMinus"
-        style="@style/Widget.Architecture.NoInsetButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:minWidth="0dp"
-        android:enabled="false"
-        android:text="-"
-        app:layout_constraintEnd_toStartOf="@+id/tvFoodNum"
-        app:layout_constraintTop_toTopOf="@+id/btnFoodAdd" />
 </androidx.constraintlayout.widget.ConstraintLayout>

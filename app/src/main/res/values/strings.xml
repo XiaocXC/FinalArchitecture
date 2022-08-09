@@ -39,4 +39,7 @@
     <string name="description_already_tree">已经包含了该文件夹</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="shopping_cart_title">购物车</string>
+    <string name="shopping_cart_select_num">已选择 %d 样</string>
 </resources>

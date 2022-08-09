@@ -48,6 +48,10 @@ class ToolboxFragment : BaseFragment<FragmentToolboxBinding, EmptyViewModel>() {
         mBinding.btnFluidMusic.setOnClickListener {
             startActivity(Intent(requireContext(), FluidMusicMainActivity::class.java))
         }
+
+        mBinding.btnShoppingCart.setOnClickListener {
+            findNavController().navigate(MainFragmentDirections.actionMainFragmentToShoppingCartFragment())
+        }
     }
 
     override fun createObserver() {

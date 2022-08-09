@@ -12,7 +12,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="btnMulti,btnDropPop,btnTreeCheck,btnDragSimple,btnRvSelect,btnImeAnim,btnBgChange,btnFluidMusic"
+        app:constraint_referenced_ids="btnMulti,btnDropPop,btnTreeCheck,btnDragSimple,btnRvSelect,btnImeAnim,btnBgChange,btnFluidMusic,btnShoppingCart"
         app:flow_horizontalGap="5dp"
         app:flow_verticalGap="5dp"
         app:flow_wrapMode="chain2" />
@@ -65,5 +65,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="FluidMusic" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnShoppingCart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="购物车" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

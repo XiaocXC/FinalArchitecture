@@ -1,33 +1,37 @@
 package com.zjl.finalarchitecture.module.toolbox.shoppingcart.provider
 
+import java.math.BigDecimal
+
 /**
  * @author Xiaoc
- * @since  2022-08-08
- *
- * 购物车数据处理和视图联动 Provider
- **/
-interface ShoppingCartProvider<F> {
+ * @since 2022-08-09
+ */
+abstract class ShoppingCartProvider<T> {
 
-    /**
-     * 清除所有已选择的菜品
-     */
-    abstract fun clearAllSelectFood()
+    companion object {
+        const val TYPE_ADD_FOOD = 1
+        const val TYPE_ADD_FOOD_ONLY_COUNT = 2
+        const val TYPE_REMOVE_FOOD = 3
+        const val TYPE_REMOVE_FOOD_TOTAL = 4
+        const val TYPE_CLEAR_ALL_FOOD = 5
+    }
 
-    /**
-     * 移除一个菜品
-     * @param food 菜品实例
-     */
-    abstract fun removeSelectFood(food: F)
+    protected val _selectFoods = mutableListOf<T>()
+    val selectFoods: List<T> = _selectFoods
 
-    /**
-     * 添加一个菜品
-     * @param food 菜品实例
-     */
-    abstract fun addFood(food: F)
+    abstract fun addFood(food: T): HandleResult<T>
 
-    /**
-     * 对比菜品是不是相同的
-     * 这个需要你自行重写，来告诉Provider如何比对菜品是否相同
-     */
-    abstract fun isFoodEquals(originFood: F, compareFood: F): Boolean
+    abstract fun removeFood(food: T): HandleResult<T>
+
+    abstract fun clearAllFoods(): HandleResult<T>
+
+    abstract fun isFoodEquals(originFood: T, compareFood: T): Boolean
+
+    data class HandleResult<T>(
+        val type: Int,
+        val updateFood: T?,
+        val selectFoods: List<T>,
+        val updatePosition: Int,
+        val totalPrice: Double
+    )
 }
