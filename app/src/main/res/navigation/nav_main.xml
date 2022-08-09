@@ -40,9 +40,6 @@
         <action
             android:id="@+id/action_mainFragment_to_backgroundChangeFragment"
             app:destination="@id/backgroundChangeFragment" />
-        <action
-            android:id="@+id/action_mainFragment_to_testFragment"
-            app:destination="@id/testFragment" />
     </fragment>
 
 
@@ -135,9 +132,5 @@
         android:id="@+id/backgroundChangeFragment"
         android:name="com.zjl.finalarchitecture.module.toolbox.change.BackgroundChangeFragment"
         android:label="BackgroundChangeFragment" />
-    <fragment
-        android:id="@+id/testFragment"
-        android:name="com.zjl.finalarchitecture.module.toolbox.TestFragment"
-        android:label="TestFragment" />
 
 </navigation>

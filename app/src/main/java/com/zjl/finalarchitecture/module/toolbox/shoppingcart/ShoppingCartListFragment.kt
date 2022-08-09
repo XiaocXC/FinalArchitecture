@@ -42,8 +42,6 @@ class ShoppingCartListFragment: BaseFragment<FragmentShoppingCartListBinding, Sh
                     } == null
                 }
 
-                foodGroupAdapter.setData(index, addFoodItem)
-
             }
 
             override fun afterRemoveSelectFood(
