@@ -1,6 +1,7 @@
 package com.zjl.finalarchitecture.module.toolbox.shoppingcart.provider
 
 import com.zjl.finalarchitecture.module.toolbox.shoppingcart.data.FoodItem
+import java.math.BigDecimal
 
 /**
  * @author Xiaoc
@@ -57,9 +58,9 @@ class FinalShoppingCartProvider: ShoppingCartProvider<FoodItem>() {
         }
 
         val type = if(shouldRemoveToList){
-            TYPE_ADD_FOOD
+            TYPE_REMOVE_FOOD
         } else {
-            TYPE_ADD_FOOD_ONLY_COUNT
+            TYPE_REMOVE_FOOD_TOTAL
         }
 
         // 计算总额
@@ -70,7 +71,7 @@ class FinalShoppingCartProvider: ShoppingCartProvider<FoodItem>() {
 
     override fun clearAllFoods(): HandleResult<FoodItem> {
         _selectFoods.clear()
-        return HandleResult(TYPE_CLEAR_ALL_FOOD, null, selectFoods, -1, 0.0)
+        return HandleResult(TYPE_CLEAR_ALL_FOOD, null, selectFoods, -1, BigDecimal(0))
     }
 
     override fun isFoodEquals(originFood: FoodItem, compareFood: FoodItem): Boolean {
@@ -80,9 +81,14 @@ class FinalShoppingCartProvider: ShoppingCartProvider<FoodItem>() {
     /**
      * 计算总金额
      */
-    fun calculatePrice(): Double{
+    fun calculatePrice(): BigDecimal{
         return _selectFoods.sumOf {
-            it.price * it.count
+            val priceDecimal = priceToBitDecimal(it)
+            priceDecimal.multiply(BigDecimal(it.count))
         }
+    }
+
+    override fun priceToBitDecimal(food: FoodItem): BigDecimal {
+        return BigDecimal.valueOf(food.price)
     }
 }

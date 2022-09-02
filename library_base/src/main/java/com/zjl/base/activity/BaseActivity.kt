@@ -1,17 +1,12 @@
 package com.zjl.base.activity
 
-import android.content.IntentFilter
-import android.net.ConnectivityManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.WindowCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
-import com.gyf.immersionbar.ImmersionBar
 import com.kongzue.dialogx.dialogs.WaitDialog
 import com.zjl.base.globalContext
 import com.zjl.base.network.NetworkManager
-import com.zjl.base.network.NetworkStateReceiver
 import com.zjl.base.ui.onFailure
 import com.zjl.base.ui.onLoading
 import com.zjl.base.ui.onSuccess
@@ -58,6 +53,10 @@ abstract class BaseActivity<V : ViewBinding, VM : BaseViewModel> : AppCompatActi
         // 设置沉浸式状态栏，此操作会去掉透明遮罩等内容
         // 类似于使用了 view.setSystemUiVisibility(LAYOUT_STABLE | LAYOUT_FULLSCREEN | LAYOUT_FULLSCREEN)
 //        WindowCompat.setDecorFitsSystemWindows(window, false)
+//        immersionBar {
+//            transparentBar()
+//        }
+
 
         mViewModel = bindViewModel()
         initViewAndEvent(savedInstanceState)

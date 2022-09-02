@@ -4,13 +4,17 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
+import androidx.navigation.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
+import com.xiaoc.feature_fluid_music.NavFluidMusicDirections
+import com.xiaoc.feature_fluid_music.R
 import com.xiaoc.feature_fluid_music.databinding.FluidMusicFragmentMusicBrowserListBinding
 import com.xiaoc.feature_fluid_music.service.ui.browser.album.AllAlbumListFragment
 import com.xiaoc.feature_fluid_music.service.ui.browser.artist.AllArtistListFragment
 import com.xiaoc.feature_fluid_music.service.ui.browser.music.AllMusicListFragment
 import com.zjl.base.fragment.BaseFragment
+import com.zjl.base.utils.findNavController
 import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
 import kotlinx.coroutines.flow.collectLatest
 
@@ -32,6 +36,10 @@ class MusicBrowserFragment: BaseFragment<FluidMusicFragmentMusicBrowserListBindi
         TabLayoutMediator(mBinding.tabMediaType, mBinding.vpMediaType){ tab, position ->
             tab.text = mViewModel.mediaTypes.value[position].mediaMetadata.title
         }.attach()
+
+        mBinding.btnPlayer.setOnClickListener {
+            findNavController().navigate(NavFluidMusicDirections.actionGlobalToMusicPlayerDetail())
+        }
     }
 
     override fun createObserver() {

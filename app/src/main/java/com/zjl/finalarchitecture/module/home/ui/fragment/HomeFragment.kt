@@ -19,6 +19,8 @@ import com.zjl.base.viewmodel.EmptyViewModel
 import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.databinding.FragmentHomeBinding
 import com.zjl.finalarchitecture.module.home.viewmodel.HomeViewModel
+import timber.log.Timber
+import java.math.BigDecimal
 
 /**
  * @description:首页父Fragment管理5个子fragment
@@ -58,12 +60,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, EmptyViewModel>() {
             }
         })
         //mSearchLayout
-        mBinding.mSearchLayout.setOnClickListener(object : View.OnClickListener{
+        mBinding.mSearchLayout.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 findNavController().navigate(R.id.action_mainFragment_to_searchFragment)
             }
         })
         initWidget()
+
     }
 
     override fun createObserver() {

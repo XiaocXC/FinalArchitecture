@@ -1,6 +1,7 @@
 import config.Libs
 
 apply from: "../feature_config.gradle"
+apply plugin: 'androidx.navigation.safeargs.kotlin'
 
 android{
 

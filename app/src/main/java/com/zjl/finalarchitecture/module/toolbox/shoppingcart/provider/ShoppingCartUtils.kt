@@ -28,7 +28,7 @@ object ShoppingCartUtils {
 //        if(result.updateFood != null){
 //            val data = adapter.getItem(groupPosition)
 //            data.foods[itemPosition] = result.updateFood
-//            adapter.notifyItemChanged(groupPosition)
+//            adapter.notifyDataSetChanged()
 //        }
     }
 }

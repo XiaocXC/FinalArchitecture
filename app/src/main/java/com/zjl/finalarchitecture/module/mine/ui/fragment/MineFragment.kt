@@ -2,6 +2,7 @@ package com.zjl.finalarchitecture.module.mine.ui.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.utils.findNavController
 import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
@@ -12,8 +13,11 @@ import com.zjl.finalarchitecture.data.model.UserInfoVO.Companion.NOT_LOGIN_USER
 import com.zjl.finalarchitecture.data.respository.datasouce.UserAuthDataSource
 import com.zjl.finalarchitecture.databinding.FragmentMineBinding
 import com.zjl.finalarchitecture.module.mine.viewmodel.MineViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import timber.log.Timber
 import java.io.File
 
 
@@ -31,6 +35,7 @@ class MineFragment : BaseFragment<FragmentMineBinding, MineViewModel>() {
     }
 
     override fun createObserver() {
+
         launchAndRepeatWithViewLifecycle {
 
             launch {

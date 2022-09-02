@@ -21,22 +21,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?attr/colorPrimary"
-                android:paddingTop="?attr/actionBarSize"
                 android:paddingBottom="?attr/actionBarSize">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/asd"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/iv_user_photo"
                     android:layout_width="64dp"
                     android:layout_height="64dp"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="32dp"
                     android:padding="2dp"
-                    app:strokeWidth="1dp"
                     android:scaleType="centerCrop"
-                    app:strokeColor="?attr/colorOnPrimary"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:shapeAppearanceOverlay="@style/ShapeAppearance.Architecture.Circle" />
+                    app:shapeAppearanceOverlay="@style/ShapeAppearance.Architecture.Circle"
+                    app:strokeColor="?attr/colorOnPrimary"
+                    app:strokeWidth="1dp" />
 
                 <TextView
                     android:id="@+id/tv_user_name"

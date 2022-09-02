@@ -27,11 +27,13 @@ abstract class ShoppingCartProvider<T> {
 
     abstract fun isFoodEquals(originFood: T, compareFood: T): Boolean
 
+    abstract fun priceToBitDecimal(food: T): BigDecimal
+
     data class HandleResult<T>(
         val type: Int,
         val updateFood: T?,
         val selectFoods: List<T>,
         val updatePosition: Int,
-        val totalPrice: Double
+        val totalPrice: BigDecimal
     )
 }
