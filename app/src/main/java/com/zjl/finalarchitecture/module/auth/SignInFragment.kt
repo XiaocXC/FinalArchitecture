@@ -77,6 +77,11 @@ class SignInFragment: BaseFragment<FragmentLoginBinding, SignInViewModel>() {
             )
         }
 
+        // 注册按钮
+        mBinding.btnRegister.setOnClickListener {
+            findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToRegisterFragment())
+        }
+
         // 下一步的按钮
         mBinding.btnNextStep.setOnClickListener {
             // 打开返回重新监听
