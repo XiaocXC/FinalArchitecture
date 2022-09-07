@@ -124,4 +124,17 @@ interface ApiService {
         @Field("password") password: String
     ): ApiResult<UserInfoVO>
 
+    /**
+     * 注册（表单POST）
+     * @param account 账号
+     * @param password 密码
+     */
+    @FormUrlEncoded
+    @POST("user/register")
+    suspend fun register(
+        @Field("username") account: String,
+        @Field("password") password: String,
+        @Field("repassword") repassword: String
+    ): ApiResult<Unit>
+
 }

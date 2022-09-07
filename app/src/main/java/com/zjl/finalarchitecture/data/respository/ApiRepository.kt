@@ -174,4 +174,13 @@ object ApiRepository {
     suspend fun login(account: String, password: String): ApiResult<UserInfoVO> {
         return mApiService.login(account, password)
     }
+
+    /**
+     * 注册账户
+     * @param account 账号
+     * @param password 密码
+     */
+    suspend fun register(account: String, password: String): ApiResult<Unit> {
+        return mApiService.register(account, password, password)
+    }
 }

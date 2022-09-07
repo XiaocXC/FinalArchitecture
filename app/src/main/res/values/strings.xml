@@ -37,6 +37,7 @@
     <string name="description_not_login_tip">点击登录</string>
 
     <string name="description_register">注册</string>
+    <string name="description_register_success">注册成功</string>
 
     <!-- 文件选择树 -->
     <string name="description_already_tree">已经包含了该文件夹</string>
