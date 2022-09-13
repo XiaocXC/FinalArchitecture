@@ -2,11 +2,12 @@ package com.zjl.base.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.kongzue.dialogx.dialogs.WaitDialog
-import com.zjl.base.globalContext
 import com.zjl.base.network.NetworkManager
+import com.zjl.base.globalContext
 import com.zjl.base.ui.onFailure
 import com.zjl.base.ui.onLoading
 import com.zjl.base.ui.onSuccess
@@ -141,6 +142,10 @@ abstract class BaseActivity<V : ViewBinding, VM : BaseViewModel> : AppCompatActi
                     }
                 }
             }
+        }
+
+        // 我们规定监听网络状态的内容在Activity创建时开始，避免恢复Activity时重新观察的问题
+        launchAndRepeatWithViewLifecycle(minActiveState = Lifecycle.State.CREATED) {
 
             launch {
                 // 监听网络状态
@@ -173,13 +178,13 @@ abstract class BaseActivity<V : ViewBinding, VM : BaseViewModel> : AppCompatActi
     override fun onPause() {
         super.onPause()
         // 停止观察网络状态
-        NetworkManager.unregisterNetworkStateChanged(this)
+        NetworkManager.unregisterNetworkCallback(this)
     }
 
     override fun onResume() {
         super.onResume()
         // 恢复观察网络状态
-        NetworkManager.registerNetworkStateChanged(this)
+        NetworkManager.registerNetworkCallback(this)
     }
 
 

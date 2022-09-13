@@ -6,9 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.CallSuper
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
-import com.gyf.immersionbar.ImmersionBar
 import com.kongzue.dialogx.dialogs.WaitDialog
 import com.zjl.base.globalContext
 import com.zjl.base.network.NetworkManager
@@ -149,6 +149,10 @@ abstract class BaseFragment<V : ViewBinding, VM : BaseViewModel> : Fragment() {
                     }
                 }
             }
+        }
+
+        // 我们规定监听网络状态的内容在Fragment创建时开始，避免恢复Fragment时重新观察的问题
+        launchAndRepeatWithViewLifecycle(minActiveState = Lifecycle.State.CREATED) {
 
             launch {
                 // 监听网络状态

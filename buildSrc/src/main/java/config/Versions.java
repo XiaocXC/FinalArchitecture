@@ -22,7 +22,7 @@ public class Versions {
     public static final int MIN_SDK = 25;
 
     // Gradle插件版本
-    public static final String ANDROID_GRADLE_PLUGIN = "4.2.2";
+    public static final String ANDROID_GRADLE_PLUGIN = "7.2.2";
     // Kotlin版本
     public static final String KOTLIN = "1.6.20";
 }
