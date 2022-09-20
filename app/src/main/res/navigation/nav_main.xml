@@ -43,6 +43,9 @@
         <action
             android:id="@+id/action_mainFragment_to_shoppingCartFragment"
             app:destination="@id/shoppingCartFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_progressListFragment"
+            app:destination="@id/progressListFragment" />
     </fragment>
 
 
@@ -139,5 +142,9 @@
         android:id="@+id/shoppingCartFragment"
         android:name="com.zjl.finalarchitecture.module.toolbox.shoppingcart.ShoppingCartFragment"
         android:label="ShoppingCartFragment" />
+    <fragment
+        android:id="@+id/progressListFragment"
+        android:name="com.zjl.finalarchitecture.module.toolbox.progressList.ProgressListFragment"
+        android:label="ProgressListFragment" />
 
 </navigation>

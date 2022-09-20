@@ -52,6 +52,10 @@ class ToolboxFragment : BaseFragment<FragmentToolboxBinding, EmptyViewModel>() {
         mBinding.btnShoppingCart.setOnClickListener {
             findNavController().navigate(MainFragmentDirections.actionMainFragmentToShoppingCartFragment())
         }
+
+        mBinding.btnProgressList.setOnClickListener {
+            findNavController().navigate(MainFragmentDirections.actionMainFragmentToProgressListFragment())
+        }
     }
 
     override fun createObserver() {
