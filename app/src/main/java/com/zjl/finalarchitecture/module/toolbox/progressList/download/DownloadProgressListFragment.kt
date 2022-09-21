@@ -12,8 +12,11 @@ import com.zjl.finalarchitecture.databinding.FragmentDownloadProgressListBinding
  */
 class DownloadProgressListFragment: BaseFragment<FragmentDownloadProgressListBinding, DownloadProgressListViewModel>() {
 
-    override fun initViewAndEvent(savedInstanceState: Bundle?) {
+    private lateinit var adapter: DownloadProgressAdapter
 
+    override fun initViewAndEvent(savedInstanceState: Bundle?) {
+        adapter = DownloadProgressAdapter()
+        mBinding.rvTimer.adapter = adapter
     }
 
     override fun createObserver() {

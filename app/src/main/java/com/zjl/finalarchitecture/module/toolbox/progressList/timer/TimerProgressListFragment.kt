@@ -1,8 +1,13 @@
 package com.zjl.finalarchitecture.module.toolbox.progressList.timer
 
 import android.os.Bundle
+import android.view.View
+import androidx.recyclerview.widget.RecyclerView
 import com.zjl.base.fragment.BaseFragment
+import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
 import com.zjl.finalarchitecture.databinding.FragmentTimerProgressListBinding
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 /**
  * @author Xiaoc
@@ -12,11 +17,20 @@ import com.zjl.finalarchitecture.databinding.FragmentTimerProgressListBinding
  */
 class TimerProgressListFragment: BaseFragment<FragmentTimerProgressListBinding, TimerProgressListViewModel>() {
 
-    override fun initViewAndEvent(savedInstanceState: Bundle?) {
+    private lateinit var adapter: TimerProgressAdapter
 
+    override fun initViewAndEvent(savedInstanceState: Bundle?) {
+        adapter = TimerProgressAdapter()
+        mBinding.rvTimer.adapter = adapter
     }
 
     override fun createObserver() {
-
+        launchAndRepeatWithViewLifecycle {
+            launch {
+                mViewModel.timerList.collectLatest {
+                    adapter.setList(it)
+                }
+            }
+        }
     }
 }
