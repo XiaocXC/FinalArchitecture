@@ -57,6 +57,34 @@ class TimerProgressListViewModel: BaseViewModel() {
                 add(
                     TimerProgressData(8, "8", "这是8", currentTime + 80 * 1000)
                 )
+
+                add(
+                    TimerProgressData(9, "9", "这是9", currentTime + 10 * 1000)
+                )
+
+                add(
+                    TimerProgressData(10, "10", "这是10", currentTime + 5 * 1000)
+                )
+
+                add(
+                    TimerProgressData(11, "11", "这是11", currentTime + 55 * 1000)
+                )
+
+                add(
+                    TimerProgressData(12, "12", "这是12", currentTime + 32 * 1000)
+                )
+
+                add(
+                    TimerProgressData(13, "13", "这是13", currentTime + 54 * 1000)
+                )
+
+                add(
+                    TimerProgressData(14, "14", "这是14", currentTime + 14 * 1000)
+                )
+
+                add(
+                    TimerProgressData(15, "15", "这是15", currentTime + 87 * 1000)
+                )
             }
 
             _timerList.value = result
