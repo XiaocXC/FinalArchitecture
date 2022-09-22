@@ -30,12 +30,12 @@
 
     <TextView
         android:id="@+id/tv_subtitle"
+        style="@style/TextAppearance.Material3.BodySmall"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        style="@style/TextAppearance.Material3.BodySmall"
         android:layout_marginTop="6dp"
-        tools:text="文本内容"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_title"
+        tools:text="文本内容" />
 </androidx.constraintlayout.widget.ConstraintLayout>

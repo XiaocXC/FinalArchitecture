@@ -1,6 +1,10 @@
 package com.zjl.finalarchitecture.module.toolbox.progressList
 
 import android.os.Bundle
+import android.view.View
+import android.widget.FrameLayout
+import com.google.android.material.badge.BadgeDrawable
+import com.google.android.material.badge.BadgeUtils
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.viewmodel.EmptyViewModel
 import com.zjl.finalarchitecture.R
@@ -17,6 +21,15 @@ import com.zjl.finalarchitecture.module.toolbox.progressList.timer.TimerProgress
 class ProgressListHomeFragment: BaseFragment<FragmentProgressListHomeBinding, EmptyViewModel>() {
 
     override fun initViewAndEvent(savedInstanceState: Bundle?) {
+
+        val drawable = BadgeDrawable.create(requireContext())
+        mBinding.ivBadge.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
+            BadgeUtils.attachBadgeDrawable(
+                drawable, mBinding.ivBadge
+            )
+            drawable.isVisible = true
+            drawable.number = 50
+        }
 
         // 倒计时案例
         mBinding.btnTimer.setOnClickListener {

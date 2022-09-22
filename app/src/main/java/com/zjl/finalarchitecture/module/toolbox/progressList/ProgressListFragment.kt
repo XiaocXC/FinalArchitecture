@@ -5,8 +5,6 @@ import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.utils.findNavController
 import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.databinding.FragmentProgressListBinding
-import com.zjl.finalarchitecture.module.toolbox.progressList.download.DownloadProgressListFragment
-import com.zjl.finalarchitecture.module.toolbox.progressList.timer.TimerProgressListFragment
 
 /**
  * @author Xiaoc
