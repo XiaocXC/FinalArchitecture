@@ -21,7 +21,7 @@ class DownloadProgressAdapter: BaseQuickAdapter<DownloadProgressData, BaseViewHo
         holder.setText(R.id.tv_title, item.title)
             .setText(R.id.tv_subtitle, item.subTitle)
 
-        updateProgress(holder, item.currentProgress)
+        updateProgress(holder, item.currentProgress, false)
     }
 
     override fun convert(holder: BaseViewHolder, item: DownloadProgressData, payloads: List<Any>) {
@@ -34,9 +34,9 @@ class DownloadProgressAdapter: BaseQuickAdapter<DownloadProgressData, BaseViewHo
         }
     }
 
-    private fun updateProgress(holder: BaseViewHolder, progress: Int){
+    private fun updateProgress(holder: BaseViewHolder, progress: Int, showAnim: Boolean = true){
         val progressDownload = holder.getView<LinearProgressIndicator>(R.id.progress_download)
-        progressDownload.setProgress(progress, true)
+        progressDownload.setProgress(progress, showAnim)
     }
 }
 
