@@ -2,16 +2,12 @@ package com.xiaoc.feature_fluid_music.service.ui.browser.album
 
 import android.os.Bundle
 import androidx.core.os.bundleOf
-import androidx.recyclerview.widget.DiffUtil
 import com.xiaoc.feature_fluid_music.databinding.FluidMusicFragmentAllAlbumListBinding
-import com.xiaoc.feature_fluid_music.service.bean.UIMediaData
 import com.xiaoc.feature_fluid_music.service.ui.browser.album.adapter.AlbumItemAdapter
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.ui.state.EmptyState
-import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
+import com.zjl.base.utils.launchAndCollectIn
 import com.zy.multistatepage.state.SuccessState
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 /**
  * @author Xiaoc
@@ -45,17 +41,13 @@ class AllAlbumListFragment: BaseFragment<FluidMusicFragmentAllAlbumListBinding, 
     }
 
     override fun createObserver() {
-        launchAndRepeatWithViewLifecycle {
-            launch {
-                mViewModel.localAllAlbumList.collectLatest {
-                    if(it.isEmpty()){
-                        uiRootState.show(EmptyState())
-                        return@collectLatest
-                    }
-                    uiRootState.show(SuccessState())
-                    albumItemAdapter.setList(it)
-                }
+        mViewModel.localAllAlbumList.launchAndCollectIn(viewLifecycleOwner){
+            if(it.isEmpty()){
+                uiRootState.show(EmptyState())
+                return@launchAndCollectIn
             }
+            uiRootState.show(SuccessState())
+            albumItemAdapter.setList(it)
         }
     }
 

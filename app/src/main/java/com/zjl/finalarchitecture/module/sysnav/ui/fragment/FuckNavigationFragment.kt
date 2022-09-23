@@ -7,12 +7,10 @@ import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.ui.data
 import com.zjl.base.utils.autoCleared
-import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
+import com.zjl.base.utils.launchAndCollectIn
 import com.zjl.finalarchitecture.databinding.FragmentFuckNavigationBinding
 import com.zjl.finalarchitecture.module.sysnav.ui.adapter.FuckNavigationGroupAdapter
 import com.zjl.finalarchitecture.module.sysnav.viewmodel.NavigationViewModel
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 
 class FuckNavigationFragment : BaseFragment<FragmentFuckNavigationBinding, NavigationViewModel>(),
@@ -31,13 +29,8 @@ class FuckNavigationFragment : BaseFragment<FragmentFuckNavigationBinding, Navig
     }
 
     override fun createObserver() {
-        launchAndRepeatWithViewLifecycle {
-            // Banner数据
-            launch {
-                mViewModel.fuckNavigationList.collectLatest { result ->
-                    mAdapter.setList(result.data)
-                }
-            }
+        mViewModel.fuckNavigationList.launchAndCollectIn(viewLifecycleOwner){ result ->
+            mAdapter.setList(result.data)
         }
     }
 

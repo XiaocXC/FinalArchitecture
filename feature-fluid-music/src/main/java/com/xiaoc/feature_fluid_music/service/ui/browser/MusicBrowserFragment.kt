@@ -8,14 +8,13 @@ import androidx.navigation.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.xiaoc.feature_fluid_music.NavFluidMusicDirections
-import com.xiaoc.feature_fluid_music.R
 import com.xiaoc.feature_fluid_music.databinding.FluidMusicFragmentMusicBrowserListBinding
 import com.xiaoc.feature_fluid_music.service.ui.browser.album.AllAlbumListFragment
 import com.xiaoc.feature_fluid_music.service.ui.browser.artist.AllArtistListFragment
 import com.xiaoc.feature_fluid_music.service.ui.browser.music.AllMusicListFragment
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.utils.findNavController
-import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
+import com.zjl.base.utils.launchAndCollectIn
 import kotlinx.coroutines.flow.collectLatest
 
 /**
@@ -43,12 +42,10 @@ class MusicBrowserFragment: BaseFragment<FluidMusicFragmentMusicBrowserListBindi
     }
 
     override fun createObserver() {
-        launchAndRepeatWithViewLifecycle {
-            // 更新媒体分类类型的Tab栏与对应的Fragment
-            mViewModel.mediaTypes.collectLatest {
-                mediaTypeAdapter.mediaTypes = it
-                mediaTypeAdapter.notifyDataSetChanged()
-            }
+        // 更新媒体分类类型的Tab栏与对应的Fragment
+        mViewModel.mediaTypes.launchAndCollectIn(viewLifecycleOwner){
+            mediaTypeAdapter.mediaTypes = it
+            mediaTypeAdapter.notifyDataSetChanged()
         }
     }
 

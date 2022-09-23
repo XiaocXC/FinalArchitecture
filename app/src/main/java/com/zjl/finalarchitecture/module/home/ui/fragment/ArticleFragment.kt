@@ -12,8 +12,7 @@ import com.scwang.smart.refresh.layout.listener.OnRefreshListener
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.utils.autoCleared
-import com.zjl.base.utils.ext.doOnApplyWindowInsets
-import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
+import com.zjl.base.utils.launchAndCollectIn
 import com.zjl.finalarchitecture.databinding.FragmentArticleBinding
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleAdapter
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleBannerWrapperAdapter
@@ -80,29 +79,22 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel>()
 
     override fun createObserver() {
 
-        launchAndRepeatWithViewLifecycle {
-            // Banner数据
-            launch {
-                mViewModel.bannerList.collect { bannerList ->
-                    mBannerAdapter.setList(
-                        listOf(BannerVOWrapper(bannerList))
-                    )
-                }
-            }
+        // Banner数据
+        mViewModel.bannerList.launchAndCollectIn(viewLifecycleOwner){ bannerList ->
+            mBannerAdapter.setList(
+                listOf(BannerVOWrapper(bannerList))
+            )
+        }
 
-            // 文章分页数据
-            launch {
-                mViewModel.articleList.collectLatest { uiModel ->
-                    uiModel.handlePagingStatus(
-                        mArticleAdapter,
-                        uiRootState,
-                        mBinding.refreshLayout
-                    ) {
-                        refresh()
-                    }
-                }
+        // 文章分页数据
+        mViewModel.articleList.launchAndCollectIn(viewLifecycleOwner){ uiModel ->
+            uiModel.handlePagingStatus(
+                mArticleAdapter,
+                uiRootState,
+                mBinding.refreshLayout
+            ) {
+                refresh()
             }
-
         }
     }
 

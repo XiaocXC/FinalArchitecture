@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
@@ -12,7 +11,7 @@ import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.utils.ext.init
 import com.zjl.base.utils.ext.reduceDragSensitivity
 import com.zjl.base.utils.findNavController
-import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
+import com.zjl.base.utils.launchAndCollectIn
 import com.zjl.base.utils.navArgs
 import com.zjl.finalarchitecture.data.model.ClassifyVO
 import com.zjl.finalarchitecture.databinding.FragmentSystemDetailArrBinding
@@ -66,34 +65,30 @@ class SystemDetailArrFragment : BaseFragment<FragmentSystemDetailArrBinding, Sys
     @SuppressLint("NotifyDataSetChanged")
     override fun createObserver() {
 
-        launchAndRepeatWithViewLifecycle {
-            launch {
-                mViewModel.systemChild.collectLatest {
-                    // 展示ViewPager内容
-                    val (index, ids) = it
-                    //用法1
-                    for (i in it.second) {
-                        mFragmentList.add(SystemDetailInnerFragment.newInstance(i.id))
-                        mTitleArrayData.add(i.name)
-                    }
-                    mBinding.vpSystemInner.init(this@SystemDetailArrFragment,mFragmentList)
-
-                    tabLayoutMediator = TabLayoutMediator(
-                        mBinding.tabSystem,
-                        mBinding.vpSystemInner
-                    ) { tab, index ->
-                        tab.text = mTitleArrayData[index]
-                    }.apply {
-                        attach()
-                    }
-
-                    //用法2
-//                    systemDetailArrViewPagerAdapter.children = ids
-//                    systemDetailArrViewPagerAdapter.notifyDataSetChanged()
-
-                    mBinding.vpSystemInner.setCurrentItem(index, false)
-                }
+        mViewModel.systemChild.launchAndCollectIn(viewLifecycleOwner){
+            // 展示ViewPager内容
+            val (index, ids) = it
+            //用法1
+            for (i in it.second) {
+                mFragmentList.add(SystemDetailInnerFragment.newInstance(i.id))
+                mTitleArrayData.add(i.name)
             }
+            mBinding.vpSystemInner.init(this@SystemDetailArrFragment,mFragmentList)
+
+            tabLayoutMediator = TabLayoutMediator(
+                mBinding.tabSystem,
+                mBinding.vpSystemInner
+            ) { tab, index ->
+                tab.text = mTitleArrayData[index]
+            }.apply {
+                attach()
+            }
+
+            //用法2
+//            systemDetailArrViewPagerAdapter.children = ids
+//            systemDetailArrViewPagerAdapter.notifyDataSetChanged()
+
+            mBinding.vpSystemInner.setCurrentItem(index, false)
         }
     }
 

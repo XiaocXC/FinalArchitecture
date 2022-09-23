@@ -6,10 +6,8 @@ import com.xiaoc.feature_fluid_music.databinding.FluidMusicFragmentAllArtistList
 import com.xiaoc.feature_fluid_music.service.ui.browser.artist.adapter.ArtistItemAdapter
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.ui.state.EmptyState
-import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
+import com.zjl.base.utils.launchAndCollectIn
 import com.zy.multistatepage.state.SuccessState
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 /**
  * @author Xiaoc
@@ -43,17 +41,13 @@ class AllArtistListFragment: BaseFragment<FluidMusicFragmentAllArtistListBinding
     }
 
     override fun createObserver() {
-        launchAndRepeatWithViewLifecycle {
-            launch {
-                mViewModel.localAllArtistList.collectLatest {
-                    if(it.isEmpty()){
-                        uiRootState.show(EmptyState())
-                        return@collectLatest
-                    }
-                    uiRootState.show(SuccessState())
-                    artistItemAdapter.setList(it)
-                }
+        mViewModel.localAllArtistList.launchAndCollectIn(viewLifecycleOwner){
+            if(it.isEmpty()){
+                uiRootState.show(EmptyState())
+                return@launchAndCollectIn
             }
+            uiRootState.show(SuccessState())
+            artistItemAdapter.setList(it)
         }
     }
 

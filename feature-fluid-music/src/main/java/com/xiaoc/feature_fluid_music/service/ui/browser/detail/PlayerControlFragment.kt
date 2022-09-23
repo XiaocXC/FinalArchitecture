@@ -7,9 +7,7 @@ import coil.load
 import com.xiaoc.feature_fluid_music.R
 import com.xiaoc.feature_fluid_music.databinding.FluidMusicFragmentPlayerControlBinding
 import com.zjl.base.fragment.BaseFragment
-import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
+import com.zjl.base.utils.launchAndCollectIn
 
 /**
  * @author Xiaoc
@@ -31,18 +29,12 @@ class PlayerControlFragment: BaseFragment<FluidMusicFragmentPlayerControlBinding
     }
 
     override fun createObserver() {
-        launchAndRepeatWithViewLifecycle {
-            launch {
-                mViewModel.currentPlayInfo.collectLatest {
-                    updateCurrentMediaInfo(it)
-                }
-            }
+        mViewModel.currentPlayInfo.launchAndCollectIn(viewLifecycleOwner){
+            updateCurrentMediaInfo(it)
+        }
 
-            launch {
-                mViewModel.currentIsPlaying.collectLatest {
-                    updateCurrentPlayerState(it)
-                }
-            }
+        mViewModel.currentIsPlaying.launchAndCollectIn(viewLifecycleOwner){
+            updateCurrentPlayerState(it)
         }
 
     }

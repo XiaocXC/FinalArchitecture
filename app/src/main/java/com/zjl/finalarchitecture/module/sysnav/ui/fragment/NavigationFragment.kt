@@ -10,7 +10,7 @@ import com.zjl.base.ui.onLoading
 import com.zjl.base.ui.onSuccess
 import com.zjl.base.utils.autoCleared
 import com.zjl.base.utils.findNavController
-import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
+import com.zjl.base.utils.launchAndCollectIn
 import com.zjl.finalarchitecture.NavMainDirections
 import com.zjl.finalarchitecture.databinding.FragmentNavigationBinding
 import com.zjl.finalarchitecture.module.sysnav.ui.adapter.NavigationGroupAdapter
@@ -95,29 +95,23 @@ class NavigationFragment : BaseFragment<FragmentNavigationBinding, NavigationVie
 
     override fun createObserver() {
 
-        launchAndRepeatWithViewLifecycle {
-            // 监听状态
-            launch {
-                mViewModel.rootViewState.collectLatest {
-                    it.onSuccess {
-                        uiRootState.show(SuccessState())
-                    }.onLoading {
-                        uiRootState.show(LoadingState())
-                    }.onFailure { _, _ ->
-                        uiRootState.show(ErrorState())
-                    }
-                }
+        // 监听状态
+        mViewModel.rootViewState.launchAndCollectIn(viewLifecycleOwner){
+            it.onSuccess {
+                uiRootState.show(SuccessState())
+            }.onLoading {
+                uiRootState.show(LoadingState())
+            }.onFailure { _, _ ->
+                uiRootState.show(ErrorState())
             }
+        }
 
-            // 更新数据
-            launch {
-                mViewModel.navigationList.collectLatest {
-                    navigationGroupAdapter.setList(it)
-                    navigationTabAdapter.setList(it.map {
-                        NavigationTab(false, it)
-                    })
-                }
-            }
+        // 更新数据
+        mViewModel.navigationList.launchAndCollectIn(viewLifecycleOwner){
+            navigationGroupAdapter.setList(it)
+            navigationTabAdapter.setList(it.map {
+                NavigationTab(false, it)
+            })
         }
     }
 

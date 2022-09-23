@@ -1,15 +1,12 @@
 package com.zjl.finalarchitecture.module.toolbox.draghelper
 
 import android.os.Bundle
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.zjl.base.fragment.BaseFragment
-import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
+import com.zjl.base.utils.launchAndCollectIn
 import com.zjl.finalarchitecture.databinding.FragmentRecyclerViewDragBinding
 import com.zjl.finalarchitecture.module.toolbox.draghelper.adapter.DragStringItemAdapter
 import com.zjl.finalarchitecture.module.toolbox.draghelper.adapter.DragStringItemHelper
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 /**
  * @author Xiaoc
@@ -41,12 +38,8 @@ class RecyclerViewDragFragment: BaseFragment<FragmentRecyclerViewDragBinding, Re
 
     override fun createObserver() {
 
-        launchAndRepeatWithViewLifecycle {
-            launch {
-                mViewModel.items.collectLatest {
-                    dragStringItemAdapter.setList(it)
-                }
-            }
+        mViewModel.items.launchAndCollectIn(viewLifecycleOwner){
+            dragStringItemAdapter.setList(it)
         }
     }
 }

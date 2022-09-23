@@ -15,7 +15,7 @@ import com.zjl.base.ui.state.ErrorState
 import com.zjl.base.ui.state.LoadingState
 import com.zjl.base.utils.ext.getVmClazz
 import com.zjl.base.utils.ext.inflateBindingWithGeneric
-import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
+import com.zjl.base.utils.launchAndCollectIn
 import com.zjl.base.viewmodel.BaseViewModel
 import com.zjl.lib_base.R
 import com.zy.multistatepage.MultiStatePage.bindMultiState
@@ -129,32 +129,24 @@ abstract class BaseActivity<V : ViewBinding, VM : BaseViewModel> : AppCompatActi
     }
 
     open fun createDefObserver() {
-        launchAndRepeatWithViewLifecycle {
-            launch {
-                // 默认监听根视图状态
-                mViewModel.rootViewState.collectLatest { uiModel ->
-                    uiModel.onSuccess {
-                        showUiSuccess()
-                    }.onLoading {
-                        showUiLoading()
-                    }.onFailure { _, throwable ->
-                        showUiError(throwable)
-                    }
-                }
+        // 默认监听根视图状态
+        mViewModel.rootViewState.launchAndCollectIn(this){ uiModel ->
+            uiModel.onSuccess {
+                showUiSuccess()
+            }.onLoading {
+                showUiLoading()
+            }.onFailure { _, throwable ->
+                showUiError(throwable)
             }
         }
 
-        // 我们规定监听网络状态的内容在Activity创建时开始，避免恢复Activity时重新观察的问题
-        launchAndRepeatWithViewLifecycle(minActiveState = Lifecycle.State.CREATED) {
 
-            launch {
-                // 监听网络状态
-                NetworkManager.networkState.collectLatest {
-                    val hasNetwork = NetworkManager.isConnectNetwork(globalContext)
-                    Timber.i("Network：网络状态发生变化，是否有网络：%s", hasNetwork)
-                    networkStateChanged(hasNetwork)
-                }
-            }
+        // 监听网络状态
+        // 我们规定监听网络状态的内容在Activity创建时开始，避免恢复Activity时重新观察的问题
+        NetworkManager.networkState.launchAndCollectIn(this, minActiveState = Lifecycle.State.CREATED){
+            val hasNetwork = NetworkManager.isConnectNetwork(globalContext)
+            Timber.i("Network：网络状态发生变化，是否有网络：%s", hasNetwork)
+            networkStateChanged(hasNetwork)
         }
     }
 

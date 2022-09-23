@@ -1,17 +1,10 @@
 package com.zjl.finalarchitecture.module.webview.ui.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.LinearLayout
-import androidx.fragment.app.viewModels
 import com.just.agentweb.AgentWeb
 import com.zjl.base.fragment.BaseFragment
-import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
-import com.zjl.finalarchitecture.R
-import com.zjl.finalarchitecture.databinding.FragmentArticleBinding
+import com.zjl.base.utils.launchAndCollectIn
 import com.zjl.finalarchitecture.databinding.FragmentWebViewBinding
 import com.zjl.finalarchitecture.module.webview.viewmodel.WebViewModel
 import kotlinx.coroutines.flow.collectLatest
@@ -32,7 +25,7 @@ class WebViewFragment : BaseFragment<FragmentWebViewBinding, WebViewModel>() {
 
     override fun createObserver() {
 
-        launchAndRepeatWithViewLifecycle {
+        mViewModel.webUrl.launchAndCollectIn(viewLifecycleOwner){
             mViewModel.webUrl.collectLatest {
                 if(it.isEmpty()){
                     return@collectLatest

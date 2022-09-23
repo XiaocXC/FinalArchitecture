@@ -5,14 +5,11 @@ import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.DiffUtil
 import com.xiaoc.feature_fluid_music.databinding.FluidMusicFragmentAllMusicListBinding
 import com.xiaoc.feature_fluid_music.service.bean.UIMediaData
-import com.xiaoc.feature_fluid_music.service.ui.browser.album.adapter.AlbumItemAdapter
 import com.xiaoc.feature_fluid_music.service.ui.browser.music.adapter.MusicItemAdapter
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.ui.state.EmptyState
-import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
+import com.zjl.base.utils.launchAndCollectIn
 import com.zy.multistatepage.state.SuccessState
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 /**
  * @author Xiaoc
@@ -59,17 +56,13 @@ class AllMusicListFragment: BaseFragment<FluidMusicFragmentAllMusicListBinding, 
     }
 
     override fun createObserver() {
-        launchAndRepeatWithViewLifecycle {
-            launch {
-                mViewModel.localAllMusicList.collectLatest {
-                    if(it.isEmpty()){
-                        uiRootState.show(EmptyState())
-                        return@collectLatest
-                    }
-                    uiRootState.show(SuccessState())
-                    musicItemAdapter.setDiffNewData(it.toMutableList())
-                }
+        mViewModel.localAllMusicList.launchAndCollectIn(viewLifecycleOwner){
+            if(it.isEmpty()){
+                uiRootState.show(EmptyState())
+                return@launchAndCollectIn
             }
+            uiRootState.show(SuccessState())
+            musicItemAdapter.setDiffNewData(it.toMutableList())
         }
     }
 

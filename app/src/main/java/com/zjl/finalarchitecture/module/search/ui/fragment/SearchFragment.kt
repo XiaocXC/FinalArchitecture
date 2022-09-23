@@ -10,7 +10,7 @@ import com.google.android.material.chip.Chip
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.utils.ext.doOnApplyWindowInsets
 import com.zjl.base.utils.findNavController
-import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
+import com.zjl.base.utils.launchAndCollectIn
 import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.data.model.SearchHotVO
 import com.zjl.finalarchitecture.databinding.FragmentSearchBinding
@@ -56,19 +56,14 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>() {
     }
 
     override fun createObserver() {
-        launchAndRepeatWithViewLifecycle {
-            launch {
-                // 热门搜索
-                mViewModel.searchHotKeys.collectLatest {
-                    generateSearchHotChip(it)
-                }
-            }
-            launch {
-                // 历史记录
-                mViewModel.searchHistoryKeys.collectLatest {
-                    generateSearchHistoryChip(it)
-                }
-            }
+        // 热门搜索
+        mViewModel.searchHotKeys.launchAndCollectIn(viewLifecycleOwner){
+            generateSearchHotChip(it)
+        }
+
+        // 历史记录
+        mViewModel.searchHistoryKeys.launchAndCollectIn(viewLifecycleOwner){
+            generateSearchHistoryChip(it)
         }
     }
 

@@ -6,18 +6,16 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ToastUtils
 import com.scwang.smart.refresh.layout.api.RefreshLayout
-import com.scwang.smart.refresh.layout.listener.OnRefreshListener
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import com.zjl.base.adapter.DefaultLoadStateAdapter
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.utils.autoCleared
 import com.zjl.base.utils.findNavController
-import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
+import com.zjl.base.utils.launchAndCollectIn
 import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.databinding.FragmentPlazaBinding
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleAdapter
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleDividerItemDecoration
-import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleOldAdapter
 import com.zjl.finalarchitecture.module.home.viewmodel.PlazaViewModel
 import com.zjl.finalarchitecture.utils.ext.handlePagingStatus
 import kotlinx.coroutines.flow.collectLatest
@@ -68,14 +66,10 @@ class PlazaFragment : BaseFragment<FragmentPlazaBinding, PlazaViewModel>(), OnRe
 
     override fun createObserver() {
 
-        launchAndRepeatWithViewLifecycle {
-            // 文章分页数据
-            launch {
-                mViewModel.plazaList.collectLatest {
-                    it.handlePagingStatus(mArticleAdapter, uiRootState, mBinding.refreshLayout){
-                        refresh()
-                    }
-                }
+        // 文章分页数据
+        mViewModel.plazaList.launchAndCollectIn(viewLifecycleOwner){
+            it.handlePagingStatus(mArticleAdapter, uiRootState, mBinding.refreshLayout){
+                refresh()
             }
         }
 

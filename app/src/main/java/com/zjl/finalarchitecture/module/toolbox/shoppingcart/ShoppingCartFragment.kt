@@ -2,15 +2,12 @@ package com.zjl.finalarchitecture.module.toolbox.shoppingcart
 
 import android.os.Bundle
 import com.zjl.base.fragment.BaseFragment
-import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
+import com.zjl.base.utils.launchAndCollectIn
 import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.databinding.FragmentShoppingCartBinding
 import com.zjl.finalarchitecture.module.toolbox.shoppingcart.adapter.FoodGroupAdapter
 import com.zjl.finalarchitecture.module.toolbox.shoppingcart.provider.FinalShoppingCartProvider
-import com.zjl.finalarchitecture.module.toolbox.shoppingcart.provider.ShoppingCartProvider
 import com.zjl.finalarchitecture.module.toolbox.shoppingcart.provider.ShoppingCartUtils
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 /**
  * @author Xiaoc
@@ -46,12 +43,8 @@ class ShoppingCartFragment: BaseFragment<FragmentShoppingCartBinding, ShoppingCa
     }
 
     override fun createObserver() {
-        launchAndRepeatWithViewLifecycle {
-            launch {
-                mViewModel.foodList.collectLatest {
-                    foodGroupAdapter.setList(it)
-                }
-            }
+        mViewModel.foodList.launchAndCollectIn(viewLifecycleOwner){
+            foodGroupAdapter.setList(it)
         }
     }
 }

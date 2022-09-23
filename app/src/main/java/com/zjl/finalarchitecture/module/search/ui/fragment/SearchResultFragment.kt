@@ -8,15 +8,12 @@ import com.zjl.base.adapter.DefaultLoadStateAdapter
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.utils.autoCleared
 import com.zjl.base.utils.findNavController
-import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
+import com.zjl.base.utils.launchAndCollectIn
 import com.zjl.finalarchitecture.databinding.FragmentSearchResultBinding
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleAdapter
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleDividerItemDecoration
-import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleOldAdapter
 import com.zjl.finalarchitecture.module.search.viewmodel.SearchResultViewModel
 import com.zjl.finalarchitecture.utils.ext.handlePagingStatus
-import com.zjl.finalarchitecture.utils.ext.multistate.handleWithPaging3
-import com.zjl.finalarchitecture.utils.ext.paging.withLoadState
 import com.zy.multistatepage.MultiStateContainer
 import com.zy.multistatepage.bindMultiState
 import kotlinx.coroutines.flow.collectLatest
@@ -62,20 +59,14 @@ class SearchResultFragment: BaseFragment<FragmentSearchResultBinding, SearchResu
     }
 
     override fun createObserver() {
-        launchAndRepeatWithViewLifecycle {
-            launch {
-                mViewModel.searchResults.collectLatest {
-                    it.handlePagingStatus(mArticleAdapter, searchResultStateContainer, null){
-                        refresh()
-                    }
-                }
+        mViewModel.searchResults.launchAndCollectIn(viewLifecycleOwner){
+            it.handlePagingStatus(mArticleAdapter, searchResultStateContainer, null){
+                refresh()
             }
+        }
 
-            launch {
-                mViewModel.title.collectLatest {
-                    mBinding.toolbarSearchResult.title = it
-                }
-            }
+        mViewModel.title.launchAndCollectIn(viewLifecycleOwner){
+            mBinding.toolbarSearchResult.title = it
         }
     }
 

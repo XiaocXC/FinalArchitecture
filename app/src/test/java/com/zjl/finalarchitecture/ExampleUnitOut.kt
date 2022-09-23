@@ -1,7 +1,6 @@
 package com.zjl.finalarchitecture
 
 import android.text.TextUtils
-import com.kongzue.baseokhttp.util.JsonMap
 import org.junit.Test
 
 /**
@@ -12,11 +11,10 @@ import org.junit.Test
 class ExampleUnitOut {
     @Test
     fun addition_isCorrect() {
+        val test = "0"
 
-//        println(secondToHour("0"))
-//        println(secondToHour("60"))
-//        println(secondToHour("111"))
-//        println(secondToHour("3700"))
+        val match = test.matches(Regex("[^0]"))
+        println("符合？:$match")
 
     }
 

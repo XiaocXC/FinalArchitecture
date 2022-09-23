@@ -8,7 +8,7 @@ import com.zjl.base.ui.onFailure
 import com.zjl.base.ui.onLoading
 import com.zjl.base.ui.onSuccess
 import com.zjl.base.utils.findNavController
-import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
+import com.zjl.base.utils.launchAndCollectIn
 import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.databinding.FragmentRegisterBinding
 import kotlinx.coroutines.flow.collectLatest
@@ -65,25 +65,19 @@ class RegisterFragment: BaseFragment<FragmentRegisterBinding, RegisterViewModel>
     }
 
     override fun createObserver() {
-        launchAndRepeatWithViewLifecycle {
-
-            launch {
-                // 注册状态
-                mViewModel.eventRegisterState.collectLatest {
-                    it.onSuccess {
-                        mBinding.btnRegister.setLoading(false)
-                        Toast.makeText(requireContext(), R.string.description_register_success, Toast.LENGTH_SHORT).show()
-                        // 登录成功则返回上一页
-                        findNavController().navigateUp()
-                    }.onLoading {
-                        mBinding.btnRegister.setLoading(true)
-                    }.onFailure { _, throwable ->
-                        mBinding.btnRegister.setLoading(false)
-                        Toast.makeText(requireContext(), throwable.message ?: "未知错误", Toast.LENGTH_SHORT).show()
-                    }
-                }
+        // 注册状态
+        mViewModel.eventRegisterState.launchAndCollectIn(viewLifecycleOwner){
+            it.onSuccess {
+                mBinding.btnRegister.setLoading(false)
+                Toast.makeText(requireContext(), R.string.description_register_success, Toast.LENGTH_SHORT).show()
+                // 登录成功则返回上一页
+                findNavController().navigateUp()
+            }.onLoading {
+                mBinding.btnRegister.setLoading(true)
+            }.onFailure { _, throwable ->
+                mBinding.btnRegister.setLoading(false)
+                Toast.makeText(requireContext(), throwable.message ?: "未知错误", Toast.LENGTH_SHORT).show()
             }
-
         }
     }
 

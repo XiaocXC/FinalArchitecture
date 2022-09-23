@@ -9,7 +9,7 @@ import com.zjl.base.adapter.DefaultLoadStateAdapter
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.ui.data
 import com.zjl.base.utils.autoCleared
-import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
+import com.zjl.base.utils.launchAndCollectIn
 import com.zjl.finalarchitecture.databinding.FragmentProjectBinding
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleDividerItemDecoration
 import com.zjl.finalarchitecture.module.home.ui.adapter.ProjectAdapter
@@ -88,24 +88,18 @@ class ProjectFragment : BaseFragment<FragmentProjectBinding, ProjectViewModel>()
     }
 
     override fun createObserver() {
-        launchAndRepeatWithViewLifecycle {
-            // 项目栏目顶部分类
-            launch {
-                mViewModel.categoryList.collectLatest {
-                    mProjectCategoryAdapter.setList(it.data)
-                }
+        // 项目栏目顶部分类
+        mViewModel.categoryList.launchAndCollectIn(viewLifecycleOwner){
+            mViewModel.categoryList.collectLatest {
+                mProjectCategoryAdapter.setList(it.data)
             }
+        }
 
-            // 对应分类的数据
-            launch {
-                mViewModel.articleList.collectLatest {
-                    it.handlePagingStatus(mProjectListAdapter, articleStateContainer, mBinding.refreshLayout){
-                        refresh()
-                    }
-                }
+        // 对应分类的数据
+        mViewModel.articleList.launchAndCollectIn(viewLifecycleOwner){
+            it.handlePagingStatus(mProjectListAdapter, articleStateContainer, mBinding.refreshLayout){
+                refresh()
             }
-
-
         }
     }
 

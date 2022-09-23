@@ -1,25 +1,17 @@
 package com.zjl.finalarchitecture.module.home.ui.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.scwang.smart.refresh.layout.api.RefreshLayout
-import com.scwang.smart.refresh.layout.listener.OnRefreshListener
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
-import com.zjl.base.adapter.DefaultLoadStateAdapter
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.utils.autoCleared
-import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
+import com.zjl.base.utils.launchAndCollectIn
 import com.zjl.finalarchitecture.databinding.FragmentAskBinding
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleAdapter
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleDividerItemDecoration
-import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleOldAdapter
 import com.zjl.finalarchitecture.module.home.viewmodel.AskViewModel
 import com.zjl.finalarchitecture.utils.ext.handlePagingStatus
-import com.zjl.finalarchitecture.utils.ext.multistate.handleWithPaging3
-import com.zjl.finalarchitecture.utils.ext.paging.withLoadState
-import com.zjl.finalarchitecture.utils.ext.smartrefresh.handleWithPaging3
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -64,14 +56,10 @@ class AskFragment: BaseFragment<FragmentAskBinding, AskViewModel>(), OnRefreshLo
     }
 
     override fun createObserver() {
-        launchAndRepeatWithViewLifecycle {
-            // 文章分页数据
-            launch {
-                mViewModel.askList.collectLatest {
-                    it.handlePagingStatus(mArticleAdapter, uiRootState, mBinding.refreshLayout){
-                        refresh()
-                    }
-                }
+        // 文章分页数据
+        mViewModel.askList.launchAndCollectIn(viewLifecycleOwner){
+            it.handlePagingStatus(mArticleAdapter, uiRootState, mBinding.refreshLayout){
+                refresh()
             }
         }
 

@@ -7,7 +7,7 @@ import com.zjl.base.ui.onLoading
 import com.zjl.base.ui.onSuccess
 import com.zjl.base.utils.autoCleared
 import com.zjl.base.utils.findNavController
-import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
+import com.zjl.base.utils.launchAndCollectIn
 import com.zjl.finalarchitecture.databinding.FragmentSystemBinding
 import com.zjl.finalarchitecture.module.main.ui.fragment.MainFragmentDirections
 import com.zjl.finalarchitecture.module.sysnav.ui.adapter.SystemGroupAdapter
@@ -49,27 +49,20 @@ class SystemFragment : BaseFragment<FragmentSystemBinding, SystemViewModel>() {
 
     override fun createObserver() {
 
-        launchAndRepeatWithViewLifecycle {
-            // 监听状态
-            launch {
-                mViewModel.rootViewState.collectLatest {
-                    it.onSuccess {
-                        uiRootState.show(SuccessState())
-                    }.onLoading {
-                        uiRootState.show(LoadingState())
-                    }.onFailure { _, _ ->
-                        uiRootState.show(ErrorState())
-                    }
-                }
+        // 监听状态
+        mViewModel.rootViewState.launchAndCollectIn(viewLifecycleOwner){
+            it.onSuccess {
+                uiRootState.show(SuccessState())
+            }.onLoading {
+                uiRootState.show(LoadingState())
+            }.onFailure { _, _ ->
+                uiRootState.show(ErrorState())
             }
+        }
 
-            // 更新数据
-            launch {
-                mViewModel.systemList.collectLatest {
-                    systemGroupAdapter.setList(it)
-                }
-            }
-
+        // 更新数据
+        mViewModel.systemList.launchAndCollectIn(viewLifecycleOwner){
+            systemGroupAdapter.setList(it)
         }
     }
 }

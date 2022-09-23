@@ -13,8 +13,7 @@ import com.zjl.base.ui.onFailure
 import com.zjl.base.ui.onLoading
 import com.zjl.base.ui.onSuccess
 import com.zjl.base.utils.findNavController
-import com.zjl.base.utils.launchAndRepeatWithViewLifecycle
-import com.zjl.base.viewmodel.EmptyViewModel
+import com.zjl.base.utils.launchAndCollectIn
 import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.databinding.FragmentLoginBinding
 import kotlinx.coroutines.flow.collectLatest
@@ -111,25 +110,19 @@ class SignInFragment: BaseFragment<FragmentLoginBinding, SignInViewModel>() {
             }
         }
 
-        launchAndRepeatWithViewLifecycle {
-
-            launch {
-                // 登录状态
-                mViewModel.eventSignInState.collectLatest {
-                    it.onSuccess {
-                        mBinding.btnSignIn.setLoading(false)
-                        Toast.makeText(requireContext(), R.string.description_login_success, Toast.LENGTH_SHORT).show()
-                        // 登录成功则返回上一页
-                        findNavController().navigateUp()
-                    }.onLoading {
-                        mBinding.btnSignIn.setLoading(true)
-                    }.onFailure { _, throwable ->
-                        mBinding.btnSignIn.setLoading(false)
-                        Toast.makeText(requireContext(), throwable.message ?: "未知错误", Toast.LENGTH_SHORT).show()
-                    }
-                }
+        // 登录状态
+        mViewModel.eventSignInState.launchAndCollectIn(viewLifecycleOwner){
+            it.onSuccess {
+                mBinding.btnSignIn.setLoading(false)
+                Toast.makeText(requireContext(), R.string.description_login_success, Toast.LENGTH_SHORT).show()
+                // 登录成功则返回上一页
+                findNavController().navigateUp()
+            }.onLoading {
+                mBinding.btnSignIn.setLoading(true)
+            }.onFailure { _, throwable ->
+                mBinding.btnSignIn.setLoading(false)
+                Toast.makeText(requireContext(), throwable.message ?: "未知错误", Toast.LENGTH_SHORT).show()
             }
-
         }
     }
 
