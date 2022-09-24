@@ -23,6 +23,7 @@ import com.zjl.finalarchitecture.utils.ext.handlePagingStatus
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.lang.RuntimeException
 
 /**
  * @description:首页文章
@@ -47,6 +48,8 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel>()
         // Banner适配器
         // 开了弟弟的眼界
         mBannerAdapter = ArticleBannerWrapperAdapter(viewLifecycleOwner.lifecycle)
+
+        // TODO 做功能了
 
         // 列表适配器
         mArticleAdapter = ArticleAdapter {
