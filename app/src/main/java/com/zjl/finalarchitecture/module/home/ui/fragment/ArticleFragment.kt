@@ -49,8 +49,6 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel>()
         // 开了弟弟的眼界
         mBannerAdapter = ArticleBannerWrapperAdapter(viewLifecycleOwner.lifecycle)
 
-        // TODO 做功能了
-
         // 列表适配器
         mArticleAdapter = ArticleAdapter {
 //            mViewModel.updateCollectState(it.id, !it.collect)
