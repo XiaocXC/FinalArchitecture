@@ -6,6 +6,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.SavedStateHandle
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.gyf.immersionbar.ImmersionBar
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
@@ -110,6 +111,11 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel>()
     private fun refresh() {
         // 重新请求，如果文章列表没有数据，则整个界面会重新显示loading状态
         mViewModel.initData()
+    }
+
+    override fun configImmersive(immersionBar: ImmersionBar): ImmersionBar? {
+        // 内部Fragment不处理沉浸式，防止被覆盖
+        return null
     }
 
 

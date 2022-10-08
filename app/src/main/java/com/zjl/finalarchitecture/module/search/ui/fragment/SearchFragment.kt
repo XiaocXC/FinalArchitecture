@@ -7,8 +7,11 @@ import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.viewModels
 import com.blankj.utilcode.util.KeyboardUtils
 import com.google.android.material.chip.Chip
+import com.gyf.immersionbar.ImmersionBar
+import com.gyf.immersionbar.ktx.immersionBar
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.utils.ext.doOnApplyWindowInsets
+import com.zjl.base.utils.ext.isNightMode
 import com.zjl.base.utils.findNavController
 import com.zjl.base.utils.launchAndCollectIn
 import com.zjl.finalarchitecture.R
@@ -126,6 +129,11 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>() {
             }
             mBinding.chipSearchHistory.addView(chip)
         }
+    }
+
+
+    override fun configImmersive(immersionBar: ImmersionBar): ImmersionBar? {
+        return immersionBar.titleBar(mBinding.toolbarSearch)
     }
 
     override fun onDestroyView() {

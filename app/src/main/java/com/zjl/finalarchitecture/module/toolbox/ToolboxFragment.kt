@@ -2,7 +2,8 @@ package com.zjl.finalarchitecture.module.toolbox
 
 import android.content.Intent
 import android.os.Bundle
-import com.xiaoc.feature_fluid_music.service.ui.FluidMusicMainActivity
+import com.gyf.immersionbar.ImmersionBar
+import com.xiaoc.feature_fluid_music.ui.FluidMusicMainActivity
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.utils.findNavController
 import com.zjl.base.viewmodel.EmptyViewModel
@@ -56,6 +57,10 @@ class ToolboxFragment : BaseFragment<FragmentToolboxBinding, EmptyViewModel>() {
         mBinding.btnProgressList.setOnClickListener {
             findNavController().navigate(MainFragmentDirections.actionMainFragmentToProgressListFragment())
         }
+    }
+
+    override fun configImmersive(immersionBar: ImmersionBar): ImmersionBar? {
+        return immersionBar.fitsSystemWindows(true)
     }
 
     override fun createObserver() {

@@ -2,6 +2,7 @@ package com.zjl.finalarchitecture.module.toolbox.multilist
 
 import android.graphics.Color
 import android.os.Bundle
+import com.gyf.immersionbar.ImmersionBar
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.utils.autoCleared
 import com.zjl.base.utils.findNavController
@@ -41,25 +42,11 @@ class MultiListFragment: BaseFragment<FragmentMultiListBinding, MultiListViewMod
             mBinding.toolbarMulti.setBackgroundColor(colorData.primaryColor)
             mBinding.toolbarMulti.setTitleTextColor(colorData.onPrimaryColor)
             mBinding.toolbarMulti.setNavigationIconTint(colorData.onPrimaryColor)
-
-//          // 更改状态栏颜色
-//             immersionBar {
-//                navigationBarColorInt(Color.TRANSPARENT)
-//                statusBarColorInt(colorData.primaryColor)
-//                statusBarDarkFont(!resources.isNightMode())
-//             }
         }
 
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-
-//        // 恢复状态栏颜色
-//        immersionBar {
-//            navigationBarColorInt(Color.TRANSPARENT)
-//            statusBarColorInt(Color.TRANSPARENT)
-//            statusBarDarkFont(!resources.isNightMode())
-//        }
+    override fun configImmersive(immersionBar: ImmersionBar): ImmersionBar? {
+        return immersionBar.titleBar(mBinding.toolbarMulti)
     }
 }

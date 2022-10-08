@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
+import com.gyf.immersionbar.ImmersionBar
+import com.gyf.immersionbar.ktx.immersionBar
 import com.kongzue.dialogx.dialogs.WaitDialog
 import com.zjl.base.network.NetworkManager
 import com.zjl.base.globalContext
@@ -15,6 +17,7 @@ import com.zjl.base.ui.state.ErrorState
 import com.zjl.base.ui.state.LoadingState
 import com.zjl.base.utils.ext.getVmClazz
 import com.zjl.base.utils.ext.inflateBindingWithGeneric
+import com.zjl.base.utils.ext.isNightMode
 import com.zjl.base.utils.launchAndCollectIn
 import com.zjl.base.viewmodel.BaseViewModel
 import com.zjl.lib_base.R
@@ -52,17 +55,27 @@ abstract class BaseActivity<V : ViewBinding, VM : BaseViewModel> : AppCompatActi
         setContentView(mBinding.root)
 
         // 设置沉浸式状态栏，此操作会去掉透明遮罩等内容
-        // 类似于使用了 view.setSystemUiVisibility(LAYOUT_STABLE | LAYOUT_FULLSCREEN | LAYOUT_FULLSCREEN)
-//        WindowCompat.setDecorFitsSystemWindows(window, false)
-//        immersionBar {
-//            transparentBar()
-//        }
+        val defaultImmersionBar = ImmersionBar.with(this)
+            .transparentBar()
+            .statusBarDarkFont(!resources.isNightMode())
+            .navigationBarDarkIcon(!resources.isNightMode())
 
+        val immersionBar = configImmersive(defaultImmersionBar)
+        immersionBar?.init()
 
         mViewModel = bindViewModel()
         initViewAndEvent(savedInstanceState)
         createDefObserver()
         createObserver()
+    }
+
+    /**
+     * 配置沉浸式
+     * 默认Fragment不进行沉浸式处理，如果你需要请返回对应沉浸式处理的immersionBar
+     * @param immersionBar 默认的沉浸式处理，你可以自行创建，也可以在此基础上创建
+     */
+    open fun configImmersive(immersionBar: ImmersionBar): ImmersionBar?{
+        return immersionBar
     }
 
     /**

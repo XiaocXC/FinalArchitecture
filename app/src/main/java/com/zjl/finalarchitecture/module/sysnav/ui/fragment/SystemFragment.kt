@@ -1,6 +1,7 @@
 package com.zjl.finalarchitecture.module.sysnav.ui.fragment
 
 import android.os.Bundle
+import com.gyf.immersionbar.ImmersionBar
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.ui.onFailure
 import com.zjl.base.ui.onLoading
@@ -64,5 +65,9 @@ class SystemFragment : BaseFragment<FragmentSystemBinding, SystemViewModel>() {
         mViewModel.systemList.launchAndCollectIn(viewLifecycleOwner){
             systemGroupAdapter.setList(it)
         }
+    }
+
+    override fun configImmersive(immersionBar: ImmersionBar): ImmersionBar? {
+        return null
     }
 }

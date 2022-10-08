@@ -5,6 +5,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.ToastUtils
+import com.gyf.immersionbar.ImmersionBar
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import com.zjl.base.adapter.DefaultLoadStateAdapter
@@ -87,5 +88,9 @@ class PlazaFragment : BaseFragment<FragmentPlazaBinding, PlazaViewModel>(), OnRe
         mViewModel.initData()
     }
 
+    override fun configImmersive(immersionBar: ImmersionBar): ImmersionBar? {
+        // 内部Fragment不处理沉浸式，防止被覆盖
+        return null
+    }
 
 }

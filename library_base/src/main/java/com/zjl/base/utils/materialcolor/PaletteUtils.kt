@@ -66,11 +66,11 @@ object PaletteUtils {
         return pixels
     }
 
-    fun rgb2Argb(color: Int): Int{
+    fun rgb2Argb(color: Int, alpha: Int): Int{
         val red = Color.red(color)
         val green = Color.green(color)
         val blue = Color.blue(color)
-        return Color.argb(46,red,green,blue)
+        return Color.argb(alpha,red,green,blue)
     }
 }
 

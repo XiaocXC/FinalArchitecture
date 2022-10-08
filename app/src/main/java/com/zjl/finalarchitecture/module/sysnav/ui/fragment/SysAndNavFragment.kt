@@ -4,8 +4,11 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.blankj.utilcode.util.LogUtils
 import com.google.android.material.tabs.TabLayoutMediator
+import com.gyf.immersionbar.ImmersionBar
+import com.gyf.immersionbar.ktx.immersionBar
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.utils.ext.init
+import com.zjl.base.utils.ext.isNightMode
 import com.zjl.base.utils.ext.reduceDragSensitivity
 import com.zjl.base.viewmodel.EmptyViewModel
 import com.zjl.finalarchitecture.databinding.FragmentSysAndNavBinding
@@ -47,6 +50,10 @@ class SysAndNavFragment : BaseFragment<FragmentSysAndNavBinding, EmptyViewModel>
                 attach()
             }
 
+    }
+
+    override fun configImmersive(immersionBar: ImmersionBar): ImmersionBar? {
+        return immersionBar.fitsSystemWindows(true)
     }
 
     override fun onDestroyView() {

@@ -23,8 +23,6 @@ import com.zjl.finalarchitecture.module.toolbox.ToolboxFragment
  */
 class MainFragment : BaseFragment<FragmentMainBinding, EmptyViewModel>() {
 
-    protected var mImmersionBar: ImmersionBar? = null
-
     override fun initViewAndEvent(savedInstanceState: Bundle?) {
         //viewpager2是否可以滑动
         mBinding.mViewPager2.isUserInputEnabled = false

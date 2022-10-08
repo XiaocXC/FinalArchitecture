@@ -23,7 +23,6 @@
 
         <activity
             android:name=".module.main.ui.activity.MainActivity"
-            android:configChanges="keyboard|keyboardHidden|screenSize|fontScale|density|orientation"
             android:exported="true" />
 
 

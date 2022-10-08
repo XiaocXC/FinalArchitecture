@@ -10,9 +10,12 @@ import androidx.fragment.app.viewModels
 import com.blankj.utilcode.util.LogUtils
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import com.gyf.immersionbar.ImmersionBar
+import com.gyf.immersionbar.ktx.immersionBar
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.utils.ext.doOnApplyWindowInsets
 import com.zjl.base.utils.ext.init
+import com.zjl.base.utils.ext.isNightMode
 import com.zjl.base.utils.ext.reduceDragSensitivity
 import com.zjl.base.utils.findNavController
 import com.zjl.base.viewmodel.EmptyViewModel
@@ -116,6 +119,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, EmptyViewModel>() {
     override fun onStop() {
         super.onStop()
         LogUtils.eTag("zhou::", "onStop")
+    }
+
+    override fun configImmersive(immersionBar: ImmersionBar): ImmersionBar? {
+        return immersionBar.fitsSystemWindows(true)
     }
 
     override fun onDestroyView() {

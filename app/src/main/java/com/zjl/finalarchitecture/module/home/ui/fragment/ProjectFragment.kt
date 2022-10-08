@@ -2,6 +2,7 @@ package com.zjl.finalarchitecture.module.home.ui.fragment
 
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.gyf.immersionbar.ImmersionBar
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
@@ -114,6 +115,11 @@ class ProjectFragment : BaseFragment<FragmentProjectBinding, ProjectViewModel>()
     private fun refresh() {
         // 刷新Paging
         mViewModel.initData()
+    }
+
+    override fun configImmersive(immersionBar: ImmersionBar): ImmersionBar? {
+        // 内部Fragment不处理沉浸式，防止被覆盖
+        return null
     }
 
 }
