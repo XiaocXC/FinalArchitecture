@@ -18,6 +18,6 @@
 
         <activity
             android:exported="false"
-            android:name=".service.ui.FluidMusicMainActivity"/>
+            android:name="com.xiaoc.feature_fluid_music.ui.FluidMusicMainActivity"/>
     </application>
 </manifest>

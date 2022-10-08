@@ -1,4 +1,4 @@
-package com.xiaoc.feature_fluid_music.service.ui.browser.detail
+package com.xiaoc.feature_fluid_music.ui.browser.detail
 
 import android.os.Bundle
 import com.xiaoc.feature_fluid_music.databinding.FluidMusicFragmentPlayerDetailBinding

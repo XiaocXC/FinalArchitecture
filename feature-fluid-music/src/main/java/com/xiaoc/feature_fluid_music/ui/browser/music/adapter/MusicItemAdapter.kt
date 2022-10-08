@@ -1,13 +1,12 @@
-package com.xiaoc.feature_fluid_music.service.ui.browser.music.adapter
+package com.xiaoc.feature_fluid_music.ui.browser.music.adapter
 
 import android.widget.ImageView
-import androidx.media3.common.MediaItem
 import coil.load
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.google.android.material.card.MaterialCardView
 import com.xiaoc.feature_fluid_music.R
-import com.xiaoc.feature_fluid_music.service.bean.UIMediaData
+import com.xiaoc.feature_fluid_music.ui.bean.UIMediaData
 
 /**
  * @author Xiaoc

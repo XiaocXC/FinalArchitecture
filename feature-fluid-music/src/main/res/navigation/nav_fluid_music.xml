@@ -4,23 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_fluid_music"
     tools:ignore="ResourceName"
-    app:startDestination="@id/fluid_music_fluidmusicmainactivity">
+    app:startDestination="@id/fluid_music_musicbrowserfragment">
 
-    <activity
-        android:id="@+id/fluid_music_fluidmusicmainactivity"
-        android:name="com.xiaoc.feature_fluid_music.service.ui.FluidMusicMainActivity"
-        android:label="FluidMusicMainActivity" />
+    <fragment
+        android:id="@+id/fluid_music_musicbrowserfragment"
+        android:name="com.xiaoc.feature_fluid_music.ui.browser.MusicBrowserFragment"
+        android:label="MusicBrowserFragment" />
 
     <fragment
         android:id="@+id/fluid_music_playerdetailfragment"
-        android:name="com.xiaoc.feature_fluid_music.service.ui.browser.detail.PlayerDetailFragment"
+        android:name="com.xiaoc.feature_fluid_music.ui.browser.detail.PlayerDetailFragment"
         android:label="PlayerDetailFragment" />
 
 
     <action android:id="@+id/action_global_to_music_player_detail"
         app:destination="@+id/fluid_music_playerdetailfragment"/>
-    <fragment
-        android:id="@+id/fluid_music_musicbrowserfragment2"
-        android:name="com.xiaoc.feature_fluid_music.service.ui.browser.MusicBrowserFragment"
-        android:label="MusicBrowserFragment" />
 </navigation>

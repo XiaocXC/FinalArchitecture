@@ -1,9 +1,10 @@
-package com.xiaoc.feature_fluid_music.service.ui.browser.artist
+package com.xiaoc.feature_fluid_music.ui.browser.artist
 
 import android.os.Bundle
 import androidx.core.os.bundleOf
+import com.gyf.immersionbar.ImmersionBar
 import com.xiaoc.feature_fluid_music.databinding.FluidMusicFragmentAllArtistListBinding
-import com.xiaoc.feature_fluid_music.service.ui.browser.artist.adapter.ArtistItemAdapter
+import com.xiaoc.feature_fluid_music.ui.browser.artist.adapter.ArtistItemAdapter
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.ui.state.EmptyState
 import com.zjl.base.utils.launchAndCollectIn
@@ -51,13 +52,8 @@ class AllArtistListFragment: BaseFragment<FluidMusicFragmentAllArtistListBinding
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        mViewModel.initializeBrowser(requireContext())
-    }
-
-    override fun onStop() {
-        super.onStop()
-        mViewModel.releaseBrowser()
+    override fun configImmersive(immersionBar: ImmersionBar): ImmersionBar? {
+        // 内部Fragment不处理沉浸式，防止被覆盖
+        return null
     }
 }

@@ -1,21 +1,19 @@
-package com.xiaoc.feature_fluid_music.service.ui.browser
+package com.xiaoc.feature_fluid_music.ui.browser
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
-import androidx.navigation.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.xiaoc.feature_fluid_music.NavFluidMusicDirections
 import com.xiaoc.feature_fluid_music.databinding.FluidMusicFragmentMusicBrowserListBinding
-import com.xiaoc.feature_fluid_music.service.ui.browser.album.AllAlbumListFragment
-import com.xiaoc.feature_fluid_music.service.ui.browser.artist.AllArtistListFragment
-import com.xiaoc.feature_fluid_music.service.ui.browser.music.AllMusicListFragment
+import com.xiaoc.feature_fluid_music.ui.browser.album.AllAlbumListFragment
+import com.xiaoc.feature_fluid_music.ui.browser.artist.AllArtistListFragment
+import com.xiaoc.feature_fluid_music.ui.browser.music.AllMusicListFragment
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.utils.findNavController
 import com.zjl.base.utils.launchAndCollectIn
-import kotlinx.coroutines.flow.collectLatest
 
 /**
  * @author Xiaoc
@@ -47,16 +45,6 @@ class MusicBrowserFragment: BaseFragment<FluidMusicFragmentMusicBrowserListBindi
             mediaTypeAdapter.mediaTypes = it
             mediaTypeAdapter.notifyDataSetChanged()
         }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        mViewModel.initializeBrowser(requireContext())
-    }
-
-    override fun onStop() {
-        super.onStop()
-        mViewModel.releaseBrowser()
     }
 
     private class MusicTypeTabViewPagerAdapter(

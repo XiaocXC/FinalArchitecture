@@ -1,4 +1,4 @@
-package com.xiaoc.feature_fluid_music.service.bean
+package com.xiaoc.feature_fluid_music.ui.bean
 
 import androidx.media3.common.MediaItem
 

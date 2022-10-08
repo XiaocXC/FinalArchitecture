@@ -1,4 +1,4 @@
-package com.xiaoc.feature_fluid_music.service.ui
+package com.xiaoc.feature_fluid_music.ui
 
 import android.Manifest
 import android.os.Bundle
@@ -6,7 +6,7 @@ import android.view.View
 import com.permissionx.guolindev.PermissionX
 import com.xiaoc.feature_fluid_music.R
 import com.xiaoc.feature_fluid_music.databinding.FluidMusicActivityMainBinding
-import com.xiaoc.feature_fluid_music.service.ui.browser.MusicBrowserFragment
+import com.xiaoc.feature_fluid_music.ui.browser.MusicBrowserFragment
 import com.zjl.base.activity.BaseActivity
 
 /**
@@ -21,7 +21,6 @@ class FluidMusicMainActivity: BaseActivity<FluidMusicActivityMainBinding, FluidM
         // 判断是否读取外置存储权限
         if(PermissionX.isGranted(this, Manifest.permission.READ_EXTERNAL_STORAGE)){
             mBinding.tvPermission.visibility = View.GONE
-            showMusicBrowser()
         } else {
             mBinding.tvPermission.visibility = View.VISIBLE
         }
@@ -45,18 +44,9 @@ class FluidMusicMainActivity: BaseActivity<FluidMusicActivityMainBinding, FluidM
                 if (allGranted) {
                     mBinding.tvPermission.visibility = View.GONE
 
-                    // 显示媒体浏览界面
-                    showMusicBrowser()
-
                 } else {
                     mBinding.tvPermission.visibility = View.VISIBLE
                 }
             }
-    }
-
-    private fun showMusicBrowser(){
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.container_music, MusicBrowserFragment())
-            .commit()
     }
 }

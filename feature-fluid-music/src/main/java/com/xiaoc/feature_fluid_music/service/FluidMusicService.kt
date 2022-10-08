@@ -10,7 +10,7 @@ import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.session.MediaLibraryService
 import androidx.media3.session.MediaSession
 import com.xiaoc.feature_fluid_music.service.callback.MediaLibrarySessionCallbackImpl
-import com.xiaoc.feature_fluid_music.service.ui.FluidMusicMainActivity
+import com.xiaoc.feature_fluid_music.ui.FluidMusicMainActivity
 
 /**
  * @author Xiaoc

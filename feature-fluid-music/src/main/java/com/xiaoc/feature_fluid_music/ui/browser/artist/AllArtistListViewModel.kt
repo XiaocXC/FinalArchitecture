@@ -1,4 +1,4 @@
-package com.xiaoc.feature_fluid_music.service.ui.browser.artist
+package com.xiaoc.feature_fluid_music.ui.browser.artist
 
 import android.content.ComponentName
 import android.content.Context
@@ -9,10 +9,15 @@ import androidx.media3.common.MediaItem
 import androidx.media3.session.MediaBrowser
 import androidx.media3.session.SessionToken
 import com.google.common.util.concurrent.ListenableFuture
+import com.xiaoc.feature_fluid_music.connection.MusicServiceConnection
 import com.xiaoc.feature_fluid_music.service.FluidMusicService
+import com.xiaoc.feature_fluid_music.ui.bean.UIMediaData
+import com.zjl.base.globalContext
 import com.zjl.base.viewmodel.BaseViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 /**
@@ -27,38 +32,21 @@ class AllArtistListViewModel(
 
     private val parentId = savedStateHandle["parentId"] ?: ""
 
+    private val musicServiceConnection = MusicServiceConnection.getInstance(globalContext)
+
     private val _localAllArtistList = MutableStateFlow<List<MediaItem>>(emptyList())
     val localAllArtistList: StateFlow<List<MediaItem>> = _localAllArtistList
 
-    private lateinit var browserFuture: ListenableFuture<MediaBrowser>
-    val browser: MediaBrowser?
-        get() = if (browserFuture.isDone) browserFuture.get() else null
-
-    fun initializeBrowser(context: Context){
-        viewModelScope.launch {
-            browserFuture =
-                MediaBrowser.Builder(
-                    context,
-                    SessionToken(context, ComponentName(context, FluidMusicService::class.java))
-                ).buildAsync()
-
-            browserFuture.await()
-
-            // 获取对应parentId下的内容
-            val browser = browser ?: return@launch
-
-            val childrenResult = browser.getChildren(parentId, 0, Int.MAX_VALUE, null).await()
-            val children = childrenResult.value ?: return@launch
-
-            _localAllArtistList.value = children
-        }
-    }
-
-    fun releaseBrowser(){
-        MediaBrowser.releaseFuture(browserFuture)
+    init {
+        initData()
     }
 
     override fun refresh() {
 
+        viewModelScope.launch {
+            val children = musicServiceConnection.getChildren(parentId)
+
+            _localAllArtistList.value = children
+        }
     }
 }

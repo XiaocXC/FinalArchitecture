@@ -6,10 +6,20 @@
     android:layout_height="match_parent">
 
     <View
+        android:id="@+id/transBgColor"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/fluid_music_player_control_trans_bg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
         android:id="@+id/view_tip"
         android:layout_width="38dp"
         android:layout_height="6dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
         android:background="@drawable/fluid_music_shape_player_control_top_tip"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,13 +29,14 @@
         android:id="@+id/iv_albumArt"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/fluid_music_guideline"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toStartOf="@+id/fluid_music_guideline3"
         app:layout_constraintStart_toStartOf="@+id/fluid_music_guideline2"
         app:layout_constraintTop_toBottomOf="@+id/view_tip"
+        app:layout_constraintVertical_bias="1.0"
         app:shapeAppearanceOverlay="@style/ShapeAppearance.Architecture.SmallComponent" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -33,11 +44,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.51" />
+        app:layout_constraintGuide_percent="0.60" />
 
     <TextView
         android:id="@+id/tv_music_title"
-        style="@style/TextAppearance.Material3.TitleMedium"
+        style="@style/TextAppearance.Material3.TitleLarge"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -64,22 +75,54 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:valueFrom="0"
+        app:trackHeight="6dp"
+        app:thumbRadius="8dp"
+        app:thumbElevation="0dp"
+        app:trackColorActive="@color/white"
+        app:trackColorInactive="#72FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/fluid_music_guideline5"
         app:layout_constraintEnd_toStartOf="@+id/fluid_music_guideline3"
         app:layout_constraintStart_toStartOf="@+id/fluid_music_guideline2"
         app:layout_constraintTop_toBottomOf="@+id/tv_music_subtitle" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_pause_resume"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
+        android:id="@+id/btn_pause_previous"
         style="@style/Widget.Architecture.NoInsetButton"
-        app:iconSize="64dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        app:icon="@drawable/fluid_music_player_previous"
         app:iconGravity="textStart"
+        app:iconSize="50dp"
+        app:layout_constraintEnd_toStartOf="@+id/btn_pause_resume"
+        app:layout_constraintBottom_toTopOf="@+id/fluid_music_guideline6"
+        app:layout_constraintStart_toStartOf="@+id/fluid_music_guideline2"
+        app:layout_constraintTop_toTopOf="@+id/fluid_music_guideline5" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_pause_resume"
+        style="@style/Widget.Architecture.NoInsetButton"
+        android:layout_width="68dp"
+        android:layout_height="68dp"
         app:icon="@drawable/fluid_music_player_pause"
+        app:iconGravity="textStart"
+        app:iconSize="56dp"
+        app:layout_constraintBottom_toTopOf="@+id/fluid_music_guideline6"
+        app:layout_constraintEnd_toStartOf="@+id/btn_pause_next"
+        app:layout_constraintStart_toEndOf="@+id/btn_pause_previous"
+        app:layout_constraintTop_toTopOf="@+id/fluid_music_guideline5" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_pause_next"
+        style="@style/Widget.Architecture.NoInsetButton"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        app:icon="@drawable/fluid_music_player_next"
+        app:iconGravity="textStart"
+        app:iconSize="50dp"
+        app:layout_constraintStart_toEndOf="@+id/btn_pause_resume"
         app:layout_constraintBottom_toTopOf="@+id/fluid_music_guideline6"
         app:layout_constraintEnd_toStartOf="@+id/fluid_music_guideline3"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/fluid_music_guideline5" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -101,12 +144,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.68" />
+        app:layout_constraintGuide_percent="0.78" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/fluid_music_guideline6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.88" />
+        app:layout_constraintGuide_percent="0.90" />
 </androidx.constraintlayout.widget.ConstraintLayout>

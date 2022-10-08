@@ -71,4 +71,12 @@ class MediaLibrarySessionCallbackImpl(
         return Futures.immediateFuture(withUriMediaItems)
     }
 
+    override fun onGetItem(
+        session: MediaLibraryService.MediaLibrarySession,
+        browser: MediaSession.ControllerInfo,
+        mediaId: String
+    ): ListenableFuture<LibraryResult<MediaItem>> {
+        return super.onGetItem(session, browser, mediaId)
+    }
+
 }
