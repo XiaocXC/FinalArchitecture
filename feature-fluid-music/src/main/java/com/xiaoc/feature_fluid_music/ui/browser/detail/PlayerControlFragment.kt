@@ -3,26 +3,24 @@ package com.xiaoc.feature_fluid_music.ui.browser.detail
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updatePadding
+import android.text.format.DateUtils
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.media3.common.MediaItem
 import coil.load
+import com.google.android.material.slider.Slider
 import com.gyf.immersionbar.ImmersionBar
 import com.xiaoc.feature_fluid_music.R
 import com.xiaoc.feature_fluid_music.databinding.FluidMusicFragmentPlayerControlBinding
+import com.xiaoc.feature_fluid_music.service.tree.MediaItemTree
 import com.xiaoc.feature_fluid_music.ui.FluidMusicMainViewModel
 import com.zjl.base.fragment.BaseFragment
-import com.zjl.base.utils.ext.doOnApplyWindowInsets
 import com.zjl.base.utils.ext.getAttrColor
-import com.zjl.base.utils.ext.isNightMode
 import com.zjl.base.utils.launchAndCollectIn
 import com.zjl.base.utils.materialcolor.PaletteUtils
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 /**
@@ -32,6 +30,13 @@ import kotlinx.coroutines.launch
  * 播放控制页面
  **/
 class PlayerControlFragment: BaseFragment<FluidMusicFragmentPlayerControlBinding, PlayerDetailViewModel>() {
+
+    companion object {
+        /**
+         * 用于position字符串更新的缓冲
+         */
+        private val positionStringBuilder = StringBuilder(6)
+    }
 
     private val fluidMusicMainViewModel by activityViewModels<FluidMusicMainViewModel>()
 
@@ -45,10 +50,8 @@ class PlayerControlFragment: BaseFragment<FluidMusicFragmentPlayerControlBinding
     }
 
     override fun initViewAndEvent(savedInstanceState: Bundle?) {
-        mBinding.viewTip.doOnApplyWindowInsets { view, windowInsetsCompat, _ ->
-            val topStatus = windowInsetsCompat.getInsets(WindowInsetsCompat.Type.systemBars())
-            view.updatePadding(top = topStatus.top)
-        }
+        // 单独给顶部滑块设置marginTop
+        ImmersionBar.setTitleBarMarginTop(this, mBinding.viewTip)
 
         // 播放暂停
         mBinding.btnPauseResume.setOnClickListener {
@@ -63,6 +66,30 @@ class PlayerControlFragment: BaseFragment<FluidMusicFragmentPlayerControlBinding
         // 上一首
         mBinding.btnPausePrevious.setOnClickListener {
             mViewModel.previous()
+        }
+
+        // Slider进度条滑动事件
+        mBinding.seekbarProgress.addOnSliderTouchListener(object: Slider.OnSliderTouchListener{
+            override fun onStartTrackingTouch(slider: Slider) {
+                sliderJob?.cancel()
+            }
+
+            override fun onStopTrackingTouch(slider: Slider) {
+                // 停止滑动后跳转到指定位置
+                mViewModel.seekTo(slider.value.toLong())
+                startUpdateSlider()
+            }
+
+        })
+
+        // Slider进度改变的监听
+        mBinding.seekbarProgress.addOnChangeListener { _, value, _ ->
+            mBinding.tvCurrentPosition.text = DateUtils.formatElapsedTime(positionStringBuilder,value.toLong() / 1000L)
+        }
+
+        // 设置滑动指示器格式
+        mBinding.seekbarProgress.setLabelFormatter {
+            DateUtils.formatElapsedTime(positionStringBuilder,it.toLong() / 1000L)
         }
     }
 
@@ -85,12 +112,7 @@ class PlayerControlFragment: BaseFragment<FluidMusicFragmentPlayerControlBinding
 
             sliderJob?.cancel()
             if(it.isPlaying){
-                sliderJob = viewLifecycleOwner.lifecycleScope.launch {
-                    while (true){
-                        mBinding.seekbarProgress.value = mViewModel.getCurrentPosition().toFloat()
-                        delay(500L)
-                    }
-                }
+                startUpdateSlider()
             }
 
         }
@@ -107,6 +129,8 @@ class PlayerControlFragment: BaseFragment<FluidMusicFragmentPlayerControlBinding
                 mBinding.btnPauseNext.iconTint = ColorStateList.valueOf(Color.WHITE)
                 mBinding.btnPausePrevious.iconTint = ColorStateList.valueOf(Color.WHITE)
                 mBinding.seekbarProgress.thumbTintList = ColorStateList.valueOf(Color.WHITE)
+                mBinding.tvDuration.setTextColor(Color.WHITE)
+                mBinding.tvCurrentPosition.setTextColor(Color.WHITE)
             } else {
                 val primaryColorWith80 = handleAlpha80Color(it.onPrimaryColor)
 
@@ -117,9 +141,20 @@ class PlayerControlFragment: BaseFragment<FluidMusicFragmentPlayerControlBinding
                 mBinding.btnPauseNext.iconTint = ColorStateList.valueOf(it.onPrimaryColor)
                 mBinding.btnPausePrevious.iconTint = ColorStateList.valueOf(it.onPrimaryColor)
                 mBinding.seekbarProgress.thumbTintList = ColorStateList.valueOf(it.onPrimaryColor)
+                mBinding.tvDuration.setTextColor(it.onPrimaryColor)
+                mBinding.tvCurrentPosition.setTextColor(it.onPrimaryColor)
             }
         }
 
+    }
+
+    private fun startUpdateSlider(){
+        sliderJob = viewLifecycleOwner.lifecycleScope.launch {
+            while (true){
+                mBinding.seekbarProgress.value = mViewModel.getCurrentPosition().toFloat()
+                delay(500L)
+            }
+        }
     }
 
     private fun handleAlpha80Color(color: Int): Int{
@@ -130,6 +165,9 @@ class PlayerControlFragment: BaseFragment<FluidMusicFragmentPlayerControlBinding
         mBinding.tvMusicTitle.text = mediaItem?.mediaMetadata?.title
         mBinding.tvMusicSubtitle.text = mediaItem?.mediaMetadata?.artist
         mBinding.ivAlbumArt.load(mediaItem?.mediaMetadata?.artworkUri)
+
+        val duration = mediaItem?.mediaMetadata?.extras?.getLong(MediaItemTree.KEY_METADATA_DURATION) ?: 0L
+        mBinding.tvDuration.text = DateUtils.formatElapsedTime(positionStringBuilder, duration / 1000L)
     }
 
     private fun updateCurrentPlayerState(isPlaying: Boolean){
@@ -138,11 +176,5 @@ class PlayerControlFragment: BaseFragment<FluidMusicFragmentPlayerControlBinding
         } else {
             mBinding.btnPauseResume.setIconResource(R.drawable.fluid_music_player_play)
         }
-    }
-
-    override fun configImmersive(immersionBar: ImmersionBar): ImmersionBar? {
-        // 内部Fragment不处理沉浸式，防止被覆盖
-        return immersionBar.statusBarDarkFont(false)
-            .navigationBarDarkIcon(false)
     }
 }

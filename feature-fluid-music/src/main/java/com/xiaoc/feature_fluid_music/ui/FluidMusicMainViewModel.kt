@@ -1,9 +1,9 @@
 package com.xiaoc.feature_fluid_music.ui
 
-import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.viewModelScope
+import androidx.media3.common.MediaItem
 import coil.imageLoader
 import coil.request.ImageRequest
 import coil.request.SuccessResult
@@ -28,6 +28,11 @@ class FluidMusicMainViewModel: BaseViewModel() {
 
     private val musicServiceConnection = MusicServiceConnection.getInstance(globalContext)
 
+    private val _currentPlayInfo = MutableStateFlow<MediaItem?>(null)
+    val currentPlayInfo: StateFlow<MediaItem?> = _currentPlayInfo
+
+    val currentPlaybackState = musicServiceConnection.playbackState
+
     private val _musicColor = MutableStateFlow<ColorContainerData?>(null)
     val musicColor: StateFlow<ColorContainerData?> = _musicColor
 
@@ -38,6 +43,8 @@ class FluidMusicMainViewModel: BaseViewModel() {
     override fun refresh() {
         viewModelScope.launch {
             musicServiceConnection.nowPlaying.collectLatest {
+                _currentPlayInfo.value = it
+
                 Timber.d("FluidMusic musicChanged", it.mediaMetadata.title)
                 // 1.获得图片Bitmap
                 val request = ImageRequest.Builder(globalApplication)

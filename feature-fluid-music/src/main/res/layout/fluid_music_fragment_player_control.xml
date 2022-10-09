@@ -19,13 +19,13 @@
         android:id="@+id/view_tip"
         android:layout_width="38dp"
         android:layout_height="6dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/fluid_music_shape_player_control_top_tip"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.imageview.ShapeableImageView
+    <ImageView
         android:id="@+id/iv_albumArt"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -36,8 +36,7 @@
         app:layout_constraintEnd_toStartOf="@+id/fluid_music_guideline3"
         app:layout_constraintStart_toStartOf="@+id/fluid_music_guideline2"
         app:layout_constraintTop_toBottomOf="@+id/view_tip"
-        app:layout_constraintVertical_bias="1.0"
-        app:shapeAppearanceOverlay="@style/ShapeAppearance.Architecture.SmallComponent" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/fluid_music_guideline"
@@ -74,20 +73,39 @@
         style="@style/Widget.Material3.Slider"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
         android:valueFrom="0"
-        app:trackHeight="6dp"
-        app:thumbRadius="8dp"
-        app:thumbElevation="0dp"
-        app:trackColorActive="@color/white"
-        app:trackColorInactive="#72FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/fluid_music_guideline5"
         app:layout_constraintEnd_toStartOf="@+id/fluid_music_guideline3"
         app:layout_constraintStart_toStartOf="@+id/fluid_music_guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/tv_music_subtitle" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_music_subtitle"
+        app:thumbElevation="0dp"
+        app:thumbRadius="8dp"
+        app:trackColorActive="@color/white"
+        app:trackColorInactive="#72FFFFFF"
+        app:trackHeight="6dp" />
 
+    <TextView
+        android:id="@+id/tvCurrentPosition"
+        style="@style/TextAppearance.Material3.LabelSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-12dp"
+        app:layout_constraintStart_toStartOf="@+id/seekbar_progress"
+        app:layout_constraintTop_toBottomOf="@+id/seekbar_progress"
+        tools:text="1:32" />
+
+    <TextView
+        android:id="@+id/tvDuration"
+        style="@style/TextAppearance.Material3.LabelSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-12dp"
+        app:layout_constraintEnd_toEndOf="@+id/seekbar_progress"
+        app:layout_constraintTop_toBottomOf="@+id/seekbar_progress"
+        tools:text="1:32" />
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_pause_previous"
+        android:id="@+id/btnPausePrevious"
         style="@style/Widget.Architecture.NoInsetButton"
         android:layout_width="60dp"
         android:layout_height="60dp"
@@ -109,7 +127,7 @@
         app:iconSize="56dp"
         app:layout_constraintBottom_toTopOf="@+id/fluid_music_guideline6"
         app:layout_constraintEnd_toStartOf="@+id/btn_pause_next"
-        app:layout_constraintStart_toEndOf="@+id/btn_pause_previous"
+        app:layout_constraintStart_toEndOf="@+id/btnPausePrevious"
         app:layout_constraintTop_toTopOf="@+id/fluid_music_guideline5" />
 
     <com.google.android.material.button.MaterialButton

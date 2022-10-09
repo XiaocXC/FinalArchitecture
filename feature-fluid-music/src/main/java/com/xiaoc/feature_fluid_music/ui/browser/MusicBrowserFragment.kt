@@ -33,10 +33,6 @@ class MusicBrowserFragment: BaseFragment<FluidMusicFragmentMusicBrowserListBindi
         TabLayoutMediator(mBinding.tabMediaType, mBinding.vpMediaType){ tab, position ->
             tab.text = mViewModel.mediaTypes.value[position].mediaMetadata.title
         }.attach()
-
-        mBinding.btnPlayer.setOnClickListener {
-            findNavController().navigate(NavFluidMusicDirections.actionGlobalToMusicPlayerDetail())
-        }
     }
 
     override fun createObserver() {

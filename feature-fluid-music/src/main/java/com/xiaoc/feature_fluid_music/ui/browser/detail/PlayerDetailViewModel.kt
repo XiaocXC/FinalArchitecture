@@ -33,16 +33,33 @@ class PlayerDetailViewModel: BaseViewModel() {
         return musicServiceConnection.player?.currentPosition ?: 0L
     }
 
+    /**
+     * 播放暂停
+     */
     fun pauseOrResume(){
         musicServiceConnection.player?.let {
             it.playWhenReady = !it.playWhenReady
         }
     }
 
+    /**
+     * 跳转到对应位置播放
+     * @param position 时间轴
+     */
+    fun seekTo(position: Long){
+        musicServiceConnection.player?.seekTo(position)
+    }
+
+    /**
+     * 下一首
+     */
     fun next(){
         musicServiceConnection.player?.seekToNext()
     }
 
+    /**
+     * 上一首
+     */
     fun previous(){
         musicServiceConnection.player?.seekToPrevious()
     }
