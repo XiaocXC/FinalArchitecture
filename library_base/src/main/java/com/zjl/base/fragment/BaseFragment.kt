@@ -11,7 +11,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.gyf.immersionbar.ImmersionBar
-import com.gyf.immersionbar.ktx.immersionBar
 import com.kongzue.dialogx.dialogs.WaitDialog
 import com.zjl.base.activity.BaseActivity
 import com.zjl.base.globalContext
@@ -27,6 +26,9 @@ import com.zjl.base.utils.ext.isNightMode
 import com.zjl.base.utils.launchAndCollectIn
 import com.zjl.base.viewmodel.BaseViewModel
 import com.zjl.lib_base.R
+import com.zjl.library_trace.base.ITrackModel
+import com.zjl.library_trace.base.TrackParams
+import com.zjl.library_trace.ext.trackModel
 import com.zy.multistatepage.MultiStateContainer
 import com.zy.multistatepage.bindMultiState
 import com.zy.multistatepage.state.SuccessState
@@ -108,6 +110,11 @@ abstract class BaseFragment<V : ViewBinding, VM : BaseViewModel> : Fragment() {
     @CallSuper
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // 给Fragment的根View设置埋点
+        view.trackModel = ITrackModel {
+            fillTrackParams(it)
+        }
+
         configImmersiveInternal()
 
         mViewModel = createViewModel()
@@ -245,6 +252,10 @@ abstract class BaseFragment<V : ViewBinding, VM : BaseViewModel> : Fragment() {
         // 而此时如果获取mBinding可能由于清除了mBinding导致报错，所以我们会手动处理
         _uiRootState = null
         _mBinding = null
+    }
+
+    protected open fun fillTrackParams(trackParams: TrackParams) {
+        // 默认不实现任何埋点数据填充
     }
 
 }

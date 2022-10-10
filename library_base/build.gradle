@@ -15,6 +15,7 @@ android{
 }
 
 dependencies {
+    api(project(":library_trace"))
     api(Libs.CORE_KTX)
     api(Libs.APPCOMPAT)
 

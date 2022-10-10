@@ -21,6 +21,9 @@ import com.zjl.base.utils.ext.isNightMode
 import com.zjl.base.utils.launchAndCollectIn
 import com.zjl.base.viewmodel.BaseViewModel
 import com.zjl.lib_base.R
+import com.zjl.library_trace.base.IPageTrackNode
+import com.zjl.library_trace.base.ITrackNode
+import com.zjl.library_trace.base.TrackParams
 import com.zy.multistatepage.MultiStatePage.bindMultiState
 import com.zy.multistatepage.state.SuccessState
 import kotlinx.coroutines.flow.collectLatest
@@ -35,7 +38,7 @@ import timber.log.Timber
  * 规定一个Activity要基于ViewBinding且有一个统一的ViewModel作为支撑
  * 这一点在BaseFragment中没有强制
  */
-abstract class BaseActivity<V : ViewBinding, VM : BaseViewModel> : AppCompatActivity() {
+abstract class BaseActivity<V : ViewBinding, VM : BaseViewModel> : AppCompatActivity(), IPageTrackNode {
 
     protected lateinit var mBinding: V
 
@@ -190,6 +193,18 @@ abstract class BaseActivity<V : ViewBinding, VM : BaseViewModel> : AppCompatActi
         super.onResume()
         // 恢复观察网络状态
         NetworkManager.registerNetworkCallback(this)
+    }
+
+    override fun referrerKeyMap(): Map<String, String>? {
+        return null
+    }
+
+    override fun referrerSnapshot(): ITrackNode? {
+        return null
+    }
+
+    override fun fillTrackParams(trackParams: TrackParams) {
+
     }
 
 
