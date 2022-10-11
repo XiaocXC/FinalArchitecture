@@ -1,6 +1,7 @@
 package com.zjl.library_trace.ext
 
 import android.app.Activity
+import android.content.Intent
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
@@ -8,7 +9,10 @@ import com.zjl.library_trace.R
 import com.zjl.library_trace.base.ITrackModel
 import com.zjl.library_trace.base.TrackParams
 import com.zjl.library_trace.base.doTrackEvent
+import com.zjl.library_trace.base.fillTrackParams
 
+
+private const val KEY_REFERRER_SNAPSHOT = "referrer_node"
 
 /**
  * 从View中获取或设置trackModel埋点轨迹
@@ -38,6 +42,40 @@ fun Fragment?.traceEvent(eventName: String, params: TrackParams? = null): TrackP
  */
 fun View?.traceEvent(eventName: String, params: TrackParams? = null): TrackParams?{
     return this?.doTrackEvent(eventName, params)
+}
+
+/**
+ * 给Intent设置传递页面的埋点数据
+ * @param node 埋点数据
+ */
+fun Intent.setReferrerSnapshot(node: ITrackModel?) {
+    if (null != node) {
+        setReferrerSnapshot(fillTrackParams(node))
+    }
+}
+
+/**
+ * 给Intent设置传递页面的埋点数据
+ * @param node View视图
+ */
+fun Intent.setReferrerSnapshot(node: View?) {
+    if (null != node) {
+        setReferrerSnapshot(fillTrackParams(node))
+    }
+}
+
+/**
+ * 给Intent设置传递页面的埋点数据
+ * @param params 埋点参数
+ */
+fun Intent.setReferrerSnapshot(params: TrackParams?) {
+    if (null != params) {
+        putExtra(KEY_REFERRER_SNAPSHOT, params)
+    }
+}
+
+fun Intent.getReferrerParams(): TrackParams? {
+    return getSerializableExtra(KEY_REFERRER_SNAPSHOT) as TrackParams?
 }
 
 /**

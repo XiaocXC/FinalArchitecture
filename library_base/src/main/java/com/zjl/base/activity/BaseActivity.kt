@@ -6,7 +6,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.gyf.immersionbar.ImmersionBar
-import com.gyf.immersionbar.ktx.immersionBar
 import com.kongzue.dialogx.dialogs.WaitDialog
 import com.zjl.base.network.NetworkManager
 import com.zjl.base.globalContext
@@ -24,10 +23,9 @@ import com.zjl.lib_base.R
 import com.zjl.library_trace.base.IPageTrackNode
 import com.zjl.library_trace.base.ITrackNode
 import com.zjl.library_trace.base.TrackParams
+import com.zjl.library_trace.ext.getReferrerParams
 import com.zy.multistatepage.MultiStatePage.bindMultiState
 import com.zy.multistatepage.state.SuccessState
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 import timber.log.Timber
 
 /**
@@ -51,8 +49,30 @@ abstract class BaseActivity<V : ViewBinding, VM : BaseViewModel> : AppCompatActi
         bindMultiState(this)
     }
 
+    // 来自上个页码的数据埋点快照
+    private var referrerSnapshot: ITrackNode? = null
+
+    // 这是一个默认的埋点数据值，你可以自定义Activity默认自带的埋点数据
+    protected open val defaultTrackParams by lazy {
+        TrackParams()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // 启动Activity后获取上个页码传来的埋点数据，如果存在，则设置快照数据
+        getReferrerSnapshot()?.let { referrerParams ->
+            referrerSnapshot = object: ITrackNode {
+                override val parentNode: ITrackNode?
+                    get() = null
+
+                override fun fillTrackParams(trackParams: TrackParams) {
+                    trackParams.merge(referrerParams)
+                }
+
+            }
+        }
+
 
         mBinding = bindView()
         setContentView(mBinding.root)
@@ -71,6 +91,10 @@ abstract class BaseActivity<V : ViewBinding, VM : BaseViewModel> : AppCompatActi
         createDefObserver()
         createObserver()
     }
+
+    // ---------------------------------------------------------------------------------------------
+    // 基本设置
+    // ---------------------------------------------------------------------------------------------
 
     /**
      * 配置沉浸式
@@ -101,7 +125,7 @@ abstract class BaseActivity<V : ViewBinding, VM : BaseViewModel> : AppCompatActi
     /**
      * 展示错误界面
      * 提供一个默认实现，根据UiModel展示具体错误和重试逻辑
-     * @param uiModel 错误状态信息
+     * @param throwable 错误信息
      */
     open fun showUiError(throwable: Throwable) {
         WaitDialog.dismiss()
@@ -195,16 +219,55 @@ abstract class BaseActivity<V : ViewBinding, VM : BaseViewModel> : AppCompatActi
         NetworkManager.registerNetworkCallback(this)
     }
 
+    // ---------------------------------------------------------------------------------------------
+    // 埋点相关内容
+    // ---------------------------------------------------------------------------------------------
+
+    /**
+     * 获取上一个页面来的快照埋点数据
+     */
+    fun getReferrerSnapshot(): TrackParams? = intent.getReferrerParams()?.let { referrerParams ->
+        TrackParams().apply {
+            // 补充页面来的数据
+            fillReferrerKeyMap(referrerKeyMap(), referrerParams, this)
+        }
+    }
+
+    /**
+     * 通过映射值将上一个页面的值进行对应的更改
+     */
+    private fun fillReferrerKeyMap(
+        map: Map<String, String>?, referrerParams: TrackParams, params: TrackParams
+    ) {
+        if (map.isNullOrEmpty()) {
+            return
+        }
+        for ((fromKey, toKey) in map) {
+            val toValue = referrerParams[fromKey]
+            if (null != toValue) {
+                params.setIfNull(toKey, toValue)
+            }
+        }
+    }
+
+    /**
+     * 映射值Map
+     * @return map
+     * 跨页面后，上一个页面的埋点数据可能需要传递过来
+     * 例如 上一个页面 cur_page = "main" 传递来后
+     * 这个 cur_page Key可能需要变成 from_page
+     * 所以这里返回的Map就是对应的映射
+     */
     override fun referrerKeyMap(): Map<String, String>? {
         return null
     }
 
     override fun referrerSnapshot(): ITrackNode? {
-        return null
+        return referrerSnapshot
     }
 
     override fun fillTrackParams(trackParams: TrackParams) {
-
+        trackParams.merge(defaultTrackParams)
     }
 
 

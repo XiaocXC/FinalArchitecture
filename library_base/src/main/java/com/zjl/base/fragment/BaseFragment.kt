@@ -144,7 +144,7 @@ abstract class BaseFragment<V : ViewBinding, VM : BaseViewModel> : Fragment() {
     /**
      * 展示错误界面
      * 提供一个默认实现，根据UiModel展示具体错误和重试逻辑
-     * @param uiModel 错误状态信息
+     * @param throwable 错误信息
      */
     open fun showUiError(throwable: Throwable) {
         WaitDialog.dismiss()
