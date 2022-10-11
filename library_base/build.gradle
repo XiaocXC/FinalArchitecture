@@ -90,7 +90,7 @@ dependencies {
     api(Libs.PERMISSION_X)
 
     testImplementation(Libs.JUNIT)
-    testImplementation(Libs.JUNIT_EXT)
-    testImplementation(Libs.ESPRESSO_CORE)
+    androidTestImplementation(Libs.JUNIT_EXT)
+    androidTestImplementation(Libs.ESPRESSO_CORE)
 
 }

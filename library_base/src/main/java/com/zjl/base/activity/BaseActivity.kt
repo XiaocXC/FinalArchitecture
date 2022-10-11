@@ -1,6 +1,7 @@
 package com.zjl.base.activity
 
 import android.os.Bundle
+import androidx.annotation.CallSuper
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
@@ -266,6 +267,7 @@ abstract class BaseActivity<V : ViewBinding, VM : BaseViewModel> : AppCompatActi
         return referrerSnapshot
     }
 
+    @CallSuper
     override fun fillTrackParams(trackParams: TrackParams) {
         trackParams.merge(defaultTrackParams)
     }

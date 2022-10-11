@@ -14,6 +14,23 @@ import com.zjl.library_trace.ext.trackModel
 
 private const val TAG = "Tracker"
 
+class Tracker{
+
+    companion object {
+
+        val trackProviders = mutableListOf<ITrackProvider>()
+
+        /**
+         * 注册埋点上传提供器
+         */
+        fun registerProvider(provider: ITrackProvider) {
+            trackProviders.add(provider.apply {
+                onInit()
+            })
+        }
+    }
+}
+
 /**
  * 执行埋点上传事件
  * 该方法会从底向上遍历埋点数据，最终将完整的埋点数据进行汇总
@@ -22,6 +39,10 @@ private const val TAG = "Tracker"
  */
 internal fun Any.doTrackEvent(eventName: String, otherParams: TrackParams? = null): TrackParams?{
     // TODO 1.判断是否存在上传器
+    if(Tracker.trackProviders.isEmpty()){
+        Log.d(TAG, "没有上传实现器!请在Application中registerProvider实现器")
+        return otherParams
+    }
 
     // 2. 收集完整埋点数据
     val params = if(this is View || this is ITrackModel){
@@ -43,8 +64,13 @@ internal fun Any.doTrackEvent(eventName: String, otherParams: TrackParams? = nul
         }
     }
 
-    // TODO 4.执行上传操作
     Log.d(TAG, logStrBuilder.toString())
+
+    for(providers in Tracker.trackProviders){
+        if(providers.enabled){
+            providers.onEvent(eventName, params)
+        }
+    }
 
     return params
 }
