@@ -44,12 +44,6 @@ abstract class BaseViewModel: ViewModel(){
     protected abstract fun refresh()
 
     /**
-     * 当网络状态发生变化时回调，你可以重写此方法来进行逻辑操作
-     * @param hasNetwork 是否有网络
-     */
-    open fun networkStateChanged(hasNetwork: Boolean){}
-
-    /**
      * 普通的协程请求
      * @param requestAction 请求行为函数
      * 需要返回一个由ApiResult包裹的数据集

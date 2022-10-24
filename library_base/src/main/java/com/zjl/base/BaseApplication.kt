@@ -9,6 +9,10 @@ import kotlinx.coroutines.SupervisorJob
 import timber.log.Timber
 import android.content.Context
 import android.os.Build
+import androidx.annotation.CallSuper
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStore
+import androidx.lifecycle.ViewModelStoreOwner
 import coil.ImageLoader
 import coil.ImageLoaderFactory
 import coil.decode.GifDecoder
@@ -23,7 +27,7 @@ import com.zjl.lib_base.R
 /**
  * 全局Application对象
  */
-lateinit var globalApplication: FinalArchitectureApplication
+lateinit var globalApplication: BaseApplication
 
 /**
  * 全局Context
@@ -42,13 +46,27 @@ val globalCoroutineScope by lazy {
 /**
  * @author Xiaoc
  * @since 2022-01-07
+ *
+ * 这是一个基础Application类，它提供了基本的初始化SDK功能
+ * 并且提供了公共的全局公用ViewModel的内容
  */
-class FinalArchitectureApplication: Application(), ImageLoaderFactory {
+open class BaseApplication: Application(), ImageLoaderFactory, ViewModelStoreOwner {
 
 
     companion object {
 
-        fun initSDK(){
+        internal fun initSDKInternal(application: Application){
+
+            MMKV.initialize(application, application.filesDir.absolutePath + "/mmkv")
+
+            /**
+             * 配置Timber日志记录树
+             * 当为debug模式时使用DebugTree
+             */
+            if(BuildConfig.DEBUG){
+                Timber.plant(Timber.DebugTree())
+            }
+
             //设置全局的Header构建器
             SmartRefreshLayout.setDefaultRefreshHeaderCreator { context, layout ->
                 layout.setPrimaryColorsId(R.color.base_light_blue_800, R.color.white) //全局设置主题颜色
@@ -75,23 +93,31 @@ class FinalArchitectureApplication: Application(), ImageLoaderFactory {
 
     }
 
+    /**
+     * 全局保持的ViewModel提供者
+     * 我们可以在自己的Application中初始化ViewModel
+     * 保证这个ViewModel在Application级别均存在
+     * 全局ViewModel可以用作在UI层的配置更改等内容时进行通知
+     * 效果类似EventBus
+     */
+    private var mFactory: ViewModelProvider.Factory? = null
+    private lateinit var mAppViewModelStore: ViewModelStore
+
+    @CallSuper
     override fun onCreate() {
         super.onCreate()
         globalApplication = this
+        mAppViewModelStore = ViewModelStore()
 
-        MMKV.initialize(this, this.filesDir.absolutePath + "/mmkv")
-
-        /**
-         * 配置Timber日志记录树
-         * 当为debug模式时使用DebugTree
-         */
-        if(BuildConfig.DEBUG){
-            Timber.plant(Timber.DebugTree())
-        }
+        initSDKInternal(this)
 
         initSDK()
-
     }
+
+    /**
+     * 可以重写该方法，初始化自己的第三方SDK
+     */
+    open fun initSDK(){}
 
     override fun newImageLoader(): ImageLoader {
         // Coil配置
@@ -104,5 +130,23 @@ class FinalArchitectureApplication: Application(), ImageLoaderFactory {
                 }
             }
             .build()
+    }
+
+    /**
+     * 获取一个全局的ViewModel
+     */
+    fun getAppViewModelProvider(): ViewModelProvider {
+        return ViewModelProvider(this, this.getAppFactory())
+    }
+
+    override fun getViewModelStore(): ViewModelStore {
+        return mAppViewModelStore
+    }
+
+    private fun getAppFactory(): ViewModelProvider.Factory {
+        if (mFactory == null) {
+            mFactory = ViewModelProvider.AndroidViewModelFactory.getInstance(this)
+        }
+        return mFactory as ViewModelProvider.Factory
     }
 }

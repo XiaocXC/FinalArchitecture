@@ -3,7 +3,7 @@
     package="com.zjl.finalarchitecture">
 
     <application
-        android:name="com.zjl.base.FinalArchitectureApplication"
+        android:name=".FinalArchitectureApplication"
         android:icon="@mipmap/logo"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/logo"
