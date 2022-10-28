@@ -234,7 +234,7 @@ class TreeCheckViewModel : BaseViewModel() {
 
     }
 
-    override fun refresh() {
+    override fun initData() {
 
     }
 }

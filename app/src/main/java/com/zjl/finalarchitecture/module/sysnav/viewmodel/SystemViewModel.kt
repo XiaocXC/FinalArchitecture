@@ -18,8 +18,8 @@ class SystemViewModel: BaseViewModel() {
     /**
      * 体系列表数据
      */
-    private val _systemList = MutableStateFlow<List<SystemVO>>(emptyList())
-    val systemList: StateFlow<List<SystemVO>> = _systemList
+    private val _systemList = MutableStateFlow<UiModel<List<SystemVO>>>(UiModel.Loading())
+    val systemList: StateFlow<UiModel<List<SystemVO>>> = _systemList
 
     init {
         initData()
@@ -30,20 +30,13 @@ class SystemViewModel: BaseViewModel() {
      */
     private fun loadSystemData(){
         viewModelScope.launch {
-            launchRequestByNormal({
+            launchRequestByNormalWithUiState(requestAction = {
                 ApiRepository.requestSystemListData()
-            },{ data ->
-                // 状态更改为成功
-                _rootViewState.emit(UiModel.Success(data))
-                _systemList.value = data
-            },{ error ->
-                // 状态更改为错误
-                _rootViewState.emit(UiModel.Error(ApiException(error)))
-            })
+            }, resultState = _systemList, isShowLoading = true)
         }
     }
 
-    override fun refresh() {
+    override fun initData() {
         loadSystemData()
     }
 }

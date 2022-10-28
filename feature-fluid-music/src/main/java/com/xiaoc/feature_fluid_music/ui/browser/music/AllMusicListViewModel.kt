@@ -60,7 +60,7 @@ class AllMusicListViewModel(
         }
     }
 
-    override fun refresh() {
+    override fun initData() {
         viewModelScope.launch {
             val children = musicServiceConnection.getChildren(parentId)
             val playMediaItems = children.map {

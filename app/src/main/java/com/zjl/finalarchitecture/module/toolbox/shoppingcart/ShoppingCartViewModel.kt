@@ -21,7 +21,7 @@ class ShoppingCartViewModel: BaseViewModel() {
         initData()
     }
 
-    override fun refresh() {
+    override fun initData() {
         viewModelScope.launch {
             val result = buildList<FoodGroup> {
                 val item1 = mutableListOf(

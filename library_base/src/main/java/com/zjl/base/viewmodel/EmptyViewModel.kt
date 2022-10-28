@@ -9,6 +9,6 @@ package com.zjl.base.viewmodel
  **/
 class EmptyViewModel: BaseViewModel() {
 
-    override fun refresh() {
+    override fun initData() {
     }
 }

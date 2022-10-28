@@ -46,7 +46,7 @@ class FileLogProvider(
                 val cacheFile = File(cacheDir, fileName)
 
                 // 追加写入文本到末尾
-                cacheFile.writeText(params.toString() + "\n")
+                cacheFile.appendText(params.toString() + "\n")
             }
         }
     }

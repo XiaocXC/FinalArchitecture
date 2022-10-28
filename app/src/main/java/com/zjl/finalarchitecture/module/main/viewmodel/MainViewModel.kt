@@ -7,7 +7,7 @@ import com.zjl.base.viewmodel.BaseViewModel
  * @since 2022-01-07
  */
 class MainViewModel : BaseViewModel() {
-    override fun refresh() {
+    override fun initData() {
 
     }
 

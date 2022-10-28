@@ -80,7 +80,7 @@ class ProjectViewModel: PagingBaseViewModel() {
         viewModelScope.launch {
             launchRequestByNormalWithUiState({
                 ApiRepository.requestProjectListData()
-            }, _categoryList, true, true, successBlock = { data ->
+            }, _categoryList, isShowLoading = true, successBlock = { data ->
 
                 // 默认选中一个
                 if(data.isNotEmpty()){

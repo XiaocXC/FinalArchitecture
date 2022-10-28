@@ -35,11 +35,11 @@ class RegisterViewModel: BaseViewModel() {
         viewModelScope.launch {
             launchRequestByNormalWithUiState({
                 apiRepository.register(account, password)
-            }, _eventRegisterState, isShowState = true, isRootUiState = false)
+            }, _eventRegisterState, isShowLoading = true)
         }
     }
 
-    override fun refresh() {
+    override fun initData() {
 
     }
 }

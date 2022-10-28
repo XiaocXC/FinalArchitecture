@@ -81,8 +81,7 @@ class WechatViewModel : PagingBaseViewModel() {
             launchRequestByNormalWithUiState({
                 ApiRepository.requestWechatListData()
             }, _categoryList,
-                true,
-                true,
+                isShowLoading = true,
                 successBlock = { data ->
                     // 默认选中一个
                     if (data.isNotEmpty()) {

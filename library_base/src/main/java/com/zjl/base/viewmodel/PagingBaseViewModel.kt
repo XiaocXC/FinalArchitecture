@@ -32,7 +32,7 @@ abstract class PagingBaseViewModel: BaseViewModel() {
     protected set
 
 
-    final override fun refresh() {
+    final override fun initData() {
         // 重置页码数
         currentPageIndex = initPageIndex()
         loadMore()

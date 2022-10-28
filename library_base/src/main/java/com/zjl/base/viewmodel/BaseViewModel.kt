@@ -20,28 +20,10 @@ import kotlin.coroutines.coroutineContext
 abstract class BaseViewModel: ViewModel(){
 
     /**
-     * 根View状态值
-     * 该值为当前viewModel控制视图的根View的状态值，它存储着整个页面当前的状态
-     * 该值属于视图事件，所以不能为黏性事件
-     * 如果你需要颗粒度更细的加载状态，例如Paging3等内容的状态，可以自行处理
-     */
-    protected val _rootViewState = MutableSharedFlow<UiModel<Any>>()
-    val rootViewState: SharedFlow<UiModel<Any>> =  _rootViewState
-
-    /**
-     * 初始化数据
-     * 当需要页面刷新或页面初始化的时候，调用此方法
-     */
-    fun initData(){
-        // 调用重写子类的刷新方法
-        refresh()
-    }
-
-    /**
      * 刷新重写方法
      * 该方法仅供ViewModel中使用
      */
-    protected abstract fun refresh()
+    abstract fun initData()
 
     /**
      * 普通的协程请求
@@ -79,48 +61,35 @@ abstract class BaseViewModel: ViewModel(){
      * @param requestAction 请求行为函数
      * 需要返回一个由ApiResult包裹的数据集
      * @param resultState 用来承载请求结果的StateFlow
-     * @param isShowState 是否显示加载联动状态，默认不处理
-     * @param isRootUiState 该状态是否是根UI的状态，默认为true
+     * @param isShowLoading 是否显示加载联动状态，默认不处理
      * @param successBlock 成功回调，你可以在此处做自己的其他操作
      * @param failureBlock 失败回调，你可以在此处做自己的其他操作
      *
      * 该方法与[launchRequestByNormal]不同的是，它会帮助你处理Ui状态
-     * 如果[isShowState]为true，它会帮你处理请求过程中的状态更新
-     * 如果[isRootUiState]为true，它会将状态与[rootViewState]的状态联动
+     * 如果[isShowLoading]为true，它会帮你处理请求过程中（加载中）的状态更新
      */
     protected suspend fun <T> launchRequestByNormalWithUiState(
         requestAction: suspend CoroutineContext.() -> ApiResult<T>,
         resultState: MutableSharedFlow<UiModel<T>>,
-        isShowState: Boolean = false,
-        isRootUiState: Boolean = true,
+        isShowLoading: Boolean = false,
         successBlock: suspend CoroutineContext.(T) -> Unit = {},
         failureBlock: suspend CoroutineContext.(Error) -> Unit = {}
     ){
         runCatching {
             // 如果要显示状态，设置为加载中
-            if(isShowState){
-                if(isRootUiState){
-                    _rootViewState.emit(UiModel.Loading())
-                } else {
-                    resultState.emit(UiModel.Loading())
-                }
+            if(isShowLoading){
+                resultState.emit(UiModel.Loading())
             }
 
             val result = requestAction(coroutineContext)
             result.onSuccess { data ->
                 // 如果要显示状态，设置为成功
-                if(isShowState && isRootUiState){
-                    _rootViewState.emit(UiModel.Success(Unit))
-                }
                 resultState.emit(UiModel.Success(data))
                 // 回调成功方法
                 successBlock(coroutineContext, data)
 
             }.onFailure { error ->
                 // 如果要显示状态，设置为失败
-                if(isShowState && isRootUiState){
-                    _rootViewState.emit(UiModel.Error(ApiException(error)))
-                }
                 resultState.emit(UiModel.Error(ApiException(error)))
                 // 回调失败方法
                 failureBlock(coroutineContext, error)
@@ -128,9 +97,6 @@ abstract class BaseViewModel: ViewModel(){
 
         }.onFailure {
             // 如果要显示状态，设置为失败
-            if(isShowState && isRootUiState){
-                _rootViewState.emit(UiModel.Success(Unit))
-            }
             val error = Error(errorCode = 0, errorMsg = it.message)
             resultState.emit(UiModel.Error(ApiException(error)))
             // 回调失败方法

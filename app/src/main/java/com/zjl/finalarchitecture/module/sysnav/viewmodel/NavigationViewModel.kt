@@ -18,7 +18,6 @@ import kotlinx.coroutines.launch
  */
 class NavigationViewModel : BaseViewModel() {
 
-
     private val _navigationList = MutableStateFlow<List<NavigationVO>>(emptyList())
     val navigationList: StateFlow<List<NavigationVO>> = _navigationList
 
@@ -30,24 +29,12 @@ class NavigationViewModel : BaseViewModel() {
         initData()
     }
 
-    override fun refresh() {
+    override fun initData() {
 
         viewModelScope.launch {
-            launchRequestByNormal({
-                ApiRepository.requestNavigationListData()
-            }, { data ->
-                // 状态更改为成功
-                _rootViewState.emit(UiModel.Success(data))
-                _navigationList.value = data
-            }, { error ->
-                // 状态更改为错误
-                _rootViewState.emit(UiModel.Error(ApiException(error)))
-            })
-
-
             launchRequestByNormalWithUiState({
                 ApiRepository.requestNavigationListData()
-            }, _fuckNavigationList, true, true)
+            }, _fuckNavigationList, isShowLoading = true)
 
         }
 

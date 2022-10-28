@@ -41,7 +41,7 @@ public class Libs {
     // NAVIGATION导航-UI-Ktx
     public static final String NAVIGATION_UI_KTX = "androidx.navigation:navigation-ui-ktx:" + NAVIGATION_VERSION;
     // smooth-navigation
-    public static final String SMOOTH_NAVIGATION = "com.kunminx.arch:smooth-navigation:4.0.0-beta1";
+    public static final String SMOOTH_NAVIGATION = "com.kunminx.arch:smooth-navigation:4.0.0";
 
     private static final String COIL_VERSION = "2.1.0";
     // Coil图片加载库

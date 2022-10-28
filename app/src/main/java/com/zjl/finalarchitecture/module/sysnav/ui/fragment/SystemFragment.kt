@@ -50,20 +50,18 @@ class SystemFragment : BaseFragment<FragmentSystemBinding, SystemViewModel>() {
 
     override fun createObserver() {
 
-        // 监听状态
-        mViewModel.rootViewState.launchAndCollectIn(viewLifecycleOwner){
-            it.onSuccess {
-                uiRootState.show(SuccessState())
-            }.onLoading {
-                uiRootState.show(LoadingState())
-            }.onFailure { _, _ ->
-                uiRootState.show(ErrorState())
-            }
-        }
-
         // 更新数据
         mViewModel.systemList.launchAndCollectIn(viewLifecycleOwner){
-            systemGroupAdapter.setList(it)
+            it.onSuccess {
+                uiRootState.show(SuccessState())
+                systemGroupAdapter.setList(it)
+            }.onLoading {
+                uiRootState.show(LoadingState())
+            }.onFailure { value, throwable ->
+                val state = ErrorState()
+                state.setErrorMsg(throwable.message ?: "")
+                uiRootState.show(state)
+            }
         }
     }
 

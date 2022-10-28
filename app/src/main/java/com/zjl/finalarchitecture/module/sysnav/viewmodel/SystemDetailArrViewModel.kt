@@ -29,7 +29,7 @@ class SystemDetailArrViewModel(
         initData()
     }
 
-    override fun refresh() {
+    override fun initData() {
         val data = systemData ?: return
         _systemChild.value = Pair(systemNavIndex, data.children)
     }

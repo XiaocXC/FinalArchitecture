@@ -25,7 +25,7 @@ class MusicBrowserViewModel: BaseViewModel() {
     }
     val mediaTypes: StateFlow<List<MediaItem>> = _mediaTypes.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), emptyList())
 
-    override fun refresh() {
+    override fun initData() {
 
     }
 }

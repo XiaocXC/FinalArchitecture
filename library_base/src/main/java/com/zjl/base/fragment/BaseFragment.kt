@@ -15,9 +15,6 @@ import com.kongzue.dialogx.dialogs.WaitDialog
 import com.zjl.base.activity.BaseActivity
 import com.zjl.base.globalContext
 import com.zjl.base.network.NetworkManager
-import com.zjl.base.ui.onFailure
-import com.zjl.base.ui.onLoading
-import com.zjl.base.ui.onSuccess
 import com.zjl.base.ui.state.ErrorState
 import com.zjl.base.ui.state.LoadingState
 import com.zjl.base.utils.ext.getVmClazz
@@ -45,6 +42,9 @@ import timber.log.Timber
  */
 abstract class BaseFragment<V : ViewBinding, VM : BaseViewModel> : Fragment() {
 
+    /**
+     * 当前Fragment是否可见
+     */
     protected var isUserHintVisible: Boolean = false
 
     private var _mBinding: V? = null
@@ -55,8 +55,7 @@ abstract class BaseFragment<V : ViewBinding, VM : BaseViewModel> : Fragment() {
     /**
      * 整个Fragment的状态控制器
      */
-    private var _uiRootState: MultiStateContainer? = null
-    protected val uiRootState get() = _uiRootState!!
+    protected lateinit var uiRootState: MultiStateContainer
 
 
     @CallSuper
@@ -66,7 +65,7 @@ abstract class BaseFragment<V : ViewBinding, VM : BaseViewModel> : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _mBinding = bindView(inflater, container, savedInstanceState)
-        _uiRootState = mBinding.root.bindMultiState()
+        uiRootState = mBinding.root.bindMultiState()
         return uiRootState
     }
 
@@ -125,30 +124,34 @@ abstract class BaseFragment<V : ViewBinding, VM : BaseViewModel> : Fragment() {
     }
 
     /**
-     * 展示加载界面
-     * 提供一个默认实现，展示弹窗加载或者是界面加载
-     * @param cancelable 是否支持取消，默认为true可取消
+     * 展示加载框弹窗（基于DialogX）
      */
-    open fun showUiLoading(cancelable: Boolean = true) {
-        // 如果可取消，显示的是替换整个界面的加载内容
-        // 如果不可取消，则显示的是加载弹出，禁止关闭
-        if (cancelable) {
-            uiRootState.show(LoadingState())
-        } else {
-            WaitDialog.show(getString(R.string.base_ui_description_status_view_loading)).apply {
-                isCancelable = false
-            }
+    open fun showUiLoadingWithDialog(
+        message: String = getString(R.string.base_ui_description_status_view_loading),
+        cancelable: Boolean = false
+    ){
+        WaitDialog.show(message).apply {
+            isCancelable = cancelable
         }
+    }
+
+    /**
+     * 展示加载界面
+     * @param uiState MultiStateContainer的视图对象，如果不传，默认就把整个Fragment界面根视图变成加载界面
+     */
+    open fun showUiLoading(uiState: MultiStateContainer = uiRootState){
+        uiState.show(LoadingState())
     }
 
     /**
      * 展示错误界面
      * 提供一个默认实现，根据UiModel展示具体错误和重试逻辑
      * @param throwable 错误信息
+     * @param uiState MultiStateContainer的视图对象，如果不传，默认就把整个Fragment界面根视图变成失败界面
      */
-    open fun showUiError(throwable: Throwable) {
+    open fun showUiError(throwable: Throwable, uiState: MultiStateContainer = uiRootState) {
         WaitDialog.dismiss()
-        uiRootState.show<ErrorState> {
+        uiState.show<ErrorState> {
             it.setErrorMsg(throwable.message)
             it.retry { retryAll() }
         }
@@ -157,10 +160,11 @@ abstract class BaseFragment<V : ViewBinding, VM : BaseViewModel> : Fragment() {
     /**
      * 展示成功页面
      * 提供一个默认实现，及展示正确的视图，隐藏掉所有负面内容
+     * @param uiState MultiStateContainer的视图对象，如果不传，默认就把整个Fragment界面根视图变成成功界面
      */
-    open fun showUiSuccess() {
+    open fun showUiSuccess(uiState: MultiStateContainer = uiRootState) {
         WaitDialog.dismiss()
-        uiRootState.show(SuccessState())
+        uiState.show(SuccessState())
     }
 
     /**
@@ -175,17 +179,6 @@ abstract class BaseFragment<V : ViewBinding, VM : BaseViewModel> : Fragment() {
      * 主要用于界面状态的监听
      */
     open fun createDefObserver() {
-        // 默认监听根视图状态
-        mViewModel.rootViewState.launchAndCollectIn(viewLifecycleOwner){ uiModel ->
-            uiModel.onSuccess {
-                showUiSuccess()
-            }.onLoading {
-                showUiLoading()
-            }.onFailure { _, throwable ->
-                showUiError(throwable)
-            }
-        }
-
         // 网络状态监听
         NetworkManager.networkState.launchAndCollectIn(viewLifecycleOwner, minActiveState = Lifecycle.State.CREATED){
             val hasNetwork = NetworkManager.isConnectNetwork(globalContext)
@@ -250,7 +243,6 @@ abstract class BaseFragment<V : ViewBinding, VM : BaseViewModel> : Fragment() {
         // 保持ViewBinding在 onCreateView 和 onDestroyView 生命周期之间
         // 这里不自动使用autoCleared原因是因为有个先后顺序，因为部分adapter的原因，需要重写onDestroyView来手动设置为Null
         // 而此时如果获取mBinding可能由于清除了mBinding导致报错，所以我们会手动处理
-        _uiRootState = null
         _mBinding = null
     }
 

@@ -95,17 +95,6 @@ class NavigationFragment : BaseFragment<FragmentNavigationBinding, NavigationVie
 
     override fun createObserver() {
 
-        // 监听状态
-        mViewModel.rootViewState.launchAndCollectIn(viewLifecycleOwner){
-            it.onSuccess {
-                uiRootState.show(SuccessState())
-            }.onLoading {
-                uiRootState.show(LoadingState())
-            }.onFailure { _, _ ->
-                uiRootState.show(ErrorState())
-            }
-        }
-
         // 更新数据
         mViewModel.navigationList.launchAndCollectIn(viewLifecycleOwner){
             navigationGroupAdapter.setList(it)

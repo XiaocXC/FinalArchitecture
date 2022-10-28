@@ -25,6 +25,7 @@ import com.zjl.library_trace.base.IPageTrackNode
 import com.zjl.library_trace.base.ITrackNode
 import com.zjl.library_trace.base.TrackParams
 import com.zjl.library_trace.ext.getReferrerParams
+import com.zy.multistatepage.MultiStateContainer
 import com.zy.multistatepage.MultiStatePage.bindMultiState
 import com.zy.multistatepage.state.SuccessState
 import timber.log.Timber
@@ -107,30 +108,34 @@ abstract class BaseActivity<V : ViewBinding, VM : BaseViewModel> : AppCompatActi
     }
 
     /**
-     * 展示加载界面
-     * 提供一个默认实现，展示弹窗加载或者是界面加载
-     * @param cancelable 是否支持取消，默认为true可取消
+     * 展示加载框弹窗（基于DialogX）
      */
-    open fun showUiLoading(cancelable: Boolean = true) {
-        // 如果可取消，显示的是替换整个界面的加载内容
-        // 如果不可取消，则显示的是加载弹出，禁止关闭
-        if (cancelable) {
-            WaitDialog.show(getString(R.string.base_ui_description_status_view_empty)).apply {
-                isCancelable = false
-            }
-        } else {
-            rootUiState.show(LoadingState())
+    open fun showUiLoadingWithDialog(
+        message: String = getString(R.string.base_ui_description_status_view_loading),
+        cancelable: Boolean = false
+    ){
+        WaitDialog.show(message).apply {
+            isCancelable = cancelable
         }
+    }
+
+    /**
+     * 展示加载界面
+     * @param uiState MultiStateContainer的视图对象，如果不传，默认就把整个Activity界面根视图变成加载界面
+     */
+    open fun showUiLoading(uiState: MultiStateContainer = rootUiState){
+        uiState.show(LoadingState())
     }
 
     /**
      * 展示错误界面
      * 提供一个默认实现，根据UiModel展示具体错误和重试逻辑
      * @param throwable 错误信息
+     * @param uiState MultiStateContainer的视图对象，如果不传，默认就把整个Activity界面根视图变成失败界面
      */
-    open fun showUiError(throwable: Throwable) {
+    open fun showUiError(throwable: Throwable, uiState: MultiStateContainer = rootUiState) {
         WaitDialog.dismiss()
-        rootUiState.show<ErrorState> {
+        uiState.show<ErrorState> {
             it.setErrorMsg(throwable.message)
             it.retry { retryAll() }
         }
@@ -139,10 +144,11 @@ abstract class BaseActivity<V : ViewBinding, VM : BaseViewModel> : AppCompatActi
     /**
      * 展示成功页面
      * 提供一个默认实现，及展示正确的视图，隐藏掉所有负面内容
+     * @param uiState MultiStateContainer的视图对象，如果不传，默认就把整个Activity界面根视图变成成功界面
      */
-    open fun showUiSuccess() {
+    open fun showUiSuccess(uiState: MultiStateContainer = rootUiState) {
         WaitDialog.dismiss()
-        rootUiState.show(SuccessState())
+        uiState.show(SuccessState())
     }
 
     /**
@@ -170,18 +176,6 @@ abstract class BaseActivity<V : ViewBinding, VM : BaseViewModel> : AppCompatActi
     }
 
     open fun createDefObserver() {
-        // 默认监听根视图状态
-        mViewModel.rootViewState.launchAndCollectIn(this){ uiModel ->
-            uiModel.onSuccess {
-                showUiSuccess()
-            }.onLoading {
-                showUiLoading()
-            }.onFailure { _, throwable ->
-                showUiError(throwable)
-            }
-        }
-
-
         // 监听网络状态
         // 我们规定监听网络状态的内容在Activity创建时开始，避免恢复Activity时重新观察的问题
         NetworkManager.networkState.launchAndCollectIn(this, minActiveState = Lifecycle.State.CREATED){

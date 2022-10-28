@@ -29,7 +29,7 @@ class DownloadProgressListViewModel: BaseViewModel() {
         initData()
     }
 
-    override fun refresh() {
+    override fun initData() {
         viewModelScope.launch {
             val downloads = buildList {
                 add(DownloadProgressData(1, "标题1", "这是副标题1", 0))

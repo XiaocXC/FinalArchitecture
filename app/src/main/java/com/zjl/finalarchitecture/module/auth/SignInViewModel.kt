@@ -38,14 +38,14 @@ class SignInViewModel : BaseViewModel(){
         viewModelScope.launch {
             launchRequestByNormalWithUiState({
                 apiRepository.login(account, password)
-            }, _eventSignInState, isShowState = true, isRootUiState = false, successBlock = {
+            }, _eventSignInState, isShowLoading = true, successBlock = {
                 // 如果登录成功，我们把用户信息数据存储到本地
                 UserAuthDataSource.signIn(it)
             })
         }
     }
 
-    override fun refresh() {
+    override fun initData() {
 
     }
 

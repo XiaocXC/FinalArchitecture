@@ -69,7 +69,7 @@ class SearchViewModel: BaseViewModel() {
         }
     }
 
-    override fun refresh() {
+    override fun initData() {
         viewModelScope.launch {
             launchRequestByNormal({
                 ApiRepository.getSearchHot()

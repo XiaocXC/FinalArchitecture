@@ -91,9 +91,7 @@ class ProjectFragment : BaseFragment<FragmentProjectBinding, ProjectViewModel>()
     override fun createObserver() {
         // 项目栏目顶部分类
         mViewModel.categoryList.launchAndCollectIn(viewLifecycleOwner){
-            mViewModel.categoryList.collectLatest {
-                mProjectCategoryAdapter.setList(it.data)
-            }
+            mProjectCategoryAdapter.setList(it.data)
         }
 
         // 对应分类的数据
