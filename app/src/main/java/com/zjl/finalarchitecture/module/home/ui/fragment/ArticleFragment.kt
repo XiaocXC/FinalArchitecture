@@ -95,22 +95,17 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel>()
                 uiRootState,
                 mBinding.refreshLayout
             ) {
-                refresh()
+                onRefresh(mBinding.refreshLayout)
             }
         }
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout) {
-        refresh()
+        mViewModel.onRefreshData()
     }
 
     override fun onLoadMore(refreshLayout: RefreshLayout) {
-        mViewModel.loadMore()
-    }
-
-    private fun refresh() {
-        // 重新请求，如果文章列表没有数据，则整个界面会重新显示loading状态
-        mViewModel.initData()
+        mViewModel.onLoadMoreData()
     }
 
     override fun configImmersive(immersionBar: ImmersionBar): ImmersionBar? {
@@ -118,5 +113,9 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel>()
         return null
     }
 
+    override fun retryAll() {
+        super.retryAll()
+        mBinding.refreshLayout.autoRefresh()
+    }
 
 }
