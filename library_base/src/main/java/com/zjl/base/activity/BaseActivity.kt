@@ -13,6 +13,7 @@ import com.zjl.base.globalContext
 import com.zjl.base.ui.onFailure
 import com.zjl.base.ui.onLoading
 import com.zjl.base.ui.onSuccess
+import com.zjl.base.ui.state.EmptyState
 import com.zjl.base.ui.state.ErrorState
 import com.zjl.base.ui.state.LoadingState
 import com.zjl.base.utils.ext.getVmClazz
@@ -121,10 +122,16 @@ abstract class BaseActivity<V : ViewBinding, VM : BaseViewModel> : AppCompatActi
 
     /**
      * 展示加载界面
+     * @param message 加载提示
      * @param uiState MultiStateContainer的视图对象，如果不传，默认就把整个Activity界面根视图变成加载界面
      */
-    open fun showUiLoading(uiState: MultiStateContainer = rootUiState){
-        uiState.show(LoadingState())
+    open fun showUiLoading(
+        message: String = getString(R.string.base_ui_description_status_view_loading),
+        uiState: MultiStateContainer = rootUiState)
+    {
+        uiState.show<EmptyState> {
+            it.setEmptyMsg(message)
+        }
     }
 
     /**
