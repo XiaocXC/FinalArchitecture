@@ -30,7 +30,7 @@ class ExpandListAdapter : BaseQuickAdapter<ExpandListData, BaseViewHolder>(
         // 我们这里在convert里面创建更快速
         holder.itemView.setOnClickListener {
             // 点击Item后我们来处理展开折叠动画
-            val parent = holder.itemView as? ViewGroup ?: return@setOnClickListener
+            val parent = holder.itemView.parent as? ViewGroup ?: return@setOnClickListener
             val expanded = item.isExpand
 
             // 启动动画
@@ -40,17 +40,8 @@ class ExpandListAdapter : BaseQuickAdapter<ExpandListData, BaseViewHolder>(
             // 更改数据源
             item.isExpand = !expanded
 
-            // 更新视图
-            notifyItemChanged(holder.adapterPosition, item.isExpand)
-        }
-    }
-
-    /**
-     * 局部更新（主要是为了刷新视图，出现动画）
-     */
-    override fun convert(holder: BaseViewHolder, item: ExpandListData, payloads: List<Any>) {
-        payloads.forEach { _ ->
-            handleExpand(holder, item.isExpand)
+            // 更新视图显示
+            handleExpand(holder, !expanded)
         }
     }
 

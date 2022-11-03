@@ -20,6 +20,8 @@ class ExpandListFragment: BaseFragment<FragmentExpandListBinding, EmptyViewModel
     override fun initViewAndEvent(savedInstanceState: Bundle?) {
         adapter = ExpandListAdapter()
         mBinding.rvExpandList.adapter = adapter
+        // 将hasFixedSize设置为true，此步骤可选
+        mBinding.rvExpandList.setHasFixedSize(true)
 
         val list = buildList {
             add(ExpandListData("标题1", "这是标题1的详情信息这是标题1的详情信息这是标题1的详情信息这是标题1的详情信息这是标题1的详情信息这是标题1的详情信息这是标题1的详情信息", "12s", false))
