@@ -13,7 +13,6 @@ import com.zjl.finalarchitecture.module.toolbox.expandList.data.ExpandListData
  * @since 2022-11-03
  *
  * 展开折叠Item Adapter
- * 一些不足：显示是瞬时的，暂时没有渐隐动画，后续优化
  */
 class ExpandListAdapter : BaseQuickAdapter<ExpandListData, BaseViewHolder>(
     R.layout.item_expand_list
