@@ -46,6 +46,9 @@
         <action
             android:id="@+id/action_mainFragment_to_progressListFragment"
             app:destination="@id/progressListFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_expandListFragment"
+            app:destination="@id/expandListFragment" />
     </fragment>
 
 
@@ -146,5 +149,9 @@
         android:id="@+id/progressListFragment"
         android:name="com.zjl.finalarchitecture.module.toolbox.progressList.ProgressListFragment"
         android:label="ProgressListFragment" />
+    <fragment
+        android:id="@+id/expandListFragment"
+        android:name="com.zjl.finalarchitecture.module.toolbox.expandList.ExpandListFragment"
+        android:label="ExpandListFragment" />
 
 </navigation>
