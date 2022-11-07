@@ -54,4 +54,55 @@ fun main() {
     println(list2.size)
 //    println(split.contentToString())
 
+
+    //    val coldFlow = flow {
+//        emit(1)
+//        emit(2)
+//        emit(2)
+//        emit(2)
+//        emit(2)
+//        emit(2)
+//        emit(2)
+//    }.flowOn(Dispatchers.IO) // 以上内容在IO线程执行
+//        .map {
+//
+//        }.map {
+//
+//        }.flowOn(Dispatchers.Default)  // 以上Map内容在Default线程执行
+//
+//    val hotFlow = MutableStateFlow(2)
+//
+//    fun test(){
+//        viewModelScope.launch {
+//            coldFlow.collect {
+//                // 打印
+//                // 1  2
+//            }
+//
+//            coldFlow.collect {
+//                // 打印
+//                // 1  2
+//            }
+//
+//            hotFlow.collect {
+//                // 打印
+//                // 2
+//
+//                // 执行下面的内容后
+//                // 5
+//            }
+//
+//            hotFlow.value = 5
+//        }
+//    }
+
+//    private val _plazaListFlow = MutableStateFlow<MutableList<ArticleListVO>>(mutableListOf())
+//    val mPlazaListFlow: StateFlow<MutableList<ArticleListVO>> = _plazaListFlow
+//
+//    // BannerUI
+//    private val _addPlazaListFlow = MutableStateFlow<List<ArticleListVO>>(emptyList())
+//    val mAddPlazaListFlow: StateFlow<List<ArticleListVO>> = _addPlazaListFlow
+//
+//    private var currentPage = 0
+
 }

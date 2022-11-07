@@ -20,12 +20,6 @@ import kotlin.coroutines.coroutineContext
 abstract class BaseViewModel: ViewModel(){
 
     /**
-     * 刷新重写方法
-     * 该方法仅供ViewModel中使用
-     */
-    abstract fun initData()
-
-    /**
      * 普通的协程请求
      * @param requestAction 请求行为函数
      * 需要返回一个由ApiResult包裹的数据集

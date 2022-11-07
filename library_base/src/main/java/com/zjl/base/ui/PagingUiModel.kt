@@ -15,12 +15,12 @@ sealed class PagingUiModel<T>(open val refresh: Boolean) {
      * 是否需要加载更多
      * @param data 数据
      * @param refresh 刷新
-     * @param hasMore 加载更多
+     * @param noMore 是否到头
      */
     data class Success<T>(
         val data: List<T>,
         override val refresh: Boolean,
-        val hasMore: Boolean
+        val noMore: Boolean
     ) : PagingUiModel<T>(refresh) {
 
         override fun equals(other: Any?): Boolean {
@@ -32,7 +32,7 @@ sealed class PagingUiModel<T>(open val refresh: Boolean) {
             var result = super.hashCode()
             result = 31 * result + data.hashCode()
             result = 31 * result + refresh.hashCode()
-            result = 31 * result + hasMore.hashCode()
+            result = 31 * result + noMore.hashCode()
             return result
         }
 

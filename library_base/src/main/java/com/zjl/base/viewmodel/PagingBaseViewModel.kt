@@ -16,65 +16,16 @@ import kotlin.coroutines.coroutineContext
  * 内部维护一个 [currentPageIndex] 用来记录当前页码
  *
  * 你可以重写[pageSize]方法和[initPageIndex]来规定请求页码大小和初始页码索引大小
- * 同时提供[launchRequestByPaging]等分页请求方法，让你专心处理网络逻辑
  * 一个PagingBaseViewModel只能自动处理一个分页数据加载
  * 如果你一个界面含有多个分页，另一个分页需要你自行管理或者重新创建一个新的PagingBaseViewModel进行管理
  **/
 abstract class PagingBaseViewModel: BaseViewModel() {
 
-    open fun pageSize() = 15
+    open fun pageSize() = 20
 
     open fun initPageIndex() = 0
 
-    val pageSize = pageSize()
+    abstract fun onRefreshData(tag: Any? = null)
 
-    var currentPageIndex = initPageIndex()
-    protected set
-
-
-    final override fun initData() {
-        // 重置页码数
-        currentPageIndex = initPageIndex()
-        loadMore()
-    }
-
-    fun loadMore(){
-        loadMoreInner(currentPageIndex)
-    }
-
-
-    protected abstract fun loadMoreInner(currentIndex: Int)
-
-    /**
-     * 分页的协程请求
-     * @param requestAction 请求行为函数
-     * 需要返回一个由ApiResult包裹的数据集
-     * @param successBlock （可选）成功后所做的操作
-     * @param failureBlock （可选）失败后所做的操作
-     *
-     * 提示：该方法在请求成功后，会自动处理[currentPageIndex]的值
-     * 该方法只提供[successBlock]和[failureBlock]回调，具体内容需要你自行处理
-     */
-    protected suspend fun <T> launchRequestByPaging(
-        requestAction: suspend CoroutineContext.() -> ApiResult<T>,
-        successBlock: suspend CoroutineContext.(T) -> Unit = {},
-        failureBlock: suspend CoroutineContext.(Error) -> Unit = {}
-    ){
-        runCatching {
-            val result = requestAction(coroutineContext)
-            result.onSuccess {
-                // 成功后当前页码 +1
-                currentPageIndex ++
-                // 回调成功方法
-                successBlock(coroutineContext, it)
-            }.onFailure {
-                // 回调失败方法
-                failureBlock(coroutineContext,it)
-            }
-        }.onFailure {
-            it.printStackTrace()
-            // 回调失败方法
-            failureBlock(coroutineContext, Error(errorCode = 0, errorMsg = it.message))
-        }
-    }
+    abstract fun onLoadMoreData(tag: Any? = null)
 }

@@ -26,18 +26,30 @@ class AskViewModel : PagingBaseViewModel() {
     private val _askList = MutableStateFlow<PagingUiModel<ArticleListVO>>(PagingUiModel.Loading(true))
     val askList: StateFlow<PagingUiModel<ArticleListVO>> = _askList
 
+    private var currentIndex = initPageIndex()
+
     init {
-        initData()
+        onRefreshData()
     }
 
-    override fun loadMoreInner(currentIndex: Int) {
+    override fun onRefreshData(tag: Any?) {
+        currentIndex = initPageIndex()
+        requestAskArticle(currentIndex)
+    }
+
+    override fun onLoadMoreData(tag: Any?) {
+        ++ currentIndex
+        requestAskArticle(currentIndex)
+    }
+
+    fun requestAskArticle(currentIndex: Int) {
         viewModelScope.launch {
             // 先置为加载中
             if(currentIndex == initPageIndex()){
                 _askList.value = PagingUiModel.Loading(true)
             }
 
-            launchRequestByPaging({
+            launchRequestByNormal({
                 ApiRepository.requestAskArticleListDataByPage(currentIndex)
             }, successBlock = {
                 _askList.value = PagingUiModel.Success(it.dataList, currentIndex == initPageIndex(), !it.over)

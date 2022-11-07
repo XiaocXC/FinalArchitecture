@@ -30,30 +30,39 @@ class ArticleViewModel : PagingBaseViewModel() {
     private val _articleList = MutableStateFlow<PagingUiModel<ArticleListVO>>(PagingUiModel.Loading(true))
     val articleList: StateFlow<PagingUiModel<ArticleListVO>> = _articleList
 
+    private var mCurrentIndex: Int = initPageIndex()
+
     init {
-        initData()
+        onRefreshData()
     }
 
-    override fun loadMoreInner(currentIndex: Int) {
-        // 如果是第一页，还要请求Banner数据
-        if(currentIndex == initPageIndex()){
-            refreshBanner()
-        }
-        loadArticle(currentIndex)
+    override fun pageSize(): Int {
+        return super.pageSize()
+    }
+
+    override fun onRefreshData(tag: Any?) {
+        mCurrentIndex = initPageIndex()
+        requestBanner()
+        requestArticle(mCurrentIndex)
+    }
+
+    override fun onLoadMoreData(tag: Any?) {
+        ++mCurrentIndex
+        requestArticle(mCurrentIndex)
     }
 
     /**
      * 加载分页文章数据
      * @param currentIndex 当前加载的分页数据
      */
-    private fun loadArticle(currentIndex: Int){
+    private fun requestArticle(currentIndex: Int){
         viewModelScope.launch {
             // 先置为加载中
             if(currentIndex == initPageIndex()){
                 _articleList.value = PagingUiModel.Loading(true)
             }
 
-            launchRequestByPaging({
+            launchRequestByNormal({
                 // 如果App配置打开了首页请求置顶文章(为什么做这个，我们可以再设置页面灵活开关)，且是第一页，则额外请求一个置顶文章列表
                 val articlePageData = ApiRepository.requestArticleDataByPage(currentIndex)
                 if (CacheUtil.isNeedTop() && currentIndex == initPageIndex()) {
@@ -69,7 +78,7 @@ class ArticleViewModel : PagingBaseViewModel() {
                 }
                 articlePageData
             }, successBlock = {
-                _articleList.value = PagingUiModel.Success(it.dataList, currentIndex == initPageIndex(), !it.over)
+                _articleList.value = PagingUiModel.Success(it.dataList, currentIndex == initPageIndex(), it.over)
             }, failureBlock = {
                 _articleList.value = PagingUiModel.Error(ApiException(it), currentIndex == initPageIndex())
             })
@@ -79,7 +88,7 @@ class ArticleViewModel : PagingBaseViewModel() {
     /**
      * 刷新Banner数据
      */
-    private fun refreshBanner() {
+    private fun requestBanner() {
         viewModelScope.launch {
             launchRequestByNormal({
                 ApiRepository.requestBanner()
@@ -88,4 +97,6 @@ class ArticleViewModel : PagingBaseViewModel() {
             })
         }
     }
+
+
 }
