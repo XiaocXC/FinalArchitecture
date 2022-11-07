@@ -129,8 +129,8 @@ abstract class BaseActivity<V : ViewBinding, VM : BaseViewModel> : AppCompatActi
         message: String = getString(R.string.base_ui_description_status_view_loading),
         uiState: MultiStateContainer = rootUiState)
     {
-        uiState.show<EmptyState> {
-            it.setEmptyMsg(message)
+        uiState.show<LoadingState> {
+            it.setLoadingMsg(message)
         }
     }
 

@@ -145,8 +145,8 @@ abstract class BaseFragment<V : ViewBinding, VM : BaseViewModel> : Fragment() {
         message: String = getString(R.string.base_ui_description_status_view_loading),
         uiState: MultiStateContainer = uiRootState
     ){
-        uiState.show<EmptyState> {
-            it.setEmptyMsg(message)
+        uiState.show<LoadingState> {
+            it.setLoadingMsg(message)
         }
     }
 
