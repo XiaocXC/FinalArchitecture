@@ -40,7 +40,7 @@ class FluidMusicMainViewModel: BaseViewModel() {
         initData()
     }
 
-    override fun initData() {
+    fun initData() {
         viewModelScope.launch {
             musicServiceConnection.nowPlaying.collectLatest {
                 _currentPlayInfo.value = it

@@ -64,7 +64,7 @@ class PlayerDetailViewModel: BaseViewModel() {
         musicServiceConnection.player?.seekToPrevious()
     }
 
-    override fun initData() {
+    fun initData() {
         viewModelScope.launch {
             musicServiceConnection.nowPlaying.collectLatest {
                 _currentPlayInfo.value = it

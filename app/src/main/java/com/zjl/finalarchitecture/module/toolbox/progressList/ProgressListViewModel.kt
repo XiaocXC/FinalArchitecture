@@ -10,7 +10,7 @@ import com.zjl.base.viewmodel.BaseViewModel
  */
 class ProgressListViewModel: BaseViewModel() {
 
-    override fun initData() {
+    fun initData() {
 
     }
 }

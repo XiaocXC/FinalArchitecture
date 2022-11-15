@@ -1,20 +1,15 @@
 package com.zjl.finalarchitecture.module.home.viewmodel
 
-import androidx.lifecycle.viewModelScope
-import com.zjl.base.exception.ApiException
 import com.zjl.base.onSuccess
 import com.zjl.base.ui.PagingUiModel
-import com.zjl.base.ui.UiModel
-import com.zjl.base.ui.data
 import com.zjl.base.viewmodel.PagingBaseViewModel
+import com.zjl.base.viewmodel.requestScope
 import com.zjl.finalarchitecture.data.model.ArticleListVO
 import com.zjl.finalarchitecture.data.model.BannerVO
-import com.zjl.finalarchitecture.data.model.PageVO
 import com.zjl.finalarchitecture.data.respository.ApiRepository
 import com.zjl.finalarchitecture.utils.CacheUtil
+import com.zjl.finalarchitecture.utils.ext.paging.requestPagingApiResult
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
-import timber.log.Timber
 
 /**
  * @author Xiaoc
@@ -33,6 +28,7 @@ class ArticleViewModel : PagingBaseViewModel() {
     private var mCurrentIndex: Int = initPageIndex()
 
     init {
+        // 初始化时请求刷新数据
         onRefreshData()
     }
 
@@ -56,13 +52,10 @@ class ArticleViewModel : PagingBaseViewModel() {
      * @param currentIndex 当前加载的分页数据
      */
     private fun requestArticle(currentIndex: Int){
-        viewModelScope.launch {
-            // 先置为加载中
-            if(currentIndex == initPageIndex()){
-                _articleList.value = PagingUiModel.Loading(true)
-            }
-
-            launchRequestByNormal({
+        // 启动请求协程域，里面的任何错误均可被处理
+        requestScope {
+            // 调用快捷的分页请求方法，具体使用请见该方法注释
+            requestPagingApiResult(isRefresh = currentIndex == initPageIndex(), pagingUiModel = _articleList){
                 // 如果App配置打开了首页请求置顶文章(为什么做这个，我们可以再设置页面灵活开关)，且是第一页，则额外请求一个置顶文章列表
                 val articlePageData = ApiRepository.requestArticleDataByPage(currentIndex)
                 if (CacheUtil.isNeedTop() && currentIndex == initPageIndex()) {
@@ -77,11 +70,7 @@ class ArticleViewModel : PagingBaseViewModel() {
                     }
                 }
                 articlePageData
-            }, successBlock = {
-                _articleList.value = PagingUiModel.Success(it.dataList, currentIndex == initPageIndex(), it.over)
-            }, failureBlock = {
-                _articleList.value = PagingUiModel.Error(ApiException(it), currentIndex == initPageIndex())
-            })
+            }.await()
         }
     }
 
@@ -89,12 +78,12 @@ class ArticleViewModel : PagingBaseViewModel() {
      * 刷新Banner数据
      */
     private fun requestBanner() {
-        viewModelScope.launch {
-            launchRequestByNormal({
+        requestScope {
+            // 调用网络请求方法，具体使用请见该方法注释
+            val data = requestApiResult {
                 ApiRepository.requestBanner()
-            }, successBlock = {
-                _bannerList.value = it
-            })
+            }.await()
+            _bannerList.value = data
         }
     }
 

@@ -70,22 +70,23 @@ class PlazaFragment : BaseFragment<FragmentPlazaBinding, PlazaViewModel>(), OnRe
         // 文章分页数据
         mViewModel.plazaList.launchAndCollectIn(viewLifecycleOwner){
             it.handlePagingStatus(mArticleAdapter, uiRootState, mBinding.refreshLayout){
-                refresh()
+                retryAll()
             }
         }
 
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout) {
-        refresh()
+        mViewModel.onRefreshData()
     }
 
     override fun onLoadMore(refreshLayout: RefreshLayout) {
-        mViewModel.loadMore()
+        mViewModel.onLoadMoreData()
     }
 
-    private fun refresh() {
-        mViewModel.initData()
+    override fun retryAll() {
+        super.retryAll()
+        mBinding.refreshLayout.autoRefresh()
     }
 
     override fun configImmersive(immersionBar: ImmersionBar): ImmersionBar? {

@@ -58,7 +58,7 @@ class WeChatFragment : BaseFragment<FragmentProjectBinding, WechatViewModel>(), 
         mWechatCategoryAdapter.check(mViewModel.checkPosition)
 
         mWechatCategoryAdapter.setCheckClick { id, position ->
-            mViewModel.onCidChanged(id)
+            mViewModel.onRefreshCategoryId(id)
             mViewModel.checkPosition = position
         }
 
@@ -93,23 +93,22 @@ class WeChatFragment : BaseFragment<FragmentProjectBinding, WechatViewModel>(), 
         // 对应分类的数据
         mViewModel.articleList.launchAndCollectIn(viewLifecycleOwner){
             it.handlePagingStatus(mWechatListAdapter, articleStateContainer, mBinding.refreshLayout){
-                refresh()
+                retryAll()
             }
         }
 
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout) {
-        mViewModel.onCidChanged(mViewModel.cid.value)
+        mViewModel.onRefreshData()
     }
 
     override fun onLoadMore(refreshLayout: RefreshLayout) {
-        mViewModel.loadMore()
+        mViewModel.onLoadMoreData()
     }
 
-    private fun refresh() {
-        // 刷新Paging
-        mViewModel.initData()
+    override fun retryAll() {
+        mBinding.refreshLayout.autoRefresh()
     }
 
     override fun configImmersive(immersionBar: ImmersionBar): ImmersionBar? {

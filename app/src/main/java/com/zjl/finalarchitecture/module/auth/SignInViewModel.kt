@@ -5,6 +5,7 @@ import com.zjl.base.exception.ApiException
 import com.zjl.base.onSuccess
 import com.zjl.base.ui.UiModel
 import com.zjl.base.viewmodel.BaseViewModel
+import com.zjl.base.viewmodel.requestScope
 import com.zjl.finalarchitecture.data.model.UserInfoVO
 import com.zjl.finalarchitecture.data.respository.ApiRepository
 import com.zjl.finalarchitecture.data.respository.datasouce.UserAuthDataSource
@@ -34,19 +35,13 @@ class SignInViewModel : BaseViewModel(){
      * @param password 密码
      */
     fun signInByPassword(account: String, password: String){
-
-        viewModelScope.launch {
-            launchRequestByNormalWithUiState({
+        requestScope {
+            val data = requestApiResult {
                 apiRepository.login(account, password)
-            }, _eventSignInState, isShowLoading = true, successBlock = {
-                // 如果登录成功，我们把用户信息数据存储到本地
-                UserAuthDataSource.signIn(it)
-            })
+            }.await()
+            // 如果登录成功，我们把用户信息数据存储到本地
+            UserAuthDataSource.signIn(data)
         }
-    }
-
-    override fun initData() {
-
     }
 
 }

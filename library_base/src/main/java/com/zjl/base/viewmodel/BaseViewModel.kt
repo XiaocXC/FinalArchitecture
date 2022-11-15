@@ -5,9 +5,14 @@ import com.zjl.base.*
 import com.zjl.base.error.Error
 import com.zjl.base.exception.ApiException
 import com.zjl.base.ui.UiModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.async
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.*
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.coroutineContext
+import kotlin.jvm.Throws
 
 /**
  * @author Xiaoc
@@ -20,6 +25,62 @@ import kotlin.coroutines.coroutineContext
 abstract class BaseViewModel: ViewModel(){
 
     /**
+     * 请求基于ApiResult的网络请求
+     * @param uiModel UiModel的状态值，如果不传，你可以通过返回值自行处理
+     * @param block 请求的接口调用
+     *
+     * example 1.
+     * 我需要请求一个数据，并将数据以及它的请求状态填充到stateFlow中
+     *  // 文章详情
+     *  private val _articleData = MutableStateFlow<UiModel<ArticleListVO>>(UiModel.Loading())
+     *  val articleData: StateFlow<UiModel<ArticleListVO>> = _articleData
+     *
+     *  fun test(){
+     *      requestApiResult(uiModel = _articleData){
+     *          ApiService.requestData()
+     *      }.await()
+     *  }
+     *
+     * example 2.
+     * 我需要请求一个数据，但我不需要自行填充，我自己处理返回数据
+     *
+     *  fun test(){
+     *      val result = requestApiResult(uiModel = _articleData){
+     *          ApiService.requestData()
+     *      }.await()
+     *
+     *      // 自行处理result
+     *  }
+     */
+    @Throws(ApiException::class)
+    inline fun <reified T> CoroutineScope.requestApiResult(
+        uiModel: MutableSharedFlow<UiModel<T>>? = null,
+        crossinline block: suspend (CoroutineScope.() -> ApiResult<T>)
+    ): Deferred<T> {
+        return async {
+            ensureActive()
+            // 如果传入了uiModel，则请求前更改为加载中状态
+            uiModel?.emit(UiModel.Loading())
+            return@async when(val result = block(this)){
+                is ApiResult.Success ->{
+                    val data = result.data
+                    // 如果传入了uiModel，则给它赋值成功状态
+                    uiModel?.emit(UiModel.Success(data))
+                    // 返回脱壳数据
+                    data
+                }
+                is ApiResult.Failure ->{
+                    val exception = ApiException(result.error)
+                    // 如果传入了uiModel，则给它赋值失败状态
+                    uiModel?.emit(UiModel.Error(exception))
+                    // 抛出错误
+                    throw exception
+                }
+            }
+        }
+    }
+
+    /**
      * 普通的协程请求
      * @param requestAction 请求行为函数
      * 需要返回一个由ApiResult包裹的数据集
@@ -28,6 +89,7 @@ abstract class BaseViewModel: ViewModel(){
      *
      * 该方法只提供[successBlock]和[failureBlock]回调，具体内容需要你自行处理
      */
+    @Deprecated("建议使用更先进的API", replaceWith = ReplaceWith("this.requestApiResult"))
     protected suspend fun <T> launchRequestByNormal(
         requestAction: suspend CoroutineContext.() -> ApiResult<T>,
         successBlock: suspend CoroutineContext.(T) -> Unit = {},
@@ -62,6 +124,7 @@ abstract class BaseViewModel: ViewModel(){
      * 该方法与[launchRequestByNormal]不同的是，它会帮助你处理Ui状态
      * 如果[isShowLoading]为true，它会帮你处理请求过程中（加载中）的状态更新
      */
+    @Deprecated("建议使用更先进的API", replaceWith = ReplaceWith("this.requestApiResult"))
     protected suspend fun <T> launchRequestByNormalWithUiState(
         requestAction: suspend CoroutineContext.() -> ApiResult<T>,
         resultState: MutableSharedFlow<UiModel<T>>,

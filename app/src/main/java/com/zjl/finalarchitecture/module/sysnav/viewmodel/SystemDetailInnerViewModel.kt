@@ -9,9 +9,11 @@ import com.zjl.base.exception.ApiException
 import com.zjl.base.ui.PagingUiModel
 import com.zjl.base.viewmodel.BaseViewModel
 import com.zjl.base.viewmodel.PagingBaseViewModel
+import com.zjl.base.viewmodel.requestScope
 import com.zjl.finalarchitecture.data.model.ArticleListVO
 import com.zjl.finalarchitecture.data.respository.ApiRepository
 import com.zjl.finalarchitecture.data.respository.datasouce.SystemArticlePagingSource
+import com.zjl.finalarchitecture.utils.ext.paging.requestPagingApiResult
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -31,24 +33,28 @@ class SystemDetailInnerViewModel(
     private val _systemArticleList = MutableStateFlow<PagingUiModel<ArticleListVO>>(PagingUiModel.Loading(true))
     val systemArticleList: StateFlow<PagingUiModel<ArticleListVO>> = _systemArticleList
 
+    private var mCurrentIndex: Int = initPageIndex()
+
     init {
-        initData()
+        onRefreshData()
     }
 
-    override fun loadMoreInner(currentIndex: Int) {
+    fun loadMoreSystemDetailList(currentIndex: Int) {
         viewModelScope.launch {
-            // 先置为加载中
-            if(currentIndex == initPageIndex()){
-                _systemArticleList.value = PagingUiModel.Loading(true)
+            requestScope {
+                requestPagingApiResult(isRefresh = currentIndex == initPageIndex(), pagingUiModel = _systemArticleList){
+                    ApiRepository.requestSystemListData(currentIndex, id)
+                }.await()
             }
-
-            launchRequestByPaging({
-                ApiRepository.requestSystemListData(currentIndex, id)
-            }, successBlock = {
-                _systemArticleList.value = PagingUiModel.Success(it.dataList, currentIndex == initPageIndex(), !it.over)
-            }, failureBlock = {
-                _systemArticleList.value = PagingUiModel.Error(ApiException(it), currentIndex == initPageIndex())
-            })
         }
+    }
+
+    override fun onRefreshData(tag: Any?) {
+        mCurrentIndex = initPageIndex()
+    }
+
+    override fun onLoadMoreData(tag: Any?) {
+        mCurrentIndex ++
+        loadMoreSystemDetailList(mCurrentIndex)
     }
 }

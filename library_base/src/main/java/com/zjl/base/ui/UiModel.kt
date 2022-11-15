@@ -12,38 +12,9 @@ package com.zjl.base.ui
  */
 sealed class UiModel<T>{
 
-    data class Success<T>(val data: T) : UiModel<T>(){
-        override fun equals(other: Any?): Boolean {
-            // 我们要把equals方法返回false，防止StateFlow判断值相同不更新的问题
-            return false
-        }
-
-        override fun hashCode(): Int {
-            return data?.hashCode() ?: 0
-        }
-    }
-    data class Loading<T>(val data: T? = null) : UiModel<T>(){
-        override fun equals(other: Any?): Boolean {
-            // 我们要把equals方法返回false，防止StateFlow判断值相同不更新的问题
-            return false
-        }
-
-        override fun hashCode(): Int {
-            return data?.hashCode() ?: 0
-        }
-    }
-    data class Error<T>(val error: Throwable, val data: T? = null) : UiModel<T>(){
-        override fun equals(other: Any?): Boolean {
-            // 我们要把equals方法返回false，防止StateFlow判断值相同不更新的问题
-            return false
-        }
-
-        override fun hashCode(): Int {
-            var result = error.hashCode()
-            result = 31 * result + (data?.hashCode() ?: 0)
-            return result
-        }
-    }
+    data class Success<T>(val data: T) : UiModel<T>()
+    data class Loading<T>(val data: T? = null) : UiModel<T>()
+    data class Error<T>(val error: Throwable, val data: T? = null) : UiModel<T>()
 
 }
 

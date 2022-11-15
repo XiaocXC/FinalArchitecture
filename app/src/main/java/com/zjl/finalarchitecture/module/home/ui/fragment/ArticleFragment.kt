@@ -95,7 +95,7 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel>()
                 uiRootState,
                 mBinding.refreshLayout
             ) {
-                onRefresh(mBinding.refreshLayout)
+                retryAll()
             }
         }
     }

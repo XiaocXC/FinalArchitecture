@@ -41,7 +41,7 @@ class AllArtistListViewModel(
         initData()
     }
 
-    override fun initData() {
+    fun initData() {
 
         viewModelScope.launch {
             val children = musicServiceConnection.getChildren(parentId)

@@ -162,7 +162,7 @@ abstract class BaseActivity<V : ViewBinding, VM : BaseViewModel> : AppCompatActi
      * 重试方法，默认不实现
      */
     open fun retryAll() {
-        mViewModel.initData()
+
     }
 
     /**

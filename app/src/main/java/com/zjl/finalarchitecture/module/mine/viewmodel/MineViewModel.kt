@@ -13,6 +13,6 @@ class MineViewModel: BaseViewModel() {
 
     val userInfo = UserAuthDataSource.basicUserInfoVO
 
-    override fun initData() {
+    fun initData() {
     }
 }

@@ -65,7 +65,7 @@ class MultiListViewModel: BaseViewModel() {
         }
     }
 
-    override fun initData() {
+    fun initData() {
         viewModelScope.launch {
             // 模拟多样式内容数据
             _multiList.value = listOf(

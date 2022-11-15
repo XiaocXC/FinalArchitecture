@@ -21,7 +21,7 @@ class TimerProgressListViewModel: BaseViewModel() {
         initData()
     }
 
-    override fun initData() {
+    fun initData() {
         viewModelScope.launch {
             // 生成假数据
             val currentTime = System.currentTimeMillis()

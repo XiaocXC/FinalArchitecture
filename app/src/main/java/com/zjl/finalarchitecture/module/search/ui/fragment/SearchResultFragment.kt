@@ -42,7 +42,7 @@ class SearchResultFragment: BaseFragment<FragmentSearchResultBinding, SearchResu
         // 列表适配器
         mArticleAdapter = ArticleAdapter()
         mArticleAdapter.loadMoreModule.setOnLoadMoreListener {
-            mViewModel.loadMore()
+            mViewModel.onLoadMoreData()
         }
 
         // 给ArticleAdapter加上分页的状态尾
@@ -62,7 +62,7 @@ class SearchResultFragment: BaseFragment<FragmentSearchResultBinding, SearchResu
     override fun createObserver() {
         mViewModel.searchResults.launchAndCollectIn(viewLifecycleOwner){
             it.handlePagingStatus(mArticleAdapter, searchResultStateContainer, null){
-                refresh()
+                retryAll()
             }
         }
 
@@ -71,8 +71,8 @@ class SearchResultFragment: BaseFragment<FragmentSearchResultBinding, SearchResu
         }
     }
 
-    private fun refresh(){
-        // 刷新
-        mViewModel.loadMore()
+    override fun retryAll() {
+        mViewModel.onRefreshData()
+        super.retryAll()
     }
 }

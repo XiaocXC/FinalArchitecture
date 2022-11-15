@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.zjl.base.exception.ApiException
 import com.zjl.base.ui.UiModel
 import com.zjl.base.viewmodel.BaseViewModel
+import com.zjl.base.viewmodel.requestScope
 import com.zjl.finalarchitecture.data.model.NavigationVO
 import com.zjl.finalarchitecture.data.respository.ApiRepository
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -29,14 +30,11 @@ class NavigationViewModel : BaseViewModel() {
         initData()
     }
 
-    override fun initData() {
-
-        viewModelScope.launch {
-            launchRequestByNormalWithUiState({
+    fun initData() {
+        requestScope {
+            requestApiResult(uiModel = _fuckNavigationList) {
                 ApiRepository.requestNavigationListData()
-            }, _fuckNavigationList, isShowLoading = true)
-
+            }.await()
         }
-
     }
 }

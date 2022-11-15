@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.zjl.base.exception.ApiException
 import com.zjl.base.ui.UiModel
 import com.zjl.base.viewmodel.BaseViewModel
+import com.zjl.base.viewmodel.requestScope
 import com.zjl.finalarchitecture.data.model.SystemVO
 import com.zjl.finalarchitecture.data.respository.ApiRepository
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,21 +23,17 @@ class SystemViewModel: BaseViewModel() {
     val systemList: StateFlow<UiModel<List<SystemVO>>> = _systemList
 
     init {
-        initData()
+        loadSystemData()
     }
 
     /**
      * 加载体系数据
      */
     private fun loadSystemData(){
-        viewModelScope.launch {
-            launchRequestByNormalWithUiState(requestAction = {
+        requestScope {
+            requestApiResult(uiModel = _systemList) {
                 ApiRepository.requestSystemListData()
-            }, resultState = _systemList, isShowLoading = true)
+            }.await()
         }
-    }
-
-    override fun initData() {
-        loadSystemData()
     }
 }

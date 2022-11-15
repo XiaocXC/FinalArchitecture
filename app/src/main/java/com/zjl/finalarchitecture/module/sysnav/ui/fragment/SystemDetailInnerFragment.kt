@@ -45,13 +45,13 @@ class SystemDetailInnerFragment: BaseFragment<FragmentSystemDetailInnerBinding, 
 
         mViewModel.systemArticleList.launchAndCollectIn(viewLifecycleOwner){
             it.handlePagingStatus(mArticleAdapter, uiRootState, mBinding.smartRefresh){
-                refresh()
+                retryAll()
             }
         }
     }
 
-    private fun refresh(){
-        // 刷新Paging
-        mViewModel.initData()
+    override fun retryAll() {
+        super.retryAll()
+        mViewModel.onRefreshData()
     }
 }

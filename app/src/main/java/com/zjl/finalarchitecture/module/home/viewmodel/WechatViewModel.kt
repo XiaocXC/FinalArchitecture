@@ -1,17 +1,15 @@
 package com.zjl.finalarchitecture.module.home.viewmodel
 
-import androidx.lifecycle.viewModelScope
-import com.zjl.base.exception.ApiException
 import com.zjl.base.ui.PagingUiModel
 import com.zjl.base.ui.UiModel
 import com.zjl.base.viewmodel.PagingBaseViewModel
+import com.zjl.base.viewmodel.requestScope
 import com.zjl.finalarchitecture.data.model.ArticleListVO
 import com.zjl.finalarchitecture.data.model.CategoryVO
 import com.zjl.finalarchitecture.data.respository.ApiRepository
+import com.zjl.finalarchitecture.utils.ext.paging.requestPagingApiResult
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.launch
 
 class WechatViewModel : PagingBaseViewModel() {
 
@@ -28,8 +26,9 @@ class WechatViewModel : PagingBaseViewModel() {
         MutableStateFlow<PagingUiModel<ArticleListVO>>(PagingUiModel.Loading(true))
     val articleList: StateFlow<PagingUiModel<ArticleListVO>> = _articleList
 
-    private val _cid = MutableStateFlow(0)
-    val cid: StateFlow<Int> = _cid
+    private var categoryId: Int? = null
+
+    private var mCurrentIndex = initPageIndex()
 
     // 微信公众号分类选中下表
     var checkPosition = 0
@@ -42,52 +41,47 @@ class WechatViewModel : PagingBaseViewModel() {
         return 1
     }
 
-    override fun loadMoreInner(currentIndex: Int) {
-        viewModelScope.launch {
-            // 如果是重新刷新，则显示加载中
-            if (currentIndex == initPageIndex()) {
-                _articleList.value = PagingUiModel.Loading(true)
-            }
+    override fun onRefreshData(tag: Any?) {
+        mCurrentIndex = initPageIndex()
+        loadMoreWechatList(mCurrentIndex)
+    }
 
-            launchRequestByPaging({
-                ApiRepository.requestWechatDetailListDataByPage(_cid.value, currentIndex)
-            }, successBlock = {
-                _articleList.value =
-                    PagingUiModel.Success(it.dataList, currentIndex == initPageIndex(), !it.over)
-            }, failureBlock = {
-                _articleList.value =
-                    PagingUiModel.Error(ApiException(it), currentIndex == initPageIndex())
-            })
+    override fun onLoadMoreData(tag: Any?) {
+        mCurrentIndex ++
+        loadMoreWechatList(mCurrentIndex)
+    }
+
+    private fun loadMoreWechatList(currentIndex: Int) {
+        requestScope {
+            requestPagingApiResult(isRefresh = currentIndex == initPageIndex(), pagingUiModel = _articleList){
+                ApiRepository.requestWechatDetailListDataByPage(categoryId!!, currentIndex)
+            }.await()
         }
     }
 
     /**
-     * 点击后更改的Cid
+     * 点击后更改的CategoryId
      * 更改会会触发加载数据
      */
-    fun onCidChanged(cid: Int) {
-        _cid.value = cid
-
-        // 重置分页Index
-        currentPageIndex = initPageIndex()
-        loadMore()
+    fun onRefreshCategoryId(cid: Int) {
+        categoryId = cid
+        // 刷新数据
+        onRefreshData()
     }
 
     /**
      * 请求微信公众号分类
      */
     private fun requestCategory() {
-        viewModelScope.launch {
-            launchRequestByNormalWithUiState({
+        requestScope {
+            val data = requestApiResult(uiModel = _categoryList) {
                 ApiRepository.requestWechatListData()
-            }, _categoryList,
-                isShowLoading = true,
-                successBlock = { data ->
-                    // 默认选中一个
-                    if (data.isNotEmpty()) {
-                        onCidChanged(data[0].id)
-                    }
-                })
+            }.await()
+
+            // 默认选中一个
+            if(data.isNotEmpty()){
+                onRefreshCategoryId(data[0].id)
+            }
         }
     }
 

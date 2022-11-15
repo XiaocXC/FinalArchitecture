@@ -61,7 +61,7 @@ class ProjectFragment : BaseFragment<FragmentProjectBinding, ProjectViewModel>()
 
         mProjectCategoryAdapter.setCheckClick { id, position ->
             Timber.e("收到的id是：${id}")
-            mViewModel.onCidChanged(id)
+            mViewModel.refreshCategoryList(id)
 
             mViewModel.checkPosition = position
         }
@@ -97,22 +97,21 @@ class ProjectFragment : BaseFragment<FragmentProjectBinding, ProjectViewModel>()
         // 对应分类的数据
         mViewModel.articleList.launchAndCollectIn(viewLifecycleOwner){
             it.handlePagingStatus(mProjectListAdapter, articleStateContainer, mBinding.refreshLayout){
-                refresh()
+                retryAll()
             }
         }
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout) {
-        mViewModel.onCidChanged(mViewModel.cid.value)
+        mViewModel.onRefreshData()
     }
 
     override fun onLoadMore(refreshLayout: RefreshLayout) {
-        mViewModel.loadMore()
+        mViewModel.onLoadMoreData()
     }
 
-    private fun refresh() {
-        // 刷新Paging
-        mViewModel.initData()
+    override fun retryAll() {
+        mBinding.refreshLayout.autoRefresh()
     }
 
     override fun configImmersive(immersionBar: ImmersionBar): ImmersionBar? {

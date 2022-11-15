@@ -21,7 +21,7 @@ class RecyclerViewDragViewModel: BaseViewModel() {
         initData()
     }
 
-    override fun initData() {
+    fun initData() {
         viewModelScope.launch {
             val generateItems = mutableListOf<String>(
                 "1",

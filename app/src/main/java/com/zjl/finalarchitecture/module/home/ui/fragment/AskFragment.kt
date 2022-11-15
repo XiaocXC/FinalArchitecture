@@ -60,7 +60,7 @@ class AskFragment: BaseFragment<FragmentAskBinding, AskViewModel>(), OnRefreshLo
         // 文章分页数据
         mViewModel.askList.launchAndCollectIn(viewLifecycleOwner){
             it.handlePagingStatus(mArticleAdapter, uiRootState, mBinding.refreshLayout){
-                onRefresh(mBinding.refreshLayout)
+                retryAll()
             }
         }
 
@@ -72,6 +72,11 @@ class AskFragment: BaseFragment<FragmentAskBinding, AskViewModel>(), OnRefreshLo
 
     override fun onLoadMore(refreshLayout: RefreshLayout) {
         mViewModel.onLoadMoreData()
+    }
+
+    override fun retryAll() {
+        super.retryAll()
+        mBinding.refreshLayout.autoRefresh()
     }
 
     override fun configImmersive(immersionBar: ImmersionBar): ImmersionBar? {

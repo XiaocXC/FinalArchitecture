@@ -8,7 +8,4 @@ package com.zjl.base.viewmodel
  * 部分界面不需要ViewModel时可使用
  **/
 class EmptyViewModel: BaseViewModel() {
-
-    override fun initData() {
-    }
 }

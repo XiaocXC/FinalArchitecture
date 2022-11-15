@@ -21,7 +21,7 @@ class WebViewModel(
     private val _webUrl = MutableStateFlow(_webUrlInner ?: "")
     val webUrl: StateFlow<String> get() = _webUrl
 
-    override fun initData() {
+    fun initData() {
 
     }
 }

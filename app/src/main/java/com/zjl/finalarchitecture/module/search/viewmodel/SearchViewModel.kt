@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.zjl.base.utils.globalJson
 import com.zjl.finalarchitecture.utils.CacheUtil
 import com.zjl.base.viewmodel.BaseViewModel
+import com.zjl.base.viewmodel.requestScope
 import com.zjl.finalarchitecture.data.model.SearchHotVO
 import com.zjl.finalarchitecture.data.respository.ApiRepository
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -69,16 +70,18 @@ class SearchViewModel: BaseViewModel() {
         }
     }
 
-    override fun initData() {
-        viewModelScope.launch {
-            launchRequestByNormal({
-                ApiRepository.getSearchHot()
-            }, successBlock = {
-                _searchHotKeys.emit(it)
-            })
-        }
-        viewModelScope.launch {
+    fun initData() {
+        requestScope {
+            // 历史搜索记录
             _searchHistoryKeys.value = CacheUtil.getSearchHistoryData().toMutableList()
+
+            // 推荐热门搜索内容
+            val data = requestApiResult {
+                ApiRepository.getSearchHot()
+            }.await()
+
+            _searchHotKeys.value = data
+
         }
     }
 }

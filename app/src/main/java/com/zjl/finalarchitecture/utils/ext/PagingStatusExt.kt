@@ -36,7 +36,12 @@ fun <T> PagingUiModel<T>.handlePagingStatus(
                     stateContainer?.show(EmptyState())
                 } else {
                     // 设置数据到Adapter中
-                    adapter.setList(this.data)
+                    if(adapter.data.isEmpty()){
+                        adapter.setList(this.totalList)
+                    } else {
+                        adapter.setList(this.data)
+                    }
+
                     // 否则显示成功布局（即正常视图）
                     stateContainer?.show(SuccessState())
                 }
@@ -44,7 +49,11 @@ fun <T> PagingUiModel<T>.handlePagingStatus(
                 refreshLayout?.finishRefresh(500)
             } else {
                 // 如果不是重新刷新，将数据加入到Adapter中
-                adapter.addData(this.data)
+                if (adapter.data.isEmpty()){
+                    adapter.setList(this.totalList)
+                } else {
+                    adapter.addData(this.data)
+                }
                 // 结束加载更多
                 refreshLayout?.finishLoadMore(500)
             }
@@ -58,6 +67,9 @@ fun <T> PagingUiModel<T>.handlePagingStatus(
 
         // 如果是失败
         is PagingUiModel.Error -> {
+            if (adapter.data.isEmpty()) {
+                adapter.setList(this.totalList)
+            }
             // 如果是重新刷新
             if (this.refresh) {
                 refreshLayout?.finishRefresh(false)

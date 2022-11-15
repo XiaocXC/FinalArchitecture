@@ -3,6 +3,7 @@ package com.zjl.finalarchitecture.module.auth.register
 import androidx.lifecycle.viewModelScope
 import com.zjl.base.ui.UiModel
 import com.zjl.base.viewmodel.BaseViewModel
+import com.zjl.base.viewmodel.requestScope
 import com.zjl.finalarchitecture.data.model.UserInfoVO
 import com.zjl.finalarchitecture.data.respository.ApiRepository
 import com.zjl.finalarchitecture.data.respository.datasouce.UserAuthDataSource
@@ -31,15 +32,10 @@ class RegisterViewModel: BaseViewModel() {
      * @param password 密码
      */
     fun registerByPassword(account: String, password: String){
-
-        viewModelScope.launch {
-            launchRequestByNormalWithUiState({
+        requestScope {
+            requestApiResult(uiModel = _eventRegisterState) {
                 apiRepository.register(account, password)
-            }, _eventRegisterState, isShowLoading = true)
+            }.await()
         }
-    }
-
-    override fun initData() {
-
     }
 }

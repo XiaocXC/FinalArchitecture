@@ -11,7 +11,7 @@ import com.zjl.base.viewmodel.BaseViewModel
  */
 class AppConfigViewModel: BaseViewModel() {
 
-    override fun initData() {
+    fun initData() {
 
     }
 }
