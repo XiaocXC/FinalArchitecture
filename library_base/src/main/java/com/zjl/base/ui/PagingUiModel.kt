@@ -62,8 +62,13 @@ sealed class PagingUiModel<T> {
  * 更新PagingUiModel状态
  * @param pagingUiModel 新的PagingUiModel
  *
- * 由于Navigation的replace覆盖Fragment的问题，我们提供了该方法进行处理分页数据
+ * 由于Navigation的replace覆盖Fragment的问题，我们提供了该方法进行处理分页数据，它在赋值时会保留之前的页码数据
  * 防止切换暗黑模式等情况时，总数据丢失的问题
+ * 注意数据丢失会出现在满足以下条件的情况下：
+ * 1.你的分页请求初始化是放在ViewModel的初始化中，而不是Fragment中的
+ * 2.你使用了LiveData、StateFlow之类的观察类
+ * 3.你没有使用Paging库进行分页，而是使用adapter、smartRefresh等界面库的分页操作
+ * 以上条件均满足，当切换界面重建则会出现数据丢失的情况
  */
 fun <T> PagingUiModel<T>.append(pagingUiModel: PagingUiModel<T>): PagingUiModel<T>{
     val oldList = this.totalList
@@ -72,7 +77,7 @@ fun <T> PagingUiModel<T>.append(pagingUiModel: PagingUiModel<T>): PagingUiModel<
             return if(pagingUiModel.refresh){
                 pagingUiModel.copy(totalList = pagingUiModel.data.toMutableList())
             } else {
-                // 如果是加载更多，我们把总数据给放置正确
+                // 如果是加载更多，我们把之前的总数据加上
                 val addList = pagingUiModel.data
                 oldList.addAll(addList)
                 pagingUiModel.copy(totalList = oldList)

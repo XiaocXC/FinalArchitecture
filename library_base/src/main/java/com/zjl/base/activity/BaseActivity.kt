@@ -160,6 +160,7 @@ abstract class BaseActivity<V : ViewBinding, VM : BaseViewModel> : AppCompatActi
 
     /**
      * 重试方法，默认不实现
+     * 子类可以重写该方法
      */
     open fun retryAll() {
 

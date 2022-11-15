@@ -56,11 +56,13 @@ class ArticleViewModel : PagingBaseViewModel() {
         requestScope {
             // 调用快捷的分页请求方法，具体使用请见该方法注释
             requestPagingApiResult(isRefresh = currentIndex == initPageIndex(), pagingUiModel = _articleList){
-                // 如果App配置打开了首页请求置顶文章(为什么做这个，我们可以再设置页面灵活开关)，且是第一页，则额外请求一个置顶文章列表
+                // 1.获取文章分页数据
                 val articlePageData = ApiRepository.requestArticleDataByPage(currentIndex)
+                // 2.当我们开启了置顶显示且是第一页时，我们请求一次置顶数据
                 if (CacheUtil.isNeedTop() && currentIndex == initPageIndex()) {
                     val topArticleList = mutableListOf<ArticleListVO>()
 
+                    // 3.获取置顶数据，如果成功，我们将其组装到总数据中
                     val topArticleListData = ApiRepository.requestTopArticleData()
                     topArticleListData.onSuccess {
                         topArticleList.addAll(it)

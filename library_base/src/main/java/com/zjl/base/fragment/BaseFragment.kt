@@ -15,7 +15,6 @@ import com.kongzue.dialogx.dialogs.WaitDialog
 import com.zjl.base.activity.BaseActivity
 import com.zjl.base.globalContext
 import com.zjl.base.network.NetworkManager
-import com.zjl.base.ui.state.EmptyState
 import com.zjl.base.ui.state.ErrorState
 import com.zjl.base.ui.state.LoadingState
 import com.zjl.base.utils.ext.getVmClazz
@@ -175,7 +174,8 @@ abstract class BaseFragment<V : ViewBinding, VM : BaseViewModel> : Fragment() {
     }
 
     /**
-     * 重试刷新全部内容的方法，默认直接调用viewModel的初始化方法
+     * 重试刷新全部内容的方法
+     * 子类可以重写该方法
      */
     open fun retryAll() {
 

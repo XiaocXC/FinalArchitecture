@@ -3,6 +3,7 @@ package com.zjl.base.ui.state
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
+import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import com.zjl.lib_base.R
 import com.zjl.lib_base.databinding.BaseUiStateErrorEmptyViewBinding
@@ -47,6 +48,10 @@ class ErrorState: MultiState() {
 
     fun retry(retryListener: OnRetryClickListener?){
         this.retryListener = retryListener
+    }
+
+    fun setErrorTextColor(@ColorInt color: Int){
+        binding.tvErrorInfo.setTextColor(color)
     }
 
     fun interface OnRetryClickListener {

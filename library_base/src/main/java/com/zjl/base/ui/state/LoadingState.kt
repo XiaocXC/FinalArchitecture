@@ -3,6 +3,7 @@ package com.zjl.base.ui.state
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
+import androidx.annotation.ColorInt
 import com.zjl.lib_base.R
 import com.zjl.lib_base.databinding.BaseUiStateLoadingViewBinding
 import com.zy.multistatepage.MultiState
@@ -33,5 +34,9 @@ class LoadingState: MultiState() {
 
     fun setLoadingMsg(text: String?){
         binding.tvLoadingMsg.text = text
+    }
+
+    fun setLoadingTextColor(@ColorInt color: Int){
+        binding.tvLoadingMsg.setTextColor(color)
     }
 }

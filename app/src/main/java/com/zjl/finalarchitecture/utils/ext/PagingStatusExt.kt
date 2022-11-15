@@ -14,6 +14,16 @@ import com.zy.multistatepage.state.SuccessState
  * @since  2022-07-04
  *
  * PagingUiModel分页数据与视图状态的处理
+ *
+ * 该扩展方法可以根据 PagingUiModel 的状态适配SmartRefreshLayout、BaseAdapter等内容的分页状态
+ * 并根据具体情况加载更多
+ * 该扩展处理了使用Navigation时出现的切换夜间模式或界面时造成的显示数据缺失的问题
+ * 注意数据丢失会出现在满足以下条件的情况下：
+ * 1.你的分页请求初始化是放在ViewModel的初始化中，而不是Fragment中的
+ * 2.你使用了LiveData、StateFlow之类的观察类
+ * 3.你没有使用Paging库进行分页，而是使用adapter、smartRefresh等界面库的分页操作
+ * 以上条件均满足，当切换界面重建则会出现数据丢失的情况
+ *
  * @param adapter 列表适配器
  * @param stateContainer 状态容器，为null则不处理
  * @param refreshLayout smartRefresh，为null则不处理
@@ -35,7 +45,9 @@ fun <T> PagingUiModel<T>.handlePagingStatus(
                 if (this.data.isEmpty()) {
                     stateContainer?.show(EmptyState())
                 } else {
-                    // 设置数据到Adapter中
+                    // 设置数据到Adapter中，这里分两种情况
+                    // 如果当前adapter中没有数据，我们填充所有数据
+                    // 否则我们填充当前数据
                     if(adapter.data.isEmpty()){
                         adapter.setList(this.totalList)
                     } else {
@@ -48,7 +60,9 @@ fun <T> PagingUiModel<T>.handlePagingStatus(
                 // 结束下拉刷新
                 refreshLayout?.finishRefresh(500)
             } else {
-                // 如果不是重新刷新，将数据加入到Adapter中
+                // 如果不是重新刷新，将数据加入到Adapter中，这里分两种情况
+                // 如果当前adapter中没有数据，我们填充所有数据
+                // 否则我们添加当前数据
                 if (adapter.data.isEmpty()){
                     adapter.setList(this.totalList)
                 } else {
@@ -67,6 +81,7 @@ fun <T> PagingUiModel<T>.handlePagingStatus(
 
         // 如果是失败
         is PagingUiModel.Error -> {
+            // 判断一下，如果当前adapter是空数据，可能是出现了界面重绘，我们填充一下所有数据
             if (adapter.data.isEmpty()) {
                 adapter.setList(this.totalList)
             }
@@ -86,9 +101,13 @@ fun <T> PagingUiModel<T>.handlePagingStatus(
 
         // 如果是加载中
         is PagingUiModel.Loading -> {
-
+            // 判断一下，如果当前adapter是空数据，可能是出现了界面重绘，我们填充一下所有数据
+            if (adapter.data.isEmpty()){
+                adapter.setList(this.totalList)
+            }
             if (this.refresh) {
                 refreshLayout?.autoRefresh()
+                // 如果adapter不存在数据，我们展示加载状态框
                 if (adapter.itemCount <= 0) {
                     stateContainer?.show(LoadingState())
                 }

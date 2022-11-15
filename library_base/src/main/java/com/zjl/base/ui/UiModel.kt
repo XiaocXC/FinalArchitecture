@@ -6,9 +6,6 @@ package com.zjl.base.ui
  * @since 2021/5/10
  *
  * 响应内容的包装类，它主要用于与UI层状态进行关联
- *
- * @param data 数据
- * @param error 错误信息（用于UI显示对应错误内容策略）
  */
 sealed class UiModel<T>{
 

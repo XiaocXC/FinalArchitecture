@@ -65,7 +65,7 @@ object NetworkManager {
 
             // 在 Android N 以后使用默认网络进行监听，策略不一样
             // Android N 以后我们直接使用回调回来的最新网络状态
-            // 在Android N 以前我们需要用一个列表存储起来判断当前默认网络是不是已经没有了，代表无网络状态
+            // 在 Android N 以前我们需要用一个列表存储起来判断当前默认网络是不是已经没有了，代表无网络状态
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
                 availableNetworkStates.clear()
                 setNetworkState(NO_NETWORK)
