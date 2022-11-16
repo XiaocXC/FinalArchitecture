@@ -57,6 +57,51 @@ abstract class BaseViewModel: ViewModel(){
      *      }
      *  }
      *
+     *  example 3.
+     *  我需要请求多个接口，按照1->2->3的顺序串行执行
+     *
+     *  fun test(){
+     *      // 在协程作用域下启动（这里推荐requestScope，它能处理一切异常）
+     *      requestScope {
+     *          val data1 = requestApiResult {
+     *              ApiService.requestData1()
+     *          }.await()
+     *          // 等待1请求完毕再请求2
+     *          val data2 = requestApiResult {
+     *              ApiService.requestData2()
+     *          }.await()
+     *          // 等待2请求完毕再请求3
+     *          val data3 = requestApiResult {
+     *              ApiService.requestData3()
+     *          }.await()
+     *      }
+     *  }
+     *
+     *  example 4.
+     *  我需要请求多个接口，3个接口同时异步请求，最后得到所有请求结果
+     *
+     *  fun test(){
+     *      // 在协程作用域下启动（这里推荐requestScope，它能处理一切异常）
+     *      requestScope {
+     *          // 请求1，2，3接口
+     *          val job1 = requestApiResult {
+     *              ApiService.requestData1()
+     *          }
+     *          val job2 = requestApiResult {
+     *              ApiService.requestData2()
+     *          }
+     *          val job3 = requestApiResult {
+     *              ApiService.requestData3()
+     *          }
+     *
+     *          // 等待1，2，3接口返回数据
+     *          val data1 = job1.await()
+     *          val data2 = job2.await()
+     *          val data3 = job3.await()
+     *
+     *      }
+     *  }
+     *
      * @param uiModel UiModel的状态值，如果不传，你可以通过返回值自行处理
      * @param block 请求的接口调用
      *
