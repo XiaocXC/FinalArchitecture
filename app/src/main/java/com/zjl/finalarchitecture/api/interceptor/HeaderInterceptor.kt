@@ -1,4 +1,4 @@
-package com.zjl.finalarchitecture.utils.network
+package com.zjl.finalarchitecture.api.interceptor
 
 import com.zjl.finalarchitecture.data.respository.datasouce.UserAuthDataSource
 import okhttp3.Interceptor

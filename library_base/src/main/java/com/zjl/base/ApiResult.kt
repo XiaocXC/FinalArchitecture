@@ -1,9 +1,5 @@
 package com.zjl.base
 
-import com.zjl.base.ui.UiModel
-import com.zjl.base.error.Error
-import com.zjl.base.exception.ApiException
-
 
 /**
  * @author Xiaoc
@@ -15,7 +11,7 @@ sealed class ApiResult<out T> {
 
     data class Success<T>(val data: T): ApiResult<T>()
 
-    data class Failure constructor(val error: Error): ApiResult<Nothing>()
+    data class Failure constructor(val throwable: Throwable): ApiResult<Nothing>()
 }
 
 /**
@@ -35,28 +31,11 @@ inline fun <T> ApiResult<T>.onSuccess(action: (T) -> Unit): ApiResult<T>{
  * 否则不进行任何操作，返回本身
  * @param action 成功后的操作
  */
-inline fun <T> ApiResult<T>.onFailure(action: (Error) -> Unit): ApiResult<T>{
+inline fun <T> ApiResult<T>.onFailure(action: (Throwable) -> Unit): ApiResult<T>{
     if(this is ApiResult.Failure){
-        action(this.error)
+        action(this.throwable)
     }
     return this
-}
-
-/**
- * 将ApiResult转换为UiModel
- * 如果是[ApiResult.Success]则转换为[UiModel.Success]
- * 否则转换为[UiModel.Error]
- * 避免每次写模板代码
- */
-fun <T> ApiResult<T>.transToUiModel(): UiModel<T>{
-    return when(this){
-        is ApiResult.Success ->{
-            UiModel.Success(this.data)
-        }
-        is ApiResult.Failure -> {
-            UiModel.Error(ApiException(this.error))
-        }
-    }
 }
 
 fun <T, R> ApiResult<T>.map(transform: (T) -> R): ApiResult<R>{
@@ -65,7 +44,7 @@ fun <T, R> ApiResult<T>.map(transform: (T) -> R): ApiResult<R>{
             ApiResult.Success(transform(this.data))
         }
         is ApiResult.Failure -> {
-            ApiResult.Failure(this.error)
+            ApiResult.Failure(this.throwable)
         }
     }
 }

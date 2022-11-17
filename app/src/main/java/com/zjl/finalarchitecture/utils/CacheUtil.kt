@@ -1,8 +1,7 @@
 package com.zjl.finalarchitecture.utils
 
 import com.tencent.mmkv.MMKV
-import com.zjl.base.utils.globalJson
-import com.zjl.base.utils.toJsonString
+import com.zjl.library_network.utils.globalJson
 import kotlinx.serialization.decodeFromString
 
 /**

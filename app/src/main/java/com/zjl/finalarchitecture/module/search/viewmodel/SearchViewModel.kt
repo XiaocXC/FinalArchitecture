@@ -1,7 +1,7 @@
 package com.zjl.finalarchitecture.module.search.viewmodel
 
 import androidx.lifecycle.viewModelScope
-import com.zjl.base.utils.globalJson
+import com.zjl.library_network.utils.globalJson
 import com.zjl.finalarchitecture.utils.CacheUtil
 import com.zjl.base.viewmodel.BaseViewModel
 import com.zjl.base.viewmodel.requestScope

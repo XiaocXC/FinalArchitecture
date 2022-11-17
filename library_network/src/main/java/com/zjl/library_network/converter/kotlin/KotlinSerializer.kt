@@ -1,7 +1,6 @@
-package com.zjl.library_network.converter
+package com.zjl.library_network.converter.kotlin
 
-import com.zjl.base.utils.globalJson
-import com.zjl.base.utils.toJsonString
+import com.zjl.library_network.utils.globalJson
 import kotlinx.serialization.*
 import kotlinx.serialization.json.jsonObject
 import okhttp3.MediaType
@@ -14,10 +13,9 @@ import java.lang.reflect.Type
  * @author Xiaoc
  * @since 2021-10-13
  *
- * 序列化器
- * 注意：该序列化器创建的Retrofit序列化处理器会自动脱壳[ResultVO]
+ * Kotlin序列化器，你需要继承该类来序列化你的内容
  */
-internal sealed class Serializer {
+abstract class KotlinSerializer {
     abstract fun <T> fromResponseBody(loader: DeserializationStrategy<T>, body: ResponseBody): T
     abstract fun <T> toRequestBody(contentType: MediaType, saver: SerializationStrategy<T>, value: T): RequestBody
 
@@ -26,24 +24,26 @@ internal sealed class Serializer {
     @ExperimentalSerializationApi
     fun serializer(type: Type): KSerializer<Any> = format.serializersModule.serializer(type)
 
-    class FromString(override val format: StringFormat) : Serializer() {
+    class DefaultFromString(override val format: StringFormat) : KotlinSerializer() {
+
+        /**
+         * 将后台返回的数据序列化
+         */
         override fun <T> fromResponseBody(loader: DeserializationStrategy<T>, body: ResponseBody): T {
             val string = body.string()
-            // 脱壳ResultVO
-            val jsonObject = globalJson.parseToJsonElement(string).jsonObject
-
-            // 这里由于拦截器里做了正误判断，我们直接脱壳就行
-            val dataJson = jsonObject.getValue("data")
-            return format.decodeFromString(loader, dataJson.toJsonString())
+            return format.decodeFromString(loader, string)
         }
 
+        /**
+         * 将请求的参数数据序列化
+         */
         override fun <T> toRequestBody(contentType: MediaType, saver: SerializationStrategy<T>, value: T): RequestBody {
             val string = format.encodeToString(saver, value)
             return string.toRequestBody(contentType)
         }
     }
 
-    class FromBytes(override val format: BinaryFormat) : Serializer() {
+    class DefaultFromBytes(override val format: BinaryFormat) : KotlinSerializer() {
         override fun <T> fromResponseBody(loader: DeserializationStrategy<T>, body: ResponseBody): T {
             val bytes = body.bytes()
             return format.decodeFromByteArray(loader, bytes)

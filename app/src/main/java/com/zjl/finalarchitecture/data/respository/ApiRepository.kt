@@ -4,7 +4,7 @@ import com.zjl.base.ApiResult
 import com.zjl.base.onSuccess
 import com.zjl.finalarchitecture.utils.CacheUtil
 import com.zjl.finalarchitecture.api.ApiService
-import com.zjl.finalarchitecture.api.mRetrofit
+import com.zjl.finalarchitecture.api.mWanAndroidRetrofit
 import com.zjl.finalarchitecture.data.model.*
 
 import kotlinx.coroutines.Dispatchers
@@ -19,7 +19,7 @@ import kotlinx.coroutines.withContext
  */
 object ApiRepository {
 
-    private val mApiService by lazy { mRetrofit.create(ApiService::class.java) }
+    private val mApiService by lazy { mWanAndroidRetrofit.create(ApiService::class.java) }
 
     /**
      * 获取Banner数据

@@ -8,6 +8,8 @@ import com.zjl.base.activity.BaseActivity
 import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.module.main.viewmodel.MainViewModel
 import com.zjl.finalarchitecture.databinding.ActivityMainBinding
+import org.json.JSONObject
+import timber.log.Timber
 
 /**
  * @description: 主界面
@@ -19,6 +21,10 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     var mExitTime = 0L
 
     override fun initViewAndEvent(savedInstanceState: Bundle?) {
+        val jsonStr = "{\"msg\":\"error\",\"code\":20,\"data\":null}"
+        val obj = JSONObject(jsonStr)
+        val data = obj.optJSONObject("data")
+        Timber.i("TEST: ${data == null}")
         // 配置Navigation
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {

@@ -4,8 +4,6 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.zjl.base.ApiResult
 import com.zjl.finalarchitecture.data.model.PageVO
-import com.zjl.base.error.ApiError
-import com.zjl.base.exception.ApiException
 
 /**
  * @author Xiaoc
@@ -48,14 +46,14 @@ abstract class IntegerPagingSource<V : Any> : PagingSource<Int, V>() {
                 }
                 is ApiResult.Failure -> {
                     return LoadResult.Error(
-                        ApiException(result.error)
+                        result.throwable
                     )
                 }
             }
         } catch (e: Exception) {
             e.printStackTrace()
             return LoadResult.Error(
-                ApiException(ApiError.unknownError)
+                e
             )
         }
     }

@@ -1,7 +1,5 @@
 package com.zjl.finalarchitecture.module.sysnav.viewmodel
 
-import androidx.lifecycle.viewModelScope
-import com.zjl.base.exception.ApiException
 import com.zjl.base.ui.UiModel
 import com.zjl.base.viewmodel.BaseViewModel
 import com.zjl.base.viewmodel.requestScope
@@ -9,7 +7,6 @@ import com.zjl.finalarchitecture.data.model.NavigationVO
 import com.zjl.finalarchitecture.data.respository.ApiRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
 
 /**
  * @author Xiaoc

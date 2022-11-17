@@ -2,8 +2,7 @@ package com.zjl.base.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.zjl.base.*
-import com.zjl.base.error.Error
-import com.zjl.base.exception.ApiException
+import com.zjl.base.exception.NetworkException
 import com.zjl.base.ui.UiModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
@@ -106,7 +105,7 @@ abstract class BaseViewModel: ViewModel(){
      * @param block 请求的接口调用
      *
      */
-    @Throws(ApiException::class)
+    @Throws(NetworkException::class)
     inline fun <reified T> CoroutineScope.requestApiResult(
         uiModel: MutableSharedFlow<UiModel<T>>? = null,
         crossinline block: suspend (CoroutineScope.() -> ApiResult<T>)
@@ -124,11 +123,11 @@ abstract class BaseViewModel: ViewModel(){
                     data
                 }
                 is ApiResult.Failure ->{
-                    val exception = ApiException(result.error)
+                    val throwable = result.throwable
                     // 如果传入了uiModel，则给它赋值失败状态
-                    uiModel?.emit(UiModel.Error(exception))
+                    uiModel?.emit(UiModel.Error(throwable))
                     // 抛出错误，让外部去捕捉
-                    throw exception
+                    throw throwable
                 }
             }
         }
@@ -147,7 +146,7 @@ abstract class BaseViewModel: ViewModel(){
     protected suspend fun <T> launchRequestByNormal(
         requestAction: suspend CoroutineContext.() -> ApiResult<T>,
         successBlock: suspend CoroutineContext.(T) -> Unit = {},
-        failureBlock: suspend CoroutineContext.(Error) -> Unit = {}
+        failureBlock: suspend CoroutineContext.(Throwable) -> Unit = {}
     ){
         runCatching {
             val result = requestAction(coroutineContext)
@@ -158,10 +157,10 @@ abstract class BaseViewModel: ViewModel(){
                 // 回调失败方法
                 failureBlock(coroutineContext, it)
             }
-        }.onFailure {
-            it.printStackTrace()
+        }.onFailure { throwable ->
+            throwable.printStackTrace()
             // 回调失败方法
-            failureBlock(coroutineContext, Error(errorCode = 0, errorMsg = it.message))
+            failureBlock(coroutineContext, throwable)
         }
     }
 
@@ -184,7 +183,7 @@ abstract class BaseViewModel: ViewModel(){
         resultState: MutableSharedFlow<UiModel<T>>,
         isShowLoading: Boolean = false,
         successBlock: suspend CoroutineContext.(T) -> Unit = {},
-        failureBlock: suspend CoroutineContext.(Error) -> Unit = {}
+        failureBlock: suspend CoroutineContext.(Throwable) -> Unit = {}
     ){
         runCatching {
             // 如果要显示状态，设置为加载中
@@ -199,19 +198,18 @@ abstract class BaseViewModel: ViewModel(){
                 // 回调成功方法
                 successBlock(coroutineContext, data)
 
-            }.onFailure { error ->
+            }.onFailure { throwable ->
                 // 如果要显示状态，设置为失败
-                resultState.emit(UiModel.Error(ApiException(error)))
+                resultState.emit(UiModel.Error(throwable))
                 // 回调失败方法
-                failureBlock(coroutineContext, error)
+                failureBlock(coroutineContext, throwable)
             }
 
-        }.onFailure {
+        }.onFailure { throwable ->
             // 如果要显示状态，设置为失败
-            val error = Error(errorCode = 0, errorMsg = it.message)
-            resultState.emit(UiModel.Error(ApiException(error)))
+            resultState.emit(UiModel.Error(throwable))
             // 回调失败方法
-            failureBlock(coroutineContext, error)
+            failureBlock(coroutineContext, throwable)
         }
     }
 }

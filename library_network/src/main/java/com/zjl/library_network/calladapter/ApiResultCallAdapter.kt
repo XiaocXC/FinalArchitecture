@@ -1,8 +1,7 @@
 package com.zjl.library_network.calladapter
 
 import com.zjl.base.ApiResult
-import com.zjl.base.error.ApiError
-import com.zjl.base.exception.ApiException
+import com.zjl.base.exception.*
 import okhttp3.Request
 import okio.Timeout
 import retrofit2.*
@@ -16,6 +15,10 @@ import java.net.UnknownHostException
 /**
  * @author Xiaoc
  * @since 2021/5/10
+ *
+ * 这是一个要求请求结果均使用ApiResult包裹的适配器
+ * 在请求完成后，会把数据包装为ApiResult.Success或ApiResult.Failure
+ * 从而避免了请求出现错误而你自己没有手动处理导致的闪退
  */
 class ApiResultCallAdapterFactory: CallAdapter.Factory(){
 
@@ -79,17 +82,32 @@ class ApiResultCall<T>(private val delegate: Call<T>): Call<ApiResult<T>> {
              * 网络请求成功后回调该方法（无论statusCode是否为200）
              */
             override fun onResponse(call: Call<T>, response: Response<T>) {
-                if (response.isSuccessful) { // HTTP响应为[200..300)
-                    val result = if (response.body() == null) {
-                        ApiResult.Failure(ApiError.dataIsNull)
-                    } else {
-                        ApiResult.Success(response.body()!!)
+                try {
+                    val code = response.code()
+                    when {
+                        // 请求成功
+                        code in 200..299 ->{
+                            val result = ApiResult.Success(response.body()!!)
+                            callback.onResponse(this@ApiResultCall, Response.success(result))
+                        }
+                        // 400-499是客户端错误
+                        code in 400..499 ->{
+                            val result = ApiResult.Failure(RequestParamsException(response.raw(), code.toString()))
+                            callback.onResponse(this@ApiResultCall, Response.success(result))
+                        }
+                        // 500以上是服务端错误
+                        code >= 500 ->{
+                            val result = ApiResult.Failure(ServerResponseException(response.raw(), code.toString()))
+                            callback.onResponse(this@ApiResultCall, Response.success(result))
+                        }
+                        else ->{
+                            val result = ApiResult.Failure(ConvertException(response.raw()))
+                            callback.onResponse(this@ApiResultCall, Response.success(result))
+                        }
                     }
-                    callback.onResponse(this@ApiResultCall, Response.success(result))
-                } else {
-                    Timber.d("网络请求失败")
-                    // HTTP响应为错误码
-                    val result = ApiResult.Failure(ApiError.httpStatusError)
+                } catch (e: Throwable){
+                    e.printStackTrace()
+                    val result = ApiResult.Failure(ConvertException(response = response.raw(), cause = e))
                     callback.onResponse(this@ApiResultCall, Response.success(result))
                 }
             }
@@ -99,18 +117,27 @@ class ApiResultCall<T>(private val delegate: Call<T>): Call<ApiResult<T>> {
              */
             override fun onFailure(call: Call<T>, t: Throwable) {
                 Timber.d(t)
+                val request = call.request()
                 val failureResult = when (t) {
-                    is ApiException -> {
-                        ApiResult.Failure(t.error)
-                    }
+                    // 超时
                     is SocketTimeoutException -> {
-                        ApiResult.Failure(ApiError.timeoutError)
+                        ApiResult.Failure(NetworkSocketTimeoutException(request, t.message, t))
                     }
-                    is ConnectException, is UnknownHostException -> {
-                        ApiResult.Failure(ApiError.connectionError)
+                    // 连接错误
+                    is ConnectException ->{
+                        ApiResult.Failure(NetworkConnectException(request, cause = t))
+                    }
+                    // 无法解析域名
+                    is UnknownHostException -> {
+                        ApiResult.Failure(NetUnknownHostException(request, message = t.message))
+                    }
+                    // 自定义的网络错误
+                    is NetworkException ->{
+                        ApiResult.Failure(t)
                     }
                     else -> {
-                        ApiResult.Failure(ApiError.unknownError)
+                        // 剩下的错误全部判定为Http请求失败的错误
+                        ApiResult.Failure(HttpFailureException(request, cause = t))
                     }
                 }
                 callback.onResponse(this@ApiResultCall, Response.success(failureResult))

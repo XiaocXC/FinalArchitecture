@@ -1,4 +1,4 @@
-package com.zjl.library_network
+package com.zjl.finalarchitecture.data.model
 
 import kotlinx.serialization.Serializable
 

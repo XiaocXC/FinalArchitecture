@@ -2,17 +2,11 @@ package com.zjl.finalarchitecture.module.sysnav.viewmodel
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.cachedIn
-import com.zjl.base.exception.ApiException
 import com.zjl.base.ui.PagingUiModel
-import com.zjl.base.viewmodel.BaseViewModel
 import com.zjl.base.viewmodel.PagingBaseViewModel
 import com.zjl.base.viewmodel.requestScope
 import com.zjl.finalarchitecture.data.model.ArticleListVO
 import com.zjl.finalarchitecture.data.respository.ApiRepository
-import com.zjl.finalarchitecture.data.respository.datasouce.SystemArticlePagingSource
 import com.zjl.finalarchitecture.utils.ext.paging.requestPagingApiResult
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -51,6 +45,7 @@ class SystemDetailInnerViewModel(
 
     override fun onRefreshData(tag: Any?) {
         mCurrentIndex = initPageIndex()
+        loadMoreSystemDetailList(mCurrentIndex)
     }
 
     override fun onLoadMoreData(tag: Any?) {

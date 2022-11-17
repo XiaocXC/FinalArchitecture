@@ -1,7 +1,7 @@
 package com.zjl.finalarchitecture.utils.ext.paging
 
 import com.zjl.base.ApiResult
-import com.zjl.base.exception.ApiException
+import com.zjl.base.exception.NetworkException
 import com.zjl.base.ui.PagingUiModel
 import com.zjl.base.ui.append
 import com.zjl.finalarchitecture.data.model.PageVO
@@ -59,7 +59,7 @@ import kotlin.jvm.Throws
  * @param block 请求的接口调用
  *
  */
-@Throws(ApiException::class)
+@Throws(NetworkException::class)
 inline fun <reified T> CoroutineScope.requestPagingApiResult(
     isRefresh: Boolean,
     pagingUiModel: MutableStateFlow<PagingUiModel<T>>? = null,
@@ -84,13 +84,13 @@ inline fun <reified T> CoroutineScope.requestPagingApiResult(
                 data
             }
             is ApiResult.Failure ->{
-                val exception = ApiException(result.error)
+                val throwable = result.throwable
                 // 如果传入了uiModel，则给它赋值失败状态
                 if(pagingUiModel != null){
-                    pagingUiModel.value = pagingUiModel.value.append(PagingUiModel.Error(exception, isRefresh))
+                    pagingUiModel.value = pagingUiModel.value.append(PagingUiModel.Error(throwable, isRefresh))
                 }
                 // 抛出错误，让外部去捕捉
-                throw exception
+                throw throwable
             }
         }
     }

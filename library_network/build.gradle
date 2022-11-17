@@ -16,6 +16,7 @@ dependencies {
     api(Libs.RETROFIT)
     api(Libs.OKHTTP)
     api(Libs.KOTLIN_SERIALIZATION)
+    api(Libs.GSON)
     // Log日志拦截器
     api(Libs.OKHTTP_LOGGING)
 

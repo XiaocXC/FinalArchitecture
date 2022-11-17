@@ -137,6 +137,9 @@ public class Libs {
     // 权限申请PermissionX
     public static final String PERMISSION_X = "com.guolindev.permissionx:permissionx:1.6.4";
 
+    // GSON
+    public static final String GSON = "com.google.code.gson:gson:2.10";
+
 
     // 测试库
     public static final String JUNIT = "junit:junit:4.13.2";
