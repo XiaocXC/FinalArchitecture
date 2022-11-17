@@ -146,5 +146,9 @@
         android:id="@+id/progressListFragment"
         android:name="com.zjl.finalarchitecture.module.toolbox.progressList.ProgressListFragment"
         android:label="ProgressListFragment" />
+    <fragment
+        android:id="@+id/tutorialFragment"
+        android:name="com.zjl.finalarchitecture.module.sysnav.ui.fragment.TutorialFragment"
+        android:label="TutorialFragment" />
 
 </navigation>

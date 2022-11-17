@@ -118,7 +118,7 @@ interface ApiService {
      * @param password 密码
      */
     @FormUrlEncoded
-    @POST("user/login")
+    @POST("/user/login")
     suspend fun login(
         @Field("username") account: String,
         @Field("password") password: String
@@ -130,11 +130,18 @@ interface ApiService {
      * @param password 密码
      */
     @FormUrlEncoded
-    @POST("user/register")
+    @POST("/user/register")
     suspend fun register(
         @Field("username") account: String,
         @Field("password") password: String,
         @Field("repassword") repassword: String
     ): ApiResult<Unit>
+
+
+    /**
+     * 获取微信公众号分类
+     */
+    @GET("/chapter/547/sublist/json")
+    suspend fun getTutorialList(): ApiResult<List<TutorialVO>>
 
 }

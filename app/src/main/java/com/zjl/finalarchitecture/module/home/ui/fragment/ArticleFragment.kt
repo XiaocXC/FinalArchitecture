@@ -72,9 +72,6 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel>()
             )
         )
 
-        // 下拉刷新
-//        mBinding.refreshLayout.setOnRefreshListener(this)
-
         mBinding.refreshLayout.setOnRefreshLoadMoreListener(this)
 
     }

@@ -33,7 +33,7 @@ class SignInViewModel : BaseViewModel(){
     fun signInByPassword(account: String, password: String){
         requestScope {
             val data = requestApiResult {
-                apiRepository.login(account, password)
+                apiRepository.requestLogin(account, password)
             }.await()
             // 如果登录成功，我们把用户信息数据存储到本地
             UserAuthDataSource.signIn(data)

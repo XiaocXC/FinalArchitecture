@@ -16,6 +16,7 @@ import kotlinx.coroutines.withContext
  * @since 2022-01-08
  *
  * 仓库层
+ * 方法命名必须以 request 开头
  */
 object ApiRepository {
 
@@ -171,7 +172,7 @@ object ApiRepository {
      * @param account 账号
      * @param password 密码
      */
-    suspend fun login(account: String, password: String): ApiResult<UserInfoVO> {
+    suspend fun requestLogin(account: String, password: String): ApiResult<UserInfoVO> {
         return mApiService.login(account, password)
     }
 
@@ -180,7 +181,15 @@ object ApiRepository {
      * @param account 账号
      * @param password 密码
      */
-    suspend fun register(account: String, password: String): ApiResult<Unit> {
+    suspend fun requestRegister(account: String, password: String): ApiResult<Unit> {
         return mApiService.register(account, password, password)
+    }
+
+
+    /**
+     * 教程
+     */
+    suspend fun requestTutorialListData(): ApiResult<List<TutorialVO>> {
+        return mApiService.getTutorialList()
     }
 }

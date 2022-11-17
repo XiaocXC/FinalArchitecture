@@ -1,15 +1,11 @@
 package com.zjl.finalarchitecture.module.auth.register
 
-import androidx.lifecycle.viewModelScope
 import com.zjl.base.ui.UiModel
 import com.zjl.base.viewmodel.BaseViewModel
 import com.zjl.base.viewmodel.requestScope
-import com.zjl.finalarchitecture.data.model.UserInfoVO
 import com.zjl.finalarchitecture.data.respository.ApiRepository
-import com.zjl.finalarchitecture.data.respository.datasouce.UserAuthDataSource
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.launch
 
 /**
  * @author Xiaoc
@@ -34,7 +30,7 @@ class RegisterViewModel: BaseViewModel() {
     fun registerByPassword(account: String, password: String){
         requestScope {
             requestApiResult(uiModel = _eventRegisterState) {
-                apiRepository.register(account, password)
+                apiRepository.requestRegister(account, password)
             }.await()
         }
     }

@@ -44,9 +44,6 @@ class PlazaFragment : BaseFragment<FragmentPlazaBinding, PlazaViewModel>(), OnRe
         // 列表适配器
         mArticleAdapter = ArticleAdapter()
 
-//        mArticleAdapter.loadMoreModule.setOnLoadMoreListener {
-//            mViewModel.loadMore()
-//        }
 
         mBinding.recyclerView.adapter = mArticleAdapter
         mBinding.refreshLayout.setOnRefreshLoadMoreListener(this)
