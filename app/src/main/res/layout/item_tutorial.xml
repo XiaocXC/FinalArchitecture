@@ -10,12 +10,11 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="6dp"
-        android:layout_marginEnd="12dp"
+        android:layout_marginEnd="10dp"
         android:layout_marginBottom="6dp"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="12dp"
+        app:cardCornerRadius="10dp"
         app:strokeWidth="0dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -27,14 +26,13 @@
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/sivCover"
-                android:layout_width="80dp"
+                android:layout_width="88dp"
                 android:layout_height="134dp"
-                android:scaleType="centerCrop"
+                android:scaleType="fitXY"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:roundedCornerRadius="8dp"
-                app:viewAspectRatio="0.72" />
+                app:shapeAppearance="@style/base_RoundedStyle" />
 
             <TextView
                 android:id="@+id/tvTitle"
@@ -74,10 +72,10 @@
                 android:maxLines="3"
                 android:textColor="?colorOnSurface"
                 android:textSize="13sp"
+                app:layout_constraintBottom_toBottomOf="@+id/sivCover"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/tvTitle"
                 app:layout_constraintTop_toBottomOf="@+id/tvAuthor"
-                app:layout_constraintBottom_toBottomOf="@+id/sivCover"
                 app:layout_constraintVertical_chainStyle="packed"
                 tools:text="也可以用作参考手册查阅语法。\n\n" />
 

@@ -108,17 +108,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, EmptyViewModel>() {
 
     override fun onResume() {
         super.onResume()
-        LogUtils.eTag("zhou::", "onResume")
     }
 
     override fun onPause() {
         super.onPause()
-        LogUtils.eTag("zhou::", "onPause")
     }
 
     override fun onStop() {
         super.onStop()
-        LogUtils.eTag("zhou::", "onStop")
     }
 
     override fun configImmersive(immersionBar: ImmersionBar): ImmersionBar? {
@@ -130,17 +127,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, EmptyViewModel>() {
         tabLayoutMediator = null
         mBinding.mViewPager2.adapter = null
         super.onDestroyView()
-        LogUtils.eTag("zhou::", "onDestroyView")
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        LogUtils.eTag("zhou::", "onDestroy")
     }
 
     override fun onDetach() {
         super.onDetach()
-        LogUtils.eTag("zhou::", "onDetach")
     }
 
 }

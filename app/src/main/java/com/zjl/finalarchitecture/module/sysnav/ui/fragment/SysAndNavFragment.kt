@@ -17,7 +17,7 @@ import com.zjl.finalarchitecture.databinding.FragmentSysAndNavBinding
 class SysAndNavFragment : BaseFragment<FragmentSysAndNavBinding, EmptyViewModel>() {
 
     //体系,导航
-    private var mTitleArrayData = arrayListOf("体系", "导航","教程")
+    private var mTitleArrayData = arrayListOf("体系", "导航", "教程")
     private var mFragmentList: ArrayList<Fragment> = arrayListOf()
 
     private var tabLayoutMediator: TabLayoutMediator? = null
@@ -26,7 +26,7 @@ class SysAndNavFragment : BaseFragment<FragmentSysAndNavBinding, EmptyViewModel>
     init {
         mFragmentList.add(SystemFragment.newInstance())
         mFragmentList.add(FuckNavigationFragment.newInstance())
-        mFragmentList.add(FuckNavigationFragment.newInstance())
+        mFragmentList.add(TutorialFragment.newInstance())
     }
 
     override fun initViewAndEvent(savedInstanceState: Bundle?) {

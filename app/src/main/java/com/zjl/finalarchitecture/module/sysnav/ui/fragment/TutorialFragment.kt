@@ -5,6 +5,7 @@ import android.view.View
 import com.blankj.utilcode.util.ToastUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
+import com.gyf.immersionbar.ImmersionBar
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.ui.onFailure
 import com.zjl.base.ui.onLoading
@@ -59,5 +60,9 @@ class TutorialFragment : BaseFragment<FragmentTutorialBinding, TutorialViewModel
 
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
         ToastUtils.showShort("小${position}")
+    }
+
+    override fun configImmersive(immersionBar: ImmersionBar): ImmersionBar? {
+        return null
     }
 }

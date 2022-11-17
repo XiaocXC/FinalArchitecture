@@ -110,4 +110,11 @@
 
     <!-- 输入框背景颜色 -->
     <color name="textInputLayout_bg" tools:ignore="ResourceName">@color/base_grey_light_200</color>
+
+    <!--ShapeableImageView 圆角-->
+    <style name="base_RoundedStyle">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">10dp</item>
+    </style>
+
 </resources>
