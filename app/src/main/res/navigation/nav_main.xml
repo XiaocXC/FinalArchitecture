@@ -46,6 +46,9 @@
         <action
             android:id="@+id/action_mainFragment_to_progressListFragment"
             app:destination="@id/progressListFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_tutorialDetailArrFragment"
+            app:destination="@id/tutorialDetailArrFragment" />
     </fragment>
 
 
@@ -73,15 +76,33 @@
             app:argType="integer" />
 
     </fragment>
+
+    <fragment
+        android:id="@+id/tutorialDetailArrFragment"
+        android:name="com.zjl.finalarchitecture.module.sysnav.ui.fragment.TutorialDetailArrFragment"
+        android:label="TutorialDetailArrFragment">
+
+        <argument
+            android:name="ids"
+            app:argType="integer" />
+
+        <argument
+            android:name="detailTitle"
+            app:argType="String" />
+
+    </fragment>
+
     <fragment
         android:id="@+id/addPlazaArticleFragment"
         android:name="com.zjl.finalarchitecture.module.addPlaza.ui.fragment.AddPlazaArticleFragment"
         android:label="fragment_add_plaza_article"
         tools:layout="@layout/fragment_add_plaza_article" />
+
     <fragment
         android:id="@+id/multiListFragment"
         android:name="com.zjl.finalarchitecture.module.toolbox.multilist.MultiListFragment"
         android:label="MultiListFragment" />
+
     <fragment
         android:id="@+id/webViewFragment"
         android:name="com.zjl.finalarchitecture.module.webview.ui.fragment.WebViewFragment"
@@ -118,6 +139,7 @@
     <action
         android:id="@+id/action_global_sign_in"
         app:destination="@id/nav_auth" />
+
     <fragment
         android:id="@+id/treeCheckFragment"
         android:name="com.zjl.finalarchitecture.module.toolbox.treeCheck.TreeCheckFragment"
@@ -150,5 +172,6 @@
         android:id="@+id/tutorialFragment"
         android:name="com.zjl.finalarchitecture.module.sysnav.ui.fragment.TutorialFragment"
         android:label="TutorialFragment" />
+
 
 </navigation>
