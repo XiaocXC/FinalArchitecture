@@ -93,21 +93,28 @@ class ApiResultCall<T>(private val delegate: Call<T>): Call<ApiResult<T>> {
                         // 400-499是客户端错误
                         code in 400..499 ->{
                             val result = ApiResult.Failure(RequestParamsException(response.raw(), code.toString()))
+                            // 在LogCat上打印一下错误日志
+                            result.throwable.printStackTrace()
                             callback.onResponse(this@ApiResultCall, Response.success(result))
                         }
                         // 500以上是服务端错误
                         code >= 500 ->{
                             val result = ApiResult.Failure(ServerResponseException(response.raw(), code.toString()))
+                            // 在LogCat上打印一下错误日志
+                            result.throwable.printStackTrace()
                             callback.onResponse(this@ApiResultCall, Response.success(result))
                         }
                         else ->{
                             val result = ApiResult.Failure(ConvertException(response.raw()))
+                            // 在LogCat上打印一下错误日志
+                            result.throwable.printStackTrace()
                             callback.onResponse(this@ApiResultCall, Response.success(result))
                         }
                     }
                 } catch (e: Throwable){
-                    e.printStackTrace()
                     val result = ApiResult.Failure(ConvertException(response = response.raw(), cause = e))
+                    // 在LogCat上打印一下错误日志
+                    result.throwable.printStackTrace()
                     callback.onResponse(this@ApiResultCall, Response.success(result))
                 }
             }
@@ -116,7 +123,6 @@ class ApiResultCall<T>(private val delegate: Call<T>): Call<ApiResult<T>> {
              * 网络请求失败后回调该方法
              */
             override fun onFailure(call: Call<T>, t: Throwable) {
-                Timber.d(t)
                 val request = call.request()
                 val failureResult = when (t) {
                     // 超时
@@ -140,6 +146,8 @@ class ApiResultCall<T>(private val delegate: Call<T>): Call<ApiResult<T>> {
                         ApiResult.Failure(HttpFailureException(request, cause = t))
                     }
                 }
+                // 在LogCat上打印一下错误日志
+                failureResult.throwable.printStackTrace()
                 callback.onResponse(this@ApiResultCall, Response.success(failureResult))
             }
 
@@ -150,7 +158,51 @@ class ApiResultCall<T>(private val delegate: Call<T>): Call<ApiResult<T>> {
     override fun clone(): Call<ApiResult<T>> = ApiResultCall(delegate.clone())
 
     override fun execute(): Response<ApiResult<T>> {
-        throw UnsupportedOperationException("不支持同步请求")
+        try {
+            val response = delegate.execute()
+            val code = response.code()
+            return when {
+                // 请求成功
+                code in 200..299 ->{
+                    Response.success(ApiResult.Success(response.body()!!))
+                }
+                // 400-499是客户端错误
+                code in 400..499 ->{
+                    Response.success(ApiResult.Failure(RequestParamsException(response.raw(), code.toString())))
+                }
+                // 500以上是服务端错误
+                code >= 500 ->{
+                    Response.success(ApiResult.Failure(ServerResponseException(response.raw(), code.toString())))
+                }
+                else ->{
+                    Response.success(ApiResult.Failure(ConvertException(response.raw())))
+                }
+            }
+        } catch (t: Throwable){
+            val request = delegate.request()
+            return when (t) {
+                // 超时
+                is SocketTimeoutException -> {
+                    Response.success(ApiResult.Failure(NetworkSocketTimeoutException(request, t.message, t)))
+                }
+                // 连接错误
+                is ConnectException ->{
+                    Response.success(ApiResult.Failure(NetworkConnectException(request, cause = t)))
+                }
+                // 无法解析域名
+                is UnknownHostException -> {
+                    Response.success(ApiResult.Failure(NetUnknownHostException(request, message = t.message)))
+                }
+                // 自定义的网络错误
+                is NetworkException ->{
+                    Response.success(ApiResult.Failure(t))
+                }
+                else -> {
+                    // 剩下的错误全部判定为Http请求失败的错误
+                    Response.success(ApiResult.Failure(HttpFailureException(request, cause = t)))
+                }
+            }
+        }
     }
 
     override fun isExecuted(): Boolean {

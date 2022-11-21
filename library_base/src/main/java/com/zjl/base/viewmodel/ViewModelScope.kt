@@ -1,5 +1,7 @@
 package com.zjl.base.viewmodel
 
+import android.util.Log
+import com.zjl.lib_base.BuildConfig
 import kotlinx.coroutines.*
 import java.io.Closeable
 import kotlin.coroutines.CoroutineContext
@@ -35,6 +37,10 @@ import kotlin.coroutines.EmptyCoroutineContext
 open class RequestCoroutineScope(
     val dispatcher: CoroutineDispatcher = Dispatchers.Main.immediate
 ) : CoroutineScope, Closeable {
+
+    companion object {
+        const val TAG = "RequestCoroutineScope"
+    }
 
     private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
         catch(throwable)
@@ -72,6 +78,11 @@ open class RequestCoroutineScope(
      */
     protected open fun catch(e: Throwable) {
         catch?.invoke(this@RequestCoroutineScope, e)
+        if(BuildConfig.DEBUG){
+            // Debug模式打印更详细的信息
+            val adjustMessage = e.stackTraceToString()
+            Log.d(TAG, adjustMessage)
+        }
     }
 
     /**
