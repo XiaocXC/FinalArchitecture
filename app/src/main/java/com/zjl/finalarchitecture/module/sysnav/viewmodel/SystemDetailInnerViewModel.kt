@@ -34,12 +34,10 @@ class SystemDetailInnerViewModel(
     }
 
     fun loadMoreSystemDetailList(currentIndex: Int) {
-        viewModelScope.launch {
-            requestScope {
-                requestPagingApiResult(isRefresh = currentIndex == initPageIndex(), pagingUiModel = _systemArticleList){
+        requestScope {
+            requestPagingApiResult(isRefresh = currentIndex == initPageIndex(), pagingUiModel = _systemArticleList){
                     ApiRepository.requestSystemListData(currentIndex, id)
-                }.await()
-            }
+            }.await()
         }
     }
 

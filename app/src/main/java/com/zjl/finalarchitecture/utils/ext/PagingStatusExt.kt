@@ -71,12 +71,15 @@ fun <T> PagingUiModel<T>.handlePagingStatus(
                 // 结束加载更多
                 refreshLayout?.finishLoadMore(500)
             }
-//            // 是否加载更多
-//            if(this.hasMore){
-//                adapter.loadMoreModule.loadMoreComplete()
-//            } else {
-//                adapter.loadMoreModule.loadMoreEnd()
-//            }
+            // 如果SmartRefresh为空，我们才使用Adapter的加载更多状态
+            if(refreshLayout == null){
+                // 是否加载更多
+                if(this.noMore){
+                    adapter.loadMoreModule.loadMoreEnd()
+                } else {
+                    adapter.loadMoreModule.loadMoreComplete()
+                }
+            }
         }
 
         // 如果是失败
@@ -95,7 +98,11 @@ fun <T> PagingUiModel<T>.handlePagingStatus(
                 }
             } else {
                 refreshLayout?.finishLoadMore(false)
-//                adapter.loadMoreModule.loadMoreFail()
+                // 如果SmartRefresh为空，我们才使用Adapter的加载状态
+                if(refreshLayout == null){
+                    // 加载失败
+                    adapter.loadMoreModule.loadMoreFail()
+                }
             }
         }
 
@@ -113,6 +120,11 @@ fun <T> PagingUiModel<T>.handlePagingStatus(
                 }
             } else {
                 refreshLayout?.autoLoadMore()
+                // 如果SmartRefresh为空，我们才使用Adapter的加载状态
+                if(refreshLayout == null){
+                    // 加载失败
+                    adapter.loadMoreModule.loadMoreToLoading()
+                }
             }
         }
     }

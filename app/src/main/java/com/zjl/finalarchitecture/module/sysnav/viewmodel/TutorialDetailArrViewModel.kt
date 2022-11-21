@@ -11,6 +11,7 @@ import com.zjl.finalarchitecture.data.model.SystemVO
 import com.zjl.finalarchitecture.data.model.TutorialVO
 import com.zjl.finalarchitecture.data.respository.ApiRepository
 import com.zjl.finalarchitecture.utils.ext.paging.requestPagingApiResult
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -47,6 +48,7 @@ class TutorialDetailArrViewModel(
 
     private fun loadTutorialDetailListData(currentIndex: Int) {
         requestScope {
+            delay(3000L)
             requestPagingApiResult(
                 isRefresh = currentIndex == initPageIndex(),
                 pagingUiModel = _tutorialDetailList

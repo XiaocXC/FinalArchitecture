@@ -56,9 +56,7 @@ class SystemFragment : BaseFragment<FragmentSystemBinding, SystemViewModel>() {
             }.onLoading {
                 uiRootState.show(LoadingState())
             }.onFailure { value, throwable ->
-                val state = ErrorState()
-                state.setErrorMsg(throwable.message ?: "")
-                uiRootState.show(state)
+                showUiError(throwable)
             }
         }
     }

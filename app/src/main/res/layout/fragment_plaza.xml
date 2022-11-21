@@ -14,7 +14,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srlEnableLoadMore="false">
+        app:srlEnableLoadMore="true">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
