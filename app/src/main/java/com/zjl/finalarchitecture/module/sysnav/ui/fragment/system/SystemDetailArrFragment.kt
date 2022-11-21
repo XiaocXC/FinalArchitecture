@@ -1,4 +1,4 @@
-package com.zjl.finalarchitecture.module.sysnav.ui.fragment
+package com.zjl.finalarchitecture.module.sysnav.ui.fragment.system
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -15,9 +15,8 @@ import com.zjl.base.utils.launchAndCollectIn
 import com.zjl.base.utils.navArgs
 import com.zjl.finalarchitecture.data.model.ClassifyVO
 import com.zjl.finalarchitecture.databinding.FragmentSystemDetailArrBinding
+import com.zjl.finalarchitecture.module.sysnav.ui.fragment.system.child.SystemDetailChildFragment
 import com.zjl.finalarchitecture.module.sysnav.viewmodel.SystemDetailArrViewModel
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 class SystemDetailArrFragment : BaseFragment<FragmentSystemDetailArrBinding, SystemDetailArrViewModel>() {
 
@@ -70,7 +69,7 @@ class SystemDetailArrFragment : BaseFragment<FragmentSystemDetailArrBinding, Sys
             val (index, ids) = it
             //用法1
             for (i in it.second) {
-                mFragmentList.add(SystemDetailInnerFragment.newInstance(i.id))
+                mFragmentList.add(SystemDetailChildFragment.newInstance(i.id))
                 mTitleArrayData.add(i.name)
             }
             mBinding.vpSystemInner.init(this@SystemDetailArrFragment,mFragmentList)
@@ -83,11 +82,9 @@ class SystemDetailArrFragment : BaseFragment<FragmentSystemDetailArrBinding, Sys
             }.apply {
                 attach()
             }
-
             //用法2
 //            systemDetailArrViewPagerAdapter.children = ids
 //            systemDetailArrViewPagerAdapter.notifyDataSetChanged()
-
             mBinding.vpSystemInner.setCurrentItem(index, false)
         }
     }
@@ -112,7 +109,7 @@ class SystemDetailArrFragment : BaseFragment<FragmentSystemDetailArrBinding, Sys
         override fun getItemCount(): Int = children.size
 
         override fun createFragment(position: Int): Fragment {
-            return SystemDetailInnerFragment.newInstance(children[position].id)
+            return SystemDetailChildFragment.newInstance(children[position].id)
         }
     }
 

@@ -5,18 +5,19 @@ import androidx.fragment.app.Fragment
 import com.blankj.utilcode.util.LogUtils
 import com.google.android.material.tabs.TabLayoutMediator
 import com.gyf.immersionbar.ImmersionBar
-import com.gyf.immersionbar.ktx.immersionBar
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.utils.ext.init
-import com.zjl.base.utils.ext.isNightMode
 import com.zjl.base.utils.ext.reduceDragSensitivity
 import com.zjl.base.viewmodel.EmptyViewModel
-import com.zjl.finalarchitecture.databinding.FragmentSysAndNavBinding
+import com.zjl.finalarchitecture.databinding.FragmentSysAndNavAndTutorBinding
+import com.zjl.finalarchitecture.module.sysnav.ui.fragment.navigation.FuckNavigationFragment
+import com.zjl.finalarchitecture.module.sysnav.ui.fragment.system.SystemFragment
+import com.zjl.finalarchitecture.module.sysnav.ui.fragment.tutorial.TutorialFragment
 
 
-class SysAndNavFragment : BaseFragment<FragmentSysAndNavBinding, EmptyViewModel>() {
+class SysAndNavAndTutorFragment : BaseFragment<FragmentSysAndNavAndTutorBinding, EmptyViewModel>() {
 
-    //体系,导航
+    //体系,导航,教程
     private var mTitleArrayData = arrayListOf("体系", "导航", "教程")
     private var mFragmentList: ArrayList<Fragment> = arrayListOf()
 

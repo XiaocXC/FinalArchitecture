@@ -77,7 +77,7 @@ class SearchViewModel: BaseViewModel() {
 
             // 推荐热门搜索内容
             val data = requestApiResult {
-                ApiRepository.getSearchHot()
+                ApiRepository.requestSearchHot()
             }.await()
 
             _searchHotKeys.value = data

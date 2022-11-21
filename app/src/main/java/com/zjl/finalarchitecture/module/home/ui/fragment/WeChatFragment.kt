@@ -62,7 +62,6 @@ class WeChatFragment : BaseFragment<FragmentProjectBinding, WechatViewModel>(), 
             mViewModel.checkPosition = position
         }
 
-
         /**
          * 微信公众号详情列表 rv adapter
          */

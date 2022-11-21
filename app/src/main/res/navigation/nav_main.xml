@@ -15,6 +15,7 @@
             app:destination="@id/searchFragment"
             app:enterAnim="@anim/zoom_small_in"
             app:exitAnim="@anim/zoom_small_out" />
+
         <action
             android:id="@+id/action_mainFragment_to_systemDetailArrFragment"
             app:destination="@id/systemDetailArrFragment" />
@@ -64,7 +65,7 @@
 
     <fragment
         android:id="@+id/systemDetailArrFragment"
-        android:name="com.zjl.finalarchitecture.module.sysnav.ui.fragment.SystemDetailArrFragment"
+        android:name="com.zjl.finalarchitecture.module.sysnav.ui.fragment.system.SystemDetailArrFragment"
         android:label="SystemDetailArrFragment">
 
         <argument
@@ -79,7 +80,7 @@
 
     <fragment
         android:id="@+id/tutorialDetailArrFragment"
-        android:name="com.zjl.finalarchitecture.module.sysnav.ui.fragment.TutorialDetailArrFragment"
+        android:name="com.zjl.finalarchitecture.module.sysnav.ui.fragment.tutorial.TutorialDetailArrFragment"
         android:label="TutorialDetailArrFragment">
 
         <argument
@@ -88,7 +89,7 @@
 
         <argument
             android:name="detailTitle"
-            app:argType="String" />
+            app:argType="string" />
 
     </fragment>
 
@@ -170,7 +171,7 @@
         android:label="ProgressListFragment" />
     <fragment
         android:id="@+id/tutorialFragment"
-        android:name="com.zjl.finalarchitecture.module.sysnav.ui.fragment.TutorialFragment"
+        android:name="com.zjl.finalarchitecture.module.sysnav.ui.fragment.tutorial.TutorialFragment"
         android:label="TutorialFragment" />
 
 

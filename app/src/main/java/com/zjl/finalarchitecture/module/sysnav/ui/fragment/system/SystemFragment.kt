@@ -1,4 +1,4 @@
-package com.zjl.finalarchitecture.module.sysnav.ui.fragment
+package com.zjl.finalarchitecture.module.sysnav.ui.fragment.system
 
 import android.os.Bundle
 import com.gyf.immersionbar.ImmersionBar
@@ -16,8 +16,6 @@ import com.zjl.finalarchitecture.module.sysnav.viewmodel.SystemViewModel
 import com.zy.multistatepage.state.ErrorState
 import com.zy.multistatepage.state.LoadingState
 import com.zy.multistatepage.state.SuccessState
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 /**
  * 体系Fragment

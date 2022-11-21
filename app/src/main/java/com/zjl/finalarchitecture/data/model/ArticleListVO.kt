@@ -13,7 +13,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 @Parcelize
 data class ArticleListVO(
-
+    val adminAdd: Boolean,
     val apkLink: String,
     val audit: Int,
     /* 文章作者 */
@@ -53,4 +53,4 @@ data class ArticleListVO(
     val zan: Int,
     /* 本地字段是否是 置顶文章 */
     var top: Boolean = false
-): Parcelable
+) : Parcelable

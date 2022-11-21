@@ -36,7 +36,7 @@ interface ApiService {
      * 获取广场文章列表
      */
     @GET("/user_article/list/{page}/json")
-    suspend fun getPlazaArticleListByPage(@Path("page") page : Int): ApiResult<PageVO<ArticleListVO>>
+    suspend fun getPlazaArticleListByPage(@Path("page") page: Int): ApiResult<PageVO<ArticleListVO>>
 
     /**
      * 获取体系数据
@@ -139,9 +139,19 @@ interface ApiService {
 
 
     /**
-     * 获取微信公众号分类
+     * 获取教程列表
      */
     @GET("/chapter/547/sublist/json")
     suspend fun getTutorialList(): ApiResult<List<TutorialVO>>
 
+
+    /**
+     * 获取单个教程下的列表数据
+     */
+    @GET("article/list/{page}/json")
+    suspend fun getTutorialDetailList(
+        @Path("page") page: Int,
+        @Query("cid") cid: Int?,
+        @Query("order_type") orderType: Int = 1
+    ): ApiResult<PageVO<ArticleListVO>>
 }

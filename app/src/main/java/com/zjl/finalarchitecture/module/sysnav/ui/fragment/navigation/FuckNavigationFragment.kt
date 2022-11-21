@@ -1,4 +1,4 @@
-package com.zjl.finalarchitecture.module.sysnav.ui.fragment
+package com.zjl.finalarchitecture.module.sysnav.ui.fragment.navigation
 
 import android.os.Bundle
 import android.view.View

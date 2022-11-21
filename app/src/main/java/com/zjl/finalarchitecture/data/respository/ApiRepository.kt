@@ -156,7 +156,7 @@ object ApiRepository {
     /**
      * 获取热门搜索
      */
-    suspend fun getSearchHot(): ApiResult<List<SearchHotVO>> {
+    suspend fun requestSearchHot(): ApiResult<List<SearchHotVO>> {
         return mApiService.getSearchHot()
     }
 
@@ -191,5 +191,16 @@ object ApiRepository {
      */
     suspend fun requestTutorialListData(): ApiResult<List<TutorialVO>> {
         return mApiService.getTutorialList()
+    }
+
+    /**
+     * 教程详情
+     */
+    suspend fun requestTutorialDetailListData(
+        page: Int,
+        cid: Int?,
+        orderType: Int = 1
+    ): ApiResult<PageVO<ArticleListVO>> {
+        return mApiService.getTutorialDetailList(page, cid, orderType)
     }
 }

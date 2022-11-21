@@ -93,17 +93,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, EmptyViewModel>() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        LogUtils.eTag("zhou::", "onAttach")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        LogUtils.eTag("zhou::", "onCreate")
     }
 
     override fun onStart() {
         super.onStart()
-        LogUtils.eTag("zhou::", "onStart")
     }
 
     override fun onResume() {

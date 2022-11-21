@@ -3,7 +3,6 @@ package com.zjl.finalarchitecture.module.main.ui.fragment
 import android.os.Bundle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
-import com.gyf.immersionbar.ImmersionBar
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.utils.ext.getAttrColor
 import com.zjl.base.viewmodel.EmptyViewModel
@@ -12,7 +11,7 @@ import com.zjl.finalarchitecture.databinding.FragmentMainBinding
 import com.zjl.finalarchitecture.module.discovery.ui.fragment.DiscoveryFragment
 import com.zjl.finalarchitecture.module.home.ui.fragment.HomeFragment
 import com.zjl.finalarchitecture.module.mine.ui.fragment.MineFragment
-import com.zjl.finalarchitecture.module.sysnav.ui.fragment.SysAndNavFragment
+import com.zjl.finalarchitecture.module.sysnav.ui.fragment.SysAndNavAndTutorFragment
 import com.zjl.finalarchitecture.module.toolbox.ToolboxFragment
 
 
@@ -33,7 +32,7 @@ class MainFragment : BaseFragment<FragmentMainBinding, EmptyViewModel>() {
                 override fun getItemCount() = 5
                 override fun createFragment(position: Int) = when (position) {
                     0 -> HomeFragment()
-                    1 -> SysAndNavFragment()
+                    1 -> SysAndNavAndTutorFragment()
                     2 -> DiscoveryFragment()
                     3 -> ToolboxFragment()
                     4 -> MineFragment()

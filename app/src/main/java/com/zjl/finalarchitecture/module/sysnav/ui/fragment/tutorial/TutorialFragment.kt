@@ -1,8 +1,7 @@
-package com.zjl.finalarchitecture.module.sysnav.ui.fragment
+package com.zjl.finalarchitecture.module.sysnav.ui.fragment.tutorial
 
 import android.os.Bundle
 import android.view.View
-import com.blankj.utilcode.util.ToastUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.gyf.immersionbar.ImmersionBar
@@ -11,9 +10,10 @@ import com.zjl.base.ui.onFailure
 import com.zjl.base.ui.onLoading
 import com.zjl.base.ui.onSuccess
 import com.zjl.base.utils.autoCleared
+import com.zjl.base.utils.findNavController
 import com.zjl.base.utils.launchAndCollectIn
 import com.zjl.finalarchitecture.databinding.FragmentTutorialBinding
-import com.zjl.finalarchitecture.module.sysnav.ui.adapter.SystemGroupAdapter
+import com.zjl.finalarchitecture.module.main.ui.fragment.MainFragmentDirections
 import com.zjl.finalarchitecture.module.sysnav.ui.adapter.TutorialAdapter
 import com.zjl.finalarchitecture.module.sysnav.viewmodel.TutorialViewModel
 import com.zy.multistatepage.state.ErrorState
@@ -59,7 +59,14 @@ class TutorialFragment : BaseFragment<FragmentTutorialBinding, TutorialViewModel
     }
 
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
-        ToastUtils.showShort("小${position}")
+        findNavController().navigate(
+            MainFragmentDirections.actionMainFragmentToTutorialDetailArrFragment(
+                tutorialAdapter.getItem(
+                    position
+                ).id, tutorialAdapter.getItem(position).name
+            )
+        )
+
     }
 
     override fun configImmersive(immersionBar: ImmersionBar): ImmersionBar? {

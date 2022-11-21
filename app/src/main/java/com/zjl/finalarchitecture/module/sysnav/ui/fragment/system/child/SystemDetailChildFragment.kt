@@ -1,4 +1,4 @@
-package com.zjl.finalarchitecture.module.sysnav.ui.fragment
+package com.zjl.finalarchitecture.module.sysnav.ui.fragment.system.child
 
 import android.os.Bundle
 import androidx.core.os.bundleOf
@@ -6,17 +6,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.utils.autoCleared
 import com.zjl.base.utils.launchAndCollectIn
-import com.zjl.finalarchitecture.databinding.FragmentSystemDetailInnerBinding
+import com.zjl.finalarchitecture.databinding.FragmentSystemDetailChildBinding
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleAdapter
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleDividerItemDecoration
 import com.zjl.finalarchitecture.module.sysnav.viewmodel.SystemDetailInnerViewModel
 import com.zjl.finalarchitecture.utils.ext.handlePagingStatus
 
-class SystemDetailInnerFragment: BaseFragment<FragmentSystemDetailInnerBinding, SystemDetailInnerViewModel>() {
+class SystemDetailChildFragment :
+    BaseFragment<FragmentSystemDetailChildBinding, SystemDetailInnerViewModel>() {
 
-    companion object{
-        fun newInstance(id: String): SystemDetailInnerFragment{
-            return SystemDetailInnerFragment().apply {
+    companion object {
+        fun newInstance(id: String): SystemDetailChildFragment {
+            return SystemDetailChildFragment().apply {
                 arguments = bundleOf(
                     "id" to id
                 )
@@ -43,8 +44,8 @@ class SystemDetailInnerFragment: BaseFragment<FragmentSystemDetailInnerBinding, 
 
     override fun createObserver() {
 
-        mViewModel.systemArticleList.launchAndCollectIn(viewLifecycleOwner){
-            it.handlePagingStatus(mArticleAdapter, uiRootState, mBinding.smartRefresh){
+        mViewModel.systemArticleList.launchAndCollectIn(viewLifecycleOwner) {
+            it.handlePagingStatus(mArticleAdapter, uiRootState, mBinding.smartRefresh) {
                 retryAll()
             }
         }
