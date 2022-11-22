@@ -52,8 +52,7 @@ open class RequestCoroutineScope(
     /**
      * 这里我们把全局协程异常处理器加上，做一个全局兜底
      */
-    override val coroutineContext: CoroutineContext
-        get() = SupervisorJob() + exceptionHandler + dispatcher
+    override val coroutineContext: CoroutineContext = dispatcher + exceptionHandler + SupervisorJob()
 
     open fun launch(block: suspend CoroutineScope.() -> Unit): RequestCoroutineScope {
         launch(EmptyCoroutineContext) {
@@ -103,7 +102,7 @@ open class RequestCoroutineScope(
     }
 
     override fun close() {
-        cancel()
+        coroutineContext.cancel()
     }
 }
 
