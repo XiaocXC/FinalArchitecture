@@ -70,4 +70,10 @@ class TutorialFragment : BaseFragment<FragmentTutorialBinding, TutorialViewModel
     override fun configImmersive(immersionBar: ImmersionBar): ImmersionBar? {
         return null
     }
+
+    override fun retryAll() {
+        super.retryAll()
+        // 重新请求
+        mViewModel.loadTutorialListData()
+    }
 }

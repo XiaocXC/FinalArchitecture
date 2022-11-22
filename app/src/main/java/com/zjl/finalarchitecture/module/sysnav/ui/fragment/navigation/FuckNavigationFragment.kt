@@ -43,4 +43,9 @@ class FuckNavigationFragment : BaseFragment<FragmentFuckNavigationBinding, Navig
         return null
     }
 
+    override fun retryAll() {
+        super.retryAll()
+        mViewModel.initData()
+    }
+
 }

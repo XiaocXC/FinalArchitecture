@@ -72,7 +72,7 @@ class SearchResultFragment: BaseFragment<FragmentSearchResultBinding, SearchResu
     }
 
     override fun retryAll() {
-        mViewModel.onRefreshData()
         super.retryAll()
+        mViewModel.onRefreshData()
     }
 }

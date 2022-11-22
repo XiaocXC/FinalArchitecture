@@ -29,7 +29,7 @@ class TutorialViewModel : BaseViewModel() {
     /**
      * 加载教程数据
      */
-    private fun loadTutorialListData() {
+    fun loadTutorialListData() {
         requestScope {
             requestApiResult(uiModel = _tutorialList) {
                 ApiRepository.requestTutorialListData()
