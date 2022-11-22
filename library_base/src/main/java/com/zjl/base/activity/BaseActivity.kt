@@ -37,7 +37,6 @@ import timber.log.Timber
  *
  * 基类Activity，提供基本的封装内容进行统一
  * 规定一个Activity要基于ViewBinding且有一个统一的ViewModel作为支撑
- * 这一点在BaseFragment中没有强制
  */
 abstract class BaseActivity<V : ViewBinding, VM : BaseViewModel> : AppCompatActivity(), IPageTrackNode {
 

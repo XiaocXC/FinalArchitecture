@@ -185,6 +185,13 @@ object ApiRepository {
         return mApiService.register(account, password, password)
     }
 
+    /**
+     * 退出账户
+     */
+    suspend fun requestLogout(): ApiResult<Unit> {
+        return mApiService.logout()
+    }
+
 
     /**
      * 教程

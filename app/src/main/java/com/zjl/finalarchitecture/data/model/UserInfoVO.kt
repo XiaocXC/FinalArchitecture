@@ -18,6 +18,7 @@ data class UserInfoVO(
     var id: String = "",
     var nickname: String = "",
     var password: String = "",
+    var coinCount: Int = 0,
     var token: String = "",
     var type: Int = 0,
     var username: String = ""

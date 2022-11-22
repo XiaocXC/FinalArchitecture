@@ -173,6 +173,13 @@
         android:id="@+id/tutorialFragment"
         android:name="com.zjl.finalarchitecture.module.sysnav.ui.fragment.tutorial.TutorialFragment"
         android:label="TutorialFragment" />
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.zjl.finalarchitecture.module.setting.SettingFragment"
+        android:label="SettingFragment" />
+    <action
+        android:id="@+id/action_global_to_settingFragment"
+        app:destination="@+id/settingFragment"/>
 
 
 </navigation>

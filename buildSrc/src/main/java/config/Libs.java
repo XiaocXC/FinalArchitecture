@@ -140,6 +140,12 @@ public class Libs {
     // GSON
     public static final String GSON = "com.google.code.gson:gson:2.10";
 
+    private static final String PREFERENCE_VERSION = "1.2.0";
+
+    // 设置库
+    public static final String PREFERENCE = "androidx.preference:preference:" + PREFERENCE_VERSION;
+    public static final String PREFERENCE_KTX = "androidx.preference:preference-ktx:" + PREFERENCE_VERSION;
+
 
     // 测试库
     public static final String JUNIT = "junit:junit:4.13.2";

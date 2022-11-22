@@ -8,6 +8,8 @@
     <string name="toolbox">工具</string>
     <string name="mine">我的</string>
 
+    <string name="description_confirm">确定</string>
+
     <string name="search_hint">搜索关键词以空格隔开</string>
     <string name="fuck_bitch">我偷偷对着前台黑丝小妹猛冲</string>
     <string name="top_article">置顶</string>
@@ -46,4 +48,18 @@
 
     <string name="shopping_cart_title">购物车</string>
     <string name="shopping_cart_select_num">已选择 %d 样</string>
+
+    <!-- 我的 -->
+    <string name="me_my_coin_num">积分：%s</string>
+
+    <!-- 设置 -->
+    <string name="key_preference_about">aboutApp</string>
+    <string name="key_preference_github_website">codeGithub</string>
+    <string name="key_preference_sign_out">signOut</string>
+    <string name="preference_category_others">其他</string>
+    <string name="preference_title_about">关于</string>
+    <string name="preference_title_home_website">源代码</string>
+    <string name="preference_sign_out">退出登录</string>
+    <string name="description_sign_out_success">退出登录成功</string>
+    <string name="description_sign_out_des_dialog">您确定要退出登录吗？</string>
 </resources>

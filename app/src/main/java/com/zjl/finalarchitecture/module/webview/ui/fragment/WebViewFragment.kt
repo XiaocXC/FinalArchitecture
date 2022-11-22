@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.widget.LinearLayout
 import com.just.agentweb.AgentWeb
 import com.zjl.base.fragment.BaseFragment
+import com.zjl.base.ui.state.EmptyState
 import com.zjl.base.utils.launchAndCollectIn
 import com.zjl.finalarchitecture.databinding.FragmentWebViewBinding
 import com.zjl.finalarchitecture.module.webview.viewmodel.WebViewModel
@@ -26,13 +27,13 @@ class WebViewFragment : BaseFragment<FragmentWebViewBinding, WebViewModel>() {
     override fun createObserver() {
 
         mViewModel.webUrl.launchAndCollectIn(viewLifecycleOwner){
-            mViewModel.webUrl.collectLatest {
-                if(it.isEmpty()){
-                    return@collectLatest
-                }
+            if(it.isNullOrEmpty()){
+                uiRootState.show<EmptyState>()
+            } else {
                 //加载网页
                 mAgentWeb = preWeb.go(it)
             }
+
         }
     }
 }

@@ -137,6 +137,12 @@ interface ApiService {
         @Field("repassword") repassword: String
     ): ApiResult<Unit>
 
+    /**
+     * 退出登录
+     */
+    @GET("/user/logout/json")
+    suspend fun logout(): ApiResult<Unit>
+
 
     /**
      * 获取教程列表

@@ -76,4 +76,7 @@ dependencies {
     implementation(Libs.BANNER_VIEWPAGER)
     implementation(Libs.SHAPE_VIEW)
     implementation(Libs.DOCUMENT_FILE)
+    // 设置库
+    implementation(Libs.PREFERENCE)
+    implementation(Libs.PREFERENCE_KTX)
 }
