@@ -3,12 +3,11 @@ package com.zjl.finalarchitecture.module.auth
 import com.zjl.base.ui.UiModel
 import com.zjl.base.viewmodel.BaseViewModel
 import com.zjl.base.viewmodel.requestScope
-import com.zjl.finalarchitecture.data.model.UserInfoVO
+import com.zjl.finalarchitecture.data.model.user.CombineUserInfoVO
+import com.zjl.finalarchitecture.data.model.user.UserInfoVO
 import com.zjl.finalarchitecture.data.respository.ApiRepository
 import com.zjl.finalarchitecture.data.respository.datasouce.UserAuthDataSource
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 
 /**
@@ -24,7 +23,7 @@ class SignInViewModel : BaseViewModel(){
     /**
      * 登录状态
      */
-    private val _eventSignInState = Channel<UiModel<UserInfoVO>>()
+    private val _eventSignInState = Channel<UiModel<CombineUserInfoVO>>()
     val eventSignInState = _eventSignInState.receiveAsFlow()
 
     /**
@@ -38,10 +37,14 @@ class SignInViewModel : BaseViewModel(){
             _eventSignInState.send(UiModel.Loading())
 
             try {
-                val data = requestApiResult {
+                requestApiResult {
                     apiRepository.requestLogin(account, password)
                 }.await()
-                // 如果登录成功，我们把用户信息数据存储到本地
+                // 如果登录成功，我们获取完整用户信息
+                val data = requestApiResult {
+                    apiRepository.requestUserInfo()
+                }.await()
+                // 存储到本地
                 UserAuthDataSource.signIn(data)
                 // 更新为成功信息
                 _eventSignInState.send(UiModel.Success(data))

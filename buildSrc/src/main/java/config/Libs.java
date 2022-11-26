@@ -56,6 +56,8 @@ public class Libs {
     public static final String FLEX_BOX = "com.google.android.flexbox:flexbox:3.0.0";
     // 动态替换BaseUrl库，使用可参考 https://github.com/JessYanCoding/RetrofitUrlManager
     public static final String RETROFIT_URL_MANAGER = "me.jessyan:retrofit-url-manager:1.4.0";
+    // 持久化Cookies
+    public static final String RETROFIT_CookiesJar = "com.github.franmontiel:PersistentCookieJar:v1.0.1";
     // immersionbar-Ktx
     public static final String IMMERSIONBAR_BOX_KTX = "com.geyifeng.immersionbar:immersionbar-ktx:3.2.2";
     // immersionbar-Ktx

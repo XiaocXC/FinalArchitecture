@@ -6,6 +6,9 @@ import com.zjl.finalarchitecture.utils.CacheUtil
 import com.zjl.finalarchitecture.api.ApiService
 import com.zjl.finalarchitecture.api.mWanAndroidRetrofit
 import com.zjl.finalarchitecture.data.model.*
+import com.zjl.finalarchitecture.data.model.coin.CoinVO
+import com.zjl.finalarchitecture.data.model.user.CombineUserInfoVO
+import com.zjl.finalarchitecture.data.model.user.UserInfoVO
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -209,5 +212,21 @@ object ApiRepository {
         orderType: Int = 1
     ): ApiResult<PageVO<ArticleListVO>> {
         return mApiService.getTutorialDetailList(page, cid, orderType)
+    }
+
+    /**
+     * 获取用户积分信息
+     */
+    suspend fun requestUserCoinData(
+    ): ApiResult<CoinVO> {
+        return mApiService.getUserCoinData()
+    }
+
+    /**
+     * 获取用户详细信息，包含积分数据
+     */
+    suspend fun requestUserInfo(
+    ): ApiResult<CombineUserInfoVO> {
+        return mApiService.getUserInfo()
     }
 }

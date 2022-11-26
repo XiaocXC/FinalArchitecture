@@ -19,6 +19,7 @@ dependencies {
     api(Libs.GSON)
     // Log日志拦截器
     api(Libs.OKHTTP_LOGGING)
+    api(Libs.RETROFIT_CookiesJar)
 
     testImplementation(Libs.JUNIT)
     testImplementation(Libs.JUNIT_EXT)

@@ -1,4 +1,4 @@
-package com.zjl.finalarchitecture.data.model
+package com.zjl.finalarchitecture.data.model.user
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
@@ -22,9 +22,4 @@ data class UserInfoVO(
     var token: String = "",
     var type: Int = 0,
     var username: String = ""
-) : Parcelable {
-
-    companion object{
-        val NOT_LOGIN_USER = UserInfoVO()
-    }
-}
+) : Parcelable

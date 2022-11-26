@@ -1,7 +1,7 @@
 package com.zjl.finalarchitecture.utils.auth
 
 import com.tencent.mmkv.MMKV
-import com.zjl.finalarchitecture.data.model.UserInfoVO
+import com.zjl.finalarchitecture.data.model.user.CombineUserInfoVO
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -28,26 +28,26 @@ object AuthStateManager {
      * 获取用户信息
      * 协程
      */
-    suspend fun getUserInfo(): UserInfoVO = withContext(Dispatchers.IO) {
+    suspend fun getUserInfo(): CombineUserInfoVO? = withContext(Dispatchers.IO) {
         MMKV.mmkvWithID(AUTH_FILE_NAME)?.decodeParcelable(
-            USER_DETAIL, UserInfoVO::class.java
-        ) ?: UserInfoVO.NOT_LOGIN_USER
+            USER_DETAIL, CombineUserInfoVO::class.java
+        )
     }
 
     /**
      * 获取用户信息
      * 同步
      */
-    fun getUserInfoSync(): UserInfoVO {
+    fun getUserInfoSync(): CombineUserInfoVO? {
         return MMKV.mmkvWithID(AUTH_FILE_NAME)?.decodeParcelable(
-            USER_DETAIL, UserInfoVO::class.java
-        ) ?: UserInfoVO.NOT_LOGIN_USER
+            USER_DETAIL, CombineUserInfoVO::class.java
+        )
     }
 
     /**
      * 记录登陆用户信息
      */
-    suspend fun signIn(userInfoVO: UserInfoVO) = withContext(Dispatchers.IO) {
+    suspend fun signIn(userInfoVO: CombineUserInfoVO) = withContext(Dispatchers.IO) {
         MMKV.mmkvWithID(AUTH_FILE_NAME)?.apply {
             encode(USER_DETAIL, userInfoVO)
         }
@@ -58,7 +58,7 @@ object AuthStateManager {
      */
     suspend fun signOut() = withContext(Dispatchers.IO) {
         MMKV.mmkvWithID(AUTH_FILE_NAME)?.apply {
-            encode(USER_DETAIL, UserInfoVO.NOT_LOGIN_USER)
+            removeValueForKey(USER_DETAIL)
         }
     }
 }

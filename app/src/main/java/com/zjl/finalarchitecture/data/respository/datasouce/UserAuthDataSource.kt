@@ -1,7 +1,7 @@
 package com.zjl.finalarchitecture.data.respository.datasouce
 
 import com.zjl.base.globalCoroutineScope
-import com.zjl.finalarchitecture.data.model.UserInfoVO
+import com.zjl.finalarchitecture.data.model.user.CombineUserInfoVO
 import com.zjl.finalarchitecture.utils.auth.AuthStateManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -21,8 +21,8 @@ object UserAuthDataSource {
      * 用户信息
      * 您可以观察此流来监听用户数据的变化
      */
-    private val _basicUserInfo = MutableStateFlow(UserInfoVO.NOT_LOGIN_USER)
-    val basicUserInfoVO: StateFlow<UserInfoVO> get() = _basicUserInfo
+    private val _basicUserInfo = MutableStateFlow<CombineUserInfoVO?>(null)
+    val basicUserInfoVO: StateFlow<CombineUserInfoVO?> = _basicUserInfo
 
     /**
      * 是否登录标准
@@ -31,7 +31,7 @@ object UserAuthDataSource {
      */
     val isLogin: Boolean
     get() {
-        return _basicUserInfo.value.id.isNotEmpty()
+        return _basicUserInfo.value != null && !_basicUserInfo.value?.userInfo?.id.isNullOrEmpty()
     }
 
     init {
@@ -58,7 +58,7 @@ object UserAuthDataSource {
      * （启动全局作用域使用）
      * @param userInfo 用户信息
      */
-    fun signIn(userInfo: UserInfoVO){
+    fun signIn(userInfo: CombineUserInfoVO){
         globalCoroutineScope.launch {
             authStateManager.signIn(userInfo)
             // 更新当前用户状态信息

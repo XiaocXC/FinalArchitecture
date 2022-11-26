@@ -9,7 +9,6 @@ import com.zjl.base.utils.findNavController
 import com.zjl.base.utils.launchAndCollectIn
 import com.zjl.finalarchitecture.NavMainDirections
 import com.zjl.finalarchitecture.R
-import com.zjl.finalarchitecture.data.model.UserInfoVO.Companion.NOT_LOGIN_USER
 import com.zjl.finalarchitecture.data.respository.datasouce.UserAuthDataSource
 import com.zjl.finalarchitecture.databinding.FragmentMineBinding
 import com.zjl.finalarchitecture.module.mine.viewmodel.MineViewModel
@@ -37,26 +36,29 @@ class MineFragment : BaseFragment<FragmentMineBinding, MineViewModel>(), SwipeRe
     override fun createObserver() {
 
         mViewModel.userInfo.launchAndCollectIn(viewLifecycleOwner){
+            mBinding.containerRefresh.isRefreshing = false
+
             // 判断是否登录更新不同视图
-            if(it == NOT_LOGIN_USER){
+            if(it == null){
                 mBinding.tvUserName.text = getString(R.string.description_not_login_tip)
                 mBinding.tvTip.isVisible = false
                 mBinding.ivUserPhoto.setImageResource(R.drawable.ic_default_user_photo)
             } else {
-                mBinding.tvUserName.text = it.nickname
+                mBinding.tvUserName.text = it.userInfo.nickname
                 mBinding.tvTip.isVisible = true
-                mBinding.ivUserPhoto.load(it.icon){
+                mBinding.ivUserPhoto.load(it.userInfo.icon){
                     placeholder(R.drawable.ic_default_user_photo)
                     error(R.drawable.ic_default_user_photo)
                 }
-                mBinding.tvTip.text = getString(R.string.me_my_coin_num, it.coinCount.toString())
+                // 排名积分信息
+                mBinding.tvTip.text = getString(R.string.me_my_coin_num, it.coinInfo.coinCount.toString(), it.coinInfo.level.toString(), it.coinInfo.rank.toString())
             }
         }
     }
 
     override fun onRefresh() {
-        // 目前更新用户信息不需要请求接口，所以直接置为false
-        mBinding.containerRefresh.isRefreshing = false
+        // 更新用户信息
+        mViewModel.initData()
     }
 
 }

@@ -50,7 +50,7 @@
     <string name="shopping_cart_select_num">已选择 %d 样</string>
 
     <!-- 我的 -->
-    <string name="me_my_coin_num">积分：%s</string>
+    <string name="me_my_coin_num">积分：%s | 等级：%s | 排名：%s</string>
 
     <!-- 设置 -->
     <string name="key_preference_about">aboutApp</string>

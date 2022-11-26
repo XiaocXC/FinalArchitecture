@@ -1,5 +1,9 @@
 package com.zjl.finalarchitecture.api
 
+import com.franmontiel.persistentcookiejar.PersistentCookieJar
+import com.franmontiel.persistentcookiejar.cache.SetCookieCache
+import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor
+import com.zjl.base.globalContext
 import com.zjl.finalarchitecture.api.converter.kotlin.WanAndroidSerializer
 import com.zjl.library_network.converter.kotlin.SerializerFactory
 import com.zjl.lib_base.BuildConfig
@@ -21,6 +25,10 @@ import java.util.concurrent.TimeUnit
  */
 private const val BASE_URL = "https://www.wanandroid.com"
 
+val wanAndroidCookieJar: PersistentCookieJar by lazy {
+    PersistentCookieJar(SetCookieCache(), SharedPrefsCookiePersistor(globalContext))
+}
+
 private val okHttpClient = OkHttpClient.Builder().apply {
     // 添加公共heads 注意要设置在日志拦截器之前，不然Log中会不显示head信息
     addInterceptor(HeaderInterceptor())
@@ -31,6 +39,8 @@ private val okHttpClient = OkHttpClient.Builder().apply {
         })
     }
 }.addInterceptor(WanAndroidParseInterceptor())
+    //添加Cookies自动持久化
+    .cookieJar(wanAndroidCookieJar)
     .callTimeout(30, TimeUnit.SECONDS)
     .readTimeout(30, TimeUnit.SECONDS)
     .connectTimeout(30, TimeUnit.SECONDS)

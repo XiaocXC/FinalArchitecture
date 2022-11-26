@@ -16,7 +16,7 @@ class HeaderInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val builder = chain.request().newBuilder()
         if(UserAuthDataSource.isLogin){
-            builder.addHeader("token", UserAuthDataSource.basicUserInfoVO.value.token).build()
+            builder.addHeader("token", UserAuthDataSource.basicUserInfoVO.value?.userInfo?.token ?: "").build()
             builder.addHeader("device", "Android").build()
         }
         builder.addHeader("isLogin", UserAuthDataSource.isLogin.toString()).build()

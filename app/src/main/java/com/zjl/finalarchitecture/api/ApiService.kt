@@ -2,6 +2,9 @@ package com.zjl.finalarchitecture.api
 
 import com.zjl.base.ApiResult
 import com.zjl.finalarchitecture.data.model.*
+import com.zjl.finalarchitecture.data.model.coin.CoinVO
+import com.zjl.finalarchitecture.data.model.user.CombineUserInfoVO
+import com.zjl.finalarchitecture.data.model.user.UserInfoVO
 import retrofit2.http.*
 
 /**
@@ -138,6 +141,13 @@ interface ApiService {
     ): ApiResult<Unit>
 
     /**
+     * 获取用户积分数据
+     * 需登录才能获取
+     */
+    @GET("user/lg/userinfo/json")
+    suspend fun getUserInfo(): ApiResult<CombineUserInfoVO>
+
+    /**
      * 退出登录
      */
     @GET("/user/logout/json")
@@ -160,4 +170,12 @@ interface ApiService {
         @Query("cid") cid: Int?,
         @Query("order_type") orderType: Int = 1
     ): ApiResult<PageVO<ArticleListVO>>
+
+
+    /**
+     * 获取用户积分数据
+     * 需登录才能获取
+     */
+    @GET("lg/coin/userinfo/json")
+    suspend fun getUserCoinData(): ApiResult<CoinVO>
 }
