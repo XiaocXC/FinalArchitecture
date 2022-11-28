@@ -50,6 +50,9 @@
         <action
             android:id="@+id/action_mainFragment_to_tutorialDetailArrFragment"
             app:destination="@id/tutorialDetailArrFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_expandListFragment2"
+            app:destination="@id/expandListFragment2" />
     </fragment>
 
 
@@ -180,6 +183,10 @@
     <action
         android:id="@+id/action_global_to_settingFragment"
         app:destination="@+id/settingFragment"/>
+    <fragment
+        android:id="@+id/expandListFragment2"
+        android:name="com.zjl.finalarchitecture.module.toolbox.expandList.ExpandListFragment"
+        android:label="ExpandListFragment" />
 
 
 </navigation>

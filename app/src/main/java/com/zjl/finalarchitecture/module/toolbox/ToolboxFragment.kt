@@ -57,6 +57,10 @@ class ToolboxFragment : BaseFragment<FragmentToolboxBinding, EmptyViewModel>() {
         mBinding.btnProgressList.setOnClickListener {
             findNavController().navigate(MainFragmentDirections.actionMainFragmentToProgressListFragment())
         }
+
+        mBinding.btnExpandList.setOnClickListener {
+            findNavController().navigate(MainFragmentDirections.actionMainFragmentToExpandListFragment2())
+        }
     }
 
     override fun configImmersive(immersionBar: ImmersionBar): ImmersionBar? {
