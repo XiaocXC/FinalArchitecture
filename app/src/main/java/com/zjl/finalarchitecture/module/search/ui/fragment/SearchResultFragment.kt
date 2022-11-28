@@ -1,15 +1,19 @@
 package com.zjl.finalarchitecture.module.search.ui.fragment
 
 import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.gyf.immersionbar.ImmersionBar
 import com.zjl.base.adapter.DefaultLoadStateAdapter
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.utils.autoCleared
 import com.zjl.base.utils.findNavController
 import com.zjl.base.utils.launchAndCollectIn
+import com.zjl.finalarchitecture.NavMainDirections
 import com.zjl.finalarchitecture.databinding.FragmentSearchResultBinding
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleAdapter
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleDividerItemDecoration
@@ -45,11 +49,14 @@ class SearchResultFragment: BaseFragment<FragmentSearchResultBinding, SearchResu
             mViewModel.onLoadMoreData()
         }
 
-        // 给ArticleAdapter加上分页的状态尾
-        val withFooterAdapter = mArticleAdapter
+        // Item点击事件
+        mArticleAdapter.setOnItemClickListener { _, _, position ->
+            // 跳转到网页
+            findNavController().navigate(NavMainDirections.actionGlobalToWebFragment(mArticleAdapter.getItem(position)))
+        }
 
         // 将BannerAdapter和ArticleAdapter整合为一个Adapter
-        mBinding.rvSearchResult.adapter = withFooterAdapter
+        mBinding.rvSearchResult.adapter = mArticleAdapter
         // 分割线
         mBinding.rvSearchResult.addItemDecoration(
             ArticleDividerItemDecoration(

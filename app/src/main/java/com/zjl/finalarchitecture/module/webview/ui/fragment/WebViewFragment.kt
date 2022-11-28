@@ -5,6 +5,7 @@ import android.widget.LinearLayout
 import com.just.agentweb.AgentWeb
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.ui.state.EmptyState
+import com.zjl.base.utils.findNavController
 import com.zjl.base.utils.launchAndCollectIn
 import com.zjl.finalarchitecture.databinding.FragmentWebViewBinding
 import com.zjl.finalarchitecture.module.webview.viewmodel.WebViewModel
@@ -17,6 +18,11 @@ class WebViewFragment : BaseFragment<FragmentWebViewBinding, WebViewModel>() {
     private var mAgentWeb: AgentWeb? = null
 
     override fun initViewAndEvent(savedInstanceState: Bundle?) {
+
+        mBinding.toolbarWeb.setNavigationOnClickListener {
+            findNavController().navigateUp()
+        }
+
         preWeb = AgentWeb.with(this@WebViewFragment)
             .setAgentWebParent(mBinding.containerWeb, LinearLayout.LayoutParams(-1, -1))
             .useDefaultIndicator()

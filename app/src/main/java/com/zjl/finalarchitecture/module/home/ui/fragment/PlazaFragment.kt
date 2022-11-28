@@ -13,6 +13,7 @@ import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.utils.autoCleared
 import com.zjl.base.utils.findNavController
 import com.zjl.base.utils.launchAndCollectIn
+import com.zjl.finalarchitecture.NavMainDirections
 import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.databinding.FragmentPlazaBinding
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleAdapter
@@ -44,6 +45,11 @@ class PlazaFragment : BaseFragment<FragmentPlazaBinding, PlazaViewModel>(), OnRe
         // 列表适配器
         mArticleAdapter = ArticleAdapter()
 
+        // Item点击事件
+        mArticleAdapter.setOnItemClickListener { _, _, position ->
+            // 跳转到网页
+            findNavController().navigate(NavMainDirections.actionGlobalToWebFragment(mArticleAdapter.getItem(position)))
+        }
 
         mBinding.recyclerView.adapter = mArticleAdapter
         mBinding.refreshLayout.setOnRefreshLoadMoreListener(this)

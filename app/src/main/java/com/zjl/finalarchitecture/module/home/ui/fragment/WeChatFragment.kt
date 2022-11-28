@@ -9,7 +9,9 @@ import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.ui.data
 import com.zjl.base.utils.autoCleared
+import com.zjl.base.utils.findNavController
 import com.zjl.base.utils.launchAndCollectIn
+import com.zjl.finalarchitecture.NavMainDirections
 import com.zjl.finalarchitecture.databinding.FragmentProjectBinding
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleDividerItemDecoration
 import com.zjl.finalarchitecture.module.home.ui.adapter.ProjectAdapter
@@ -66,9 +68,12 @@ class WeChatFragment : BaseFragment<FragmentProjectBinding, WechatViewModel>(), 
          * 微信公众号详情列表 rv adapter
          */
         mWechatListAdapter = ProjectAdapter()
-//        mWechatListAdapter.loadMoreModule.setOnLoadMoreListener {
-//            mViewModel.loadMore()
-//        }
+
+        // Item点击事件
+        mWechatListAdapter.setOnItemClickListener { _, _, position ->
+            // 跳转到网页
+            findNavController().navigate(NavMainDirections.actionGlobalToWebFragment(mWechatListAdapter.getItem(position)))
+        }
 
         mBinding.rvProject.adapter = mWechatListAdapter
         mBinding.refreshLayout.setOnRefreshLoadMoreListener(this)

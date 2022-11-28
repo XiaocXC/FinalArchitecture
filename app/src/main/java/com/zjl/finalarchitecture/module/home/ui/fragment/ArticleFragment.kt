@@ -1,11 +1,14 @@
 package com.zjl.finalarchitecture.module.home.ui.fragment
 
 import android.os.Bundle
+import android.view.View
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.SavedStateHandle
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.gyf.immersionbar.ImmersionBar
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener
@@ -13,7 +16,9 @@ import com.scwang.smart.refresh.layout.listener.OnRefreshListener
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.utils.autoCleared
+import com.zjl.base.utils.findNavController
 import com.zjl.base.utils.launchAndCollectIn
+import com.zjl.finalarchitecture.NavMainDirections
 import com.zjl.finalarchitecture.databinding.FragmentArticleBinding
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleAdapter
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleBannerWrapperAdapter
@@ -53,6 +58,12 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel>()
         // 列表适配器
         mArticleAdapter = ArticleAdapter {
 //            mViewModel.updateCollectState(it.id, !it.collect)
+        }
+
+        // Item点击事件
+        mArticleAdapter.setOnItemClickListener { _, _, position ->
+            // 跳转到网页
+            findNavController().navigate(NavMainDirections.actionGlobalToWebFragment(mArticleAdapter.getItem(position)))
         }
 
 //        val mArticleAdapter2: ArticleAdapter by lazy { ArticleAdapter() }

@@ -7,7 +7,9 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.utils.autoCleared
+import com.zjl.base.utils.findNavController
 import com.zjl.base.utils.launchAndCollectIn
+import com.zjl.finalarchitecture.NavMainDirections
 import com.zjl.finalarchitecture.databinding.FragmentAskBinding
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleAdapter
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleDividerItemDecoration
@@ -36,9 +38,11 @@ class AskFragment: BaseFragment<FragmentAskBinding, AskViewModel>(), OnRefreshLo
         // 列表适配器
         mArticleAdapter = ArticleAdapter()
 
-//        mArticleAdapter.loadMoreModule.setOnLoadMoreListener {
-//            mViewModel.loadMore()
-//        }
+        // Item点击事件
+        mArticleAdapter.setOnItemClickListener { _, _, position ->
+            // 跳转到网页
+            findNavController().navigate(NavMainDirections.actionGlobalToWebFragment(mArticleAdapter.getItem(position)))
+        }
 
         // 给ArticleAdapter加上分页的状态尾
         val articleWithFooterAdapter = mArticleAdapter

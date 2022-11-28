@@ -10,7 +10,9 @@ import com.zjl.base.adapter.DefaultLoadStateAdapter
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.ui.data
 import com.zjl.base.utils.autoCleared
+import com.zjl.base.utils.findNavController
 import com.zjl.base.utils.launchAndCollectIn
+import com.zjl.finalarchitecture.NavMainDirections
 import com.zjl.finalarchitecture.databinding.FragmentProjectBinding
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleDividerItemDecoration
 import com.zjl.finalarchitecture.module.home.ui.adapter.ProjectAdapter
@@ -71,10 +73,12 @@ class ProjectFragment : BaseFragment<FragmentProjectBinding, ProjectViewModel>()
          * 项目详情列表 rv adapter
          */
         mProjectListAdapter = ProjectAdapter()
-//        // 加载更多
-//        mProjectListAdapter.loadMoreModule.setOnLoadMoreListener {
-//            mViewModel.loadMore()
-//        }
+
+        // Item点击事件
+        mProjectListAdapter.setOnItemClickListener { _, _, position ->
+            // 跳转到网页
+            findNavController().navigate(NavMainDirections.actionGlobalToWebFragment(mProjectListAdapter.getItem(position)))
+        }
 
         mBinding.rvProject.adapter = mProjectListAdapter
         mBinding.refreshLayout.setOnRefreshLoadMoreListener(this)

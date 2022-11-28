@@ -55,7 +55,7 @@ class TutorialDetailArrViewModel(
             ) {
                 ApiRepository.requestTutorialDetailListData(page = currentIndex, cid = tutorialIds)
             }.await()
-        }.cancel()
+        }
     }
 
     override fun onRefreshData(tag: Any?) {
