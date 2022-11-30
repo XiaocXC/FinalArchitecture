@@ -1,137 +1,182 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container_refresh">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <androidx.core.widget.NestedScrollView
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
+        android:id="@+id/srl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        app:srlEnablePureScrollMode="true">
 
-        <LinearLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:background="#FAFAFA"
+            android:clipToPadding="false"
+            android:overScrollMode="never"
+            android:scrollbars="none">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/container_user_info"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?attr/colorPrimary">
+                android:layout_height="match_parent">
 
-                <ImageView
-                    android:id="@+id/imageView2"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl1"
                     android:layout_width="match_parent"
-                    android:layout_height="250dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/asd"
+                    android:layout_height="210dp"
+                    android:background="@drawable/change3"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent">
 
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/iv_user_photo"
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:layout_marginStart="16dp"
-                    android:padding="2dp"
-                    android:scaleType="centerCrop"
-                    app:layout_constraintBottom_toBottomOf="@+id/imageView2"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:shapeAppearanceOverlay="@style/ShapeAppearance.Architecture.Circle"
-                    app:strokeColor="?attr/colorOnPrimary"
-                    app:strokeWidth="1dp" />
 
-                <TextView
-                    android:id="@+id/tv_user_name"
-                    style="@style/TextAppearance.Material3.TitleMedium"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp"
-                    android:ellipsize="end"
-                    android:maxLines="2"
-                    app:layout_constraintBottom_toTopOf="@+id/tv_tip"
-                    android:textColor="?attr/colorOnPrimary"
-                    app:layout_constraintEnd_toStartOf="@+id/iv_into"
-                    app:layout_constraintStart_toEndOf="@+id/iv_user_photo"
-                    app:layout_constraintTop_toTopOf="@+id/iv_user_photo"
-                    tools:text="@string/app_name" />
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.1" />
 
-                <TextView
-                    android:id="@+id/tv_tip"
-                    style="@style/TextAppearance.Material3.LabelMedium"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp"
-                    android:ellipsize="end"
-                    android:maxLines="2"
-                    android:textColor="?attr/colorOnPrimary"
-                    app:layout_constraintBottom_toBottomOf="@+id/iv_user_photo"
-                    app:layout_constraintEnd_toStartOf="@+id/iv_into"
-                    app:layout_constraintStart_toEndOf="@+id/iv_user_photo"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_user_name"
-                    tools:text="@string/app_name" />
 
-                <ImageView
-                    android:id="@+id/iv_into"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:src="@drawable/ic_arrow_right"
-                    app:layout_constraintBottom_toBottomOf="@+id/iv_user_photo"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/iv_user_photo"
-                    app:tint="?attr/colorOnPrimary" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.9" />
 
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="-16dp"
-                style="@style/Widget.Material3.CardView.Filled"
-                app:cardBackgroundColor="?attr/colorSurface"
-                app:cardCornerRadius="16dp">
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/ivUserPhoto"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:scaleType="fitXY"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/guideline2"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.5"
+                        app:shapeAppearanceOverlay="@style/ShapeAppearance.Architecture.Circle" />
+
+                    <TextView
+                        android:id="@+id/txtUserName"
+                        style="@style/TextAppearance.Material3.TitleMedium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:textColor="?attr/colorOnPrimary"
+                        android:textSize="17sp"
+                        app:layout_constraintEnd_toStartOf="@+id/guideline9"
+                        app:layout_constraintStart_toEndOf="@+id/ivUserPhoto"
+                        app:layout_constraintTop_toTopOf="@+id/ivUserPhoto"
+                        tools:text="@string/app_name" />
+
+                    <TextView
+                        android:id="@+id/txtTip"
+                        style="@style/TextAppearance.Material3.LabelMedium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:textColor="?attr/colorOnPrimary"
+                        android:textSize="13sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/ivUserPhoto"
+                        app:layout_constraintEnd_toEndOf="@+id/txtUserName"
+                        app:layout_constraintStart_toStartOf="@+id/txtUserName"
+                        tools:text="@string/app_name" />
+
+                    <com.zjl.finalarchitecture.widget.WaveView
+                        android:id="@+id/waveView"
+                        android:layout_width="match_parent"
+                        android:layout_height="17dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:layout_marginTop="16dp">
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cl1">
 
-                    <LinearLayout
-                        android:id="@+id/container_app_setting"
+                    <com.zjl.finalarchitecture.widget.SettingBar
+                        android:id="@+id/sbIntegral"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:background="?attr/selectableItemBackground"
-                        android:paddingHorizontal="16dp"
-                        android:gravity="center_vertical">
+                        android:layout_height="wrap_content"
+                        app:bar_leftText="@string/description_app_integral"
+                        app:bar_rightIcon="@drawable/arrows_right_ic" />
 
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:layout_marginEnd="16dp"
-                            android:src="@drawable/ic_setting" />
+                    <com.zjl.finalarchitecture.widget.SettingBar
+                        android:id="@+id/sbCollect"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:bar_leftText="@string/description_app_collect"
+                        app:bar_rightIcon="@drawable/arrows_right_ic" />
 
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            style="@style/TextAppearance.Material3.LabelLarge"
-                            android:layout_weight="1"
-                            android:text="@string/description_app_setting"
-                            android:textStyle="bold" />
+                    <com.zjl.finalarchitecture.widget.SettingBar
+                        android:id="@+id/sbShare"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:bar_leftText="@string/description_app_share"
+                        app:bar_rightIcon="@drawable/arrows_right_ic" />
 
-                        <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:src="@drawable/ic_arrow_right" />
-                    </LinearLayout>
+                    <com.zjl.finalarchitecture.widget.SettingBar
+                        android:id="@+id/sbReadRecord"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:bar_leftText="@string/description_app_read_record"
+                        app:bar_rightIcon="@drawable/arrows_right_ic" />
+
+                    <com.zjl.finalarchitecture.widget.SettingBar
+                        android:id="@+id/sbOpenProject"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        app:bar_leftText="@string/description_app_open_project"
+                        app:bar_rightIcon="@drawable/arrows_right_ic" />
+
+                    <com.zjl.finalarchitecture.widget.SettingBar
+                        android:id="@+id/sbAboutWe"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:bar_leftText="@string/description_app_about_we"
+                        app:bar_rightIcon="@drawable/arrows_right_ic" />
+
+                    <com.zjl.finalarchitecture.widget.SettingBar
+                        android:id="@+id/sbVersion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:bar_leftText="@string/description_app_version"
+                        app:bar_rightIcon="@drawable/arrows_right_ic" />
+
+                    <TextView
+                        android:id="@+id/txtLogout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
+                        android:text="@string/description_app_exit"
+                        android:textColor="@color/base_red"
+                        android:textSize="@dimen/sp_14" />
+
                 </LinearLayout>
 
-            </com.google.android.material.card.MaterialCardView>
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
-</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

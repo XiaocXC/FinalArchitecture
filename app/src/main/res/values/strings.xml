@@ -27,7 +27,15 @@
     <string name="search_hot_des">热门搜索</string>
     <string name="search_history_des">历史搜索</string>
 
-    <string name="description_app_setting">APP设置</string>
+    <string name="description_app_integral">我的积分</string>
+    <string name="description_app_collect">我的收藏</string>
+    <string name="description_app_share">我的分享</string>
+    <string name="description_app_read_record">阅读历史</string>
+    <string name="description_app_open_project">开源项目</string>
+    <string name="description_app_about_we">关于作者</string>
+    <string name="description_app_setting">系统设置</string>
+    <string name="description_app_version">当前版本</string>
+    <string name="description_app_exit">退出当前账号</string>
 
     <!-- 登录 -->
     <string name="description_login">登录</string>

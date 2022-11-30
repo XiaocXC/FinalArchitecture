@@ -53,6 +53,8 @@
         <action
             android:id="@+id/action_mainFragment_to_expandListFragment2"
             app:destination="@id/expandListFragment2" />
+
+
     </fragment>
 
 
@@ -140,9 +142,7 @@
 
     <include app:graph="@navigation/nav_auth" />
 
-    <action
-        android:id="@+id/action_global_sign_in"
-        app:destination="@id/nav_auth" />
+
 
     <fragment
         android:id="@+id/treeCheckFragment"
@@ -180,13 +180,28 @@
         android:id="@+id/settingFragment"
         android:name="com.zjl.finalarchitecture.module.setting.SettingFragment"
         android:label="SettingFragment" />
-    <action
-        android:id="@+id/action_global_to_settingFragment"
-        app:destination="@+id/settingFragment"/>
+
     <fragment
         android:id="@+id/expandListFragment2"
         android:name="com.zjl.finalarchitecture.module.toolbox.expandList.ExpandListFragment"
         android:label="ExpandListFragment" />
+
+    <fragment
+        android:id="@+id/integralFragment"
+        android:name="com.zjl.finalarchitecture.module.mine.ui.fragment.integral.IntegralFragment"
+        android:label="IntegralFragment" />
+
+    <action
+        android:id="@+id/action_global_sign_in"
+        app:destination="@id/nav_auth" />
+
+    <!-- MineFragment -->
+    <action
+        android:id="@+id/action_global_to_settingFragment"
+        app:destination="@+id/settingFragment"/>
+    <action
+        android:id="@+id/action_global_to_integralFragment"
+        app:destination="@+id/integralFragment"/>
 
 
 </navigation>

@@ -30,14 +30,14 @@ object UserAuthDataSource {
      * true:已登录 | false:未登录
      */
     val isLogin: Boolean
-    get() {
-        return _basicUserInfo.value != null && !_basicUserInfo.value?.userInfo?.id.isNullOrEmpty()
-    }
+        get() {
+            return _basicUserInfo.value != null && !_basicUserInfo.value?.userInfo?.id.isNullOrEmpty()
+        }
 
     init {
         // 初始化时调用一次最新登录状态
         globalCoroutineScope.launch {
-            refresh()
+            refreshUserInfo()
         }
     }
 
@@ -45,11 +45,11 @@ object UserAuthDataSource {
      * 登出退出登录
      * （启动全局作用域使用）
      */
-    fun signOut(){
+    fun signOut() {
         globalCoroutineScope.launch {
             authStateManager.signOut()
             // 更新当前用户状态信息
-            refresh()
+            refreshUserInfo()
         }
     }
 
@@ -58,15 +58,15 @@ object UserAuthDataSource {
      * （启动全局作用域使用）
      * @param userInfo 用户信息
      */
-    fun signIn(userInfo: CombineUserInfoVO){
+    fun signIn(userInfo: CombineUserInfoVO) {
         globalCoroutineScope.launch {
             authStateManager.signIn(userInfo)
             // 更新当前用户状态信息
-            refresh()
+            refreshUserInfo()
         }
     }
 
-    private suspend fun refresh() {
+    private suspend fun refreshUserInfo() {
         _basicUserInfo.value = authStateManager.getUserInfo()
     }
 }
