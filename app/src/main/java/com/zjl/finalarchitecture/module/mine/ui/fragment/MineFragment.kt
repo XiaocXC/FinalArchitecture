@@ -46,7 +46,7 @@ class MineFragment : BaseFragment<FragmentMineBinding, MineViewModel>() {
             if (it == null) {
                 mBinding.txtUserName.text = getString(R.string.description_not_login_tip)
                 mBinding.txtTip.isVisible = false
-                mBinding.ivUserPhoto.setImageResource(R.drawable.ic_default_user_photo)
+                mBinding.ivUserPhoto.setImageResource(R.drawable.ic_default_user_logo)
             } else {
                 mBinding.txtUserName.text = it.userInfo.nickname
                 mBinding.txtTip.isVisible = true

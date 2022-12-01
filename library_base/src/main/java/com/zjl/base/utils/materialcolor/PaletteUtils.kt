@@ -4,7 +4,6 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import com.zjl.base.utils.materialcolor.quantize.QuantizerCelebi
 import com.zjl.base.utils.materialcolor.scheme.Scheme
-import com.zjl.base.utils.materialcolor.score.ContainerScore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -32,7 +31,7 @@ object PaletteUtils {
 
     private fun resolveByPixelsInner(pixels: IntArray, isDarkMode: Boolean): ColorContainerData {
         val quantize = QuantizerCelebi.quantize(pixels, 10)
-        val primaryColorPair = ContainerScore.score(quantize, !isDarkMode)
+        val primaryColorPair = Pair(true, listOf(Color.BLACK))
         if(primaryColorPair.first){
             // 如果[primaryColorPair.first]为true
             // 说明返回的颜色不是最合适的，我们直接用该色作为主色调

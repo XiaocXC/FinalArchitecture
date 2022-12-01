@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="54dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:cardCornerRadius="12dp"
+    android:layout_marginHorizontal="2dp"
+    android:layout_marginVertical="2dp"
+    app:strokeWidth="0dp"
+    app:cardBackgroundColor="@color/black">
+
+    <TextView
+        android:id="@+id/tvSubtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/TextAppearance.MaterialComponents.Subtitle1"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="6dp"
+        tools:text="primary"/>
+</com.google.android.material.card.MaterialCardView>

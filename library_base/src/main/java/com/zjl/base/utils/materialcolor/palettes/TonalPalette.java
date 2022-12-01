@@ -15,7 +15,6 @@
  */
 
 package com.zjl.base.utils.materialcolor.palettes;
-
 import com.zjl.base.utils.materialcolor.hct.Hct;
 
 import java.util.HashMap;
@@ -72,5 +71,13 @@ public final class TonalPalette {
       cache.put(tone, color);
     }
     return color;
+  }
+
+  public double getChroma() {
+    return this.chroma;
+  }
+
+  public double getHue() {
+    return this.hue;
   }
 }

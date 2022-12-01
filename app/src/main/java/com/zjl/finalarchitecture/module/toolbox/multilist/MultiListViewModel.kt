@@ -13,7 +13,9 @@ import com.zjl.base.utils.ext.isNightMode
 import com.zjl.base.utils.materialcolor.ColorContainerData
 import com.zjl.base.utils.materialcolor.PaletteUtils
 import com.zjl.base.viewmodel.BaseViewModel
+import com.zjl.base.viewmodel.requestScope
 import com.zjl.finalarchitecture.module.toolbox.multilist.entity.ExampleMultiEntity
+import com.zjl.finalarchitecture.utils.ext.coil.toBitmapWithCoil
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -37,31 +39,20 @@ class MultiListViewModel: BaseViewModel() {
     }
 
     fun parseImageToPrimaryColor(imgUrl: String){
-        viewModelScope.launch {
-            // 1.获得图片Bitmap
+        requestScope {
             val request = ImageRequest.Builder(globalApplication)
                 .size(100)
                 .allowHardware(false)
                 .data(imgUrl)
                 .build()
 
-            val result = globalApplication.imageLoader.execute(request)
-            if(result !is SuccessResult){
-                return@launch
-            }
-            // 1.将Bitmap获得
-            val bitmap = when(val drawable = result.drawable){
-                // 2.解析图片主色调
-                is BitmapDrawable ->{
-                    drawable.bitmap
-                }
-                else ->{
-                    result.drawable.current.toBitmap()
-                }
-            }
-            // 2.进行色调提取
+            val bitmap = request.toBitmapWithCoil()
+            // 进行色调提取
             val colorData = PaletteUtils.resolveByBitmap(bitmap, globalContext.resources.isNightMode())
             _toolbarColor.value = colorData
+
+        }.catch {
+            it.printStackTrace()
         }
     }
 
