@@ -12,7 +12,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="btnMulti,btnDropPop,btnTreeCheck,btnDragSimple,btnRvSelect,btnImeAnim,btnBgChange,btnFluidMusic,btnShoppingCart,btnProgressList,btnExpandList"
+        app:constraint_referenced_ids="btnMulti,btnDropPop,btnTreeCheck,btnDragSimple,btnRvSelect,btnImeAnim,btnBgChange,btnFluidMusic,btnShoppingCart,btnProgressList,btnExpandList,btnPalette"
         app:flow_horizontalGap="5dp"
         app:flow_verticalGap="5dp"
         app:flow_wrapMode="chain2" />
@@ -83,5 +83,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="列表展开折叠" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnPalette"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="取色逻辑" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -53,6 +53,9 @@
         <action
             android:id="@+id/action_mainFragment_to_expandListFragment2"
             app:destination="@id/expandListFragment2" />
+        <action
+            android:id="@+id/action_mainFragment_to_paletteFragment"
+            app:destination="@id/paletteFragment" />
 
 
     </fragment>
@@ -202,6 +205,10 @@
     <action
         android:id="@+id/action_global_to_integralFragment"
         app:destination="@+id/integralFragment"/>
+    <fragment
+        android:id="@+id/paletteFragment"
+        android:name="com.zjl.finalarchitecture.module.toolbox.palette.PaletteFragment"
+        android:label="PaletteFragment" />
 
 
 </navigation>

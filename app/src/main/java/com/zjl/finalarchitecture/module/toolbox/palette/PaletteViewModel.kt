@@ -11,6 +11,7 @@ import com.zjl.base.ui.UiModel
 import com.zjl.base.utils.ext.isNightMode
 import com.zjl.base.utils.materialcolor.hct.Hct
 import com.zjl.base.utils.materialcolor.quantize.QuantizerCelebi
+import com.zjl.base.utils.materialcolor.scheme.Scheme
 import com.zjl.base.utils.materialcolor.scheme.SchemeTonalSpot
 import com.zjl.base.utils.materialcolor.score.Score
 import com.zjl.base.viewmodel.BaseViewModel
@@ -68,8 +69,11 @@ class PaletteViewModel: BaseViewModel() {
             val colors = Score.score(quantize)
             val mostSuitableColor = colors[0]
             // 将最符合的一个颜色进行划分，将其分为MD色系，包括主色调，变调，文字颜色等
-
-            SchemeTonalSpot(Hct.fromInt(mostSuitableColor), globalContext.resources.isNightMode(), Constra)
+            val lightScheme = Scheme.light(mostSuitableColor)
+            val darkScheme = Scheme.dark(mostSuitableColor)
+            _paletteList.value = UiModel.Success(
+                listOf(PaletteData("日间", lightScheme), PaletteData("夜间", darkScheme))
+            )
 
         }.catch {
             _paletteList.value = UiModel.Error(it)
@@ -78,7 +82,7 @@ class PaletteViewModel: BaseViewModel() {
     }
 
     data class PaletteData(
-        val color: Int,
-        val description: String
+        val subtitle: String,
+        val scheme: Scheme
     )
 }
