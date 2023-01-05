@@ -68,7 +68,8 @@
                         android:ellipsize="end"
                         android:maxLines="2"
                         android:textColor="?attr/colorOnPrimary"
-                        android:textSize="17sp"
+                        android:textSize="18sp"
+                        app:layout_constraintBottom_toTopOf="@+id/txtTip"
                         app:layout_constraintEnd_toStartOf="@+id/guideline9"
                         app:layout_constraintStart_toEndOf="@+id/ivUserPhoto"
                         app:layout_constraintTop_toTopOf="@+id/ivUserPhoto"
@@ -86,6 +87,7 @@
                         app:layout_constraintBottom_toBottomOf="@+id/ivUserPhoto"
                         app:layout_constraintEnd_toEndOf="@+id/txtUserName"
                         app:layout_constraintStart_toStartOf="@+id/txtUserName"
+                        app:layout_constraintTop_toBottomOf="@+id/txtUserName"
                         tools:text="@string/app_name" />
 
                     <com.zjl.finalarchitecture.widget.WaveView
@@ -100,10 +102,10 @@
 
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:id="@+id/userSetting"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/cl1">
@@ -136,11 +138,22 @@
                         app:bar_leftText="@string/description_app_read_record"
                         app:bar_rightIcon="@drawable/arrows_right_ic" />
 
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/appSetting"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/userSetting">
+
                     <com.zjl.finalarchitecture.widget.SettingBar
                         android:id="@+id/sbOpenProject"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
                         app:bar_leftText="@string/description_app_open_project"
                         app:bar_rightIcon="@drawable/arrows_right_ic" />
 
@@ -158,20 +171,22 @@
                         app:bar_leftText="@string/description_app_version"
                         app:bar_rightIcon="@drawable/arrows_right_ic" />
 
-                    <TextView
-                        android:id="@+id/txtLogout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:background="@color/white"
-                        android:gravity="center"
-                        android:paddingTop="15dp"
-                        android:paddingBottom="15dp"
-                        android:text="@string/description_app_exit"
-                        android:textColor="@color/base_red"
-                        android:textSize="@dimen/sp_14" />
-
                 </LinearLayout>
+
+                <TextView
+                    android:id="@+id/txtLogout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:text="@string/description_app_exit"
+                    android:textColor="@color/base_red"
+                    android:textSize="@dimen/sp_14"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/appSetting" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

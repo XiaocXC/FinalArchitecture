@@ -1,7 +1,9 @@
 package com.zjl.finalarchitecture.module.home.viewmodel
 
+import com.zjl.base.map
 import com.zjl.base.onSuccess
 import com.zjl.base.ui.PagingUiModel
+import com.zjl.base.ui.UiModel
 import com.zjl.base.viewmodel.PagingBaseViewModel
 import com.zjl.base.viewmodel.requestScope
 import com.zjl.finalarchitecture.data.model.ArticleListVO
@@ -27,6 +29,9 @@ class ArticleViewModel : PagingBaseViewModel() {
 
     private var mCurrentIndex: Int = initPageIndex()
 
+    private val _collectArticleEvent = MutableSharedFlow<UiModel<Int>>()
+    val collectArticleEvent: SharedFlow<UiModel<Int>> = _collectArticleEvent
+
     init {
         // 初始化时请求刷新数据
         onRefreshData()
@@ -45,6 +50,68 @@ class ArticleViewModel : PagingBaseViewModel() {
     override fun onLoadMoreData(tag: Any?) {
         ++mCurrentIndex
         requestArticle(mCurrentIndex)
+    }
+
+    /**
+     * 收藏文章
+     */
+    fun collectArticle(id: Int){
+        requestScope {
+            try {
+                requestApiResult {
+                    ApiRepository.requestCollectArticle(id).map {
+                        // 从Unit的返回数据转回为Id存的数据
+                        id
+                    }
+                }.await()
+
+                // 更新数据源
+                // 找到对应Id的索引
+                val changedItemIndex = _articleList.value.totalList.indexOfFirst {
+                    it.id == id
+                }
+                if(changedItemIndex >= 0){
+                    // 更新收藏信息
+                    val changedItem = _articleList.value.totalList[changedItemIndex]
+                    changedItem.collect = true
+                    _collectArticleEvent.emit(UiModel.Success(changedItemIndex))
+                }
+
+            } catch (e: Exception){
+                e.printStackTrace()
+            }
+
+        }
+    }
+
+
+    /**
+     * 取消收藏文章
+     */
+    fun unCollectArticle(id: Int){
+        requestScope {
+            try {
+                requestApiResult {
+                    ApiRepository.requestUnCollectArticle(id)
+                }.await()
+
+                // 更新数据源
+                // 找到对应Id的索引
+                val changedItemIndex = _articleList.value.totalList.indexOfFirst {
+                    it.id == id
+                }
+                if(changedItemIndex >= 0){
+                    // 更新收藏信息
+                    val changedItem = _articleList.value.totalList[changedItemIndex]
+                    changedItem.collect = false
+                    _collectArticleEvent.emit(UiModel.Success(changedItemIndex))
+                }
+
+            } catch (e: Exception){
+                e.printStackTrace()
+            }
+
+        }
     }
 
     /**

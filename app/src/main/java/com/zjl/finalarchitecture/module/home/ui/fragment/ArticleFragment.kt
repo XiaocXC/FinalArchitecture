@@ -1,24 +1,18 @@
 package com.zjl.finalarchitecture.module.home.ui.fragment
 
 import android.os.Bundle
-import android.view.View
-import androidx.core.view.WindowInsetsCompat
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.SavedStateHandle
-import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.chad.library.adapter.base.BaseQuickAdapter
-import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.gyf.immersionbar.ImmersionBar
 import com.scwang.smart.refresh.layout.api.RefreshLayout
-import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import com.zjl.base.fragment.BaseFragment
+import com.zjl.base.ui.onSuccess
 import com.zjl.base.utils.autoCleared
 import com.zjl.base.utils.findNavController
 import com.zjl.base.utils.launchAndCollectIn
 import com.zjl.finalarchitecture.NavMainDirections
+import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.databinding.FragmentArticleBinding
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleAdapter
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleBannerWrapperAdapter
@@ -26,10 +20,6 @@ import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleDividerItemDecora
 import com.zjl.finalarchitecture.module.home.ui.adapter.BannerVOWrapper
 import com.zjl.finalarchitecture.module.home.viewmodel.ArticleViewModel
 import com.zjl.finalarchitecture.utils.ext.handlePagingStatus
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
-import timber.log.Timber
-import java.lang.RuntimeException
 
 /**
  * @description:首页文章
@@ -56,8 +46,19 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel>()
         mBannerAdapter = ArticleBannerWrapperAdapter(viewLifecycleOwner.lifecycle)
 
         // 列表适配器
-        mArticleAdapter = ArticleAdapter {
-//            mViewModel.updateCollectState(it.id, !it.collect)
+        mArticleAdapter = ArticleAdapter()
+
+        mArticleAdapter.addChildClickViewIds(R.id.item_home_collect)
+        // Item内部控件点击
+        mArticleAdapter.setOnItemChildClickListener { _, view, position ->
+            if(view.id == R.id.item_home_collect){
+                val item = mArticleAdapter.getItem(position)
+                if(item.collect){
+                    mViewModel.unCollectArticle(item.id)
+                } else {
+                    mViewModel.collectArticle(item.id)
+                }
+            }
         }
 
         // Item点击事件
@@ -88,6 +89,13 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel>()
     }
 
     override fun createObserver() {
+
+        mViewModel.collectArticleEvent.launchAndCollectIn(viewLifecycleOwner){ event ->
+            // 更新点赞视图
+            event.onSuccess {
+                mArticleAdapter.notifyItemChanged(it)
+            }
+        }
 
         // Banner数据
         mViewModel.bannerList.launchAndCollectIn(viewLifecycleOwner){ bannerList ->

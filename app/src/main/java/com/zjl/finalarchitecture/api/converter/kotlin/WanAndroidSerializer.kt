@@ -10,6 +10,7 @@ import okhttp3.MediaType
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.ResponseBody
+import timber.log.Timber
 
 /**
  * @author Xiaoc
@@ -42,6 +43,8 @@ class WanAndroidSerializer(override val format: StringFormat) : KotlinSerializer
             // 这里由于拦截器里做了正误判断，我们直接脱壳就行，取data字段里的数据，进行序列化
             format.decodeFromString(loader, globalJson.encodeToString(dataElement))
         } catch (e: Throwable){
+            e.printStackTrace()
+            Timber.d("脱壳失败，尝试直接序列化：$string")
             // 如果脱壳失败，可能是固定格式丢失，我们尝试用原始内容进行一次序列化
             format.decodeFromString(loader, string)
         } finally {

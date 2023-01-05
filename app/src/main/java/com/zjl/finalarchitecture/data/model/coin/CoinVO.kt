@@ -17,7 +17,7 @@ data class CoinVO(
     /**
      * 当前排名数
      */
-    val rank: Int = 0,
+    val rank: String = "",
     /**
      * 等级
      */

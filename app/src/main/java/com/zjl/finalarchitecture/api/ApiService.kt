@@ -34,6 +34,18 @@ interface ApiService {
     @GET("/article/top/json")
     suspend fun getTopArticleList(): ApiResult<ArrayList<ArticleListVO>>
 
+    /**
+     * 收藏文章
+     */
+    @POST("/lg/collect/{id}/json")
+    suspend fun collectArticle(@Path("id") id: Int): ApiResult<Unit>
+
+    /**
+     * 取消收藏文章
+     */
+    @POST("lg/uncollect_originId/{id}/json")
+    suspend fun unCollectArticle(@Path("id") id: Int): ApiResult<Unit>
+
 
     /**
      * 获取广场文章列表

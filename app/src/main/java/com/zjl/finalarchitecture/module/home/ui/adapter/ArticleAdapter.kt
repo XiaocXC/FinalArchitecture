@@ -15,9 +15,7 @@ import com.zjl.finalarchitecture.data.model.ArticleListVO
  * @author Xiaoc
  * @since 2022-02-02
  */
-class ArticleAdapter(
-    val collectClicked: (ArticleListVO) -> Unit = {}
-): BaseQuickAdapter<ArticleListVO, BaseViewHolder>(R.layout.item_article_list_data), LoadMoreModule {
+class ArticleAdapter: BaseQuickAdapter<ArticleListVO, BaseViewHolder>(R.layout.item_article_list_data), LoadMoreModule {
 
     override fun convert(
         holder: BaseViewHolder,

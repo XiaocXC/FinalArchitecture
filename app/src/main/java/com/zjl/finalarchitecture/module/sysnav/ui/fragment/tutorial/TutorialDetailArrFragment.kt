@@ -45,9 +45,7 @@ class TutorialDetailArrFragment :
         }
 
         // 列表适配器
-        mArticleAdapter = ArticleAdapter {
-            //收藏回调
-        }
+        mArticleAdapter = ArticleAdapter()
 
         // 将BannerAdapter和ArticleAdapter整合为一个Adapter
         mBinding.rv.adapter = mArticleAdapter

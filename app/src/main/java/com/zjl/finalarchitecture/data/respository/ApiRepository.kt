@@ -79,6 +79,25 @@ object ApiRepository {
         return mApiService.getArticleListByPage(pageNo)
     }
 
+    /**
+     * 收藏文章
+     * @param id 文章ID
+     */
+    suspend fun requestCollectArticle(
+        id: Int
+    ): ApiResult<Unit> {
+        return mApiService.collectArticle(id)
+    }
+
+    /**
+     * 取消收藏文章
+     * @param id 文章ID
+     */
+    suspend fun requestUnCollectArticle(
+        id: Int
+    ): ApiResult<Unit> {
+        return mApiService.unCollectArticle(id)
+    }
 
     /**
      * 分页获取广场文章
