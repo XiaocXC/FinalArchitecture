@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.CallSuper
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.zjl.base.utils.ext.getVmClazz
@@ -48,6 +49,7 @@ abstract class BaseFragment<V : ViewBinding, VM : BaseViewModel> : OriginFragmen
         return inflateBindingWithGeneric(inflater, container, false)
     }
 
+    @CallSuper
     override fun bindOthers() {
         mViewModel = createViewModel()
     }

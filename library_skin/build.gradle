@@ -5,16 +5,16 @@ apply from: "../feature_config.gradle"
 android{
 
     //统一资源前缀,规范资源引用
-    resourcePrefix "trace_"
+    resourcePrefix "skin_"
 }
 
 dependencies {
 
-    implementation(Libs.CORE_KTX)
-    implementation(Libs.APPCOMPAT)
+    api(Libs.CORE_KTX)
+    api(Libs.APPCOMPAT)
+    api(Libs.MATERIAL_DESIGN)
 
-    implementation(Libs.KOTLIN_COROUTINES)
-    implementation(Libs.MATERIAL_DESIGN)
+    api(Libs.ANDROID_UTIL_CODEX)
 
     testImplementation(Libs.JUNIT)
     androidTestImplementation(Libs.JUNIT_EXT)

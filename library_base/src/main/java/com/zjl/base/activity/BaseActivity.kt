@@ -1,5 +1,6 @@
 package com.zjl.base.activity
 
+import androidx.annotation.CallSuper
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.zjl.base.utils.ext.getVmClazz
@@ -20,6 +21,7 @@ abstract class BaseActivity<V : ViewBinding, VM : BaseViewModel> : OriginActivit
 
     protected lateinit var mViewModel: VM
 
+    @CallSuper
     override fun generateView() {
         mBinding = bindView()
         setContentView(mBinding.root)

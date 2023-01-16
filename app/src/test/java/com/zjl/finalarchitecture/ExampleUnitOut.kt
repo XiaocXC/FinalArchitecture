@@ -1,6 +1,10 @@
 package com.zjl.finalarchitecture
 
-import android.text.TextUtils
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.runBlocking
 import org.junit.Test
 
 /**
@@ -16,6 +20,44 @@ class ExampleUnitOut {
         val match = test.matches(Regex("[^0]"))
         println("符合？:$match")
 
+        val testFlow: Flow<Int> = flow {
+            emit(1)
+            emit(2)
+            emit(3)
+            emit(4)
+        }
+
+        runBlocking {
+            // 观察者1
+            testFlow.collect {
+                println("观察者1：$it")
+            }
+            // 观察者2
+            testFlow.collect {
+                println("观察者2：$it")
+            }
+        }
+
+        val testStateFlow = MutableStateFlow(1)
+
+        runBlocking {
+            // 观察者1
+            testStateFlow.collect {
+                println("观察者1：$it")
+            }
+            // 观察者2
+            testStateFlow.collect {
+                println("观察者2：$it")
+            }
+        }
+        // 更改数据为1
+        testStateFlow.value = 1
+        // 更改数据为2
+        testStateFlow.value = 2
+        // 更改数据为3
+        testStateFlow.value = 3
+        // 更改数据为4
+        testStateFlow.value = 4
     }
 
     fun secondToHour(second: String?): String {
