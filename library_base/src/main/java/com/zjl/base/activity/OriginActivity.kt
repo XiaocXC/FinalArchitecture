@@ -1,5 +1,6 @@
 package com.zjl.base.activity
 
+import android.content.Context
 import android.os.Bundle
 import androidx.annotation.CallSuper
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +14,8 @@ import com.zjl.base.ui.state.LoadingState
 import com.zjl.base.utils.ext.isNightMode
 import com.zjl.base.utils.launchAndCollectIn
 import com.zjl.lib_base.R
+import com.zjl.library_skin.SkinManager
+import com.zjl.library_skin.wrapper.SkinContextThemeWrapper
 import com.zjl.library_trace.base.IPageTrackNode
 import com.zjl.library_trace.base.ITrackNode
 import com.zjl.library_trace.base.TrackParams
@@ -241,6 +244,15 @@ abstract class OriginActivity: AppCompatActivity(), IPageTrackNode {
     @CallSuper
     override fun fillTrackParams(trackParams: TrackParams) {
         trackParams.merge(defaultTrackParams)
+    }
+
+    override fun attachBaseContext(newBase: Context?) {
+        val provider = SkinManager.getInstance().provider
+        var newContext = newBase
+        if(provider != null){
+            newContext = SkinContextThemeWrapper(newBase, provider)
+        }
+        super.attachBaseContext(newContext)
     }
 
 

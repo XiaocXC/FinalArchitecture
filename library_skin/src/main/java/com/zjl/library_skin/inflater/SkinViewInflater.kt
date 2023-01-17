@@ -10,7 +10,7 @@ import android.view.View
  */
 interface SkinViewInflater {
 
-    fun support(context: Context, view: View): Boolean
+    fun createView(context: Context, name: String?, attributeSet: AttributeSet?): View?
 
-    fun updateView(context: Context, view: View, attributeSet: AttributeSet?)
+    fun updateView(context: Context, name: String?, view: View, attributeSet: AttributeSet?)
 }

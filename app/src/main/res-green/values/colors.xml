@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="theme_green_purple_200">#ABC644</color>
+    <color name="theme_green_purple_500">#F168AF</color>
+    <color name="theme_green_purple_700">#8C3822</color>
+    <color name="theme_green_teal_200">#1E3293</color>
+    <color name="theme_green_teal_700">#979422</color>
+    <color name="theme_green_black">#852828</color>
+    <color name="theme_green_white">#441D60</color>
+    <color name="theme_green_black5">#0D472D2D</color>
+    <!-- 矢量图标的颜色 -->
+    <color name="theme_green_common_icon_color">#415C73</color>
+</resources>

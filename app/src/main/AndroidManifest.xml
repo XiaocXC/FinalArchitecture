@@ -8,7 +8,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/logo"
         android:supportsRtl="true"
-        android:theme="@style/Base_Theme.FinalArchitecture">
+        android:theme="@style/FinalArchitecture.Default">
 
         <activity
             android:name=".module.splash.ui.WelcomeActivity"

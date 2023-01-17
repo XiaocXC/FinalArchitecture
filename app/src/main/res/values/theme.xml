@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- APP主题 -->
+    <style name="FinalArchitecture.Default" parent="Base_Theme.FinalArchitecture">
+        <item name="viewInflaterClass">com.zjl.library_skin.inflater.SkinViewInflaterWrapper</item>
+    </style>
+
     <!-- 对话框形状的Shape（自己） -->
     <style name="ShapeAppearanceOverlay.ChatBubble.Self" parent="">
         <item name="cornerFamily">rounded</item>

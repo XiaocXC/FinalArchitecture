@@ -63,30 +63,6 @@ class SkinResources(
     }
 
     private fun resetResIdIfNeed(context: Context?, resId: Int): Int{
-        if(context == null){
-            return resId
-        }
-        if(!skinProvider.enabledReplaceResId(context, resId)){
-            return resId
-        }
-
-        var newResId = resId
-        val res = context.resources
-        try {
-            val resPkg = res.getResourcePackageName(resId)
-            // 非本包名下的资源则无需替换
-            if(context.packageName != resPkg){
-                return newResId
-            }
-            val resName = res.getResourceEntryName(resId)
-            val resType = res.getResourceTypeName(resId)
-            // 获取对应皮肤的资源 id
-            val newResName = skinProvider.replaceResIdPrefix(context, resName, resType)
-            val id = res.getIdentifier(newResName, resType, resPkg)
-            if(id != 0){
-                newResId = id
-            }
-        } finally { }
-        return newResId
+        return skinProvider.resetResIdIfNeed(context, resId)
     }
 }

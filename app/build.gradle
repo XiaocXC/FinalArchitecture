@@ -25,6 +25,16 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    sourceSets {
+        main {
+            java {
+                srcDir 'src/main/java'
+            }
+            res.srcDirs += 'src/main/res'
+            res.srcDirs += 'src/main/res-green'
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled true //开启混淆

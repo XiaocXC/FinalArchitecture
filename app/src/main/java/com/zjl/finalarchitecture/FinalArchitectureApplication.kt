@@ -1,7 +1,12 @@
 package com.zjl.finalarchitecture
 
+import android.content.Context
 import com.zjl.base.BaseApplication
 import com.zjl.finalarchitecture.module.global.AppConfigViewModel
+import com.zjl.finalarchitecture.theme.ThemeManager
+import com.zjl.library_skin.SkinManager
+import com.zjl.library_skin.inflater.MaterialDesignViewInflater
+import com.zjl.library_skin.provider.SkinProvider
 
 /**
  * @author Xiaoc
@@ -25,5 +30,36 @@ class FinalArchitectureApplication: BaseApplication() {
 
         // 初始化全局事件ViewModel
         getAppViewModelProvider()[AppConfigViewModel::class.java]
+    }
+
+    override fun initSDK() {
+        super.initSDK()
+
+
+        // 初始化换肤器
+        SkinManager
+            .init(this)
+            .setSkinProvider(object: SkinProvider(){
+                override fun support(context: Context): Boolean {
+                    return ThemeManager.currentTheme.value != ThemeManager.FinalTheme.DEFAULT
+                }
+
+                override fun replaceResIdPrefix(
+                    context: Context,
+                    resName: String,
+                    resType: String
+                ): String {
+                    return when(ThemeManager.currentTheme.value){
+                        ThemeManager.FinalTheme.GREEN ->{
+                            "theme_green_$resName"
+                        }
+                        else ->{
+                            resName
+                        }
+                    }
+                }
+
+            })
+            .addSkinViewInflater(MaterialDesignViewInflater())
     }
 }

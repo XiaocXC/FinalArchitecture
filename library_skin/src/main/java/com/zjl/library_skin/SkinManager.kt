@@ -12,8 +12,7 @@ import com.zjl.library_skin.provider.SkinProvider
  * 可以在application中初始化
  */
 class SkinManager(
-    private val application: Application,
-    provider: SkinProvider
+    private val application: Application
 ) {
 
     companion object {
@@ -21,10 +20,10 @@ class SkinManager(
         @Volatile
         private var mSkinManager: SkinManager? = null
 
-        fun init(application: Application, provider: SkinProvider): SkinManager{
+        fun init(application: Application): SkinManager{
             if(mSkinManager == null){
                 synchronized(SkinManager::class){
-                    mSkinManager = SkinManager(application, provider)
+                    mSkinManager = SkinManager(application)
                 }
             }
             return mSkinManager!!
@@ -35,15 +34,22 @@ class SkinManager(
         }
     }
 
-    lateinit var provider: SkinProvider
+    var provider: SkinProvider? = null
 
     val skinViewInflaters = mutableListOf<SkinViewInflater>()
 
-    fun addSkinViewInflater(skinViewInflater: SkinViewInflater){
-        skinViewInflaters.add(skinViewInflater)
+    fun setSkinProvider(skinProvider: SkinProvider): SkinManager{
+        this.provider = skinProvider
+        return this
     }
 
-    fun addSkinViewInflaters(skinViewInflaterList: List<SkinViewInflater>){
+    fun addSkinViewInflater(skinViewInflater: SkinViewInflater): SkinManager{
+        skinViewInflaters.add(skinViewInflater)
+        return this
+    }
+
+    fun addSkinViewInflaters(skinViewInflaterList: List<SkinViewInflater>): SkinManager{
         skinViewInflaters.addAll(skinViewInflaterList)
+        return this
     }
 }
