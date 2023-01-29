@@ -6,9 +6,12 @@ import com.gyf.immersionbar.ImmersionBar
 import com.xiaoc.feature_fluid_music.ui.FluidMusicMainActivity
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.utils.findNavController
+import com.zjl.base.utils.launchAndCollectIn
 import com.zjl.base.viewmodel.EmptyViewModel
 import com.zjl.finalarchitecture.databinding.FragmentToolboxBinding
 import com.zjl.finalarchitecture.module.main.ui.fragment.MainFragmentDirections
+import com.zjl.finalarchitecture.theme.FinalTheme
+import com.zjl.finalarchitecture.theme.ThemeManager
 
 /**
  * @author Xiaoc
@@ -72,7 +75,6 @@ class ToolboxFragment : BaseFragment<FragmentToolboxBinding, EmptyViewModel>() {
     }
 
     override fun createObserver() {
-
     }
 
 

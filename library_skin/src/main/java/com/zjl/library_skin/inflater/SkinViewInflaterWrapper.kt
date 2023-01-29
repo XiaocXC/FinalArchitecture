@@ -13,9 +13,12 @@ import com.zjl.library_skin.SkinManager
  * @since 2023-01-16
  *
  * 一些XML上配置的颜色等属性是不会被外部Resources替换的
- * 我们需要继承 [AppCompatViewInflater]或者[MaterialComponentsViewInflater] 来手动替换这些默认样式
+ * 我们需要继承 [MaterialComponentsViewInflater] 来手动替换这些默认样式
  *
- * 这个
+ * 这个类不需要手动在代码中配置，你可以在主题样式XML中配置 viewInflaterClass 属性配置上该类路径即可
+ * 在APP启动后，就会自动处理其中的逻辑
+ *
+ * 我们现在的类是[MaterialDesignViewInflater]的子类，如果你的项目不是MD主题，请继承[AppCompatViewInflater]
  */
 open class SkinViewInflaterWrapper: MaterialComponentsViewInflater() {
 
@@ -50,7 +53,11 @@ open class SkinViewInflaterWrapper: MaterialComponentsViewInflater() {
         for(skinInflater in SkinManager.getInstance().skinViewInflaters){
             changeView = view ?: skinInflater.createView(context, name, attrs)
             if(changeView != null){
-                skinInflater.updateView(context, name, changeView, attrs)
+                // 如果皮肤渲染加入了很多个，我们为了防止重复渲染，如果已经处理过的，返回true后直接跳出循环
+                val handled = skinInflater.updateView(context, name, changeView, attrs)
+                if(handled){
+                    break
+                }
             }
         }
 

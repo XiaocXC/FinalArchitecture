@@ -3,6 +3,7 @@ package com.zjl.library_skin.resource
 import android.content.Context
 import android.content.res.ColorStateList
 import android.content.res.Resources
+import android.content.res.XmlResourceParser
 import android.graphics.drawable.Drawable
 import androidx.annotation.RequiresApi
 import androidx.core.content.res.ResourcesCompat
@@ -60,6 +61,10 @@ class SkinResources(
 
     override fun getColorStateList(id: Int): ColorStateList {
         return super.getColorStateList(resetResIdIfNeed(contextRef.get(), id))
+    }
+
+    override fun getLayout(id: Int): XmlResourceParser {
+        return super.getLayout(resetResIdIfNeed(contextRef.get(), id))
     }
 
     private fun resetResIdIfNeed(context: Context?, resId: Int): Int{

@@ -23,7 +23,9 @@ class SkinManager(
         fun init(application: Application): SkinManager{
             if(mSkinManager == null){
                 synchronized(SkinManager::class){
-                    mSkinManager = SkinManager(application)
+                    if(mSkinManager == null){
+                        mSkinManager = SkinManager(application)
+                    }
                 }
             }
             return mSkinManager!!

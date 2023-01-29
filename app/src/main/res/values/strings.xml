@@ -33,8 +33,9 @@
     <string name="description_app_read_record">阅读历史</string>
     <string name="description_app_open_project">开源项目</string>
     <string name="description_app_about_we">关于作者</string>
-    <string name="description_app_setting">系统设置</string>
+    <string name="description_app_setting">设置</string>
     <string name="description_app_version">当前版本</string>
+    <string name="description_app_theme_change">主题设置</string>
     <string name="description_app_exit">退出当前账号</string>
 
     <!-- 登录 -->
