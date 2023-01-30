@@ -22,7 +22,8 @@ internal object MaterialColorHelper {
         R.color.m3_hint_foreground,
         R.color.m3_dark_hint_foreground,
         R.color.m3_highlighted_text,
-        R.color.m3_dark_highlighted_text
+        R.color.m3_dark_highlighted_text,
+//        R.color.m3_text_button_foreground_color_selector
     )
 
     fun updateMaterialTextColor(context: Context,
@@ -31,7 +32,7 @@ internal object MaterialColorHelper {
                                 attributeSet: AttributeSet?){
         var textColorResId = 0
 
-        var ta = context.obtainStyledAttributes(attributeSet, R.styleable.AppCompatTextView, 0, 0)
+        var ta = context.obtainStyledAttributes(attributeSet, R.styleable.AppCompatTextView, android.R.attr.textViewStyle, 0)
         var ap = 0
         ap = ta.getResourceId(R.styleable.AppCompatTextView_android_textAppearance, 0)
         ta.recycle()
@@ -60,7 +61,7 @@ internal object MaterialColorHelper {
             return
         }
         view.setTextColor(
-            ContextCompat.getColor(context, provider.resetResIdIfNeed(context, textColorResId))
+            ContextCompat.getColorStateList(context, provider.resetResIdIfNeed(context, textColorResId))
         )
     }
 
@@ -81,12 +82,14 @@ internal object MaterialColorHelper {
                              attributeSet: AttributeSet?){
         var backgroundTintResId = 0
         // 获取 对应 属性值的资源 id，未找到时返回 0
-        val ta = context.obtainStyledAttributes(attributeSet, R.styleable.MaterialButton, 0, 0)
+        val ta = context.obtainStyledAttributes(attributeSet, R.styleable.MaterialButton, com.google.android.material.R.attr.materialButtonStyle, 0)
         if(ta.hasValue(R.styleable.MaterialButton_backgroundTint)){
             backgroundTintResId = ta.getResourceId(R.styleable.MaterialButton_backgroundTint, 0)
         }
         ta.recycle()
-        if(backgroundTintResId != 0){
+
+        // 排除掉默认的M3的相关颜色属性
+        if(backgroundTintResId != 0 && backgroundTintResId != R.color.m3_text_button_background_color_selector){
             view.backgroundTintList = context.getColorStateList(provider.resetResIdIfNeed(context, backgroundTintResId))
         }
     }

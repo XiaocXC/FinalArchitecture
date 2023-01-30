@@ -8,6 +8,7 @@ import com.zjl.finalarchitecture.theme.ThemeManager
 import com.zjl.library_skin.SkinManager
 import com.zjl.library_skin.inflater.MaterialDesignViewInflater
 import com.zjl.library_skin.provider.SkinProvider
+import com.zjl.library_skin.wrapper.SkinContextThemeWrapper
 
 /**
  * @author Xiaoc
@@ -36,6 +37,9 @@ class FinalArchitectureApplication: BaseApplication() {
     override fun initSDK() {
         super.initSDK()
 
+    }
+
+    override fun attachBaseContext(newBase: Context?) {
 
         // 初始化换肤器
         SkinManager
@@ -62,5 +66,12 @@ class FinalArchitectureApplication: BaseApplication() {
 
             })
             .addSkinViewInflater(MaterialDesignViewInflater())
+
+        val provider = SkinManager.getInstance().provider
+        var newContext = newBase
+        if(provider != null){
+            newContext = SkinContextThemeWrapper(newBase, provider)
+        }
+        super.attachBaseContext(newContext)
     }
 }

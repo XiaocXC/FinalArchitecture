@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.textview.MaterialTextView
 import com.zjl.library_skin.R
 import com.zjl.library_skin.SkinManager
 import com.zjl.library_skin.inflater.helper.MaterialColorHelper
@@ -24,7 +25,17 @@ open class MaterialDesignViewInflater: SkinViewInflater {
     }
 
     override fun createView(context: Context, name: String?, attributeSet: AttributeSet?): View? {
-        return null
+        return when(name){
+            "com.google.android.material.button.MaterialButton" ->{
+                MaterialButton(context, attributeSet)
+            }
+            "com.google.android.material.textview.MaterialTextView" ->{
+                MaterialTextView(context, attributeSet)
+            }
+            else ->{
+                null
+            }
+        }
     }
 
     override fun updateView(
@@ -39,11 +50,11 @@ open class MaterialDesignViewInflater: SkinViewInflater {
         // 统一处理控件背景
         resetBackgroundColorIfNeed(context, view, attributeSet)
         return when(name){
-            "TextView" ->{
+            "TextView", "com.google.android.material.textview.MaterialTextView" ->{
                 resetTextColorIfNeed(context, view as TextView, attributeSet)
                 true
             }
-            "Button" ->{
+            "Button", "com.google.android.material.button.MaterialButton" ->{
                 resetTextColorIfNeed(context, view as TextView, attributeSet)
                 resetButtonColorIfNeed(context, view as MaterialButton, attributeSet)
                 true

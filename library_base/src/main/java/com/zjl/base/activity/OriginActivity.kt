@@ -1,9 +1,12 @@
 package com.zjl.base.activity
 
 import android.content.Context
+import android.content.res.Configuration
+import android.content.res.Resources
 import android.os.Bundle
 import androidx.annotation.CallSuper
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.Lifecycle
 import com.gyf.immersionbar.ImmersionBar
 import com.kongzue.dialogx.dialogs.WaitDialog
@@ -15,6 +18,8 @@ import com.zjl.base.utils.ext.isNightMode
 import com.zjl.base.utils.launchAndCollectIn
 import com.zjl.lib_base.R
 import com.zjl.library_skin.SkinManager
+import com.zjl.library_skin.hepler.WebViewResourceHelper
+import com.zjl.library_skin.resource.SkinResources
 import com.zjl.library_skin.wrapper.SkinContextThemeWrapper
 import com.zjl.library_trace.base.IPageTrackNode
 import com.zjl.library_trace.base.ITrackNode
@@ -33,6 +38,8 @@ import timber.log.Timber
  * 它与[BaseActivity]不同点在于，BaseActivity需要VB和VM的支撑，而OriginActivity不需要
  */
 abstract class OriginActivity: AppCompatActivity(), IPageTrackNode {
+
+    private var internalCacheResources: Resources? = null
 
     /**
      * 整个Activity的UiState状态控制器
@@ -246,13 +253,18 @@ abstract class OriginActivity: AppCompatActivity(), IPageTrackNode {
         trackParams.merge(defaultTrackParams)
     }
 
-    override fun attachBaseContext(newBase: Context?) {
-        val provider = SkinManager.getInstance().provider
-        var newContext = newBase
-        if(provider != null){
-            newContext = SkinContextThemeWrapper(newBase, provider)
+    override fun getResources(): Resources {
+        if(internalCacheResources == null){
+            val oldResources = super.getResources()
+            internalCacheResources = oldResources
+            val provider = SkinManager.getInstance().provider
+            if(provider != null){
+                // 防止Android 7以上WebView的选择菜单出现闪退
+                WebViewResourceHelper.addChromeResourceIfNeeded(this)
+                internalCacheResources = SkinResources(provider, this, oldResources)
+            }
         }
-        super.attachBaseContext(newContext)
+        return internalCacheResources!!
     }
 
 

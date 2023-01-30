@@ -22,7 +22,6 @@
         android:id="@+id/btn_select_tree"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        style="@style/Widget.Architecture.BaseButton"
         android:layout_marginHorizontal="16dp"
         android:layout_marginBottom="32dp"
         android:text="点击添加文件夹路径"
