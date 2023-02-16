@@ -29,6 +29,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="8dp"
+                android:transitionName="@string/transition_share_search_view"
                 android:background="@drawable/shape_bg_search"
                 android:elevation="1dp"
                 android:gravity="center_vertical">

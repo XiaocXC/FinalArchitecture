@@ -7,6 +7,7 @@ import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.viewModels
 import com.blankj.utilcode.util.KeyboardUtils
 import com.google.android.material.chip.Chip
+import com.google.android.material.transition.MaterialContainerTransform
 import com.gyf.immersionbar.ImmersionBar
 import com.gyf.immersionbar.ktx.immersionBar
 import com.zjl.base.fragment.BaseFragment

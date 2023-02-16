@@ -114,15 +114,20 @@ fun View.visibleOrInvisible(flag: Boolean) {
  * @param action 执行方法
  */
 var lastClickTime = 0L
-fun View.clickNoRepeat(interval: Long = 500, action: (view: View) -> Unit) {
-    setOnClickListener {
-        val currentTime = System.currentTimeMillis()
-        if (lastClickTime != 0L && (currentTime - lastClickTime < interval)) {
-            return@setOnClickListener
+fun View.clickNoRepeat(interval: Long = 500, l: View.OnClickListener?) {
+    if(l == null){
+        setOnClickListener(l)
+    } else {
+        setOnClickListener {
+            val currentTime = System.currentTimeMillis()
+            if (lastClickTime != 0L && (currentTime - lastClickTime < interval)) {
+                return@setOnClickListener
+            }
+            lastClickTime = currentTime
+            l.onClick(it)
         }
-        lastClickTime = currentTime
-        action(it)
     }
+
 }
 
 /**

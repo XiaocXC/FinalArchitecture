@@ -2,6 +2,8 @@ package com.zjl.finalarchitecture.module.webview.ui.fragment
 
 import android.os.Bundle
 import android.widget.LinearLayout
+import com.google.android.material.transition.MaterialSharedAxis
+import com.gyf.immersionbar.ImmersionBar
 import com.just.agentweb.AgentWeb
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.ui.state.EmptyState
@@ -17,6 +19,12 @@ class WebViewFragment : BaseFragment<FragmentWebViewBinding, WebViewModel>() {
 
     private var mAgentWeb: AgentWeb? = null
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        enterTransition = MaterialSharedAxis(MaterialSharedAxis.X,true)
+        returnTransition = MaterialSharedAxis(MaterialSharedAxis.X,false)
+    }
     override fun initViewAndEvent(savedInstanceState: Bundle?) {
 
         mBinding.toolbarWeb.setNavigationOnClickListener {
@@ -41,5 +49,9 @@ class WebViewFragment : BaseFragment<FragmentWebViewBinding, WebViewModel>() {
             }
 
         }
+    }
+
+    override fun configImmersive(immersionBar: ImmersionBar): ImmersionBar? {
+        return null
     }
 }
