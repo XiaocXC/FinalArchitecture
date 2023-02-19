@@ -7,15 +7,16 @@
 
     <!-- 演示 约束布局的flow的用法 -->
     <androidx.constraintlayout.helper.widget.Flow
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/flow"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:constraint_referenced_ids="btnMulti,btnDropPop,btnTreeCheck,btnDragSimple,btnRvSelect,btnImeAnim,btnBgChange,btnFluidMusic,btnShoppingCart,btnProgressList,btnExpandList,btnPalette"
         app:flow_horizontalGap="5dp"
         app:flow_verticalGap="5dp"
-        app:flow_wrapMode="chain2" />
+        app:flow_wrapMode="chain2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnMulti"

@@ -151,6 +151,13 @@
                     app:layout_constraintTop_toBottomOf="@+id/userSetting">
 
                     <com.zjl.finalarchitecture.widget.SettingBar
+                        android:id="@+id/sbTheme"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:bar_leftText="@string/description_app_theme_change"
+                        app:bar_rightIcon="@drawable/arrows_right_ic" />
+
+                    <com.zjl.finalarchitecture.widget.SettingBar
                         android:id="@+id/sbOpenProject"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -170,7 +177,6 @@
                         android:layout_height="wrap_content"
                         app:bar_leftText="@string/description_app_version"
                         app:bar_rightIcon="@drawable/arrows_right_ic" />
-
                 </LinearLayout>
 
                 <TextView

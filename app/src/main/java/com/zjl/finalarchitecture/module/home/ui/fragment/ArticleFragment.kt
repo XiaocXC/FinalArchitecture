@@ -2,6 +2,7 @@ package com.zjl.finalarchitecture.module.home.ui.fragment
 
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.transition.MaterialSharedAxis
 import com.gyf.immersionbar.ImmersionBar
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener

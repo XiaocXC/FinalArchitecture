@@ -46,6 +46,16 @@ abstract class OriginFragment : Fragment() {
     protected lateinit var uiRootState: MultiStateContainer
 
 
+    /**
+     * 默认的ImmersionBar配置
+     */
+    private val defaultImmersionBar by lazy {
+        ImmersionBar.with(this)
+            .transparentBar()
+            .statusBarDarkFont(!resources.isNightMode())
+            .navigationBarDarkIcon(!resources.isNightMode())
+    }
+
     @CallSuper
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -67,11 +77,6 @@ abstract class OriginFragment : Fragment() {
         if(isUserHintVisible){
             val activity = requireActivity()
             if(activity is BaseActivity<*, *>){
-                // 设置沉浸式状态栏，此操作会去掉透明遮罩等内容
-                val defaultImmersionBar = ImmersionBar.with(this)
-                    .transparentBar()
-                    .statusBarDarkFont(!resources.isNightMode())
-                    .navigationBarDarkIcon(!resources.isNightMode())
                 val immersionBar = configImmersive(defaultImmersionBar)
                 immersionBar?.init()
             }

@@ -56,6 +56,9 @@
         <action
             android:id="@+id/action_mainFragment_to_paletteFragment"
             app:destination="@id/paletteFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_themeChangeFragment"
+            app:destination="@id/themeChangeFragment" />
 
 
     </fragment>
@@ -209,6 +212,10 @@
         android:id="@+id/paletteFragment"
         android:name="com.zjl.finalarchitecture.module.toolbox.palette.PaletteFragment"
         android:label="PaletteFragment" />
+    <fragment
+        android:id="@+id/themeChangeFragment"
+        android:name="com.zjl.finalarchitecture.module.mine.ui.fragment.theme.ThemeChangeFragment"
+        android:label="ThemeChangeFragment" />
 
 
 </navigation>

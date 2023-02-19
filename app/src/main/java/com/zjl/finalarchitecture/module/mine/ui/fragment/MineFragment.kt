@@ -18,6 +18,7 @@ import com.zjl.finalarchitecture.NavMainDirections
 import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.data.respository.datasouce.UserAuthDataSource
 import com.zjl.finalarchitecture.databinding.FragmentMineBinding
+import com.zjl.finalarchitecture.module.main.ui.fragment.MainFragmentDirections
 import com.zjl.finalarchitecture.module.mine.viewmodel.MineViewModel
 import com.zjl.finalarchitecture.module.webview.viewmodel.WebDataUrl
 import timber.log.Timber
@@ -58,6 +59,12 @@ class MineFragment : BaseFragment<FragmentMineBinding, MineViewModel>() {
             findNavController().navigate(NavMainDirections.actionGlobalToWebFragment(
                 WebDataUrl(getString(R.string.me_app_github_url), null))
             )
+        }
+
+        // 主题切换
+        mBinding.sbTheme.visibility = View.GONE
+        mBinding.sbTheme.setOnClickListener {
+            findNavController().navigate(MainFragmentDirections.actionMainFragmentToThemeChangeFragment())
         }
 
         // 作者

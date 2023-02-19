@@ -94,7 +94,7 @@ public class Libs {
     public static final String SMART_REFRESH_FOOTER_CLASSICS = "io.github.scwang90:refresh-footer-classics:" + SMART_REFRESH_VERSION;
 
     // DialogX
-    public static final String DIALOG_X = "com.github.kongzue.DialogX:DialogX:0.0.45.beta19";
+    public static final String DIALOG_X = "com.kongzue.dialogx:DialogX:0.0.47";
 
     // AGENT_CORE
     public static final String AGENT_WEB_CORE = "com.github.Justson.AgentWeb:agentweb-core:v5.0.0-alpha.1-androidx";

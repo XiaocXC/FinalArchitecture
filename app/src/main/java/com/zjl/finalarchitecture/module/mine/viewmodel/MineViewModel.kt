@@ -49,6 +49,7 @@ class MineViewModel: BaseViewModel() {
     fun signOut(){
         requestScope {
             try {
+                // 请求后台的退出登陆接口
                 requestApiResult {
                     ApiRepository.requestLogout()
                 }.await()

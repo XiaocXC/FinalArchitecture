@@ -7,9 +7,12 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.FragmentNavigator
 import com.blankj.utilcode.util.LogUtils
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.android.material.transition.MaterialElevationScale
+import com.google.android.material.transition.MaterialSharedAxis
 import com.gyf.immersionbar.ImmersionBar
 import com.gyf.immersionbar.ktx.immersionBar
 import com.zjl.base.fragment.BaseFragment
@@ -65,6 +68,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, EmptyViewModel>() {
         //mSearchLayout
         mBinding.mSearchLayout.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
+//                val extras = FragmentNavigator.Extras.Builder()
+//                    .addSharedElement(mBinding.mSearchLayout, getString(R.string.transition_share_search_view))
+//                    .build()
                 findNavController().navigate(R.id.action_mainFragment_to_searchFragment)
             }
         })
@@ -97,6 +103,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, EmptyViewModel>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // 加入axis过渡效果
+        exitTransition = MaterialSharedAxis(MaterialSharedAxis.X,true)
+        reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X,false)
     }
 
     override fun onStart() {
@@ -116,7 +126,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, EmptyViewModel>() {
     }
 
     override fun configImmersive(immersionBar: ImmersionBar): ImmersionBar? {
-        return immersionBar.fitsSystemWindows(true)
+        return immersionBar
+            .titleBarMarginTop(mBinding.root)
     }
 
     override fun onDestroyView() {

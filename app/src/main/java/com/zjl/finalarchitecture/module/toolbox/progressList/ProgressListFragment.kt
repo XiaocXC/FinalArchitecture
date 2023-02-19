@@ -1,10 +1,13 @@
 package com.zjl.finalarchitecture.module.toolbox.progressList
 
 import android.os.Bundle
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.utils.findNavController
 import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.databinding.FragmentProgressListBinding
+import timber.log.Timber
 
 /**
  * @author Xiaoc

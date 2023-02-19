@@ -3,7 +3,7 @@
 
     <!-- APP主题 -->
     <style name="FinalArchitecture.Default" parent="Base_Theme.FinalArchitecture">
-        <item name="viewInflaterClass">com.zjl.library_skin.inflater.SkinViewInflaterWrapper</item>
+<!--        <item name="viewInflaterClass">com.zjl.library_skin.inflater.SkinViewInflaterWrapper</item>-->
     </style>
 
     <!-- 对话框形状的Shape（自己） -->
