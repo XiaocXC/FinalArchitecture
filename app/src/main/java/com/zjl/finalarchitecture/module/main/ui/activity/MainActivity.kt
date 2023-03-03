@@ -1,7 +1,11 @@
 package com.zjl.finalarchitecture.module.main.ui.activity
 
 import android.os.Bundle
+import android.view.WindowInsets
 import androidx.activity.OnBackPressedCallback
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.navigation.findNavController
 import com.blankj.utilcode.util.ToastUtils
 import com.zjl.base.activity.BaseActivity

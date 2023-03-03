@@ -1,4 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="theme_green_base_blue_100">#7BBA7C</color>
+    <color name="theme_green_md_colorPrimary">#7BBA7C</color>
+    <color name="theme_green_md_colorOnPrimary">#334034</color>
+    <color name="theme_green_md_colorPrimaryContainer">#C9FACB</color>
+    <color name="theme_green_md_colorOnPrimaryContainer">#343E35</color>
+    <color name="theme_green_md_colorSecondary">#5B875C</color>
+    <color name="theme_green_md_colorOnSecondary">#FFFFFFFF</color>
+    <color name="theme_green_md_colorSecondaryContainer">#C9FACB</color>
+    <color name="theme_green_md_colorOnSecondaryContainer">#343E35</color>
+    <color name="theme_green_md_colorTertiary">#4E8554</color>
+    <color name="theme_green_md_colorOnTertiary">#FFFFFFFF</color>
+    <color name="theme_green_md_colorTertiaryContainer">#343E35</color>
+    <color name="theme_green_md_colorOnTertiaryContainer">#393C39</color>
+    <color name="theme_green_md_colorBackground">#FFFFFFFF</color>
+    <color name="theme_green_md_colorOnBackground">#393C39</color>
+    <color name="theme_green_md_colorSurface">#FFFFFFFF</color>
+    <color name="theme_green_md_colorOnSurface">#393C39</color>
+    <color name="theme_green_md_colorOutline">#72787e</color>
+    <color name="theme_green_md_colorSurfaceVariant">#E9EEF4</color>
+    <color name="theme_green_md_colorOnSurfaceVariant">#41474d</color>
 </resources>

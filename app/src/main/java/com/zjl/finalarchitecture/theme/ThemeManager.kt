@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.StateFlow
  */
 object ThemeManager {
 
-    private val _currentTheme = MutableStateFlow(FinalTheme.DEFAULT)
+    private val _currentTheme = MutableStateFlow(FinalTheme.GREEN)
     val currentTheme: StateFlow<FinalTheme> = _currentTheme
 
     fun changeTheme(finalTheme: FinalTheme){

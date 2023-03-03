@@ -48,7 +48,7 @@
                         android:orientation="vertical"
                         app:layout_constraintGuide_percent="0.9" />
 
-                    <com.google.android.material.imageview.ShapeableImageView
+                    <com.google.android.material.imageview.SkinShapeableImageView
                         android:id="@+id/ivUserPhoto"
                         android:layout_width="64dp"
                         android:layout_height="64dp"

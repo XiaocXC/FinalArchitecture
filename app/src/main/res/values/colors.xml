@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="md_colorPrimary">#8bcdff</color>
+    <color name="md_colorOnPrimary">#003450</color>
+    <color name="md_colorPrimaryContainer">#c8e6ff</color>
+    <color name="md_colorOnPrimaryContainer">#001e31</color>
+    <color name="md_colorSecondary">#006688</color>
+    <color name="md_colorOnSecondary">#FFFFFFFF</color>
+    <color name="md_colorSecondaryContainer">#bee8ff</color>
+    <color name="md_colorOnSecondaryContainer">#001e2b</color>
+    <color name="md_colorTertiary">#0060aa</color>
+    <color name="md_colorOnTertiary">#FFFFFFFF</color>
+    <color name="md_colorTertiaryContainer">#d2e4ff</color>
+    <color name="md_colorOnTertiaryContainer">#001c39</color>
+    <color name="md_colorBackground">#FFFFFFFF</color>
+    <color name="md_colorOnBackground">#191c1d</color>
+    <color name="md_colorSurface">#FFFFFFFF</color>
+    <color name="md_colorOnSurface">#191c1d</color>
+    <color name="md_colorOutline">#72787e</color>
+    <color name="md_colorSurfaceVariant">#E9EEF4</color>
+    <color name="md_colorOnSurfaceVariant">#41474d</color>
+
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>

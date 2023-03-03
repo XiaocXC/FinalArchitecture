@@ -29,11 +29,11 @@ buildscript {
 
 allprojects {
     repositories {
+        mavenCentral()
         maven { url 'https://maven.aliyun.com/repository/central' }
         maven { url 'https://maven.aliyun.com/repository/jcenter' }
         maven { url 'https://maven.aliyun.com/repository/public' }
         maven { url 'https://maven.aliyun.com/repository/google' }
-        mavenCentral()
         // 阿里云云效仓库，提升编译速度：https://maven.aliyun.com/mvn/guide
         google()
         maven {

@@ -62,7 +62,7 @@ class MineFragment : BaseFragment<FragmentMineBinding, MineViewModel>() {
         }
 
         // 主题切换
-        mBinding.sbTheme.visibility = View.GONE
+//        mBinding.sbTheme.visibility = View.GONE
         mBinding.sbTheme.setOnClickListener {
             findNavController().navigate(MainFragmentDirections.actionMainFragmentToThemeChangeFragment())
         }

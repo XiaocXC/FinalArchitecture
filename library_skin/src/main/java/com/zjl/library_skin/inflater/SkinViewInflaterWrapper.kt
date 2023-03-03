@@ -4,9 +4,15 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import androidx.appcompat.widget.AppCompatButton
+import androidx.appcompat.widget.AppCompatCheckBox
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import com.google.android.material.theme.MaterialComponentsViewInflater
 import com.zjl.library_skin.SkinManager
+import com.google.android.material.button.SkinMaterialButton
+import com.google.android.material.textview.SkinMaterialTextView
+import com.zjl.library_skin.widget.compat.SkinCheckBox
+import com.zjl.library_skin.widget.compat.SkinImageView
 
 /**
  * @author Xiaoc
@@ -22,16 +28,20 @@ import com.zjl.library_skin.SkinManager
  */
 open class SkinViewInflaterWrapper: MaterialComponentsViewInflater() {
 
-    override fun createTextView(context: Context?, attrs: AttributeSet?): AppCompatTextView {
-        val view = super.createTextView(context, attrs)
-        resetViewAttrsIfNeed(context, view, "TextView", attrs)
-        return view
+    override fun createTextView(context: Context, attrs: AttributeSet?): AppCompatTextView {
+        return SkinMaterialTextView(context, attrs)
     }
 
     override fun createButton(context: Context, attrs: AttributeSet): AppCompatButton {
-        val view = super.createButton(context, attrs)
-        resetViewAttrsIfNeed(context, view, "Button", attrs)
-        return view
+        return SkinMaterialButton(context, attrs)
+    }
+
+    override fun createImageView(context: Context, attrs: AttributeSet?): AppCompatImageView {
+        return SkinImageView(context, attrs)
+    }
+
+    override fun createCheckBox(context: Context, attrs: AttributeSet?): AppCompatCheckBox {
+        return SkinCheckBox(context, attrs)
     }
 
     override fun createView(context: Context?, name: String?, attrs: AttributeSet?): View? {
@@ -53,11 +63,7 @@ open class SkinViewInflaterWrapper: MaterialComponentsViewInflater() {
         for(skinInflater in SkinManager.getInstance().skinViewInflaters){
             changeView = view ?: skinInflater.createView(context, name, attrs)
             if(changeView != null){
-                // 如果皮肤渲染加入了很多个，我们为了防止重复渲染，如果已经处理过的，返回true后直接跳出循环
-                val handled = skinInflater.updateView(context, name, changeView, attrs)
-                if(handled){
-                    break
-                }
+                break
             }
         }
 

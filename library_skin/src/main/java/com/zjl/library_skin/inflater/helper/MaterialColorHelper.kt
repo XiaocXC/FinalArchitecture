@@ -13,16 +13,16 @@ import com.zjl.library_skin.provider.SkinProvider
 internal object MaterialColorHelper {
 
     private val defaultMaterialTextColors = listOf<Int>(
-        R.color.m3_default_color_primary_text,
-        R.color.m3_dark_default_color_primary_text,
-        R.color.m3_default_color_secondary_text,
-        R.color.m3_dark_default_color_secondary_text,
-        R.color.m3_primary_text_disable_only,
-        R.color.m3_dark_primary_text_disable_only,
-        R.color.m3_hint_foreground,
-        R.color.m3_dark_hint_foreground,
-        R.color.m3_highlighted_text,
-        R.color.m3_dark_highlighted_text,
+//        R.color.m3_default_color_primary_text,
+//        R.color.m3_dark_default_color_primary_text,
+//        R.color.m3_default_color_secondary_text,
+//        R.color.m3_dark_default_color_secondary_text,
+//        R.color.m3_primary_text_disable_only,
+//        R.color.m3_dark_primary_text_disable_only,
+//        R.color.m3_hint_foreground,
+//        R.color.m3_dark_hint_foreground,
+//        R.color.m3_highlighted_text,
+//        R.color.m3_dark_highlighted_text,
 //        R.color.m3_text_button_foreground_color_selector
     )
 
@@ -89,8 +89,8 @@ internal object MaterialColorHelper {
         ta.recycle()
 
         // 排除掉默认的M3的相关颜色属性
-        if(backgroundTintResId != 0 && backgroundTintResId != R.color.m3_text_button_background_color_selector){
+//        if(backgroundTintResId != 0){
             view.backgroundTintList = context.getColorStateList(provider.resetResIdIfNeed(context, backgroundTintResId))
-        }
+//        }
     }
 }

@@ -3,13 +3,13 @@ package com.zjl.library_skin.inflater
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
-import android.widget.TextView
-import androidx.core.content.ContextCompat
-import com.google.android.material.button.MaterialButton
-import com.google.android.material.textview.MaterialTextView
-import com.zjl.library_skin.R
-import com.zjl.library_skin.SkinManager
-import com.zjl.library_skin.inflater.helper.MaterialColorHelper
+import com.google.android.material.button.SkinMaterialButton
+import com.google.android.material.checkbox.SkinMaterialCheckBox
+import com.google.android.material.imageview.SkinShapeableImageView
+import com.google.android.material.tabs.SkinTabLayout
+import com.google.android.material.textfield.SkinMaterialTextInputEditText
+import com.google.android.material.textfield.SkinMaterialTextInputLayout
+import com.google.android.material.textview.SkinMaterialTextView
 
 /**
  * @author Xiaoc
@@ -27,59 +27,32 @@ open class MaterialDesignViewInflater: SkinViewInflater {
     override fun createView(context: Context, name: String?, attributeSet: AttributeSet?): View? {
         return when(name){
             "com.google.android.material.button.MaterialButton" ->{
-                MaterialButton(context, attributeSet)
+                SkinMaterialButton(context, attributeSet)
             }
             "com.google.android.material.textview.MaterialTextView" ->{
-                MaterialTextView(context, attributeSet)
+                SkinMaterialTextView(context, attributeSet)
+            }
+            "com.google.android.material.tabs.TabLayout" ->{
+                SkinTabLayout(context, attributeSet)
+            }
+            "com.google.android.material.checkbox.MaterialCheckBox" ->{
+                SkinMaterialCheckBox(context, attributeSet)
+            }
+            "com.google.android.material.checkbox.SkinMaterialCheckBox" ->{
+                SkinMaterialCheckBox(context, attributeSet)
+            }
+            "com.google.android.material.imageview.ShapeableImageView" ->{
+                SkinShapeableImageView(context, attributeSet)
+            }
+            "com.google.android.material.textfield.TextInputEditText" ->{
+                SkinMaterialTextInputEditText(context, attributeSet)
+            }
+            "com.google.android.material.textfield.TextInputLayout" ->{
+                SkinMaterialTextInputLayout(context, attributeSet)
             }
             else ->{
                 null
             }
         }
-    }
-
-    override fun updateView(
-        context: Context,
-        name: String?,
-        view: View,
-        attributeSet: AttributeSet?
-    ): Boolean {
-        if(SkinManager.getInstance().provider?.support(context) == false){
-            return false
-        }
-        // 统一处理控件背景
-        resetBackgroundColorIfNeed(context, view, attributeSet)
-        return when(name){
-            "TextView", "com.google.android.material.textview.MaterialTextView" ->{
-                resetTextColorIfNeed(context, view as TextView, attributeSet)
-                true
-            }
-            "Button", "com.google.android.material.button.MaterialButton" ->{
-                resetTextColorIfNeed(context, view as TextView, attributeSet)
-                resetButtonColorIfNeed(context, view as MaterialButton, attributeSet)
-                true
-            }
-            else -> {
-                false
-            }
-        }
-    }
-
-    protected open fun resetBackgroundColorIfNeed(context: Context, view: View, attributeSet: AttributeSet?){
-        val provider = SkinManager.getInstance().provider ?: return
-
-        MaterialColorHelper.updateMaterialBackground(context, provider, view, attributeSet)
-    }
-
-    protected open fun resetTextColorIfNeed(context: Context, view: TextView, attributeSet: AttributeSet?){
-        val provider = SkinManager.getInstance().provider ?: return
-
-        MaterialColorHelper.updateMaterialTextColor(context, provider, view, attributeSet)
-    }
-
-    protected open fun resetButtonColorIfNeed(context: Context, view: MaterialButton, attributeSet: AttributeSet?){
-        val provider = SkinManager.getInstance().provider ?: return
-
-        MaterialColorHelper.updateMaterialButton(context, provider, view, attributeSet)
     }
 }

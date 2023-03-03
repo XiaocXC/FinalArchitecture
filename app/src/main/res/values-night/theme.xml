@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- APP主题 -->
+    <style name="FinalArchitecture.Default" parent="Base_Theme.FinalArchitecture">
+        <!-- 主色调 -->
+        <item name="colorPrimary">@color/md_colorPrimary</item>
+        <item name="colorOnPrimary">@color/md_colorOnPrimary</item>
+        <item name="colorPrimaryContainer">@color/md_colorPrimaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/md_colorOnPrimaryContainer</item>
+        <!-- 次色调 -->
+        <item name="colorSecondary">@color/md_colorSecondary</item>
+        <item name="colorOnSecondary">@color/md_colorOnSecondary</item>
+        <item name="colorSecondaryContainer">@color/md_colorSecondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/md_colorOnSecondaryContainer</item>
+        <!-- 第三色调 -->
+        <item name="colorTertiary">@color/md_colorTertiary</item>
+        <item name="colorOnTertiary">@color/md_colorOnTertiary</item>
+        <item name="colorTertiaryContainer">@color/md_colorTertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/md_colorOnTertiaryContainer</item>
+
+        <!-- 背景色 -->
+        <item name="android:colorBackground">@color/md_colorBackground</item>
+        <item name="colorOnBackground">@color/md_colorOnBackground</item>
+        <item name="colorSurface">@color/md_colorSurface</item>
+        <item name="colorOnSurface">@color/md_colorOnSurface</item>
+        <item name="colorOutline">@color/md_colorOutline</item>
+        <item name="colorSurfaceVariant">@color/md_colorSurfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/md_colorOnSurfaceVariant</item>
+
+        <!-- 自定义Inflater，可以实现动态换肤 -->
+        <item name="viewInflaterClass">com.zjl.library_skin.inflater.SkinViewInflaterWrapper</item>
+    </style>
+</resources>

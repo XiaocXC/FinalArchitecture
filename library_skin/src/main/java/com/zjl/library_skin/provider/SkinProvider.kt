@@ -1,6 +1,8 @@
 package com.zjl.library_skin.provider
 
 import android.content.Context
+import android.util.Log
+import android.view.View
 
 /**
  * @author Xiaoc
@@ -38,6 +40,9 @@ abstract class SkinProvider {
         if(!support(context)){
             return resId
         }
+        if(resId == View.NO_ID){
+            return resId
+        }
 
         var newResId = resId
         val res = context.resources
@@ -49,12 +54,15 @@ abstract class SkinProvider {
             }
             val resName = res.getResourceEntryName(resId)
             val resType = res.getResourceTypeName(resId)
+            Log.i("SkinProvider", "当前查阅的resName:$resName -- resType:$resType")
             // 获取对应皮肤的资源 id
             val newResName = replaceResIdPrefix(context, resName, resType)
             val id = res.getIdentifier(newResName, resType, resPkg)
             if(id != 0){
                 newResId = id
             }
+        } catch (e: Exception){
+            e.printStackTrace()
         } finally { }
         return newResId
     }
