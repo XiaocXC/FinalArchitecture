@@ -25,8 +25,7 @@
         style="@style/Widget.MaterialComponents.BottomNavigationView"
         android:layout_height="wrap_content"
         app:itemIconTint="@null"
-        app:labelVisibilityMode="labeled"
-        app:menu="@menu/menu_bottom_navigation"
+        app:labelVisibilityMode="unlabeled"
         app:itemTextColor="@drawable/nav_btm_color"/>
 
 </LinearLayout>

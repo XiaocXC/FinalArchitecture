@@ -154,4 +154,7 @@ public class Libs {
     // Android测试适用扩展
     public static final String JUNIT_EXT = "androidx.test.ext:junit:1.1.3";
     public static final String ESPRESSO_CORE = "androidx.test.espresso:espresso-core:3.4.0";
+
+    // Lottie
+    public static final String LOTTIE_CORE = "com.airbnb.android:lottie:6.0.0";
 }

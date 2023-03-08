@@ -1,8 +1,12 @@
 package com.zjl.finalarchitecture.module.main.ui.fragment
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
+import com.airbnb.lottie.LottieCompositionFactory
+import com.airbnb.lottie.LottieDrawable
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.utils.ext.getAttrColor
 import com.zjl.base.viewmodel.EmptyViewModel
@@ -21,6 +25,16 @@ import com.zjl.finalarchitecture.module.toolbox.ToolboxFragment
  * @date : 2022/1/14 15:42
  */
 class MainFragment : BaseFragment<FragmentMainBinding, EmptyViewModel>() {
+
+    private val lottieResWithMenu = listOf(
+        "tab/ic_home.json",
+        "tab/ic_tools.json",
+        "tab/ic_discovery.json",
+        "tab/ic_knowledge.json",
+        "tab/ic_mine.json"
+    )
+
+    private var lastNavPosition = 0
 
     override fun initViewAndEvent(savedInstanceState: Bundle?) {
         //viewpager2是否可以滑动
@@ -44,25 +58,18 @@ class MainFragment : BaseFragment<FragmentMainBinding, EmptyViewModel>() {
         mBinding.mBottomNavigationView.itemIconTintList = null
         mBinding.mBottomNavigationView.setBackgroundColor(requireContext().getAttrColor(R.attr.colorSurface))
 
+        // 动态生成Lottie的样式的底部Menu
+        mBinding.mBottomNavigationView.menu.run {
+            for(index in lottieResWithMenu.indices){
+                add(Menu.NONE, index, Menu.NONE, index.toString())
+                generateLottieDrawable(index, lottieResWithMenu[index])
+            }
+        }
         //初始化底部导航栏
         mBinding.mBottomNavigationView.setOnItemSelectedListener {
-            when (it.itemId) {
-                R.id.home -> {
-                    switchFragment(0)
-                }
-                R.id.system -> {
-                    switchFragment(1)
-                }
-                R.id.discovery -> {
-                    switchFragment(2)
-                }
-                R.id.toolbox -> {
-                    switchFragment(3)
-                }
-                R.id.mine -> {
-                    switchFragment(4)
-                }
-            }
+            switchFragment(it.itemId)
+            applyNavigationItem(it)
+            lastNavPosition = it.itemId
             //这里注意返回true,否则点击失效
             true
         }
@@ -85,6 +92,36 @@ class MainFragment : BaseFragment<FragmentMainBinding, EmptyViewModel>() {
         //smoothScroll设置为false 不然会有转场效果
         mBinding.mViewPager2.setCurrentItem(position, false)
         return true
+    }
+
+    private fun applyNavigationItem(item: MenuItem){
+        playLottieAnimation(item)
+    }
+
+    private fun playLottieAnimation(item: MenuItem){
+        val currentIcon = item.icon as? LottieDrawable
+        currentIcon?.start()
+
+        if(item.itemId != lastNavPosition){
+//            val lastLottieDrawable = mBinding.mBottomNavigationView.menu.getItem(lastNavPosition)?.icon as? LottieDrawable
+//            // 将上次的动画复原
+//            lastLottieDrawable?.stop()
+//            lastLottieDrawable?.frame = lastLottieDrawable?.minFrame?.toInt() ?: 0
+            val lastItem = mBinding.mBottomNavigationView.menu.getItem(lastNavPosition)
+            lastItem?.icon = generateLottieDrawable(lastNavPosition, lottieResWithMenu[lastNavPosition])
+        }
+
+    }
+
+    private fun generateLottieDrawable(index: Int, jsonKey: String): LottieDrawable{
+        val menuItem = mBinding.mBottomNavigationView.menu.getItem(index)
+        val lottieDrawable = LottieDrawable().apply {
+            val result = LottieCompositionFactory.fromAssetSync(requireContext(), jsonKey)
+            callback = mBinding.mBottomNavigationView
+            composition = result.value
+        }
+        menuItem.icon = lottieDrawable
+        return lottieDrawable
     }
 
 }

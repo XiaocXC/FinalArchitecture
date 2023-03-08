@@ -89,4 +89,5 @@ dependencies {
     // 设置库
     implementation(Libs.PREFERENCE)
     implementation(Libs.PREFERENCE_KTX)
+    implementation(Libs.LOTTIE_CORE)
 }
