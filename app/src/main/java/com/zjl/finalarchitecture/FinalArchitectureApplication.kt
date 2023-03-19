@@ -2,6 +2,7 @@ package com.zjl.finalarchitecture
 
 import android.content.Context
 import com.zjl.base.BaseApplication
+import com.zjl.base.globalCoroutineScope
 import com.zjl.finalarchitecture.module.global.AppConfigViewModel
 import com.zjl.finalarchitecture.theme.FinalTheme
 import com.zjl.finalarchitecture.theme.ThemeManager
@@ -10,6 +11,8 @@ import com.zjl.library_skin.inflater.CompatViewInflater
 import com.zjl.library_skin.inflater.MaterialDesignViewInflater
 import com.zjl.library_skin.provider.SkinProvider
 import com.zjl.library_skin.wrapper.SkinContextThemeWrapper
+import com.zjl.library_trace.base.Tracker
+import com.zjl.library_trace.provider.FileLogProvider
 
 /**
  * @author Xiaoc
@@ -33,6 +36,8 @@ class FinalArchitectureApplication: BaseApplication() {
 
         // 初始化全局事件ViewModel
         getAppViewModelProvider()[AppConfigViewModel::class.java]
+
+        Tracker.registerProvider(FileLogProvider(applicationContext, globalCoroutineScope))
     }
 
     override fun initSDK() {

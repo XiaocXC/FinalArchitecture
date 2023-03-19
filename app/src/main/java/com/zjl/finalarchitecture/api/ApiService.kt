@@ -5,6 +5,7 @@ import com.zjl.finalarchitecture.data.model.*
 import com.zjl.finalarchitecture.data.model.coin.CoinVO
 import com.zjl.finalarchitecture.data.model.user.CombineUserInfoVO
 import com.zjl.finalarchitecture.data.model.user.UserInfoVO
+import okhttp3.RequestBody
 import retrofit2.http.*
 
 /**
@@ -190,4 +191,5 @@ interface ApiService {
      */
     @GET("lg/coin/userinfo/json")
     suspend fun getUserCoinData(): ApiResult<CoinVO>
+
 }

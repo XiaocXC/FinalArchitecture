@@ -102,79 +102,80 @@ class MainFragment : BaseFragment<FragmentMainBinding, EmptyViewModel>() {
 
     private fun createBottomNav() {
 
-        val fontItemHome = FontBuilder.create("首页")
-            .selectedTextColor(ContextCompat.getColor(requireContext(), R.color.base_panda))
-            .unSelectedTextColor(ContextCompat.getColor(requireContext(), R.color.md_colorPrimary))
+        val fontItem = FontBuilder.create("首页")
+            .selectedTextColor(ContextCompat.getColor(requireContext(), R.color.md_colorPrimary))
+            .unSelectedTextColor(ContextCompat.getColor(requireContext(), R.color.base_panda))
             .selectedTextSize(13) //SP
             .unSelectedTextSize(12) //SP
             .build()
-
-        val fontItemSystem = FontBuilder.create("体系")
-            .selectedTextColor(ContextCompat.getColor(requireContext(), R.color.base_panda))
-            .unSelectedTextColor(ContextCompat.getColor(requireContext(), R.color.md_colorPrimary))
-            .selectedTextSize(13) //SP
-            .unSelectedTextSize(12) //SP
-            .build()
-
-        val fontItemFind = FontBuilder.create("发现")
-            .selectedTextColor(ContextCompat.getColor(requireContext(), R.color.base_panda))
-            .unSelectedTextColor(ContextCompat.getColor(requireContext(), R.color.md_colorPrimary))
-            .selectedTextSize(13) //SP
-            .unSelectedTextSize(12) //SP
-            .build()
-
-        val fontItemTool = FontBuilder.create("工具")
-            .selectedTextColor(ContextCompat.getColor(requireContext(), R.color.base_panda))
-            .unSelectedTextColor(ContextCompat.getColor(requireContext(), R.color.md_colorPrimary))
-            .selectedTextSize(13) //SP
-            .unSelectedTextSize(12) //SP
-            .build()
-
-        val fontItemMine = FontBuilder.create("我的")
-            .selectedTextColor(ContextCompat.getColor(requireContext(), R.color.base_panda))
-            .unSelectedTextColor(ContextCompat.getColor(requireContext(), R.color.md_colorPrimary))
-            .selectedTextSize(13) //SP
-            .unSelectedTextSize(12) //SP
-            .build()
+//
+//        val fontItemSystem = FontBuilder.create("体系")
+//            .selectedTextColor(ContextCompat.getColor(requireContext(), R.color.md_colorPrimary))
+//            .unSelectedTextColor(ContextCompat.getColor(requireContext(), R.color.base_panda))
+//            .selectedTextSize(13) //SP
+//            .unSelectedTextSize(12) //SP
+//            .build()
+//
+//        val fontItemFind = FontBuilder.create("发现")
+//            .selectedTextColor(ContextCompat.getColor(requireContext(), R.color.md_colorPrimary))
+//            .unSelectedTextColor(ContextCompat.getColor(requireContext(), R.color.base_panda))
+//            .selectedTextSize(13) //SP
+//            .unSelectedTextSize(12) //SP
+//            .build()
+//
+//        val fontItemTool = FontBuilder.create("工具")
+//            .selectedTextColor(ContextCompat.getColor(requireContext(), R.color.md_colorPrimary))
+//            .unSelectedTextColor(ContextCompat.getColor(requireContext(), R.color.base_panda))
+//            .selectedTextSize(13) //SP
+//            .unSelectedTextSize(12) //SP
+//            .build()
+//
+//        val fontItemMine = FontBuilder.create("我的")
+//            .selectedTextColor(ContextCompat.getColor(requireContext(), R.color.md_colorPrimary))
+//            .unSelectedTextColor(ContextCompat.getColor(requireContext(), R.color.base_panda))
+//            .selectedTextSize(13) //SP
+//            .unSelectedTextSize(12) //SP
+//            .build()
 
         val item1: com.wwdablu.soumya.lottiebottomnav.MenuItem = MenuItemBuilder.create(
-            "tab/ic_home.json",
+            "newtab/Tab_Shop_Active.json",
             com.wwdablu.soumya.lottiebottomnav.MenuItem.Source.Assets,
-            fontItemHome,
+            fontItem,
             "fontItemHome"
-        ).pausedProgress(1f).loop(false)
-            .unSelectedLottieName("tab/ic_home.json").build()
+        ).pausedProgress(0f).loop(false)
+            .unSelectedLottieName("newtab/Tab_Shop_Active.json").build()
 
         val item2: com.wwdablu.soumya.lottiebottomnav.MenuItem = MenuItemBuilder.create(
-            "tab/ic_knowledge.json",
+            "newtab/Tab_Knowledge_Active.json",
             com.wwdablu.soumya.lottiebottomnav.MenuItem.Source.Assets,
-            fontItemSystem,
+            FontBuilder.create(fontItem).setTitle("体系").build(),
             "fontItemSystem"
-        ).pausedProgress(1f).loop(false)
-            .unSelectedLottieName("tab/ic_knowledge.json").build()
+        ).pausedProgress(0f).loop(false)
+            .unSelectedLottieName("newtab/Tab_Knowledge_Active.json").build()
 
         val item3: com.wwdablu.soumya.lottiebottomnav.MenuItem = MenuItemBuilder.create(
-            "tab/ic_discovery.json",
+            "newtab/Tab_Discovery_Active.json",
             com.wwdablu.soumya.lottiebottomnav.MenuItem.Source.Assets,
-            fontItemFind,
+            FontBuilder.create(fontItem).setTitle("发现").build(),
             "fontItemFind"
-        ).pausedProgress(1f).loop(false)
-            .unSelectedLottieName("tab/ic_discovery.json").build()
+        ).pausedProgress(0f).loop(false)
+            .unSelectedLottieName("newtab/Tab_Discovery_Active.json").build()
 
         val item4: com.wwdablu.soumya.lottiebottomnav.MenuItem = MenuItemBuilder.create(
-            "tab/ic_tools.json",
+            "newtab/Tab_Community_Active.json",
             com.wwdablu.soumya.lottiebottomnav.MenuItem.Source.Assets,
-            fontItemTool,
+            FontBuilder.create(fontItem).setTitle("工具").build(),
             "fontItemTool"
-        ).pausedProgress(1f).loop(false)
-            .unSelectedLottieName("tab/ic_tools.json").build()
+        ).pausedProgress(0f).loop(false)
+            .unSelectedLottieName("newtab/Tab_Community_Active.json").build()
 
         val item5: com.wwdablu.soumya.lottiebottomnav.MenuItem = MenuItemBuilder.create(
-            "tab/ic_mine.json",
+            "newtab/Tab_Mine_Active.json",
             com.wwdablu.soumya.lottiebottomnav.MenuItem.Source.Assets,
-            fontItemMine,
+            FontBuilder.create(fontItem).setTitle("我的").build(),
             "fontItemMine"
-        ).pausedProgress(1f).loop(false).unSelectedLottieName("tab/ic_mine.json").build()
+        ).pausedProgress(0f)
+            .loop(false).unSelectedLottieName("newtab/Tab_Mine_Active.json").build()
 
         bottomNavlist.add(item1)
         bottomNavlist.add(item2)
@@ -227,7 +228,7 @@ class MainFragment : BaseFragment<FragmentMainBinding, EmptyViewModel>() {
         menuItem: com.wwdablu.soumya.lottiebottomnav.MenuItem
     ): Boolean {
 
-        mBinding.lottieBottomNav.updateMenuItemFor(position, menuItem);
+//        mBinding.lottieBottomNav.updateMenuItemFor(position, menuItem);
         //smoothScroll设置为false 不然会有转场效果
         mBinding.mViewPager2.setCurrentItem(position, false)
         return true
