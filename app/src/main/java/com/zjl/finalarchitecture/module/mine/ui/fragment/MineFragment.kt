@@ -28,12 +28,12 @@ class MineFragment : BaseFragment<FragmentMineBinding, MineViewModel>() {
 
     override fun initViewAndEvent(savedInstanceState: Bundle?) {
 
-        val lp: ConstraintLayout.LayoutParams =
-            mBinding.cl1.layoutParams as ConstraintLayout.LayoutParams
-        mBinding.waveView.setOnWaveAnimationListener { y ->
-            lp.setMargins(0, 0, 0, y.toInt() + 90)
-            mBinding.cl1.layoutParams = lp
-        }
+//        val lp: ConstraintLayout.LayoutParams =
+//            mBinding.cl1.layoutParams as ConstraintLayout.LayoutParams
+//        mBinding.waveView.setOnWaveAnimationListener { y ->
+//            lp.setMargins(0, 0, 0, y.toInt() + 90)
+//            mBinding.cl1.layoutParams = lp
+//        }
 
         mBinding.ivUserPhoto.setOnClickListener {
             if (UserAuthDataSource.isLogin) {
@@ -68,7 +68,7 @@ class MineFragment : BaseFragment<FragmentMineBinding, MineViewModel>() {
         }
 
         // 作者
-        mBinding.sbAboutWe.setRightText(R.string.me_app_author)
+//        mBinding.sbAboutWe.setRightText(R.string.me_app_author)
 
         // 当前版本
         mBinding.sbVersion.setRightText(BuildConfig.VERSION_NAME)
@@ -79,13 +79,13 @@ class MineFragment : BaseFragment<FragmentMineBinding, MineViewModel>() {
             // 判断是否登录更新不同视图
             if (it == null) {
                 mBinding.txtLogout.visibility = View.GONE
-                mBinding.userSetting.visibility = View.GONE
+//                mBinding.userSetting.visibility = View.GONE
                 mBinding.txtUserName.text = getString(R.string.description_not_login_tip)
                 mBinding.txtTip.isVisible = false
                 mBinding.ivUserPhoto.setImageResource(R.drawable.ic_default_user_logo)
             } else {
                 mBinding.txtLogout.visibility = View.VISIBLE
-                mBinding.userSetting.visibility = View.VISIBLE
+//                mBinding.userSetting.visibility = View.VISIBLE
                 mBinding.txtUserName.text = it.userInfo.nickname
                 mBinding.txtTip.isVisible = true
                 mBinding.ivUserPhoto.load(it.userInfo.icon) {

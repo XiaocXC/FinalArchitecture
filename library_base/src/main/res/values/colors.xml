@@ -122,7 +122,7 @@
     <color name="base_deeppink">#ff1493</color><!--深粉红色 -->
     <color name="base_fuchsia">#ff00ff</color><!--紫红色 -->
     <color name="base_magenta">#ff00ff</color><!--红紫色 -->
-    <color name="base_red">#ff0000</color><!--红色 -->
+    <color name="base_red">#DD2C00</color><!--红色 -->
     <color name="base_oldlace">#fdf5e6</color><!--老花色 -->
     <color name="base_lightgoldenrodyellow">#fafad2</color><!--亮金黄色 -->
     <color name="base_linen">#faf0e6</color><!--亚麻色 -->

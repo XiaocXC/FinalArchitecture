@@ -157,4 +157,7 @@ public class Libs {
 
     // Lottie
     public static final String LOTTIE_CORE = "com.airbnb.android:lottie:6.0.0";
+
+    // Lottie底部导航
+    public static final String LOTTIE_BOTTOM_NAV = "com.github.wwdablu:lottiebottomnav:1.2.0";
 }

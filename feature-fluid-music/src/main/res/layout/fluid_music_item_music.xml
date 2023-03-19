@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:paddingVertical="8dp">
 
-        <com.google.android.material.imageview.SkinShapeableImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/iv_thumbnail_albumArt"
             android:layout_width="52dp"
             android:layout_height="52dp"

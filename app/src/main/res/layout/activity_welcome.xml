@@ -26,7 +26,7 @@
 
 
 
-    <com.google.android.material.imageview.SkinShapeableImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/imgLogo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

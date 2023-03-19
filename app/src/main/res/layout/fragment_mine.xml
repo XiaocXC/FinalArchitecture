@@ -48,7 +48,7 @@
                         android:orientation="vertical"
                         app:layout_constraintGuide_percent="0.9" />
 
-                    <com.google.android.material.imageview.SkinShapeableImageView
+                    <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/ivUserPhoto"
                         android:layout_width="64dp"
                         android:layout_height="64dp"
@@ -90,13 +90,13 @@
                         app:layout_constraintTop_toBottomOf="@+id/txtUserName"
                         tools:text="@string/app_name" />
 
-                    <com.zjl.finalarchitecture.widget.WaveView
-                        android:id="@+id/waveView"
-                        android:layout_width="match_parent"
-                        android:layout_height="17dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
+<!--                    <com.zjl.finalarchitecture.widget.WaveView-->
+<!--                        android:id="@+id/waveView"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="17dp"-->
+<!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                        app:layout_constraintEnd_toEndOf="parent"-->
+<!--                        app:layout_constraintStart_toStartOf="parent" />-->
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

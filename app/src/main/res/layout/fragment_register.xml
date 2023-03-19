@@ -16,7 +16,7 @@
         app:titleCentered="true"
         app:title="@string/description_register" />
 
-    <com.google.android.material.imageview.SkinShapeableImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/iv_logo"
         android:layout_width="64dp"
         android:layout_height="64dp"

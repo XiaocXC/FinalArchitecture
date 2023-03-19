@@ -24,7 +24,7 @@
             android:background="@color/base_aliceblue"
             android:padding="10dp">
 
-            <com.google.android.material.imageview.SkinShapeableImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/sivCover"
                 android:layout_width="88dp"
                 android:layout_height="134dp"

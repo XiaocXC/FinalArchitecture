@@ -38,7 +38,7 @@ class WelcomeActivity : BaseActivity<ActivityWelcomeBinding, WelcomeViewModel>()
     private fun setUpViewPager() {
         //如果是第一次进入APP，则展示轮播图
         if (CacheUtil.isFirstEnterApp()) {
-            mBinding.imgLogo.gone()
+//            mBinding.imgLogo.gone()
             mBinding.mViewPager.setAdapter(WelcomeBannerAdapter())
             mBinding.mViewPager.setLifecycleRegistry(lifecycle)
             mBinding.mViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
@@ -56,7 +56,7 @@ class WelcomeActivity : BaseActivity<ActivityWelcomeBinding, WelcomeViewModel>()
             mBinding.mViewPager.create(mItemTextArray.toList())
         } else {
             mBinding.txtEnter.gone()
-            mBinding.imgLogo.visible()
+//            mBinding.imgLogo.visible()
             mBinding.mViewPager.postDelayed({
                 startActivity(Intent(this, MainActivity::class.java))
                 finish()

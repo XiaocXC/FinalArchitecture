@@ -40,7 +40,8 @@
                     android:layout_marginStart="12dp"
                     android:layout_marginEnd="8dp"
                     android:src="@drawable/ic_search_black_24dp"
-                    app:tint="@color/base_panda" />
+                    app:tint="@color/base_panda"
+                    android:contentDescription="@string/search" />
 
                 <TextView
                     style="@style/TextAppearance.MaterialComponents.Caption"
@@ -57,6 +58,7 @@
             android:id="@+id/mTabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/tab"
             app:tabGravity="fill"
             app:tabMode="fixed"
             app:tabTextColor="@color/base_panda" />

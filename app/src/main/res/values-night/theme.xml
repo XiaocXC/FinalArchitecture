@@ -28,6 +28,6 @@
         <item name="colorOnSurfaceVariant">@color/md_colorOnSurfaceVariant</item>
 
         <!-- 自定义Inflater，可以实现动态换肤 -->
-        <item name="viewInflaterClass">com.zjl.library_skin.inflater.SkinViewInflaterWrapper</item>
+<!--        <item name="viewInflaterClass">com.zjl.library_skin.inflater.SkinViewInflaterWrapper</item>-->
     </style>
 </resources>

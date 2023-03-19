@@ -253,19 +253,19 @@ abstract class OriginActivity: AppCompatActivity(), IPageTrackNode {
         trackParams.merge(defaultTrackParams)
     }
 
-    override fun getResources(): Resources {
-        if(internalCacheResources == null){
-            val oldResources = super.getResources()
-            internalCacheResources = oldResources
-            val provider = SkinManager.getInstance().provider
-            if(provider != null){
-                // 防止Android 7以上WebView的选择菜单出现闪退
-                WebViewResourceHelper.addChromeResourceIfNeeded(this)
-                internalCacheResources = SkinResources(provider, this, oldResources)
-            }
-        }
-        return internalCacheResources!!
-    }
+//    override fun getResources(): Resources {
+//        if(internalCacheResources == null){
+//            val oldResources = super.getResources()
+//            internalCacheResources = oldResources
+//            val provider = SkinManager.getInstance().provider
+//            if(provider != null){
+//                // 防止Android 7以上WebView的选择菜单出现闪退
+//                WebViewResourceHelper.addChromeResourceIfNeeded(this)
+//                internalCacheResources = SkinResources(provider, this, oldResources)
+//            }
+//        }
+//        return internalCacheResources!!
+//    }
 
 
 }

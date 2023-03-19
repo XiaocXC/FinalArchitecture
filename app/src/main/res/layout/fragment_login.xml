@@ -17,7 +17,7 @@
         app:titleCentered="true"
         app:title="@string/description_login" />
 
-    <com.google.android.material.imageview.SkinShapeableImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/iv_logo"
         android:layout_width="64dp"
         android:layout_height="64dp"
@@ -71,14 +71,16 @@
 
         <Button
             android:id="@+id/btn_register"
+            style="@style/Widget.Architecture.NoInsetButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:layout_gravity="end"
             android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:minHeight="48dp"
             android:paddingVertical="4dp"
             android:text="@string/description_register"
-            style="@style/Widget.Architecture.NoInsetButton"/>
+            android:textColor="#0277BD" />
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout

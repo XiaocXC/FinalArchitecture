@@ -3,7 +3,7 @@
   layout_constraintDimensionRatio: 宽高比为16：9
   shapeAppearanceOverlay: 小圆角
 -->
-<com.google.android.material.imageview.SkinShapeableImageView
+<com.google.android.material.imageview.ShapeableImageView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/iv_banner"
