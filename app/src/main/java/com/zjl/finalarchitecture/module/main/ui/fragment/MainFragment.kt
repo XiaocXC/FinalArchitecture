@@ -5,7 +5,10 @@ import android.graphics.Typeface
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.ViewGroup.MarginLayoutParams
 import androidx.core.content.ContextCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.airbnb.lottie.LottieCompositionFactory
@@ -14,6 +17,7 @@ import com.wwdablu.soumya.lottiebottomnav.FontBuilder
 import com.wwdablu.soumya.lottiebottomnav.ILottieBottomNavCallback
 import com.wwdablu.soumya.lottiebottomnav.MenuItemBuilder
 import com.zjl.base.fragment.BaseFragment
+import com.zjl.base.utils.ext.doOnApplyWindowInsets
 import com.zjl.base.utils.ext.getAttrColor
 import com.zjl.base.viewmodel.EmptyViewModel
 import com.zjl.finalarchitecture.R
@@ -62,6 +66,14 @@ class MainFragment : BaseFragment<FragmentMainBinding, EmptyViewModel>() {
                     else -> HomeFragment()
                 }
             }
+
+        mBinding.lottieBottomNav.doOnApplyWindowInsets { view, windowInsetsCompat, viewPaddingState ->
+            val navigationBarInsets = windowInsetsCompat.getInsets(WindowInsetsCompat.Type.navigationBars())
+            // 给底部加上margin
+            view.updateLayoutParams<MarginLayoutParams> {
+                bottomMargin = navigationBarInsets.bottom
+            }
+        }
 
         createBottomNav()
 
