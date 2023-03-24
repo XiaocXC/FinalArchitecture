@@ -105,10 +105,10 @@ class MainFragment : BaseFragment<FragmentMainBinding, EmptyViewModel>() {
         val fontItem = FontBuilder.create("首页")
             .selectedTextColor(ContextCompat.getColor(requireContext(), R.color.md_colorPrimary))
             .unSelectedTextColor(ContextCompat.getColor(requireContext(), R.color.base_panda))
-            .selectedTextSize(13) //SP
-            .unSelectedTextSize(12) //SP
+            .selectedTextSize(11) //SP
+            .unSelectedTextSize(11) //SP
             .build()
-//
+
 //        val fontItemSystem = FontBuilder.create("体系")
 //            .selectedTextColor(ContextCompat.getColor(requireContext(), R.color.md_colorPrimary))
 //            .unSelectedTextColor(ContextCompat.getColor(requireContext(), R.color.base_panda))
@@ -193,7 +193,7 @@ class MainFragment : BaseFragment<FragmentMainBinding, EmptyViewModel>() {
                 menuItem: com.wwdablu.soumya.lottiebottomnav.MenuItem
             ) {
                 lastNavPosition = newIndex
-                switchFragment(lastNavPosition, menuItem)
+                switchFragment(lastNavPosition)
             }
 
             override fun onAnimationStart(
@@ -224,11 +224,8 @@ class MainFragment : BaseFragment<FragmentMainBinding, EmptyViewModel>() {
      * 切换fragment
      */
     private fun switchFragment(
-        position: Int,
-        menuItem: com.wwdablu.soumya.lottiebottomnav.MenuItem
+        position: Int
     ): Boolean {
-
-//        mBinding.lottieBottomNav.updateMenuItemFor(position, menuItem);
         //smoothScroll设置为false 不然会有转场效果
         mBinding.mViewPager2.setCurrentItem(position, false)
         return true

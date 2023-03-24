@@ -76,4 +76,8 @@ class WelcomeActivity : BaseActivity<ActivityWelcomeBinding, WelcomeViewModel>()
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+    }
+
 }
