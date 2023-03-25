@@ -63,7 +63,7 @@
     <!-- 我的 -->
     <string name="me_my_coin_num">积分：%s | 等级：%s | 排名：%s</string>
     <string name="me_app_author">ZJL</string>
-    <string name="my_rank_coin">我的积分</string>
+    <string name="my_rank_coin">当前积分</string>
     <string name="me_app_github_url">https://github.com/XiaocXC/FinalArchitecture</string>
 
     <!-- 设置 -->

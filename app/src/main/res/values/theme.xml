@@ -45,4 +45,9 @@
         <item name="cornerSize">16dp</item>
         <item name="cornerSizeTopLeft">2dp</item>
     </style>
+
+    <!-- 设置Toolbar标题字体的大小 -->
+    <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">18sp</item>
+    </style>
 </resources>
