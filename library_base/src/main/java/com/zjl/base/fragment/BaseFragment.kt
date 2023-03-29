@@ -49,8 +49,10 @@ abstract class BaseFragment<V : ViewBinding, VM : BaseViewModel> : OriginFragmen
         return inflateBindingWithGeneric(inflater, container, false)
     }
 
-    final override fun bindOthers() {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         mViewModel = createViewModel()
+
+        super.onViewCreated(view, savedInstanceState)
     }
 
     /**
