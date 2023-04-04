@@ -2,8 +2,6 @@ package com.zjl.finalarchitecture.module.toolbox.transAnim
 
 import android.os.Bundle
 import androidx.transition.Scene
-import androidx.transition.Transition
-import androidx.transition.TransitionInflater
 import androidx.transition.TransitionManager
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.viewmodel.EmptyViewModel
