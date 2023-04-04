@@ -28,10 +28,8 @@ class TransAnimFragment: BaseFragment<FragmentTransAnimContainerBinding, EmptyVi
 
         bScene = Scene.getSceneForLayout(mBinding.layoutAnim, R.layout.fragment_trans_anim_layout_2, requireContext())
 
-        val clipBoundsTransition = TransitionInflater.from(requireContext())
-            .inflateTransitionManager(R.transition.anim_layout_clip_bounds, mBinding.layoutAnim)
         mBinding.btnTrans.setOnClickListener {
-            clipBoundsTransition.transitionTo(bScene)
+            TransitionManager.go(bScene)
         }
 
     }
