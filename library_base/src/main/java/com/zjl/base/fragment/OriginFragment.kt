@@ -31,7 +31,7 @@ import timber.log.Timber
  * @since 2023-01-13
  *
  * 基类Fragment，提供基本的封装内容进行统一
- * 它与[BaseFragment]不同点在于，BaseFragment需要VB和VM的支撑，而BaseFragment不需要
+ * 它与[BaseFragment]不同点在于，BaseFragment需要VB和VM的支撑，而 OriginFragment 不需要
  */
 abstract class OriginFragment : Fragment() {
 
@@ -102,14 +102,10 @@ abstract class OriginFragment : Fragment() {
 
         configImmersiveInternal()
 
-        bindOthers()
-
         initViewAndEvent(savedInstanceState)
         createDefObserver()
         createObserver()
     }
-
-    abstract fun bindOthers()
 
     /**
      * 展示加载框弹窗（基于DialogX）

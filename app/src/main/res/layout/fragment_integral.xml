@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:fitsSystemWindows="true">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -18,62 +19,72 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:background="@android:color/transparent"
-            app:contentScrim="#ba000000"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            android:fitsSystemWindows="true"
-            app:statusBarScrim="#ba000000"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+            app:contentScrim="@color/white"
             app:titleEnabled="false">
 
-<!--            <RelativeLayout-->
-<!--                android:id="@+id/rl_content"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent"-->
-<!--                app:layout_collapseMode="parallax"-->
-<!--                android:fitsSystemWindows="true"-->
-<!--                android:background="?attr/colorPrimary">-->
-
-<!--                <TextView-->
-<!--                    android:id="@+id/tv_score"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_centerInParent="true"-->
-<!--                    android:layout_gravity="center"-->
-<!--                    android:gravity="center"-->
-<!--                    android:text="10100"-->
-<!--                    android:textColor="@color/white"-->
-<!--                    android:textSize="50sp" />-->
-
-<!--            </RelativeLayout>-->
-
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/toolbar"
+            <RelativeLayout
+                android:id="@+id/rl_content"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"
-                app:navigationIcon="@drawable/ic_arrow_back"
-                app:navigationIconTint="@color/white">
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true"
+                android:background="?attr/colorPrimary">
 
-<!--                <ImageView-->
-<!--                    android:id="@+id/coinRulesHelp"-->
-<!--                    android:layout_width="25dp"-->
-<!--                    android:layout_height="25dp"-->
-<!--                    android:layout_gravity="end"-->
-<!--                    android:layout_marginEnd="20dp"-->
-<!--                    android:background="?android:selectableItemBackgroundBorderless"-->
-<!--                    android:src="@drawable/ic_rule"-->
-<!--                    app:tint="@color/white" />-->
+                <TextView
+                    android:id="@+id/tv_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="10100"
+                    android:textColor="@color/white"
+                    android:textSize="40sp" />
 
-<!--                <ImageView-->
-<!--                    android:id="@+id/coinRanking"-->
-<!--                    android:layout_width="25dp"-->
-<!--                    android:layout_height="25dp"-->
-<!--                    android:layout_gravity="end"-->
-<!--                    android:layout_marginEnd="25dp"-->
-<!--                    android:background="?android:selectableItemBackgroundBorderless"-->
-<!--                    android:src="@drawable/ic_rank"-->
-<!--                    app:tint="@color/white" />-->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_score"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:text="@string/my_rank_coin"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
 
-            </com.google.android.material.appbar.MaterialToolbar>
+                <com.google.android.material.appbar.MaterialToolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:layout_collapseMode="pin"
+                    app:navigationIcon="@drawable/ic_arrow_back"
+                    app:navigationIconTint="@color/white"
+                    app:titleTextAppearance="@style/Toolbar.TitleText">
+
+                    <ImageView
+                        android:id="@+id/coinRulesHelp"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_gravity="end"
+                        android:layout_marginEnd="20dp"
+                        android:background="?android:selectableItemBackgroundBorderless"
+                        android:src="@drawable/ic_rule"
+                        app:tint="@color/white" />
+
+                    <ImageView
+                        android:id="@+id/coinRanking"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_gravity="end"
+                        android:layout_marginEnd="22dp"
+                        android:background="?android:selectableItemBackgroundBorderless"
+                        android:src="@drawable/ic_rank"
+                        app:tint="@color/white" />
+
+                </com.google.android.material.appbar.MaterialToolbar>
+
+            </RelativeLayout>
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 

@@ -1,12 +1,9 @@
 package com.zjl.base.activity
 
-import android.content.Context
-import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Bundle
 import androidx.annotation.CallSuper
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.Lifecycle
 import com.gyf.immersionbar.ImmersionBar
 import com.kongzue.dialogx.dialogs.WaitDialog
@@ -17,10 +14,6 @@ import com.zjl.base.ui.state.LoadingState
 import com.zjl.base.utils.ext.isNightMode
 import com.zjl.base.utils.launchAndCollectIn
 import com.zjl.lib_base.R
-import com.zjl.library_skin.SkinManager
-import com.zjl.library_skin.hepler.WebViewResourceHelper
-import com.zjl.library_skin.resource.SkinResources
-import com.zjl.library_skin.wrapper.SkinContextThemeWrapper
 import com.zjl.library_trace.base.IPageTrackNode
 import com.zjl.library_trace.base.ITrackNode
 import com.zjl.library_trace.base.TrackParams
@@ -35,7 +28,7 @@ import timber.log.Timber
  * @since 2023-01-13
  *
  * 基类Activity，提供基本的封装内容进行统一
- * 它与[BaseActivity]不同点在于，BaseActivity需要VB和VM的支撑，而OriginActivity不需要
+ * 它与[BaseActivity]不同点在于，BaseActivity需要VB和VM的支撑，而 OriginActivity 不需要
  */
 abstract class OriginActivity: AppCompatActivity(), IPageTrackNode {
 
@@ -44,7 +37,7 @@ abstract class OriginActivity: AppCompatActivity(), IPageTrackNode {
     /**
      * 整个Activity的UiState状态控制器
      */
-    protected val rootUiState by lazy {
+    protected open val rootUiState by lazy {
         MultiStatePage.bindMultiState(this)
     }
 
