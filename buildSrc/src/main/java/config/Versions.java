@@ -15,9 +15,9 @@ public class Versions {
     public static final int versionCode = 1;
 
     // 编译版本
-    public static final int COMPILE_SDK = 31;
+    public static final int COMPILE_SDK = 33;
     // 目标版本
-    public static final int TARGET_SDK = 31;
+    public static final int TARGET_SDK = 33;
     // 最小版本
     public static final int MIN_SDK = 25;
 

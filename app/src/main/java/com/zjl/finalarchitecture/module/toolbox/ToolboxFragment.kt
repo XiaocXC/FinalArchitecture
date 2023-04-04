@@ -65,6 +65,10 @@ class ToolboxFragment : BaseFragment<FragmentToolboxBinding, EmptyViewModel>() {
         mBinding.btnPalette.setOnClickListener {
             findNavController().navigate(MainFragmentDirections.actionMainFragmentToPaletteFragment())
         }
+
+        mBinding.btnTransAnim.setOnClickListener {
+            findNavController().navigate(MainFragmentDirections.actionMainFragmentToTransAnimFragment())
+        }
     }
 
     override fun configImmersive(immersionBar: ImmersionBar): ImmersionBar? {

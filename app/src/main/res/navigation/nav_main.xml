@@ -59,6 +59,9 @@
         <action
             android:id="@+id/action_mainFragment_to_themeChangeFragment"
             app:destination="@id/themeChangeFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_transAnimFragment"
+            app:destination="@id/transAnimFragment" />
 
 
     </fragment>
@@ -216,6 +219,10 @@
         android:id="@+id/themeChangeFragment"
         android:name="com.zjl.finalarchitecture.module.mine.ui.fragment.theme.ThemeChangeFragment"
         android:label="ThemeChangeFragment" />
+    <fragment
+        android:id="@+id/transAnimFragment"
+        android:name="com.zjl.finalarchitecture.module.toolbox.transAnim.TransAnimFragment"
+        android:label="TransAnimFragment" />
 
 
 </navigation>

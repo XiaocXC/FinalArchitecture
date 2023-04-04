@@ -23,7 +23,7 @@ public class Libs {
     // Activity-Ktx
     public static final String ACTIVITY_KTX = "androidx.activity:activity-ktx:1.4.0";
     // Material Design
-    public static final String MATERIAL_DESIGN = "com.google.android.material:material:1.6.1";
+    public static final String MATERIAL_DESIGN = "com.google.android.material:material:1.8.0";
 
     private static final String LIFECYCLE_VERSION = "2.4.1";
     // ViewModel-Ktx

@@ -10,7 +10,7 @@
         android:id="@+id/flow"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="btnMulti,btnDropPop,btnTreeCheck,btnDragSimple,btnRvSelect,btnImeAnim,btnBgChange,btnFluidMusic,btnShoppingCart,btnProgressList,btnExpandList,btnPalette"
+        app:constraint_referenced_ids="btnMulti,btnDropPop,btnTreeCheck,btnDragSimple,btnRvSelect,btnImeAnim,btnBgChange,btnFluidMusic,btnShoppingCart,btnProgressList,btnExpandList,btnPalette,btnTransAnim"
         app:flow_horizontalGap="5dp"
         app:flow_verticalGap="5dp"
         app:flow_wrapMode="chain2"
@@ -90,5 +90,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="取色逻辑" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnTransAnim"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TRANS_ANIM" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
