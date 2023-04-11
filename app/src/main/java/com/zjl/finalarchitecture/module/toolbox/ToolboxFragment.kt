@@ -69,6 +69,14 @@ class ToolboxFragment : BaseFragment<FragmentToolboxBinding, EmptyViewModel>() {
         mBinding.btnTransAnim.setOnClickListener {
             findNavController().navigate(MainFragmentDirections.actionMainFragmentToTransAnimFragment())
         }
+
+        mBinding.btnWebSocket.setOnClickListener {
+            findNavController().navigate(MainFragmentDirections.actionMainFragmentToWebSocketFragment())
+        }
+
+        mBinding.btnBottomNavigationBar.setOnClickListener {
+            findNavController().navigate(MainFragmentDirections.actionMainFragmentToSpecialBottomNavigationBarFragment())
+        }
     }
 
     override fun configImmersive(immersionBar: ImmersionBar): ImmersionBar? {

@@ -44,4 +44,22 @@
         <attr name="bar_lineMargin" format="dimension" />
     </declare-styleable>
 
+    <declare-styleable name="CustomBottomNavigationView">
+        <!-- 设置fab凹陷/突出的的尺寸 -->
+        <attr format="enum" name="edgeTreatmentType">
+            <!-- 凸出 -->
+            <enum name="BULGE_TYPE" value="1"/>
+            <!-- 凹陷 -->
+            <enum name="SAG_TYPE" value="2"/>
+        </attr>
+        <!-- 设置fab凹陷/突出的的尺寸 -->
+        <attr format="dimension" name="fabDiameter"/>
+        <!-- 设置fab凹陷/突出的margin距离 -->
+        <attr format="dimension" name="fabCradleMargin"/>
+        <!-- 设置fab凹陷/突出的边缘圆角 -->
+        <attr format="dimension" name="fabCradleRoundedCornerRadius"/>
+        <!-- 设置fab的竖直偏移值 -->
+        <attr format="dimension" name="fabCradleVerticalOffset"/>
+    </declare-styleable>
+
 </resources>

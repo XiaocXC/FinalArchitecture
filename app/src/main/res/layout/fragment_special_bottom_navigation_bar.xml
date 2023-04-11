@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:clipChildren="false">
+
+    <LinearLayout
+        android:id="@+id/customContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="32dp"
+        android:orientation="vertical">
+
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/switch_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="凸起"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="fabMargin"
+            android:layout_marginTop="8dp"/>
+
+        <com.google.android.material.slider.Slider
+            android:id="@+id/sliderFabMargin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:valueFrom="0.0"
+            android:valueTo="5.0"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="fabDiameter"
+            android:layout_marginTop="8dp"/>
+
+        <com.google.android.material.slider.Slider
+            android:id="@+id/sliderFabDiameter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:valueFrom="0.0"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="fabCornerRadius"
+            android:layout_marginTop="8dp"/>
+
+        <com.google.android.material.slider.Slider
+            android:id="@+id/sliderFabCornerRadius"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:valueFrom="0.0"
+            android:valueTo="12.0"/>
+
+    </LinearLayout>
+
+
+    <com.zjl.finalarchitecture.widget.navigationBar.CustomBottomNavigationView
+        android:id="@+id/bottomNavigationBar"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_gravity="bottom"
+        android:background="@color/black"
+        app:edgeTreatmentType="BULGE_TYPE"
+        android:clipToPadding="false"
+        app:menu="@menu/menu_bottom_navigation"/>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

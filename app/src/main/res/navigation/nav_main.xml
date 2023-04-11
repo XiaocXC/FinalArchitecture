@@ -62,6 +62,12 @@
         <action
             android:id="@+id/action_mainFragment_to_transAnimFragment"
             app:destination="@id/transAnimFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_webSocketFragment"
+            app:destination="@id/webSocketFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_specialBottomNavigationBarFragment"
+            app:destination="@id/specialBottomNavigationBarFragment" />
 
 
     </fragment>
@@ -223,6 +229,14 @@
         android:id="@+id/transAnimFragment"
         android:name="com.zjl.finalarchitecture.module.toolbox.transAnim.TransAnimFragment"
         android:label="TransAnimFragment" />
+    <fragment
+        android:id="@+id/webSocketFragment"
+        android:name="com.zjl.finalarchitecture.module.toolbox.websocket.WebSocketFragment"
+        android:label="WebSocketFragment" />
+    <fragment
+        android:id="@+id/specialBottomNavigationBarFragment"
+        android:name="com.zjl.finalarchitecture.module.toolbox.bottomNaivgationBar.SpecialBottomNavigationBarFragment"
+        android:label="SpecialBottomNavigationBarFragment" />
 
 
 </navigation>
