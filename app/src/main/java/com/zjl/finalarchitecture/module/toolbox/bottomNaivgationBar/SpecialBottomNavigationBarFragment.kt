@@ -1,6 +1,7 @@
 package com.zjl.finalarchitecture.module.toolbox.bottomNaivgationBar
 
 import android.os.Bundle
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.zjl.base.fragment.BaseFragment
@@ -9,6 +10,7 @@ import com.zjl.base.viewmodel.EmptyViewModel
 import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.databinding.FragmentSpecialBottomNavigationBarBinding
 import com.zjl.finalarchitecture.widget.navigationBar.BaseCircleEdgeTreatment
+import com.zjl.finalarchitecture.widget.navigationBar.HideBottomEdgeTreatmentOnScrollBehavior
 
 /**
  * @author Xiaoc
@@ -23,6 +25,8 @@ class SpecialBottomNavigationBarFragment: BaseFragment<FragmentSpecialBottomNavi
         mBinding.sliderFabDiameter.valueTo = 64.dp.toFloat()
         mBinding.sliderFabCornerRadius.valueTo = 16.dp.toFloat()
 
+        val behavior = (mBinding.bottomNavigationBar.layoutParams as CoordinatorLayout.LayoutParams).behavior as? HideBottomEdgeTreatmentOnScrollBehavior
+
         mBinding.switchType.setOnCheckedChangeListener { buttonView, isChecked ->
             if(isChecked){
                 mBinding.switchType.text = "凹陷"
@@ -30,6 +34,16 @@ class SpecialBottomNavigationBarFragment: BaseFragment<FragmentSpecialBottomNavi
             } else {
                 mBinding.switchType.text = "凸起"
                 mBinding.bottomNavigationBar.edgeTreatmentType = BaseCircleEdgeTreatment.BULGE_TYPE
+            }
+        }
+
+        mBinding.switchHideShow.setOnCheckedChangeListener { buttonView, isChecked ->
+            if(isChecked){
+                mBinding.switchHideShow.text = "隐藏"
+                behavior?.slideDown(mBinding.bottomNavigationBar, true)
+            } else {
+                mBinding.switchHideShow.text = "显示"
+                behavior?.slideUp(mBinding.bottomNavigationBar, true)
             }
         }
 
@@ -50,6 +64,7 @@ class SpecialBottomNavigationBarFragment: BaseFragment<FragmentSpecialBottomNavi
             val px = (value * scale + 0.5f)
             mBinding.bottomNavigationBar.fabCornerRadius = px
         }
+
     }
 
     override fun createObserver() {

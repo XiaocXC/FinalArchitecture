@@ -1,15 +1,23 @@
 package com.zjl.finalarchitecture.widget.navigationBar;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.TimeInterpolator;
+import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewPropertyAnimator;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.ViewCompat;
 
+import com.google.android.material.animation.AnimationUtils;
 import com.google.android.material.behavior.HideBottomViewOnScrollBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -30,6 +38,9 @@ public class HideBottomEdgeTreatmentOnScrollBehavior extends HideBottomViewOnScr
     private final Rect fabContentRect;
     private WeakReference<CustomBottomNavigationView> viewRef;
     private int originalBottomMargin;
+    private int lastFabDiameter;
+    @Nullable
+    private ValueAnimator currentFabAnimator;
 
     private final View.OnLayoutChangeListener fabLayoutListener = new View.OnLayoutChangeListener() {
         @Override
@@ -99,6 +110,57 @@ public class HideBottomEdgeTreatmentOnScrollBehavior extends HideBottomViewOnScr
         // 开启滑动隐藏后，滑动时会自动隐藏底部导航栏
         return super.onStartNestedScroll(
                 coordinatorLayout, child, directTargetChild, target, axes, type);
+    }
+
+    @SuppressLint("RestrictedApi")
+    @Override
+    public void slideUp(@NonNull CustomBottomNavigationView child, boolean animate) {
+        int lastFabDiameterBackup = lastFabDiameter;
+        lastFabDiameter = 0;
+        // 如果是凸起，我们需要在显示前把凸起恢复
+        if(child.getEdgeTreatmentType() == BaseCircleEdgeTreatment.BULGE_TYPE){
+            if(animate){
+                animateChildTo(child, 0, lastFabDiameterBackup, 175, AnimationUtils.LINEAR_OUT_SLOW_IN_INTERPOLATOR);
+            } else {
+                child.setFabDiameter(lastFabDiameterBackup);
+            }
+        }
+        super.slideUp(child, animate);
+    }
+
+    @SuppressLint("RestrictedApi")
+    @Override
+    public void slideDown(@NonNull CustomBottomNavigationView child, boolean animate) {
+        lastFabDiameter = child.getFabDiameter();
+        // 如果是凸起，我们需要在隐藏前把凸起隐藏
+        if(child.getEdgeTreatmentType() == BaseCircleEdgeTreatment.BULGE_TYPE){
+            if(animate){
+                animateChildTo(child, lastFabDiameter, 0, 125, AnimationUtils.FAST_OUT_LINEAR_IN_INTERPOLATOR);
+            } else {
+                child.setFabDiameter(0);
+            }
+        }
+        super.slideDown(child, animate);
+    }
+
+    private void animateChildTo(
+            @NonNull CustomBottomNavigationView child, int fromValue, int toValue, long duration, TimeInterpolator interpolator) {
+        currentFabAnimator = ValueAnimator.ofInt(fromValue, toValue)
+                .setDuration(duration);
+        currentFabAnimator.setInterpolator(interpolator);
+        currentFabAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                child.setFabDiameter((int)animation.getAnimatedValue());
+            }
+        });
+        currentFabAnimator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                currentFabAnimator = null;
+            }
+        });
+        currentFabAnimator.start();
     }
 
     public HideBottomEdgeTreatmentOnScrollBehavior() {

@@ -90,7 +90,7 @@ public class CustomBottomNavigationView extends BottomNavigationView {
         return false;
     }
 
-    public float getFabDiameter() {
+    public int getFabDiameter() {
         return fabDiameter;
     }
 

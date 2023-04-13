@@ -57,6 +57,12 @@
             android:valueFrom="0.0"
             android:valueTo="12.0"/>
 
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/switchHideShow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="显示"/>
+
     </LinearLayout>
 
 
@@ -68,5 +74,6 @@
         android:background="@color/black"
         app:edgeTreatmentType="BULGE_TYPE"
         android:clipToPadding="false"
-        app:menu="@menu/menu_bottom_navigation"/>
+        app:menu="@menu/menu_bottom_navigation"
+        app:layout_behavior=".widget.navigationBar.HideBottomEdgeTreatmentOnScrollBehavior"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

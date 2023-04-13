@@ -1,6 +1,6 @@
 package com.zjl.finalarchitecture.module.main.ui.activity
 
-import android.os.Bundle
+import android.os.*
 import android.view.WindowInsets
 import androidx.activity.OnBackPressedCallback
 import androidx.core.view.WindowCompat
@@ -14,6 +14,7 @@ import com.zjl.finalarchitecture.module.main.viewmodel.MainViewModel
 import com.zjl.finalarchitecture.databinding.ActivityMainBinding
 import org.json.JSONObject
 import timber.log.Timber
+import kotlin.concurrent.thread
 
 /**
  * @description: 主界面
