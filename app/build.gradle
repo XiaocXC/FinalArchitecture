@@ -91,4 +91,5 @@ dependencies {
     implementation(Libs.PREFERENCE_KTX)
     implementation(Libs.LOTTIE_CORE)
     implementation(Libs.LOTTIE_BOTTOM_NAV)
+    implementation(Libs.TITLE_BAR)
 }

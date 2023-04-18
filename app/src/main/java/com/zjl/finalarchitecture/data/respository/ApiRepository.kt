@@ -248,4 +248,14 @@ object ApiRepository {
     ): ApiResult<CombineUserInfoVO> {
         return mApiService.getUserInfo()
     }
+
+
+    /**
+     * 获取个人积分获取列表
+     */
+    suspend fun requestCoinRecordList(
+        page: Int
+    ):  ApiResult<PageVO<CoinRecordVO>> {
+        return mApiService.getCoinRecordList(page)
+    }
 }

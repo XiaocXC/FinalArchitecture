@@ -160,4 +160,7 @@ public class Libs {
 
     // Lottie底部导航
     public static final String LOTTIE_BOTTOM_NAV = "com.github.wwdablu:lottiebottomnav:1.2.0";
+
+    // 标题栏框架：https://github.com/getActivity/TitleBar
+    public static final String TITLE_BAR = "com.github.getActivity:TitleBar:10.3";
 }

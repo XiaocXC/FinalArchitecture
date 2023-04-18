@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!--
+       item的icon和title属性顾名思义
+       app:showAsAction:
+       1.never 总是放置在溢出菜单中
+       2.always 总是放置在操作栏上
+       3.ifRoom 如果有空间放置，则放置在操作栏上，否则放置到溢出菜单中。
+   -->
+    <item
+        android:id="@+id/menu_coin_rank"
+        android:icon="@drawable/ic_baseline_graphic_eq_18"
+        app:showAsAction="always"
+        android:title="积分" />
+    <item
+        android:id="@+id/menu_coin_rule"
+        android:icon="@drawable/ic_baseline_rule_18"
+        app:showAsAction="always"
+        android:title="规则" />
+
+</menu>

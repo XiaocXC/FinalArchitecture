@@ -16,6 +16,7 @@ import com.zjl.finalarchitecture.databinding.FragmentProjectBinding
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleDividerItemDecoration
 import com.zjl.finalarchitecture.module.home.ui.adapter.ProjectAdapter
 import com.zjl.finalarchitecture.module.home.ui.adapter.ProjectCategoryAdapter
+import com.zjl.finalarchitecture.module.home.ui.adapter.WechatAdapter
 import com.zjl.finalarchitecture.module.home.viewmodel.WechatViewModel
 import com.zjl.finalarchitecture.utils.ext.handlePagingStatus
 import com.zy.multistatepage.MultiStateContainer
@@ -41,15 +42,12 @@ class WeChatFragment : BaseFragment<FragmentProjectBinding, WechatViewModel>(), 
     private var mWechatCategoryAdapter by autoCleared<ProjectCategoryAdapter>()
 
     /* 微信公众号详情列表 */
-    private var mWechatListAdapter by autoCleared<ProjectAdapter>()
+    private var mWechatListAdapter by autoCleared<WechatAdapter>()
 
     override fun initViewAndEvent(savedInstanceState: Bundle?) {
 
         // 将文章列表绑定到状态布局上
         articleStateContainer = mBinding.refreshLayout.bindMultiState()
-
-        // 下拉刷新
-        mBinding.refreshLayout.setOnRefreshListener(this)
 
         /**
          * 微信公众号分类 rv adapter
@@ -67,7 +65,7 @@ class WeChatFragment : BaseFragment<FragmentProjectBinding, WechatViewModel>(), 
         /**
          * 微信公众号详情列表 rv adapter
          */
-        mWechatListAdapter = ProjectAdapter()
+        mWechatListAdapter = WechatAdapter()
 
         // Item点击事件
         mWechatListAdapter.setOnItemClickListener { _, _, position ->

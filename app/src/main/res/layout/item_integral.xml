@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?colorSurface"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/txtCoinCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:includeFontPadding="false"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:textColor="@color/md_colorPrimary"
+        android:textSize="14sp"
+        tools:text="+31" />
+
+    <TextView
+        android:id="@+id/txtTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:includeFontPadding="false"
+        android:lineSpacingExtra="0dp"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/base_panda"
+        android:textSize="13sp"
+        tools:text="签到 积分10+21" />
+
+    <TextView
+        android:id="@+id/txtTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtTitle"
+        android:layout_marginTop="7dp"
+        android:includeFontPadding="false"
+        android:lineSpacingExtra="0dp"
+        android:textColor="@color/base_panda"
+        android:textSize="13sp"
+        tools:text="2019-08-31 00:03:16" />
+
+</RelativeLayout>

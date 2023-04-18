@@ -27,7 +27,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cl1"
                     android:layout_width="match_parent"
-                    android:layout_height="210dp"
+                    android:layout_height="180dp"
                     android:background="@drawable/change3"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -57,7 +57,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/guideline2"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.5"
+                        app:layout_constraintVertical_bias="0.6"
                         app:shapeAppearanceOverlay="@style/ShapeAppearance.Architecture.Circle" />
 
                     <TextView
@@ -65,7 +65,7 @@
                         style="@style/TextAppearance.Material3.TitleMedium"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
+                        android:layout_marginStart="13dp"
                         android:ellipsize="end"
                         android:maxLines="2"
                         android:textColor="?attr/colorOnPrimary"
@@ -114,29 +114,50 @@
                     <com.zjl.finalarchitecture.widget.SettingBar
                         android:id="@+id/sbIntegral"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
                         app:bar_leftText="@string/description_app_integral"
+                        android:layout_height="48dp"
+                        app:bar_leftSize="14sp"
+                        app:bar_rightSize="14sp"
+                        app:bar_leftColor="@color/base_panda"
                         app:bar_rightIcon="@drawable/arrows_right_ic" />
 
                     <com.zjl.finalarchitecture.widget.SettingBar
                         android:id="@+id/sbCollect"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
                         app:bar_leftText="@string/description_app_collect"
+                        android:layout_height="48dp"
+                        app:bar_leftSize="14sp"
+                        app:bar_rightSize="14sp"
+                        app:bar_leftColor="@color/base_panda"
                         app:bar_rightIcon="@drawable/arrows_right_ic" />
 
                     <com.zjl.finalarchitecture.widget.SettingBar
                         android:id="@+id/sbShare"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:bar_leftText="@string/description_app_share"
+                        app:bar_leftText="@string/description_app_share"  android:layout_height="48dp"
+                        app:bar_leftSize="14sp"
+                        app:bar_rightSize="14sp"
+                        app:bar_leftColor="@color/base_panda"
                         app:bar_rightIcon="@drawable/arrows_right_ic" />
 
                     <com.zjl.finalarchitecture.widget.SettingBar
                         android:id="@+id/sbReadRecord"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="48dp"
+                        app:bar_leftSize="14sp"
+                        app:bar_rightSize="14sp"
+                        app:bar_leftColor="@color/base_panda"
                         app:bar_leftText="@string/description_app_read_record"
+                        app:bar_rightIcon="@drawable/arrows_right_ic" />
+
+                    <com.zjl.finalarchitecture.widget.SettingBar
+                        android:id="@+id/sbReadLater"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        app:bar_leftSize="14sp"
+                        app:bar_rightSize="14sp"
+                        app:bar_leftColor="@color/base_panda"
+                        app:bar_leftText="@string/description_app_read_later"
                         app:bar_rightIcon="@drawable/arrows_right_ic" />
 
                 </LinearLayout>
@@ -151,32 +172,44 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/userSetting">
 
-                    <com.zjl.finalarchitecture.widget.SettingBar
-                        android:id="@+id/sbTheme"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:bar_leftText="@string/description_app_theme_change"
-                        app:bar_rightIcon="@drawable/arrows_right_ic" />
+<!--                    <com.zjl.finalarchitecture.widget.SettingBar-->
+<!--                        android:id="@+id/sbTheme"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="48dp"-->
+<!--                        app:bar_leftSize="14sp"-->
+<!--                        app:bar_rightSize="14sp"-->
+<!--                        app:bar_leftColor="@color/base_panda"-->
+<!--                        app:bar_leftText="@string/description_app_theme_change"-->
+<!--                        app:bar_rightIcon="@drawable/arrows_right_ic" />-->
 
                     <com.zjl.finalarchitecture.widget.SettingBar
                         android:id="@+id/sbOpenProject"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="48dp"
+                        app:bar_leftSize="14sp"
+                        app:bar_rightSize="14sp"
+                        app:bar_leftColor="@color/base_panda"
                         app:bar_leftText="@string/description_app_open_project"
                         app:bar_rightIcon="@drawable/arrows_right_ic" />
 
                     <com.zjl.finalarchitecture.widget.SettingBar
                         android:id="@+id/sbAboutWe"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="48dp"
+                        app:bar_leftSize="14sp"
+                        app:bar_rightSize="14sp"
+                        app:bar_leftColor="@color/base_panda"
                         app:bar_leftText="@string/description_app_about_we"
                         app:bar_rightIcon="@drawable/arrows_right_ic" />
 
                     <com.zjl.finalarchitecture.widget.SettingBar
-                        android:id="@+id/sbVersion"
+                        android:id="@+id/sbSystemSetting"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:bar_leftText="@string/description_app_version"
+                        android:layout_height="48dp"
+                        app:bar_leftSize="14sp"
+                        app:bar_rightSize="14sp"
+                        app:bar_leftColor="@color/base_panda"
+                        app:bar_leftText="@string/description_app_setting"
                         app:bar_rightIcon="@drawable/arrows_right_ic" />
                 </LinearLayout>
 

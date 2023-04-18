@@ -49,9 +49,6 @@ class ProjectFragment : BaseFragment<FragmentProjectBinding, ProjectViewModel>()
         // 将文章列表绑定到状态布局上
         articleStateContainer = mBinding.refreshLayout.bindMultiState()
 
-        // 下拉刷新
-        mBinding.refreshLayout.setOnRefreshListener(this)
-
         /**
          * 项目分类 rv adapter
          */

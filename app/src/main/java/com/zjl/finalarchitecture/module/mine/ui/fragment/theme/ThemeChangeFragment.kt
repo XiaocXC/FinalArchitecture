@@ -1,14 +1,11 @@
 package com.zjl.finalarchitecture.module.mine.ui.fragment.theme
 
 import android.os.Bundle
-import android.view.View
-import com.chad.library.adapter.base.BaseQuickAdapter
-import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.utils.findNavController
 import com.zjl.base.utils.launchAndCollectIn
 import com.zjl.finalarchitecture.databinding.FragmentThemeChangeBinding
-import com.zjl.finalarchitecture.module.mine.ui.fragment.theme.adapter.ThemeListAdapter
+import com.zjl.finalarchitecture.module.mine.ui.adapter.ThemeListAdapter
 import com.zjl.finalarchitecture.theme.FinalTheme
 import com.zjl.finalarchitecture.theme.ThemeManager
 

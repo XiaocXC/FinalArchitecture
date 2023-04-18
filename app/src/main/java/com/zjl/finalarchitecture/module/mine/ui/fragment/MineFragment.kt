@@ -28,12 +28,7 @@ class MineFragment : BaseFragment<FragmentMineBinding, MineViewModel>() {
 
     override fun initViewAndEvent(savedInstanceState: Bundle?) {
 
-//        val lp: ConstraintLayout.LayoutParams =
-//            mBinding.cl1.layoutParams as ConstraintLayout.LayoutParams
-//        mBinding.waveView.setOnWaveAnimationListener { y ->
-//            lp.setMargins(0, 0, 0, y.toInt() + 90)
-//            mBinding.cl1.layoutParams = lp
-//        }
+
 
         mBinding.ivUserPhoto.setOnClickListener {
             if (UserAuthDataSource.isLogin) {
@@ -63,15 +58,15 @@ class MineFragment : BaseFragment<FragmentMineBinding, MineViewModel>() {
 
         // 主题切换
 //        mBinding.sbTheme.visibility = View.GONE
-        mBinding.sbTheme.setOnClickListener {
-            findNavController().navigate(MainFragmentDirections.actionMainFragmentToThemeChangeFragment())
-        }
+//        mBinding.sbTheme.setOnClickListener {
+//            findNavController().navigate(MainFragmentDirections.actionMainFragmentToThemeChangeFragment())
+//        }
 
         // 作者
 //        mBinding.sbAboutWe.setRightText(R.string.me_app_author)
 
         // 当前版本
-        mBinding.sbVersion.setRightText(BuildConfig.VERSION_NAME)
+//        mBinding.sbVersion.setRightText(BuildConfig.VERSION_NAME)
     }
 
     override fun createObserver() {

@@ -6,6 +6,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.viewModels
 import com.blankj.utilcode.util.KeyboardUtils
+import com.blankj.utilcode.util.ResourceUtils
 import com.google.android.material.chip.Chip
 import com.google.android.material.transition.MaterialContainerTransform
 import com.gyf.immersionbar.ImmersionBar

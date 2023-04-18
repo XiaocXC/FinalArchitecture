@@ -32,8 +32,6 @@ class AskFragment: BaseFragment<FragmentAskBinding, AskViewModel>(), OnRefreshLo
     private var mArticleAdapter by autoCleared<ArticleAdapter>()
 
     override fun initViewAndEvent(savedInstanceState: Bundle?) {
-        // 下拉刷新
-        mBinding.refreshLayout.setOnRefreshListener(this)
 
         // 列表适配器
         mArticleAdapter = ArticleAdapter()

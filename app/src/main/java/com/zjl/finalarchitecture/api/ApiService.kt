@@ -5,7 +5,6 @@ import com.zjl.finalarchitecture.data.model.*
 import com.zjl.finalarchitecture.data.model.coin.CoinVO
 import com.zjl.finalarchitecture.data.model.user.CombineUserInfoVO
 import com.zjl.finalarchitecture.data.model.user.UserInfoVO
-import okhttp3.RequestBody
 import retrofit2.http.*
 
 /**
@@ -191,5 +190,12 @@ interface ApiService {
      */
     @GET("lg/coin/userinfo/json")
     suspend fun getUserCoinData(): ApiResult<CoinVO>
+
+    /**
+     * 获取个人积分获取列表
+     * page 1 开始
+     */
+    @GET("lg/coin/list/{page}/json")
+    suspend fun getCoinRecordList(@Path("page") page: Int): ApiResult<PageVO<CoinRecordVO>>
 
 }

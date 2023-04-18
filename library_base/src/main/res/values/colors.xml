@@ -239,7 +239,7 @@
     <color name="base_navy">#000080</color><!--海军色 -->
 
     <color name="base_chinese_red">#E60000</color><!--中国红 -->
-
+    <color name="base_color_white_a33">#54ffffff</color>
 
 
 </resources>

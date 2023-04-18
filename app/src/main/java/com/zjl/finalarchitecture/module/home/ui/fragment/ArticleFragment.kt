@@ -68,13 +68,6 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel>()
             findNavController().navigate(NavMainDirections.actionGlobalToWebFragment(mArticleAdapter.getItem(position)))
         }
 
-//        val mArticleAdapter2: ArticleAdapter by lazy { ArticleAdapter() }
-
-        // 加载更多
-//        mArticleAdapter.loadMoreModule.setOnLoadMoreListener {
-//            mViewModel.loadMore()
-//        }
-
         // 将BannerAdapter和ArticleAdapter整合为一个Adapter
         mBinding.rvArticle.adapter = mArticleAdapter
         // 分割线

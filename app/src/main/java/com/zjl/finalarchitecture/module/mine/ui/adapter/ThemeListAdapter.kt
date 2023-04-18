@@ -1,4 +1,4 @@
-package com.zjl.finalarchitecture.module.mine.ui.fragment.theme.adapter
+package com.zjl.finalarchitecture.module.mine.ui.adapter
 
 import android.widget.ImageView
 import coil.load
