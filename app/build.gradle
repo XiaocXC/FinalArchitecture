@@ -14,14 +14,16 @@ plugins {
 
 android {
     compileSdkVersion Versions.COMPILE_SDK
-    buildToolsVersion Versions.buildTools
+    buildToolsVersion Versions.BUILD_TOOLS
 
     defaultConfig {
         applicationId "com.zjl.finalarchitecture"
         minSdkVersion Versions.MIN_SDK
         targetSdkVersion Versions.TARGET_SDK
-        versionCode Versions.versionCode
-        versionName Versions.versionName
+        versionCode Versions.VERSION_CODE
+        versionName Versions.VERSION_NAME
+//        multiDexEnabled true
+        vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -37,9 +39,9 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled true //开启混淆
-            zipAlignEnabled true  //压缩优化
-            shrinkResources true  //移出无用资源
+            minifyEnabled false //开启混淆
+//            zipAlignEnabled true  //压缩优化
+//            shrinkResources false  //移出无用资源
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -67,6 +69,37 @@ android {
         viewBinding true
         dataBinding true
     }
+
+//    android.applicationVariants.all { variant ->
+//        def appName = "Final"
+//        def buildType = variant.buildType.name
+//        def createTime = new Date().format("YYYY-MM-dd_HH.mm")
+//        def releasePathFile = new File(project.rootDir.absolutePath + "/app/publish/${variant.buildType.name}")
+//        def debugPathFile = new File(project.rootDir.absolutePath + "/app/publish/${variant.buildType.name}")
+//        def originalPath = variant.getPackageApplicationProvider().get().outputDirectory.getAsFile().get().getPath()
+//        variant.assembleProvider.get().doLast {
+//            // Release包命名规则是：APP名_创建时间_构建类型_版本号.apk
+////            fileName = "${appName}_${createTime}_${buildType}_${defaultConfig.versionCode}.apk"
+//            // 将名字打印出来
+////            println "文件名 -> : ${fileName}"
+//
+//            if (buildType == "release") {
+//                copy {
+//                    from originalPath
+//                    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+//                    include '**/*.apk'
+//                    into releasePathFile
+//                }
+//            } else {
+//                copy {
+//                    from originalPath
+//                    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+//                    include '**/*.apk'
+//                    into debugPathFile
+//                }
+//            }
+//        }
+//    }
 }
 
 dependencies {
@@ -79,7 +112,7 @@ dependencies {
     testImplementation(Libs.JUNIT)
     androidTestImplementation(Libs.JUNIT_EXT)
     androidTestImplementation(Libs.ESPRESSO_CORE)
-    
+
     implementation(Libs.VERTICAL_TAB_LAYOUT)
 
     //轮播图
