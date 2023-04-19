@@ -17,7 +17,7 @@ import com.zjl.base.ui.state.ErrorState
 import com.zjl.base.ui.state.LoadingState
 import com.zjl.base.utils.ext.isNightMode
 import com.zjl.base.utils.launchAndCollectIn
-import com.zjl.lib_base.R
+import com.zjl.base.R
 import com.zjl.library_trace.base.ITrackModel
 import com.zjl.library_trace.base.TrackParams
 import com.zjl.library_trace.ext.trackModel

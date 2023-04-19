@@ -1,7 +1,7 @@
 package com.zjl.base.viewmodel
 
 import android.util.Log
-import com.zjl.lib_base.BuildConfig
+import com.zjl.base.BuildConfig
 import kotlinx.coroutines.*
 import java.io.Closeable
 import kotlin.coroutines.CoroutineContext

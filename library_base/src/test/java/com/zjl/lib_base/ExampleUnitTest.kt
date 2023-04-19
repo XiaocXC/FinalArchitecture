@@ -1,4 +1,4 @@
-package com.zjl.lib_base
+package com.zjl.base
 
 import org.junit.Test
 

@@ -14,7 +14,7 @@ public class Versions {
     /**
      * Android SDK 构建工具版本
      */
-    public static final String BUILD_TOOLS = "32.0.0";
+    public static final String BUILD_TOOLS = "33.0.0";
 
     /**
      * 版本号
@@ -31,5 +31,5 @@ public class Versions {
     // Gradle插件版本
     public static final String ANDROID_GRADLE_PLUGIN = "7.1.2";
     // Kotlin版本
-    public static final String KOTLIN = "1.6.10";
+    public static final String KOTLIN = "1.6.20";
 }

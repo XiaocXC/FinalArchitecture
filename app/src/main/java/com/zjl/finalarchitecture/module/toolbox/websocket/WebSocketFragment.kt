@@ -3,7 +3,7 @@ package com.zjl.finalarchitecture.module.toolbox.websocket
 import android.os.Bundle
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.finalarchitecture.databinding.FragmentWebsocketBinding
-import com.zjl.lib_base.BuildConfig
+import com.zjl.base.BuildConfig
 import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
 import java.util.concurrent.TimeUnit
@@ -31,6 +31,7 @@ class WebSocketFragment: BaseFragment<FragmentWebsocketBinding, WebSocketViewMod
     }
 
     override fun initViewAndEvent(savedInstanceState: Bundle?) {
+
         /**
          * wss://yjgb.yd-data.com/connection/connection
             userType, APP

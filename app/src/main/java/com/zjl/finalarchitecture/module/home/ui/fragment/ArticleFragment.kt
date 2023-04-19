@@ -1,5 +1,6 @@
 package com.zjl.finalarchitecture.module.home.ui.fragment
 
+import android.graphics.Bitmap
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.transition.MaterialSharedAxis
@@ -20,7 +21,9 @@ import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleBannerWrapperAdap
 import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleDividerItemDecoration
 import com.zjl.finalarchitecture.module.home.ui.adapter.BannerVOWrapper
 import com.zjl.finalarchitecture.module.home.viewmodel.ArticleViewModel
+import com.zjl.finalarchitecture.utils.ext.bitmap.toIntArray
 import com.zjl.finalarchitecture.utils.ext.handlePagingStatus
+import java.io.File
 
 /**
  * @description:首页文章
@@ -105,6 +108,8 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel>()
                 uiRootState,
                 mBinding.refreshLayout
             ) {
+                var bitmap: Bitmap? = null
+                bitmap?.toIntArray()
                 retryAll()
             }
         }

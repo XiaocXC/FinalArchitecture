@@ -13,7 +13,7 @@ import com.zjl.base.ui.state.ErrorState
 import com.zjl.base.ui.state.LoadingState
 import com.zjl.base.utils.ext.isNightMode
 import com.zjl.base.utils.launchAndCollectIn
-import com.zjl.lib_base.R
+import com.zjl.base.R
 import com.zjl.library_trace.base.IPageTrackNode
 import com.zjl.library_trace.base.ITrackNode
 import com.zjl.library_trace.base.TrackParams

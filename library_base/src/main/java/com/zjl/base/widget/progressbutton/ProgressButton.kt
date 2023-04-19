@@ -10,7 +10,7 @@ import com.zjl.base.widget.progressbutton.ProgressButton.Config.Companion.GRAVIT
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.progressindicator.CircularProgressIndicatorSpec
 import com.google.android.material.progressindicator.IndeterminateDrawable
-import com.zjl.lib_base.R
+import com.zjl.base.R
 
 /**
  * @author Xiaoc

@@ -9,13 +9,13 @@ package config;
 public class Libs {
 
     // Android-Core库
-    public static final String CORE_KTX = "androidx.core:core-ktx:1.7.0";
+    public static final String CORE_KTX = "androidx.core:core-ktx:1.6.0";
     // Android-Appcompat兼容库
-    public static final String APPCOMPAT = "androidx.appcompat:appcompat:1.4.1";
+    public static final String APPCOMPAT = "androidx.appcompat:appcompat:1.4.2";
     // 协程库
-//    public static final String KOTLIN_VERSION = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1";
+    public static final String KOTLIN_VERSION = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:" + Versions.KOTLIN;
     // 协程库
-    public static final String KOTLIN_COROUTINES = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1";
+    public static final String KOTLIN_COROUTINES = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2";
     // 约束布局
     public static final String CONSTRAINT_LAYOUT = "androidx.constraintlayout:constraintlayout:2.1.3";
     // Fragment-Ktx
@@ -23,7 +23,7 @@ public class Libs {
     // Activity-Ktx
     public static final String ACTIVITY_KTX = "androidx.activity:activity-ktx:1.4.0";
     // Material Design
-    public static final String MATERIAL_DESIGN = "com.google.android.material:material:1.8.0";
+    public static final String MATERIAL_DESIGN = "com.google.android.material:material:1.6.1";
 
     private static final String LIFECYCLE_VERSION = "2.4.1";
     // ViewModel-Ktx

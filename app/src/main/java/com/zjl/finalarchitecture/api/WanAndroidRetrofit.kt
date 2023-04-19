@@ -6,7 +6,7 @@ import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersisto
 import com.zjl.base.globalContext
 import com.zjl.finalarchitecture.api.converter.kotlin.WanAndroidSerializer
 import com.zjl.library_network.converter.kotlin.SerializerFactory
-import com.zjl.lib_base.BuildConfig
+import com.zjl.base.BuildConfig
 import com.zjl.library_network.calladapter.ApiResultCallAdapterFactory
 import com.zjl.finalarchitecture.api.interceptor.WanAndroidParseInterceptor
 import com.zjl.library_network.utils.globalJson

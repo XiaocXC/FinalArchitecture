@@ -1,4 +1,4 @@
-package com.zjl.lib_base
+package com.zjl.base
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.zjl.lib_base.test", appContext.packageName)
+        assertEquals("com.zjl.base.test", appContext.packageName)
     }
 }

@@ -2,7 +2,7 @@ package com.zjl.base
 
 import android.app.Application
 import com.tencent.mmkv.MMKV
-import com.zjl.lib_base.BuildConfig
+import com.zjl.base.BuildConfig
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -21,7 +21,7 @@ import com.scwang.smart.refresh.footer.ClassicsFooter
 import com.scwang.smart.refresh.header.ClassicsHeader
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.api.RefreshLayout
-import com.zjl.lib_base.R
+import com.zjl.base.R
 import com.zjl.library_skin.SkinManager
 import com.zjl.library_skin.inflater.MaterialDesignViewInflater
 import com.zjl.library_skin.provider.SkinProvider

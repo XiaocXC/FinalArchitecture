@@ -1,7 +1,7 @@
 package com.zjl.base.error
 
 import androidx.annotation.StringRes
-import com.zjl.lib_base.R
+import com.zjl.base.R
 
 /**
  * @author Xiaoc

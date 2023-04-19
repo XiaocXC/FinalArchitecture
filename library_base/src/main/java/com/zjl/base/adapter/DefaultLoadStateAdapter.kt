@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.paging.LoadState
 import androidx.paging.LoadStateAdapter
-import com.zjl.lib_base.R
-import com.zjl.lib_base.databinding.BaseItemDefaultLoadStateBinding
+import com.zjl.base.R
+import com.zjl.base.databinding.BaseItemDefaultLoadStateBinding
 import timber.log.Timber
 
 /**

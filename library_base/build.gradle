@@ -17,6 +17,7 @@ android{
 dependencies {
     api(project(":library_skin"))
     api(project(":library_trace"))
+    api(Libs.KOTLIN_VERSION)
     api(Libs.CORE_KTX)
     api(Libs.APPCOMPAT)
 

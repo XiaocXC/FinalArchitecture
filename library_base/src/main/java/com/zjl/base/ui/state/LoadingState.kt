@@ -4,8 +4,8 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import androidx.annotation.ColorInt
-import com.zjl.lib_base.R
-import com.zjl.lib_base.databinding.BaseUiStateLoadingViewBinding
+import com.zjl.base.R
+import com.zjl.base.databinding.BaseUiStateLoadingViewBinding
 import com.zy.multistatepage.MultiState
 import com.zy.multistatepage.MultiStateContainer
 

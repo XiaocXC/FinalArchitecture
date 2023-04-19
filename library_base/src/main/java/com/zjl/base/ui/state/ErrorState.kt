@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
-import com.zjl.lib_base.R
-import com.zjl.lib_base.databinding.BaseUiStateErrorEmptyViewBinding
+import com.zjl.base.R
+import com.zjl.base.databinding.BaseUiStateErrorEmptyViewBinding
 import com.zy.multistatepage.MultiState
 import com.zy.multistatepage.MultiStateContainer
 
