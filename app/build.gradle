@@ -70,36 +70,36 @@ android {
         dataBinding true
     }
 
-//    android.applicationVariants.all { variant ->
-//        def appName = "Final"
-//        def buildType = variant.buildType.name
-//        def createTime = new Date().format("YYYY-MM-dd_HH.mm")
-//        def releasePathFile = new File(project.rootDir.absolutePath + "/app/publish/${variant.buildType.name}")
-//        def debugPathFile = new File(project.rootDir.absolutePath + "/app/publish/${variant.buildType.name}")
-//        def originalPath = variant.getPackageApplicationProvider().get().outputDirectory.getAsFile().get().getPath()
-//        variant.assembleProvider.get().doLast {
-//            // Release包命名规则是：APP名_创建时间_构建类型_版本号.apk
-////            fileName = "${appName}_${createTime}_${buildType}_${defaultConfig.versionCode}.apk"
-//            // 将名字打印出来
-////            println "文件名 -> : ${fileName}"
-//
-//            if (buildType == "release") {
-//                copy {
-//                    from originalPath
-//                    duplicatesStrategy = DuplicatesStrategy.INCLUDE
-//                    include '**/*.apk'
-//                    into releasePathFile
-//                }
-//            } else {
-//                copy {
-//                    from originalPath
-//                    duplicatesStrategy = DuplicatesStrategy.INCLUDE
-//                    include '**/*.apk'
-//                    into debugPathFile
-//                }
-//            }
-//        }
-//    }
+    android.applicationVariants.all { variant ->
+        def appName = "Final"
+        def buildType = variant.buildType.name
+        def createTime = new Date().format("YYYY-MM-dd_HH.mm")
+        def releasePathFile = new File(project.rootDir.absolutePath + "/app/publish/${variant.buildType.name}")
+        def debugPathFile = new File(project.rootDir.absolutePath + "/app/publish/${variant.buildType.name}")
+        def originalPath = variant.getPackageApplicationProvider().get().outputDirectory.getAsFile().get().getPath()
+        variant.assembleProvider.get().doLast {
+            // Release包命名规则是：APP名_创建时间_构建类型_版本号.apk
+//            fileName = "${appName}_${createTime}_${buildType}_${defaultConfig.versionCode}.apk"
+            // 将名字打印出来
+//            println "文件名 -> : ${fileName}"
+
+            if (buildType == "release") {
+                copy {
+                    from originalPath
+                    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+                    include '**/*.apk'
+                    into releasePathFile
+                }
+            } else {
+                copy {
+                    from originalPath
+                    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+                    include '**/*.apk'
+                    into debugPathFile
+                }
+            }
+        }
+    }
 }
 
 dependencies {

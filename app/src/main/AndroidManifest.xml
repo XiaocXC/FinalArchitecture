@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.zjl.finalarchitecture">
 
     <application
         android:name=".FinalArchitectureApplication"
+        tools:ignore="Instantiatable"
         android:icon="@mipmap/logo"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/logo"
@@ -23,7 +25,7 @@
 
         <activity
             android:name=".module.main.ui.activity.MainActivity"
-            android:exported="true" />
+            android:exported="true"/>
 
 
     </application>
