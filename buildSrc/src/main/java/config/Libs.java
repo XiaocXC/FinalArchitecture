@@ -9,23 +9,23 @@ package config;
 public class Libs {
 
     // Android-Core库
-    public static final String CORE_KTX = "androidx.core:core-ktx:1.6.0";
+    public static final String CORE_KTX = "androidx.core:core-ktx:1.8.0";
     // Android-Appcompat兼容库
     public static final String APPCOMPAT = "androidx.appcompat:appcompat:1.4.2";
     // 协程库
-    public static final String KOTLIN_VERSION = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:" + Versions.KOTLIN;
+//    public static final String KOTLIN_VERSION = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:" + Versions.KOTLIN;
     // 协程库
-    public static final String KOTLIN_COROUTINES = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2";
+    public static final String KOTLIN_COROUTINES = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4";
     // 约束布局
-    public static final String CONSTRAINT_LAYOUT = "androidx.constraintlayout:constraintlayout:2.1.3";
+    public static final String CONSTRAINT_LAYOUT = "androidx.constraintlayout:constraintlayout:2.1.4";
     // Fragment-Ktx
-    public static final String FRAGMENT_KTX = "androidx.fragment:fragment-ktx:1.4.1";
+    public static final String FRAGMENT_KTX = "androidx.fragment:fragment-ktx:1.5.0";
     // Activity-Ktx
-    public static final String ACTIVITY_KTX = "androidx.activity:activity-ktx:1.4.0";
+    public static final String ACTIVITY_KTX = "androidx.activity:activity-ktx:1.5.0";
     // Material Design
     public static final String MATERIAL_DESIGN = "com.google.android.material:material:1.6.1";
 
-    private static final String LIFECYCLE_VERSION = "2.4.1";
+    private static final String LIFECYCLE_VERSION = "2.5.0";
     // ViewModel-Ktx
     public static final String VIEWMODEL_KTX = "androidx.lifecycle:lifecycle-viewmodel-ktx:" + LIFECYCLE_VERSION;
     // LIVEDATA-Ktx
@@ -43,7 +43,7 @@ public class Libs {
     // smooth-navigation
     public static final String SMOOTH_NAVIGATION = "com.kunminx.arch:smooth-navigation:4.0.0";
 
-    private static final String COIL_VERSION = "2.1.0";
+    private static final String COIL_VERSION = "2.3.0";
     // Coil图片加载库
     public static final String COIL = "io.coil-kt:coil:" + COIL_VERSION;
     // Coil Gif支持
@@ -67,11 +67,11 @@ public class Libs {
     // MultiStatePage状态库
     public static final String MULTI_STATE_PAGE = "com.github.Zhao-Yan-Yan:MultiStatePage:2.0.5";
     // AutoSize库
-    public static final String AUTO_SIZE = "me.jessyan:autosize:1.2.1";
+    public static final String AUTO_SIZE = "com.github.JessYanCoding:AndroidAutoSize:v1.2.1";
     // MMKV
     public static final String MMKV = "com.tencent:mmkv:1.2.13";
     // AndroidUtils
-    public static final String ANDROID_UTIL_CODEX = "com.blankj:utilcodex:1.31.0";
+    public static final String ANDROID_UTIL_CODEX = "com.blankj:utilcodex:1.31.1";
     // SwipeRefresh
     public static final String SWIPE_REFRESH = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0";
 
@@ -97,16 +97,16 @@ public class Libs {
     public static final String DIALOG_X = "com.kongzue.dialogx:DialogX:0.0.47";
 
     // AGENT_CORE
-    public static final String AGENT_WEB_CORE = "com.github.Justson.AgentWeb:agentweb-core:v5.0.0-alpha.1-androidx";
+    public static final String AGENT_WEB_CORE = "com.github.Justson.AgentWeb:agentweb-core:v5.0.6-androidx";
     // AGENT 文件选择器
-    public static final String AGENT_WEB_FILE_CHOOSER = "com.github.Justson.AgentWeb:agentweb-filechooser:v5.0.0-alpha.1-androidx";
+    public static final String AGENT_WEB_FILE_CHOOSER = "com.github.Justson.AgentWeb:agentweb-filechooser:v5.0.6-androidx";
     // AGENT 下载器
-    public static final String AGENT_WEB_DOWNLOADER = "com.github.Justson:Downloader:v5.0.0-androidx";
+    public static final String AGENT_WEB_DOWNLOADER = "com.github.Justson:Downloader:v5.0.4-androidx";
 
     // Banner
-    public static final String BANNER_VIEWPAGER = "com.github.zhpanvip:bannerviewpager:3.5.5";
+    public static final String BANNER_VIEWPAGER = "com.github.zhpanvip:bannerviewpager:3.5.11";
     // ShapeView
-    public static final String SHAPE_VIEW = "com.github.getActivity:ShapeView:6.2";
+    public static final String SHAPE_VIEW = "com.github.getActivity:ShapeView:8.5";
     // DOCUMENT_FILE 文件树扩展
     public static final String DOCUMENT_FILE = "androidx.documentfile:documentfile:1.0.1";
 
@@ -115,7 +115,7 @@ public class Libs {
     // OKHTTP
     public static final String OKHTTP = "com.squareup.okhttp3:okhttp:4.9.3";
     // Kotlin 序列化
-    public static final String KOTLIN_SERIALIZATION = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2";
+    public static final String KOTLIN_SERIALIZATION = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3";
     // OkHttp日志记录拦截器
     public static final String OKHTTP_LOGGING = "com.squareup.okhttp3:logging-interceptor:4.9.3";
 
@@ -126,7 +126,7 @@ public class Libs {
     public static final String LEGACY_SUPPORT = "androidx.legacy:legacy-support-v4:1.0.0";
 
     // Media3
-    public static final String MEDIA3_VERSION = "1.0.0-beta02";
+    public static final String MEDIA3_VERSION = "1.0.1";
     // Media3-Session会话
     public static final String MEDIA3_SESSION = "androidx.media3:media3-session:" + MEDIA3_VERSION;
     // Media3-ExoPlayer播放器

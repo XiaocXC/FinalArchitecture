@@ -14,7 +14,7 @@ plugins {
 
 android {
     compileSdkVersion Versions.COMPILE_SDK
-    buildToolsVersion Versions.BUILD_TOOLS
+//    buildToolsVersion Versions.BUILD_TOOLS
 
     defaultConfig {
         applicationId "com.zjl.finalarchitecture"
@@ -54,15 +54,15 @@ android {
         jvmTarget = '11'
     }
 
-    dexOptions {
-        javaMaxHeapSize "4g"
-        jumboMode = true
-        preDexLibraries = false
-        additionalParameters = [
-                '--multi-dex',//多分包
-                '--set-max-idx-number=60000'//每个包内方法数上限
-        ]
-    }
+//    dexOptions {
+//        javaMaxHeapSize "4g"
+//        jumboMode = true
+//        preDexLibraries = false
+//        additionalParameters = [
+//                '--multi-dex',//多分包
+//                '--set-max-idx-number=60000'//每个包内方法数上限
+//        ]
+//    }
 
     // 开启dataBinding数据绑定和viewBinding视图绑定
     buildFeatures {

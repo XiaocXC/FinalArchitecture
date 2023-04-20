@@ -17,7 +17,7 @@ android{
 dependencies {
     api(project(":library_skin"))
     api(project(":library_trace"))
-    api(Libs.KOTLIN_VERSION)
+//    api(Libs.KOTLIN_VERSION)
     api(Libs.CORE_KTX)
     api(Libs.APPCOMPAT)
 
@@ -72,7 +72,7 @@ dependencies {
 
     api(Libs.ANDROID_UTIL_CODEX)
 
-    api(Libs.SWIPE_REFRESH)
+//    api(Libs.SWIPE_REFRESH)
 
     api(Libs.SMART_REFRESH)
     api(Libs.SMART_REFRESH_HEADER_CLASSICS)
