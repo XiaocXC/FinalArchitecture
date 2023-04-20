@@ -48,7 +48,7 @@ val globalCoroutineScope by lazy {
  * 这是一个基础Application类，它提供了基本的初始化SDK功能
  * 并且提供了公共的全局公用ViewModel的内容
  */
-open class BaseApplication: Application(), ImageLoaderFactory, ViewModelStoreOwner {
+open class BaseApplication: Application(), ImageLoaderFactory {
 
 
     companion object {
@@ -99,13 +99,13 @@ open class BaseApplication: Application(), ImageLoaderFactory, ViewModelStoreOwn
      * 效果类似EventBus
      */
     private var mFactory: ViewModelProvider.Factory? = null
-    private lateinit var mAppViewModelStore: ViewModelStore
+//    private lateinit var mAppViewModelStore: ViewModelStore
 
     @CallSuper
     override fun onCreate() {
         super.onCreate()
         globalApplication = this
-        mAppViewModelStore = ViewModelStore()
+//        mAppViewModelStore = ViewModelStore()
 
         initSDKInternal(this)
 
@@ -130,23 +130,23 @@ open class BaseApplication: Application(), ImageLoaderFactory, ViewModelStoreOwn
             .build()
     }
 
-    /**
-     * 获取一个全局的ViewModel
-     */
-    fun getAppViewModelProvider(): ViewModelProvider {
-        return ViewModelProvider(this, this.getAppFactory())
-    }
+//    /**
+//     * 获取一个全局的ViewModel
+//     */
+//    fun getAppViewModelProvider(): ViewModelProvider {
+//        return ViewModelProvider(this, this.getAppFactory())
+//    }
+//
+//    override fun getViewModelStore(): ViewModelStore {
+//        return mAppViewModelStore
+//    }
 
-    override fun getViewModelStore(): ViewModelStore {
-        return mAppViewModelStore
-    }
-
-    private fun getAppFactory(): ViewModelProvider.Factory {
-        if (mFactory == null) {
-            mFactory = ViewModelProvider.AndroidViewModelFactory.getInstance(this)
-        }
-        return mFactory as ViewModelProvider.Factory
-    }
+//    private fun getAppFactory(): ViewModelProvider.Factory {
+//        if (mFactory == null) {
+//            mFactory = ViewModelProvider.AndroidViewModelFactory.getInstance(this)
+//        }
+//        return mFactory as ViewModelProvider.Factory
+//    }
 
 
 }

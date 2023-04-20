@@ -1,4 +1,4 @@
-package com.zjl.myapplication
+package com.zjl.library_network
 
 import com.zjl.library_network.utils.globalJson
 import kotlinx.serialization.Serializable
@@ -7,7 +7,6 @@ import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.serializer
 import org.junit.Test
 
-import org.junit.Assert.*
 import kotlin.reflect.typeOf
 
 /**

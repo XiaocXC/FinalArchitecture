@@ -126,7 +126,7 @@ public class Libs {
     public static final String LEGACY_SUPPORT = "androidx.legacy:legacy-support-v4:1.0.0";
 
     // Media3
-    public static final String MEDIA3_VERSION = "1.0.1";
+    public static final String MEDIA3_VERSION = "1.0.0-rc01";
     // Media3-Session会话
     public static final String MEDIA3_SESSION = "androidx.media3:media3-session:" + MEDIA3_VERSION;
     // Media3-ExoPlayer播放器

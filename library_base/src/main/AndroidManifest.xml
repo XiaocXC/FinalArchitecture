@@ -9,8 +9,7 @@
 
     <application
         android:networkSecurityConfig="@xml/base_network_security_config"
-        android:resizeableActivity="true"
-        tools:targetApi="n">
+        android:resizeableActivity="true">
 
         <!--适配华为（huawei）刘海屏-->
         <meta-data

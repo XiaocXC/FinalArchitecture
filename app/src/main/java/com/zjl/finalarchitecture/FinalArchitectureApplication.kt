@@ -35,7 +35,7 @@ class FinalArchitectureApplication: BaseApplication() {
         super.onCreate()
 
         // 初始化全局事件ViewModel
-        getAppViewModelProvider()[AppConfigViewModel::class.java]
+//        getAppViewModelProvider()[AppConfigViewModel::class.java]
 
         Tracker.registerProvider(FileLogProvider(applicationContext, globalCoroutineScope))
     }

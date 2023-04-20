@@ -1,4 +1,4 @@
-package com.zjl.myapplication
+package com.zjl.library_network
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
