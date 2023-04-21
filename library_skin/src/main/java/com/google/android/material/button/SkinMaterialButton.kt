@@ -32,8 +32,8 @@ class SkinMaterialButton @JvmOverloads constructor(
         skinMaterialTextViewHelper.onSetTextAppearance(context, resId)
     }
 
-    override fun setTextAppearance(context: Context, resId: Int) {
-        super.setTextAppearance(context, resId)
-        skinMaterialTextViewHelper.onSetTextAppearance(context, resId)
-    }
+//    override fun setTextAppearance(context: Context, resId: Int) {
+//        super.setTextAppearance(context, resId)
+//        skinMaterialTextViewHelper.onSetTextAppearance(context, resId)
+//    }
 }

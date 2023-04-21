@@ -23,8 +23,7 @@ class SkinTabLayout @JvmOverloads constructor(
             tabIndicatorColorResId = ta.getResourceId(R.styleable.TabLayout_tabIndicatorColor, View.NO_ID)
 
             var a = context.obtainStyledAttributes(attr, R.styleable.AppCompatTextView, defStyleAttr, 0)
-            var ap = 0
-            ap = a.getResourceId(R.styleable.AppCompatTextView_android_textAppearance, View.NO_ID)
+            val ap =  a.getResourceId(R.styleable.AppCompatTextView_android_textAppearance, View.NO_ID)
             a.recycle()
 
             // 先检查style里面是否默认存在textColor等属性

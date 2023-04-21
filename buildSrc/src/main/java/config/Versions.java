@@ -31,5 +31,5 @@ public class Versions {
     // Gradle插件版本
     public static final String ANDROID_GRADLE_PLUGIN = "7.2.2";
     // Kotlin版本
-    public static final String KOTLIN = "1.8.20";
+    public static final String KOTLIN = "1.8.10";
 }

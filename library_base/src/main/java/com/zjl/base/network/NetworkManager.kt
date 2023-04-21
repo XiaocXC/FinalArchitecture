@@ -3,14 +3,12 @@ package com.zjl.base.network
 import android.content.Context
 import android.net.*
 import android.os.Build
-import android.os.Looper
 import android.util.Log
 import androidx.annotation.IntDef
 import androidx.core.net.ConnectivityManagerCompat
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import timber.log.Timber
 
 /**
  * @author Xiaoc
@@ -61,18 +59,18 @@ object NetworkManager {
          */
         override fun onLost(network: Network) {
             super.onLost(network)
-            Log.i("NetworkManager", "onLost ---$network")
+            Timber.i("onLost ---$network")
 
             // 在 Android N 以后使用默认网络进行监听，策略不一样
             // Android N 以后我们直接使用回调回来的最新网络状态
             // 在 Android N 以前我们需要用一个列表存储起来判断当前默认网络是不是已经没有了，代表无网络状态
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 availableNetworkStates.clear()
                 setNetworkState(NO_NETWORK)
             } else {
                 availableNetworkStates.remove(network.toString())
 
-                if(availableNetworkStates.isEmpty()){
+                if (availableNetworkStates.isEmpty()) {
                     setNetworkState(NO_NETWORK)
                 }
             }
@@ -81,7 +79,7 @@ object NetworkManager {
 
         override fun onUnavailable() {
             super.onUnavailable()
-            Log.i("NetworkManager", "onUnavailable")
+            Timber.i("onUnavailable")
 
             availableNetworkStates.clear()
         }
@@ -91,7 +89,7 @@ object NetworkManager {
          */
         override fun onAvailable(network: Network) {
             super.onAvailable(network)
-            Log.i("NetworkManager", "onAvailable ---$network")
+            Timber.i("onAvailable ---$network")
 
             availableNetworkStates.add(network.toString())
         }
@@ -105,7 +103,7 @@ object NetworkManager {
             networkCapabilities: NetworkCapabilities
         ) {
             super.onCapabilitiesChanged(network, networkCapabilities)
-            Log.i("NetworkManager", "onCapabilitiesChanged $network --- $networkCapabilities")
+            Timber.i("onCapabilitiesChanged $network --- $networkCapabilities")
 
             val networkStatus = getNetworkInner(networkCapabilities)
             setNetworkState(networkStatus)
@@ -264,9 +262,9 @@ object NetworkManager {
         }
     }
 
-    private fun setNetworkState(@NetworkStatus state: Int){
-        Log.i("NetworkManager", "NetworkStatus Changed --- $state -- ${getNetworkStateName(state)}")
-        if(state == _networkState.value){
+    private fun setNetworkState(@NetworkStatus state: Int) {
+        Timber.i("NetworkStatus Changed --- " + state + " -- " + getNetworkStateName(state))
+        if (state == _networkState.value) {
             return
         }
         _networkState.value = state

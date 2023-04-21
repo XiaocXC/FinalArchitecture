@@ -25,8 +25,7 @@ open class SkinMaterialTextViewHelper(
 
     fun loadFromAttributes(attr: AttributeSet?, defStyleAttr: Int){
         var ta = view.context.obtainStyledAttributes(attr, R.styleable.AppCompatTextView, defStyleAttr, 0)
-        var ap = 0
-        ap = ta.getResourceId(R.styleable.AppCompatTextView_android_textAppearance, View.NO_ID)
+        val ap = ta.getResourceId(R.styleable.AppCompatTextView_android_textAppearance, View.NO_ID)
 
         if(ta.hasValue(R.styleable.AppCompatTextHelper_android_drawableLeft)){
             drawableStartResId = ta.getResourceId(R.styleable.AppCompatTextHelper_android_drawableLeft, View.NO_ID)

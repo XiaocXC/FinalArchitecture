@@ -33,8 +33,7 @@ internal object MaterialColorHelper {
         var textColorResId = 0
 
         var ta = context.obtainStyledAttributes(attributeSet, R.styleable.AppCompatTextView, android.R.attr.textViewStyle, 0)
-        var ap = 0
-        ap = ta.getResourceId(R.styleable.AppCompatTextView_android_textAppearance, 0)
+        val ap = ta.getResourceId(R.styleable.AppCompatTextView_android_textAppearance, 0)
         ta.recycle()
 
         // 先检查style里面是否默认存在textColor等属性
