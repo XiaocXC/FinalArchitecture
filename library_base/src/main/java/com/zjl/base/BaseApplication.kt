@@ -10,8 +10,6 @@ import android.content.Context
 import android.os.Build
 import androidx.annotation.CallSuper
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelStore
-import androidx.lifecycle.ViewModelStoreOwner
 import coil.ImageLoader
 import coil.ImageLoaderFactory
 import coil.decode.GifDecoder

@@ -70,23 +70,23 @@ android {
         dataBinding true
     }
 
-    lintOptions {
-        //禁用掉丢失多国语言的错误提示
-        disable 'MissingTranslation'
-        //禁用掉manifest仅支持竖屏的错误提示
-        disable 'LockedOrientationActivity'
-        //禁用掉代码setText必须使用string res的警告
-        disable 'SetTextI18n'
-        //禁用掉xml的text必须使用string res的警告
-        disable 'HardcodedText'
-        //禁用掉xml的ImageView必须添加描述的警告
-        disable 'ContentDescription'
-        //禁用掉text使用dp的警告
-        disable 'SpUsage'
-        //主要的就是这句代码
-        checkReleaseBuilds false
-        abortOnError false
-    }
+//    lintOptions {
+//        //禁用掉丢失多国语言的错误提示
+//        disable 'MissingTranslation'
+//        //禁用掉manifest仅支持竖屏的错误提示
+//        disable 'LockedOrientationActivity'
+//        //禁用掉代码setText必须使用string res的警告
+//        disable 'SetTextI18n'
+//        //禁用掉xml的text必须使用string res的警告
+//        disable 'HardcodedText'
+//        //禁用掉xml的ImageView必须添加描述的警告
+//        disable 'ContentDescription'
+//        //禁用掉text使用dp的警告
+//        disable 'SpUsage'
+//        //主要的就是这句代码
+//        checkReleaseBuilds false
+//        abortOnError false
+//    }
 
     android.applicationVariants.all { variant ->
         def appName = "Final"
@@ -121,7 +121,7 @@ android {
 }
 
 dependencies {
-    implementation(Libs.LEGACY_SUPPORT)
+//    implementation(Libs.LEGACY_SUPPORT)
 
     implementation project(':library_base')
     implementation project(':library_network')

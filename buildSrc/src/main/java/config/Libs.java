@@ -13,19 +13,19 @@ public class Libs {
     // Android-Appcompat兼容库
     public static final String APPCOMPAT = "androidx.appcompat:appcompat:1.4.2";
     // 协程库
-//    public static final String KOTLIN_VERSION = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:" + Versions.KOTLIN;
+    public static final String KOTLIN_VERSION = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:" + Versions.KOTLIN;
     // 协程库
     public static final String KOTLIN_COROUTINES = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4";
     // 约束布局
     public static final String CONSTRAINT_LAYOUT = "androidx.constraintlayout:constraintlayout:2.1.4";
     // Fragment-Ktx
-    public static final String FRAGMENT_KTX = "androidx.fragment:fragment-ktx:1.5.0";
+    public static final String FRAGMENT_KTX = "androidx.fragment:fragment-ktx:1.5.1";
     // Activity-Ktx
-    public static final String ACTIVITY_KTX = "androidx.activity:activity-ktx:1.5.0";
+    public static final String ACTIVITY_KTX = "androidx.activity:activity-ktx:1.5.1";
     // Material Design
     public static final String MATERIAL_DESIGN = "com.google.android.material:material:1.6.1";
 
-    private static final String LIFECYCLE_VERSION = "2.5.0";
+    private static final String LIFECYCLE_VERSION = "2.5.1";
     // ViewModel-Ktx
     public static final String VIEWMODEL_KTX = "androidx.lifecycle:lifecycle-viewmodel-ktx:" + LIFECYCLE_VERSION;
     // LIVEDATA-Ktx
@@ -43,7 +43,7 @@ public class Libs {
     // smooth-navigation
     public static final String SMOOTH_NAVIGATION = "com.kunminx.arch:smooth-navigation:4.0.0";
 
-    private static final String COIL_VERSION = "2.3.0";
+    private static final String COIL_VERSION = "2.2.0";
     // Coil图片加载库
     public static final String COIL = "io.coil-kt:coil:" + COIL_VERSION;
     // Coil Gif支持
@@ -115,7 +115,7 @@ public class Libs {
     // OKHTTP
     public static final String OKHTTP = "com.squareup.okhttp3:okhttp:4.9.3";
     // Kotlin 序列化
-    public static final String KOTLIN_SERIALIZATION = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3";
+    public static final String KOTLIN_SERIALIZATION = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.0";
     // OkHttp日志记录拦截器
     public static final String OKHTTP_LOGGING = "com.squareup.okhttp3:logging-interceptor:4.9.3";
 
@@ -123,7 +123,7 @@ public class Libs {
     public static final String PAGING3 = "androidx.paging:paging-runtime-ktx:3.1.1";
 
     // Legacy-Support
-    public static final String LEGACY_SUPPORT = "androidx.legacy:legacy-support-v4:1.0.0";
+//    public static final String LEGACY_SUPPORT = "androidx.legacy:legacy-support-v4:1.0.0";
 
     // Media3
     public static final String MEDIA3_VERSION = "1.0.0-rc01";
