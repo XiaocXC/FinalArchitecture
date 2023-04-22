@@ -3,9 +3,6 @@ import config.Versions
 
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
-    ext {
-        kotlinVersion = "1.7.10"
-    }
     repositories {
         maven { url 'https://maven.aliyun.com/repository/central' }
         maven { url 'https://maven.aliyun.com/repository/jcenter' }
@@ -17,8 +14,8 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:7.2.2"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.10"
+        classpath "com.android.tools.build:gradle:${Versions.ANDROID_GRADLE_PLUGIN}"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.KOTLIN}"
         // kotlin-serialization
         classpath "org.jetbrains.kotlin:kotlin-serialization:${Versions.KOTLIN}"
         // Navigation Args
