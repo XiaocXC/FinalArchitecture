@@ -62,12 +62,12 @@ class MultiListViewModel: BaseViewModel() {
             _multiList.value = listOf(
                 ExampleMultiEntity.MultiBannerData(
                     listOf(
-                        "https://im.ruzhihan.com/duanshipin/2022/03/halo_social_1200x627_5.jpg",
-                        "https://im.ruzhihan.com/duanshipin/2022/04/Spy-x-Family-Teaser-Image.jpg",
-                        "https://im.ruzhihan.com/duanshipin/2022/04/better-call-saul-season-6-poster.jpg",
-                        "https://t7.baidu.com/it/u=3655946603,4193416998&fm=193&f=GIF",
-                        "https://t7.baidu.com/it/u=12235476,3874255656&fm=193&f=GIF",
-                        "http://f.sinaimg.cn/sinakd20220121s/96/w540h356/20220121/96c6-c994bc45927a02a9dc5379a9869ff202.gif"
+                        "http://storage-image.ciangciang.top/0d23fb5ca091498db79e7ed4c7596cf6.jpg",
+                        "http://storage-image.ciangciang.top/0dfafbd9f4e041e5bcbdc82bc438b22a.jpg",
+                        "http://storage-image.ciangciang.top/30193b4e3a354a75913ce56e12fa9f8a.webp",
+                        "http://storage-image.ciangciang.top/321187e921e6406788d85bf42c1e056e.jpg",
+                        "http://storage-image.ciangciang.top/7553b942030e496581e896ca3f2573f1.jpg",
+                        "http://storage-image.ciangciang.top/1e1d1d07b60948e78fc5a4be2f8bb154.jpg"
                     )
                 ),
                 ExampleMultiEntity.MultiExpandData(

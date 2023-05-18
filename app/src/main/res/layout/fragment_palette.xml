@@ -13,7 +13,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:navigationIcon="@drawable/ic_arrow_back" />
+        app:navigationIcon="@drawable/ic_arrow_back"
+        app:title="取色逻辑"/>
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
@@ -36,7 +37,7 @@
                 android:layout_height="100dp"
                 android:layout_marginVertical="12dp"
                 android:layout_gravity="center_horizontal"
-                android:src="@color/black"/>
+                android:src="@drawable/ic_setting" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvScheme"
@@ -46,6 +47,7 @@
                 android:layout_marginHorizontal="16dp"
                 tools:listitem="@layout/item_palette_card"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
 
         </LinearLayout>
 

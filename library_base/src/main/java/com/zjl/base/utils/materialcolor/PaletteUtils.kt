@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import com.zjl.base.utils.materialcolor.quantize.QuantizerCelebi
 import com.zjl.base.utils.materialcolor.scheme.Scheme
+import com.zjl.base.utils.materialcolor.score.Score
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -17,44 +18,33 @@ import kotlinx.coroutines.withContext
  */
 object PaletteUtils {
 
-    suspend fun resolveByBitmap(bitmap: Bitmap, isDarkMode: Boolean): ColorContainerData {
+    suspend fun resolveByBitmap(bitmap: Bitmap, isDarkMode: Boolean, originalColor: Boolean = false): ColorContainerData {
         return withContext(Dispatchers.Default){
             resolveByPixelsInner(bitmapToPixels(bitmap), isDarkMode)
         }
     }
 
-    suspend fun resolveByPixels(pixels: IntArray, isDarkMode: Boolean): ColorContainerData {
+    suspend fun resolveByPixels(pixels: IntArray, isDarkMode: Boolean, originalColor: Boolean = false): ColorContainerData {
         return withContext(Dispatchers.Default){
             resolveByPixelsInner(pixels, isDarkMode)
         }
     }
 
-    private fun resolveByPixelsInner(pixels: IntArray, isDarkMode: Boolean): ColorContainerData {
+    private fun resolveByPixelsInner(pixels: IntArray, isDarkMode: Boolean, originalColor: Boolean = false): ColorContainerData {
         val quantize = QuantizerCelebi.quantize(pixels, 10)
-        val primaryColorPair = Pair(true, listOf(Color.BLACK))
-        if(primaryColorPair.first){
-            // 如果[primaryColorPair.first]为true
-            // 说明返回的颜色不是最合适的，我们直接用该色作为主色调
-            val color = primaryColorPair.second[0]
-            return if(isDarkMode){
-                val colorScheme = Scheme.dark(color)
-                ColorContainerData(color, colorScheme.onPrimary)
-            } else {
-                val colorScheme = Scheme.light(color)
-                ColorContainerData(color, colorScheme.onPrimary)
-            }
+        val result = Score.score(quantize, 4, Color.BLUE, originalColor)
+        val firstColor = result[0]
+        val colorScheme = if(isDarkMode){
+            Scheme.dark(firstColor)
         } else {
-            // 如果[primaryColorPair.first]为false
-            // 说明找到了最合适的颜色，我们计算其最应该展示的颜色
-            val color = primaryColorPair.second[0]
-            return if(isDarkMode){
-                val colorScheme = Scheme.dark(color)
-                ColorContainerData(colorScheme.primary, colorScheme.onPrimary)
-            } else {
-                val colorScheme = Scheme.light(color)
-                ColorContainerData(colorScheme.primary, colorScheme.onPrimary)
-            }
+            Scheme.light(firstColor)
         }
+        return if(originalColor){
+            ColorContainerData(firstColor, colorScheme.onPrimary)
+        } else {
+            ColorContainerData(colorScheme.primary, colorScheme.onPrimary)
+        }
+
     }
 
     private suspend fun bitmapToPixels(bitmap: Bitmap): IntArray{

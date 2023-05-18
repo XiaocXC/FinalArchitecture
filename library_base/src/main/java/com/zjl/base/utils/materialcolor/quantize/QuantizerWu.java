@@ -15,6 +15,7 @@
  */
 
 package com.zjl.base.utils.materialcolor.quantize;
+
 import com.zjl.base.utils.materialcolor.utils.ColorUtils;
 
 import java.util.ArrayList;

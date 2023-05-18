@@ -10,6 +10,12 @@
         android:roundIcon="@mipmap/logo"
         android:supportsRtl="true"
         android:theme="@style/FinalArchitecture.Default">
+        <profileable
+            android:shell="true"
+            tools:targetApi="q" />
+        <profileable
+            android:shell="true"
+            tools:targetApi="q" />
 
         <activity
             android:name=".module.splash.ui.WelcomeActivity"
@@ -20,13 +26,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
         <activity
             android:name=".module.main.ui.activity.MainActivity"
-            android:exported="true"/>
-
-
+            android:exported="true" />
     </application>
 
 </manifest>

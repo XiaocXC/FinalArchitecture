@@ -3,6 +3,7 @@ package com.xiaoc.feature_fluid_music.ui
 import android.Manifest
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.activity.addCallback
@@ -32,7 +33,7 @@ class FluidMusicMainActivity: BaseActivity<FluidMusicActivityMainBinding, FluidM
 
     override fun initViewAndEvent(savedInstanceState: Bundle?) {
         // 判断是否读取外置存储权限
-        if(PermissionX.isGranted(this, Manifest.permission.READ_EXTERNAL_STORAGE)){
+        if(PermissionX.isGranted(this, getAudioStoragePermissionString())){
             mBinding.tvPermission.visibility = View.GONE
         } else {
             mBinding.tvPermission.visibility = View.VISIBLE
@@ -132,9 +133,19 @@ class FluidMusicMainActivity: BaseActivity<FluidMusicActivityMainBinding, FluidM
         }
     }
 
+    private fun getAudioStoragePermissionString(): String{
+        return if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
+            Manifest.permission.READ_MEDIA_AUDIO
+        } else{
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        }
+    }
+
     private fun requestReadStorage(){
+        val permissionList = mutableListOf(getAudioStoragePermissionString())
+
         PermissionX.init(this)
-            .permissions(Manifest.permission.READ_EXTERNAL_STORAGE)
+            .permissions(permissionList)
             .onExplainRequestReason { scope, deniedList ->
                 scope.showRequestReasonDialog(deniedList, getString(R.string.fluid_music_permission_go_to_setting), "确定", "取消")
             }

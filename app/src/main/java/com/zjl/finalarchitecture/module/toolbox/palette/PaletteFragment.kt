@@ -5,6 +5,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import coil.load
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.ui.onSuccess
+import com.zjl.base.utils.findNavController
 import com.zjl.base.utils.launchAndCollectIn
 import com.zjl.finalarchitecture.databinding.FragmentPaletteBinding
 import com.zjl.finalarchitecture.module.toolbox.palette.adapter.PaletteSchemeAdapter
@@ -29,6 +30,10 @@ class PaletteFragment: BaseFragment<FragmentPaletteBinding, PaletteViewModel>() 
     override fun initViewAndEvent(savedInstanceState: Bundle?) {
         adapter = PaletteSchemeAdapter()
         mBinding.rvScheme.adapter = adapter
+
+        mBinding.toolbarPalette.setNavigationOnClickListener {
+            findNavController().navigateUp()
+        }
 
         mBinding.selectPhoto.setOnClickListener {
             // 启动选择图片

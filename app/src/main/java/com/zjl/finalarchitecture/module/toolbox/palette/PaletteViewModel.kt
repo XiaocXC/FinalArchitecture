@@ -44,23 +44,27 @@ class PaletteViewModel: BaseViewModel() {
 
             val scheme = uri.scheme
             // 如果是本地，我们直接解析
-            val bitmap = if(scheme == ContentResolver.SCHEME_CONTENT || scheme == ContentResolver.SCHEME_FILE){
-                val bitmap = globalContext.contentResolver.openInputStream(uri)?.use {
-                    BitmapFactory.decodeStream(it)
-                } ?: throw RuntimeException("无效的Uri")
-                bitmap
-            } else if(scheme == ContentResolver.SCHEME_FILE){
-                val file = uri.toFile()
-                val bitmap = BitmapFactory.decodeFile(file.path)
-                bitmap
-            } else {
-                val request = ImageRequest.Builder(globalApplication)
-                    .size(100)
-                    .allowHardware(false)
-                    .data(uri)
-                    .build()
-                val bitmap = request.toBitmapWithCoil()
-                bitmap
+            val bitmap = when (scheme) {
+                ContentResolver.SCHEME_CONTENT -> {
+                    val bitmap = globalContext.contentResolver.openInputStream(uri)?.use {
+                        BitmapFactory.decodeStream(it)
+                    } ?: throw RuntimeException("无效的Uri")
+                    bitmap
+                }
+                ContentResolver.SCHEME_FILE -> {
+                    val file = uri.toFile()
+                    val bitmap = BitmapFactory.decodeFile(file.path)
+                    bitmap
+                }
+                else -> {
+                    val request = ImageRequest.Builder(globalApplication)
+                        .size(100)
+                        .allowHardware(false)
+                        .data(uri)
+                        .build()
+                    val bitmap = request.toBitmapWithCoil()
+                    bitmap
+                }
             }
 
             // 进行图片色调解析，规定最大取色数为16

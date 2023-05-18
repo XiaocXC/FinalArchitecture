@@ -1,4 +1,3 @@
-
 rootProject.name = "FinalArchitecture"
 include ':app'
 include ':library_base'
@@ -6,3 +5,4 @@ include ':library_network'
 include ':feature-fluid-music'
 include ':library_trace'
 include ':library_skin'
+include ':library_benchmark'

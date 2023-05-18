@@ -29,12 +29,13 @@
             android:paddingHorizontal="16dp"
             android:paddingVertical="4dp">
 
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/ivAlbumArt"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearanceOverlay="@style/ShapeAppearance.Architecture.SmallComponent"/>
 
             <TextView
                 android:id="@+id/tvArtistTitle"
