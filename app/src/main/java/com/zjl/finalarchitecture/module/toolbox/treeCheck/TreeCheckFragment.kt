@@ -3,10 +3,14 @@ package com.zjl.finalarchitecture.module.toolbox.treeCheck
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.view.animation.LayoutAnimationController
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.utils.launchAndCollectIn
+import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.databinding.FragmentTreeCheckBinding
 import com.zjl.finalarchitecture.module.toolbox.treeCheck.adapter.FolderNodeTreeViewAdapter
 import kotlinx.coroutines.flow.collectLatest
@@ -48,12 +52,10 @@ class TreeCheckFragment: BaseFragment<FragmentTreeCheckBinding, TreeCheckViewMod
         }
 
         folderNodeTreeViewAdapter = FolderNodeTreeViewAdapter(
-            requireContext(), mViewModel.nodeManager, mBinding.treeViewFolder, {
+            requireContext(), mViewModel.folderTreeHelper.nodeManager, {
                 mViewModel.loadChildrenByParentFolder(it)
-            },{ select, parentNode ->
-                mViewModel.handleSelectedChildren(select, parentNode)
-            },{ node, select ->
-                mViewModel.setStatusParentByChild(node, select)
+            },{ checked, parentNode ->
+                mViewModel.applyNodeCheckedChanged(parentNode, checked)
             }
         )
 

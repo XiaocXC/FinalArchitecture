@@ -1,16 +1,24 @@
 package com.zjl.finalarchitecture.module.toolbox.treeCheck.adapter
 
+import android.animation.Animator
+import android.animation.ObjectAnimator
 import android.content.Context
 import android.graphics.Paint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.CheckBox
-import android.widget.CompoundButton
-import android.widget.ImageView
-import android.widget.TextView
+import android.view.View.MeasureSpec
+import android.view.View.VISIBLE
+import android.view.ViewGroup
+import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.isVisible
+import androidx.core.view.updateLayoutParams
+import com.google.android.material.progressindicator.CircularProgressIndicator
+import com.zjl.base.utils.ext.dp
 import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.module.toolbox.treeCheck.data.FolderNode
+import com.zjl.finalarchitecture.module.toolbox.treeCheck.helper.TreeSelectorHelper
 import com.zjl.finalarchitecture.widget.treeview.AbstractTreeViewAdapter
 import com.zjl.finalarchitecture.widget.treeview.InMemoryTreeStateManager
 import com.zjl.finalarchitecture.widget.treeview.TreeNodeInfo
@@ -25,7 +33,6 @@ import com.zjl.finalarchitecture.widget.treeview.TreeViewList
 class FolderNodeTreeViewAdapter(
     context: Context,
     treeStateManager: InMemoryTreeStateManager<FolderNode>,
-    treeViewList: TreeViewList,
 
     /**
      * 加载对应子文件夹 回调
@@ -35,13 +42,8 @@ class FolderNodeTreeViewAdapter(
     /**
      * 勾选或取消勾选了对应文件夹 回调
      */
-    private val selectFolder: (Boolean, FolderNode) -> Unit,
-
-    /**
-     * 取消勾选了整个父节点 回调
-     */
-    private val cancelParent: (FolderNode, Boolean) -> Unit
-): AbstractTreeViewAdapter<FolderNode>(context, treeViewList, treeStateManager, 5) {
+    private val selectFolder: (Boolean, FolderNode) -> Unit
+): AbstractTreeViewAdapter<FolderNode>(context, treeStateManager, 5) {
 
     /**
      * 点击Item的点击事件响应
@@ -49,15 +51,21 @@ class FolderNodeTreeViewAdapter(
     private val itemClickAction = View.OnClickListener {
         val node = it.tag as FolderNode
         val nodeInfo = manager.getNodeInfo(node)
+
+        val progressBar = it.findViewById<CircularProgressIndicator>(R.id.progressBar)
         // 如果该Item节点有孩子
         if(node.haveChildren){
             when {
                 // 节点下有孩子数据，我们直接展开
                 nodeInfo.isWithChildren -> {
+                    // 我们把Parent的数据addAnim更改为true，这样下次展开就可以显示展开动画了
+                    node.addAnim = true
                     super.handleItemClick(it, node)
                 }
                 // 如果层级小于4级，我们
                 nodeInfo.level < 4 -> {
+                    // 展示loading动画
+                    progressBar.show()
                     loadChild(node)
                 }
                 else -> {
@@ -67,12 +75,13 @@ class FolderNodeTreeViewAdapter(
                 }
             }
         } else {
-            val targetSelected = !node.selected
-            node.selected = targetSelected
-            selectFolder(targetSelected, node)
-            if(!targetSelected){
-                cancelParent(node, targetSelected)
+            val status = if(node.selected == TreeSelectorHelper.NODE_CHECKED){
+                TreeSelectorHelper.NODE_UNCHECKED
+            } else {
+                TreeSelectorHelper.NODE_CHECKED
             }
+            node.selected = status
+            selectFolder(status == TreeSelectorHelper.NODE_CHECKED, node)
         }
     }
 
@@ -80,25 +89,26 @@ class FolderNodeTreeViewAdapter(
         CompoundButton.OnCheckedChangeListener { view, isChecked ->
             val node = view.tag as FolderNode
 
-            node.selected = isChecked
-            if(node.haveChildren){
-                selectFolder(isChecked, node)
+            node.selected = if(isChecked){
+                TreeSelectorHelper.NODE_CHECKED
+            } else {
+                TreeSelectorHelper.NODE_UNCHECKED
             }
-            cancelParent(node, isChecked)
+            selectFolder(isChecked, node)
         }
 
-    override fun getNewChildView(treeNodeInfo: TreeNodeInfo<FolderNode>): View {
+    override fun getNewChildView(parentView: View, treeNodeInfo: TreeNodeInfo<FolderNode>): View {
         val layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val viewLayout = if(treeNodeInfo.id is FolderNode.RootFolderNode){
             layoutInflater.inflate(R.layout.item_folder_root, null)
         } else {
             layoutInflater.inflate(R.layout.item_folder_child, null)
         }
-        viewLayout.setOnClickListener(itemClickAction)
-        return updateView(viewLayout, treeNodeInfo)
+        parentView.setOnClickListener(itemClickAction)
+        return updateView(parentView, viewLayout, treeNodeInfo)
     }
 
-    override fun updateView(view: View, treeNodeInfo: TreeNodeInfo<FolderNode>): View {
+    override fun updateView(parentView: View, view: View, treeNodeInfo: TreeNodeInfo<FolderNode>): View {
         view.tag = treeNodeInfo.id
         val folderNode = treeNodeInfo.id
         val root = view as ConstraintLayout
@@ -107,20 +117,34 @@ class FolderNodeTreeViewAdapter(
             val tvFolderName = root.findViewById<TextView>(R.id.tv_folder_name)
             val ivFolderStatus = root.findViewById<ImageView>(R.id.iv_folder_status)
             val cbSelect = root.findViewById<CheckBox>(R.id.cb_select)
+            val progressBar = root.findViewById<CircularProgressIndicator>(R.id.progressBar)
+
+            progressBar.hide()
+
             cbSelect.tag = treeNodeInfo.id
             tvFolderName.text = folderNode.folderName
             // 为了避免下面的isChecked影响回调进行多余操作处理，我们会先将事件设置为null，然后再恢复
             cbSelect.setOnCheckedChangeListener(null)
-            cbSelect.isChecked = folderNode.selected
-            cbSelect.setOnCheckedChangeListener(itemCheckedAction)
-            if(folderNode.folderStatus == -1){
-                tvFolderName.paint.flags = Paint.UNDERLINE_TEXT_FLAG //下划线
-                tvFolderName.paint.isAntiAlias = true//抗锯齿
-            } else {
-                tvFolderName.paint.flags = 0
+
+            when(folderNode.selected){
+                TreeSelectorHelper.NODE_CHECKED ->{
+                    cbSelect.isChecked = true
+                    tvFolderName.paint.flags = 0
+                }
+                TreeSelectorHelper.NODE_SELECTED ->{
+                    cbSelect.isChecked = false
+                    tvFolderName.paint.flags = Paint.UNDERLINE_TEXT_FLAG //下划线
+                    tvFolderName.paint.isAntiAlias = true//抗锯齿
+                }
+                else ->{
+                    cbSelect.isChecked = false
+                    tvFolderName.paint.flags = 0
+                }
             }
+            cbSelect.setOnCheckedChangeListener(itemCheckedAction)
+
             if(folderNode.haveChildren){
-                ivFolderStatus.visibility = View.VISIBLE
+                ivFolderStatus.visibility = VISIBLE
                 if(treeNodeInfo.isExpanded){
                     ivFolderStatus.setImageResource(R.drawable.ic_folder_expand_tip)
                 } else {
@@ -131,23 +155,38 @@ class FolderNodeTreeViewAdapter(
             }
 
         } else {
+            folderNode as FolderNode.ChildFolderNode
             val tvFolderName = root.findViewById<TextView>(R.id.tv_folder_name)
             val ivFolderStatus = root.findViewById<ImageView>(R.id.iv_folder_status)
             val cbSelect = root.findViewById<CheckBox>(R.id.cb_select)
+            val progressBar = root.findViewById<CircularProgressIndicator>(R.id.progressBar)
+
+            progressBar.hide()
+
             cbSelect.tag = treeNodeInfo.id
             tvFolderName.text = folderNode.folderName
+
             // 为了避免下面的isChecked影响回调进行多余操作处理，我们会先将事件设置为null，然后再恢复
             cbSelect.setOnCheckedChangeListener(null)
-            cbSelect.isChecked = folderNode.selected
-            cbSelect.setOnCheckedChangeListener(itemCheckedAction)
-            if(folderNode.folderStatus == -1){
-                tvFolderName.paint.flags = Paint.UNDERLINE_TEXT_FLAG //下划线
-                tvFolderName.paint.isAntiAlias = true//抗锯齿
-            } else {
-                tvFolderName.paint.flags = 0
+            when(folderNode.selected){
+                TreeSelectorHelper.NODE_CHECKED ->{
+                    cbSelect.isChecked = true
+                    tvFolderName.paint.flags = 0
+                }
+                TreeSelectorHelper.NODE_SELECTED ->{
+                    cbSelect.isChecked = false
+                    tvFolderName.paint.flags = Paint.UNDERLINE_TEXT_FLAG //下划线
+                    tvFolderName.paint.isAntiAlias = true//抗锯齿
+                }
+                else ->{
+                    cbSelect.isChecked = false
+                    tvFolderName.paint.flags = 0
+                }
             }
+            cbSelect.setOnCheckedChangeListener(itemCheckedAction)
+
             if(folderNode.haveChildren){
-                ivFolderStatus.visibility = View.VISIBLE
+                ivFolderStatus.visibility = VISIBLE
                 if(treeNodeInfo.isExpanded){
                     ivFolderStatus.setImageResource(R.drawable.ic_folder_expand_tip)
                 } else {
@@ -155,6 +194,50 @@ class FolderNodeTreeViewAdapter(
                 }
             } else {
                 ivFolderStatus.visibility = View.INVISIBLE
+            }
+
+            // 判断父节点的addAnim是否为true，如果为true我们播放动画
+            val parentNode = manager.getParent(folderNode)
+            if(parentNode != null && parentNode.addAnim){
+                view.measure(MeasureSpec.UNSPECIFIED, MeasureSpec.UNSPECIFIED)
+                val realHeight = view.measuredHeight
+                view.visibility = View.GONE
+                view.layoutParams = FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.MATCH_PARENT, 0
+                )
+                view.clipToPadding = false
+                view.clipChildren = false
+                // 使用展开动画
+                val animation = ObjectAnimator.ofInt(0, realHeight)
+                animation.addUpdateListener {
+                    val height = it.animatedValue as Int
+                    view.updateLayoutParams<FrameLayout.LayoutParams> {
+                        this.height = height
+                    }
+                }
+                animation.addListener(object: Animator.AnimatorListener{
+                    override fun onAnimationStart(animation: Animator) {
+                        view.visibility = VISIBLE
+                    }
+
+                    override fun onAnimationEnd(animation: Animator) {
+                        parentNode.addAnim = false
+                        animation.removeAllListeners()
+                    }
+
+                    override fun onAnimationCancel(animation: Animator) {
+                    }
+
+                    override fun onAnimationRepeat(animation: Animator) {
+                    }
+
+                })
+                animation.duration = 275
+                animation.start()
+            } else {
+                view.layoutParams = FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT
+                )
             }
         }
         return view

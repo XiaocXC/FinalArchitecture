@@ -6,11 +6,16 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.Transformation;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.zjl.finalarchitecture.R;
+
+import java.util.List;
 
 /**
  * Tree view, expandable multi-level.
@@ -95,6 +100,60 @@ public class TreeViewList extends ListView {
         super.setAdapter(treeAdapter);
     }
 
+//    treeViewList.post(new Runnable() {
+//        @Override
+//        public void run() {
+//            List<T> children = treeStateManager.getChildren(id);
+//            int startPosition = parent.getPositionForView(view) + 1;
+//            int lastPosition = startPosition + children.size() - 1;
+//
+//            for(int i = startPosition; i <= lastPosition; i++){
+//                View childView = parent.getChildAt(i);
+//                if(childView == null){
+//                    return;
+//                }
+////                        childView.measure(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+//                final int targetHeight = 161;
+//
+//                childView.getLayoutParams().height = 0;
+//
+//                Animation a = new Animation() {
+//                    @Override
+//                    protected void applyTransformation(float interpolatedTime, Transformation t) {
+//                        childView.getLayoutParams().height = interpolatedTime == 1
+//                                ? LinearLayout.LayoutParams.WRAP_CONTENT
+//                                : (int) (targetHeight * interpolatedTime);
+//                        childView.requestLayout();
+//                    }
+//
+//                    @Override
+//                    public boolean willChangeBounds() {
+//                        return true;
+//                    }
+//                };
+//
+//                a.setAnimationListener(new Animation.AnimationListener() {
+//                    @Override
+//                    public void onAnimationStart(Animation animation) {
+//                        childView.setVisibility(View.VISIBLE);
+//                    }
+//
+//                    @Override
+//                    public void onAnimationEnd(Animation animation) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onAnimationRepeat(Animation animation) {
+//
+//                    }
+//                });
+//                // 1dp/ms
+//                a.setDuration(1000);
+//                childView.startAnimation(a);
+//            }
+//        }
+//    });
     private void syncAdapter() {
         treeAdapter.setCollapsedDrawable(collapsedDrawable);
         treeAdapter.setExpandedDrawable(expandedDrawable);

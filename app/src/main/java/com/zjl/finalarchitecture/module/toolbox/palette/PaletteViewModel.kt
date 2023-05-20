@@ -69,7 +69,7 @@ class PaletteViewModel: BaseViewModel() {
 
             // 进行图片色调解析，规定最大取色数为16
             val quantize = QuantizerCelebi.quantize(bitmap.toIntArray(), 16)
-            // 取出后我们进行评分，将某些不符合规范的颜色给筛选掉，返回一个符合的颜色列表，第一个颜色是最符合的主色调
+            // 取出后我们进行评分，将某些不符合规范的颜色给筛选掉，返回一个符合的颜色列表，第一个颜色是最多的色调
             val colors = Score.score(quantize)
             val mostSuitableColor = colors[0]
             // 将最符合的一个颜色进行划分，将其分为MD色系，包括主色调，变调，文字颜色等

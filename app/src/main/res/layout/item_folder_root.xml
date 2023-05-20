@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingHorizontal="8dp"
-    android:paddingVertical="8dp">
+    android:paddingHorizontal="6dp"
+    android:paddingVertical="4dp">
 
     <ImageView
         android:id="@+id/iv_folder_status"
@@ -21,14 +21,26 @@
         style="@style/TextAppearance.Material3.TitleMedium"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="6dp"
-        android:lines="1"
+        android:layout_marginEnd="8dp"
         android:ellipsize="end"
+        android:lines="1"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/cb_select"
+        app:layout_constraintEnd_toStartOf="@+id/progressBar"
         app:layout_constraintStart_toEndOf="@+id/iv_folder_status"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="文件夹名" />
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/progressBar"
+        style="@style/Widget.Architecture.Progress.ExtraSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:indeterminate="true"
+        app:minHideDelay="220"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/cb_select"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <CheckBox
         android:id="@+id/cb_select"

@@ -1,26 +1,24 @@
 package com.zjl.finalarchitecture.module.toolbox.treeCheck.data
 
+import com.zjl.finalarchitecture.module.toolbox.treeCheck.helper.TreeSelectorHelper
+
 sealed class FolderNode(
     open val id: Long,
     open val folderUri: String,
     open val folderName: String,
-    open var selected: Boolean = false,
-    /**
-     * 文件夹状态
-     * 1：全选或全不选 | -1：部分选择
-     */
-    open var folderStatus: Int = 1,
-    open var haveChildren: Boolean = true
+    open var selected: Int = TreeSelectorHelper.NODE_UNCHECKED,
+    open var haveChildren: Boolean = true,
+    open var addAnim: Boolean = true
 ){
 
     data class RootFolderNode(
         override val id: Long,
         override val folderUri: String,
         override val folderName: String,
-        override var selected: Boolean = false,
-        override var folderStatus: Int = 1,
-        override var haveChildren: Boolean = true
-    ): FolderNode(id, folderUri, folderName, selected, folderStatus){
+        override var selected: Int = TreeSelectorHelper.NODE_UNCHECKED,
+        override var haveChildren: Boolean = true,
+        override var addAnim: Boolean = true
+    ): FolderNode(id, folderUri, folderName, selected){
 
         override fun equals(other: Any?): Boolean {
             if (this === other) return true
@@ -43,10 +41,10 @@ sealed class FolderNode(
         override val id: Long,
         override val folderUri: String,
         override val folderName: String,
-        override var selected: Boolean = false,
-        override var folderStatus: Int = 1,
-        override var haveChildren: Boolean = true
-    ): FolderNode(id, folderUri, folderName, selected, folderStatus){
+        override var selected: Int = TreeSelectorHelper.NODE_UNCHECKED,
+        override var haveChildren: Boolean = true,
+        override var addAnim: Boolean = true
+    ): FolderNode(id, folderUri, folderName, selected){
 
         override fun equals(other: Any?): Boolean {
             if (this === other) return true
