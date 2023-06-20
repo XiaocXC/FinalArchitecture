@@ -12,7 +12,6 @@ import com.xiaoc.feature_fluid_music.ui.browser.album.AllAlbumListFragment
 import com.xiaoc.feature_fluid_music.ui.browser.artist.AllArtistListFragment
 import com.xiaoc.feature_fluid_music.ui.browser.music.AllMusicListFragment
 import com.zjl.base.fragment.BaseFragment
-import com.zjl.base.utils.findNavController
 import com.zjl.base.utils.launchAndCollectIn
 
 /**

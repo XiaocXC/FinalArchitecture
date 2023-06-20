@@ -3,6 +3,7 @@ package com.zjl.finalarchitecture.module.toolbox.treeCheck
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.provider.DocumentsContract
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.view.animation.LayoutAnimationController
@@ -36,7 +37,7 @@ class TreeCheckFragment: BaseFragment<FragmentTreeCheckBinding, TreeCheckViewMod
             val directoryUri = it.data?.data ?: return@registerForActivityResult
 
             // 申请保持访问权限Uri
-            requireContext().contentResolver.takePersistableUriPermission(
+            requireContext().applicationContext.contentResolver.takePersistableUriPermission(
                 directoryUri,
                 Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
             )

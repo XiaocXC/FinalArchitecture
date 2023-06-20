@@ -150,6 +150,7 @@ class FolderNodeTreeViewAdapter(
                 } else {
                     ivFolderStatus.setImageResource(R.drawable.ic_folder_collapse_tip)
                 }
+
             } else {
                 ivFolderStatus.visibility = View.INVISIBLE
             }
@@ -192,6 +193,7 @@ class FolderNodeTreeViewAdapter(
                 } else {
                     ivFolderStatus.setImageResource(R.drawable.ic_folder_collapse_tip)
                 }
+
             } else {
                 ivFolderStatus.visibility = View.INVISIBLE
             }

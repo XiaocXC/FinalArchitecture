@@ -15,6 +15,8 @@ sealed class FolderNode(
         override val id: Long,
         override val folderUri: String,
         override val folderName: String,
+        val icon: Int,
+        val title: String,
         override var selected: Int = TreeSelectorHelper.NODE_UNCHECKED,
         override var haveChildren: Boolean = true,
         override var addAnim: Boolean = true

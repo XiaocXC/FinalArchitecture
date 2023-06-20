@@ -2,6 +2,7 @@ package com.zjl.finalarchitecture.module.toolbox.treeCheck
 
 import android.net.Uri
 import android.provider.DocumentsContract
+import android.widget.Toast
 import androidx.documentfile.provider.DocumentFile
 import androidx.lifecycle.viewModelScope
 import com.zjl.base.globalContext
@@ -15,6 +16,7 @@ import com.zjl.finalarchitecture.widget.treeview.TreeBuilder
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.util.concurrent.atomic.AtomicLong
 
 /**
@@ -55,16 +57,60 @@ class TreeCheckViewModel : BaseViewModel() {
 
             // 构建为Document版Uri
             val treeFile = DocumentFile.fromTreeUri(globalContext, folderRootUri)
-            treeFile?.let {
+            treeFile?.let { documentFile ->
+
                 val folderRootNode = FolderNode.RootFolderNode(
                     folderTreeHelper.atomicLong.addAndGet(1),
                     treeFile.uri.toString(),
-                    it.name ?: "Unknown",
+                    documentFile.name ?: "Unknown",
+                    icon = 0,
+                    title = "",
                     TreeSelectorHelper.NODE_CHECKED
                 )
+
                 // 将根Node节点加入到Tree内容中
                 folderTreeHelper.addRoot(folderRootNode, 0)
                 folderRootUris.add(folderRootUri)
+                try {
+                    Timber.i("TTTTT" + documentFile.uri)
+                    globalContext.contentResolver.query(documentFile.uri, null, null, null, null)?.use {
+                        while (it.moveToNext()){
+                            for(name in it.columnNames){
+                                Timber.i(name + " - " + it.getString(it.getColumnIndexOrThrow(name)))
+                            }
+                            val id = it.getString(it.getColumnIndexOrThrow(DocumentsContract.Document.COLUMN_DOCUMENT_ID))
+
+                            val rootUri = DocumentsContract.buildRootUri(folderRootUri.authority, id)
+                            Timber.i("TTTTT" + rootUri)
+                            globalContext.contentResolver.query(rootUri, null, null, null, null)?.use {
+                                for(name in it.columnNames){
+                                    Timber.i(name + " - " + it.getString(it.getColumnIndexOrThrow(name)))
+                                }
+                            }
+                        }
+                    }
+                } catch (e: Exception){
+                    e.printStackTrace()
+                }
+//                try {
+//                    val rootUri = DocumentsContract.buildRootUri(folderRootUri.authority, DocumentsContract.getTreeDocumentId(folderRootUri))
+//                    val client = globalContext.contentResolver.acquireUnstableContentProviderClient(folderRootUri.authority!!)
+//                    val cu = client?.query(treeFile.uri, null, null, null, null)
+//                    cu?.use {
+//
+//                        Timber.i("根目录数据: ${it.columnNames.toList().toString()}")
+//                        val icon = it.getInt(it.getColumnIndexOrThrow(DocumentsContract.Root.COLUMN_ICON))
+//                        val title = it.getString(it.getColumnIndexOrThrow(DocumentsContract.Root.COLUMN_TITLE))
+//
+//
+//                        Timber.i("根目录数据: $folderRootNode")
+//                    }
+//
+//                } catch (e: Exception){
+//                    e.printStackTrace()
+//                    _message.emit(R.string.description_already_tree)
+//                }
+
             }
         }
     }

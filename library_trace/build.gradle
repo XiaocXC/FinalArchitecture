@@ -1,22 +1,19 @@
-import config.Libs
-
-apply from: "../feature_config.gradle"
+plugins {
+    id("final.android.library")
+}
 
 android{
 
+    namespace = "com.zjl.library_trace"
     //统一资源前缀,规范资源引用
     resourcePrefix "trace_"
 }
 
 dependencies {
 
-    implementation(Libs.CORE_KTX)
-    implementation(Libs.APPCOMPAT)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material.design.core)
 
-    implementation(Libs.KOTLIN_COROUTINES)
-    implementation(Libs.MATERIAL_DESIGN)
-
-    testImplementation(Libs.JUNIT)
-    androidTestImplementation(Libs.JUNIT_EXT)
-    androidTestImplementation(Libs.ESPRESSO_CORE)
+    implementation(libs.kotlinx.coroutines.android)
 }

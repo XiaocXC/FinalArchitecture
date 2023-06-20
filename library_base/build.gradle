@@ -1,8 +1,10 @@
-import config.Libs
-
-apply from: "../feature_config.gradle"
+plugins {
+    id("final.android.library")
+}
 
 android{
+
+    namespace = "com.zjl.base"
 
     //统一资源前缀,规范资源引用
     resourcePrefix "base_"
@@ -17,82 +19,72 @@ android{
 dependencies {
     api(project(":library_skin"))
     api(project(":library_trace"))
-//    api(Libs.KOTLIN_VERSION)
-    api(Libs.CORE_KTX)
-    api(Libs.APPCOMPAT)
 
-    api(Libs.KOTLIN_COROUTINES)
+    api(libs.kotlin.stdlib)
+    api(libs.androidx.core.ktx)
+    api(libs.androidx.appcompat)
 
-    api(Libs.PAGING3)
+    api(libs.kotlin.stdlib)
+    api(libs.kotlinx.coroutines.android)
+
+    api(libs.paging3.runtime)
 
     // UI
-    api(Libs.CONSTRAINT_LAYOUT)
-    api(Libs.FRAGMENT_KTX)
-    api(Libs.ACTIVITY_KTX)
-    api(Libs.MATERIAL_DESIGN)
+    api(libs.constraintlayout.core)
+    api(libs.fragment.ktx)
+    api(libs.activity.ktx)
+    api(libs.material.design.core)
 
     // LifeCycle
-    api(Libs.VIEWMODEL_KTX)
-    api(Libs.LIVEDATA_KTX)
-    api(Libs.LIFECYCLE_RUNTIME_KTX)
-    api(Libs.LIFECYCLE_COMMON_KTX)
+    api(libs.androidx.lifecycle.runtime.ktx)
+    api(libs.androidx.lifecycle.viewmodel.ktx)
+    api(libs.androidx.lifecycle.livedata.ktx)
+    api(libs.androidx.lifecycle.common.ktx)
 
     // Navigation
-    api(Libs.NAVIGATION_FRAGMENT_KTX) {
+    api(libs.androidx.navigation.fragment.ktx){
         exclude group: 'androidx.navigation', module: "navigation-fragment"
     }
-    api(Libs.NAVIGATION_UI_KTX)
-    api(Libs.SMOOTH_NAVIGATION)
+    api(libs.androidx.navigation.ui.ktx)
+    api(libs.smoothNavigation.core)
 
     // Coil
-    api(Libs.COIL)
-    api(Libs.COIL_GIF)
-    api(Libs.COIL_TRANSFORMERS)
+    api(libs.coil.kt)
+    api(libs.coil.kt.gif)
+    api(libs.coil.transformers)
 
-    api(Libs.BRAV_ADAPTER)
+    api(libs.brav.core)
 
-    api(Libs.FLEX_BOX)
+    api(libs.flexbox.core)
 
-    api(Libs.RETROFIT_URL_MANAGER)
+    api(libs.retrofitUrlManager.core)
 
-    api(Libs.IMMERSIONBAR_BOX)
-    api(Libs.IMMERSIONBAR_BOX_KTX)
+    api(libs.immersionbar.core)
+    api(libs.immersionbar.ktx)
 
     // 日志打印
-    api(Libs.TIMBER)
+    api(libs.timber.core)
 
     // MultiStatePage
-    api(Libs.MULTI_STATE_PAGE)
+    api(libs.multiStatePage.core)
 
     //屏幕适配
-    api(Libs.AUTO_SIZE)
+    api(libs.autoSize.core)
 
     //微信开源项目，替代SP
-    api(Libs.MMKV)
+    api(libs.mmkv.android)
 
-    api(Libs.ANDROID_UTIL_CODEX)
+    api(libs.androidUtilsCode.core)
 
-//    api(Libs.SWIPE_REFRESH)
+    api(libs.smartRefresh.core)
+    api(libs.smartRefresh.header.classic)
 
-    api(Libs.SMART_REFRESH)
-    api(Libs.SMART_REFRESH_HEADER_CLASSICS)
-    api(Libs.SMART_REFRESH_HEADER_RADAR)
-    api(Libs.SMART_REFRESH_HEADER_FALSIFY)
-    api(Libs.SMART_REFRESH_HEADER_MATERIAL)
-    api(Libs.SMART_REFRESH_HEADER_TWO_LEVEL)
-    api(Libs.SMART_REFRESH_FOOTER_BALL)
-    api(Libs.SMART_REFRESH_FOOTER_CLASSICS)
+    api(libs.dialogX.core)
 
-    api(Libs.DIALOG_X)
+    api(libs.agent.core)
+    api(libs.agent.filechooser)
+    api(libs.agent.downloader)
 
-    api(Libs.AGENT_WEB_CORE)
-    api(Libs.AGENT_WEB_FILE_CHOOSER)
-    api(Libs.AGENT_WEB_DOWNLOADER)
-
-    api(Libs.PERMISSION_X)
-
-    testImplementation(Libs.JUNIT)
-    androidTestImplementation(Libs.JUNIT_EXT)
-    androidTestImplementation(Libs.ESPRESSO_CORE)
+    api(libs.permissionX.core)
 
 }

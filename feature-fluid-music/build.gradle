@@ -1,9 +1,11 @@
-import config.Libs
-
-apply from: "../feature_config.gradle"
-apply plugin: 'androidx.navigation.safeargs.kotlin'
+plugins {
+    id("final.android.library")
+    id("final.android.feature")
+    id 'androidx.navigation.safeargs.kotlin'
+}
 
 android{
+    namespace = "com.xiaoc.feature_fluid_music"
 
     //统一资源前缀,规范资源引用
     resourcePrefix "fluid_music_"
@@ -16,13 +18,7 @@ android{
 }
 
 dependencies {
-    api project(':library_network')
-
-    implementation(Libs.MEDIA3_SESSION)
-    implementation(Libs.MEDIA3_EXOPLAYER)
-    implementation(Libs.CONCURRENT_FUTURES_KTX)
-
-    testImplementation(Libs.JUNIT)
-    androidTestImplementation(Libs.JUNIT_EXT)
-    androidTestImplementation(Libs.ESPRESSO_CORE)
+    implementation(libs.media3.session)
+    implementation(libs.media3.exoplayer)
+    implementation(libs.androidConcurrent.futures.ktx)
 }

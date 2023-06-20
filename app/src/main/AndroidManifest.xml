@@ -10,12 +10,6 @@
         android:roundIcon="@mipmap/logo"
         android:supportsRtl="true"
         android:theme="@style/FinalArchitecture.Default">
-        <profileable
-            android:shell="true"
-            tools:targetApi="q" />
-        <profileable
-            android:shell="true"
-            tools:targetApi="q" />
 
         <activity
             android:name=".module.splash.ui.WelcomeActivity"

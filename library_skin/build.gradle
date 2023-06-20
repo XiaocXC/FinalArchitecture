@@ -1,22 +1,19 @@
-import config.Libs
-
-apply from: "../feature_config.gradle"
+plugins {
+    id("final.android.library")
+}
 
 android{
 
+    namespace = "com.zjl.library_skin"
     //统一资源前缀,规范资源引用
     resourcePrefix "skin_"
 }
 
 dependencies {
 
-    api(Libs.CORE_KTX)
-    api(Libs.APPCOMPAT)
-    api(Libs.MATERIAL_DESIGN)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material.design.core)
 
-    api(Libs.ANDROID_UTIL_CODEX)
-
-    testImplementation(Libs.JUNIT)
-    androidTestImplementation(Libs.JUNIT_EXT)
-    androidTestImplementation(Libs.ESPRESSO_CORE)
+    implementation(libs.androidUtilsCode.core)
 }

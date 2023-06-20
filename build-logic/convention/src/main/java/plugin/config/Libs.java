@@ -1,4 +1,4 @@
-package config;
+package plugin.config;
 
 /**
  * @author Xiaoc

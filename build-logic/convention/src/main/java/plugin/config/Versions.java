@@ -1,10 +1,12 @@
-package config;
+package plugin.config;
 
 /**
  * @author Xiaoc
  * @since 2022-07-27
  */
 public class Versions {
+
+    public static final String ApplicationId = "com.zjl.finalarchitecture";
 
     /**
      * 版本名
@@ -27,9 +29,6 @@ public class Versions {
     public static final int TARGET_SDK = 33;
     // 最小版本
     public static final int MIN_SDK = 23;
-
-    // Gradle插件版本
-    public static final String ANDROID_GRADLE_PLUGIN = "7.2.2";
     // Kotlin版本
     public static final String KOTLIN = "1.7.10";
 }

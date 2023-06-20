@@ -8,8 +8,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:networkSecurityConfig="@xml/base_network_security_config"
-        android:resizeableActivity="true">
+        android:networkSecurityConfig="@xml/base_network_security_config" tools:targetApi="24">
 
         <!--适配华为（huawei）刘海屏-->
         <meta-data
@@ -17,7 +16,7 @@
             android:value="true" />
         <!--适配小米（xiaomi）刘海屏-->
         <meta-data
-            android:name="notch.config"
+            android:name="notch.plugin.config"
             android:value="portrait|landscape" />
 
         <!-- Arms 配置 -->

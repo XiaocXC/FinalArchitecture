@@ -1,10 +1,11 @@
-import config.Libs
-
-apply from: "../feature_config.gradle"
-apply plugin: 'kotlinx-serialization'
+plugins {
+    id("final.android.library")
+    id("kotlinx-serialization")
+}
 
 android{
 
+    namespace = "com.zjl.library_network"
     //统一资源前缀,规范资源引用
     resourcePrefix "network_"
 }
@@ -13,15 +14,11 @@ dependencies {
     api project(':library_base')
 
     // Retrofit
-    api(Libs.RETROFIT)
-    api(Libs.OKHTTP)
-    api(Libs.KOTLIN_SERIALIZATION)
-    api(Libs.GSON)
+    api(libs.retrofit.core)
+    api(libs.okhttp3)
+    api(libs.kotlinx.serialization.json)
+    api(libs.gson.core)
     // Log日志拦截器
-    api(Libs.OKHTTP_LOGGING)
-    api(Libs.RETROFIT_CookiesJar)
-
-    testImplementation(Libs.JUNIT)
-    androidTestImplementation(Libs.JUNIT_EXT)
-    androidTestImplementation(Libs.ESPRESSO_CORE)
+    api(libs.okhttp.logging)
+    api(libs.retrofit.cookiesJar)
 }
