@@ -2,6 +2,9 @@ package com.zjl.finalarchitecture.module.toolbox.bottomNaivgationBar
 
 import android.os.Bundle
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.view.children
+import androidx.core.view.forEach
+import androidx.core.view.forEachIndexed
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.zjl.base.fragment.BaseFragment
@@ -63,6 +66,21 @@ class SpecialBottomNavigationBarFragment: BaseFragment<FragmentSpecialBottomNavi
             val scale = resources.displayMetrics.density
             val px = (value * scale + 0.5f)
             mBinding.bottomNavigationBar.fabCornerRadius = px
+        }
+
+        mBinding.bottomNavigationBar.setOnItemSelectedListener { item ->
+            // 计算一下水平偏移量
+            val totalSize = mBinding.bottomNavigationBar.menu.size()
+            val totalWidth = mBinding.bottomNavigationBar.width
+
+            val itemWidth = totalWidth / totalSize
+            val currentIndex = mBinding.bottomNavigationBar.menu.children.indexOfFirst {
+                it.itemId == item.itemId
+            }
+
+            val horizontalOffset = (itemWidth * currentIndex + itemWidth * (currentIndex + 1f)) / 2
+            mBinding.bottomNavigationBar.setEdgeTreatmentHorizontalOffset(horizontalOffset, true)
+            return@setOnItemSelectedListener true
         }
 
     }

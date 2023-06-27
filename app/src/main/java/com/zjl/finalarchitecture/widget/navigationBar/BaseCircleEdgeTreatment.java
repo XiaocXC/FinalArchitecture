@@ -18,6 +18,8 @@ abstract public class BaseCircleEdgeTreatment extends EdgeTreatment {
     protected float cradleVerticalOffset;
     protected float horizontalOffset;
 
+    protected boolean isCenter = true;
+
     /**
      * 凸起
      */
@@ -58,6 +60,10 @@ abstract public class BaseCircleEdgeTreatment extends EdgeTreatment {
     /** 设置水平偏移量 */
     public void setHorizontalOffset(float horizontalOffset) {
         this.horizontalOffset = horizontalOffset;
+    }
+
+    public void setCenter(boolean center) {
+        isCenter = center;
     }
 
     /**

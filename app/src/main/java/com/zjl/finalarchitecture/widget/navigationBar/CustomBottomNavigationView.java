@@ -1,5 +1,10 @@
 package com.zjl.finalarchitecture.widget.navigationBar;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.TimeInterpolator;
+import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
@@ -10,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.Px;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
+import com.google.android.material.animation.AnimationUtils;
 import com.google.android.material.animation.TransformationCallback;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
@@ -32,7 +38,12 @@ public class CustomBottomNavigationView extends BottomNavigationView {
     private float fabMargin;
     private float fabCornerRadius;
     private float fabVerticalOffset;
+    private float fabHorizontalOffset;
     private int edgeTreatmentType;
+    private boolean isCenter;
+
+    @Nullable
+    private ValueAnimator currentFabAnimator;
 
     public CustomBottomNavigationView(@NonNull Context context) {
         this(context,null);
@@ -50,6 +61,7 @@ public class CustomBottomNavigationView extends BottomNavigationView {
         fabCornerRadius = a.getDimensionPixelOffset(R.styleable.CustomBottomNavigationView_fabCradleRoundedCornerRadius,0);
         fabVerticalOffset = a.getDimensionPixelOffset(R.styleable.CustomBottomNavigationView_fabCradleVerticalOffset,0);
         fabDiameter = a.getDimensionPixelOffset(R.styleable.CustomBottomNavigationView_fabDiameter,0);
+        isCenter = a.getBoolean(R.styleable.CustomBottomNavigationView_isCenter, true);
         int edgeTreatmentTypeInner = a.getInt(R.styleable.CustomBottomNavigationView_edgeTreatmentType, 0);
 
         a.recycle();
@@ -151,6 +163,8 @@ public class CustomBottomNavigationView extends BottomNavigationView {
         } else {
             edgeTreatment = new SagCircleEdgeTreatment(fabMargin, fabCornerRadius, fabVerticalOffset);
         }
+        edgeTreatment.setCenter(isCenter);
+        edgeTreatment.setHorizontalOffset(fabHorizontalOffset);
         // 设置到MaterialShapeDrawable
         materialShapeDrawable.setShapeAppearanceModel(materialShapeDrawable
                 .getShapeAppearanceModel().toBuilder().setTopEdge(edgeTreatment)
@@ -202,6 +216,56 @@ public class CustomBottomNavigationView extends BottomNavigationView {
         fab.addTransformationCallback(fabTransformationCallback);
     }
 
+    public void setEdgeTreatmentHorizontalOffset(float horizontalOffset){
+        setEdgeTreatmentHorizontalOffset(horizontalOffset, true);
+    }
+
+    @SuppressLint("RestrictedApi")
+    public void setEdgeTreatmentHorizontalOffset(float horizontalOffset, boolean animate){
+        this.fabHorizontalOffset = horizontalOffset;
+        BaseCircleEdgeTreatment edgeTreatment = getTopEdgeTreatment();
+        if(edgeTreatment == null){
+            return;
+        }
+        if (edgeTreatment.getHorizontalOffset() != horizontalOffset) {
+            // 使用动画
+            if(animate){
+                int lastFabDiameter = fabDiameter;
+                animateChildTo(this, fabDiameter, 0, 75, AnimationUtils.LINEAR_OUT_SLOW_IN_INTERPOLATOR, new AnimateEndCallback() {
+                    @Override
+                    public void animateEnd() {
+                        edgeTreatment.setHorizontalOffset(horizontalOffset);
+                        materialShapeDrawable.invalidateSelf();
+
+                        animateChildTo(CustomBottomNavigationView.this, 0, lastFabDiameter, 125, AnimationUtils.FAST_OUT_LINEAR_IN_INTERPOLATOR, null);
+                    }
+                });
+            } else {
+                edgeTreatment.setHorizontalOffset(horizontalOffset);
+                materialShapeDrawable.invalidateSelf();
+            }
+        }
+
+    }
+
+    public boolean isCenter() {
+        return isCenter;
+    }
+
+    /**
+     * 设置凹陷是否基于中心
+     */
+    public boolean setCenter(boolean center) {
+        isCenter = center;
+        BaseCircleEdgeTreatment edgeTreatment = getTopEdgeTreatment();
+        if(edgeTreatment == null){
+            return false;
+        }
+        edgeTreatment.setCenter(isCenter);
+        materialShapeDrawable.invalidateSelf();
+        return true;
+    }
+
     @Nullable
     private FloatingActionButton findDependentFab() {
         View view = findDependentView();
@@ -227,5 +291,70 @@ public class CustomBottomNavigationView extends BottomNavigationView {
             }
         }
         return null;
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+
+        if(isCenter){
+            return;
+        }
+        // 计算一下水平偏移量
+        int totalSize = getMenu().size();
+        int totalWidth = w;
+
+        int itemWidth = totalWidth / totalSize;
+        int currentIndex = -1;
+        for(int i = 0; i < getMenu().size(); i++){
+            if(getMenu().getItem(i).getItemId() == getSelectedItemId()){
+                currentIndex = i;
+                break;
+            }
+        }
+
+        float defaultFirstHorizontalOffset = (itemWidth * currentIndex + itemWidth * (currentIndex + 1f)) / 2;
+        setEdgeTreatmentHorizontalOffset(defaultFirstHorizontalOffset);
+
+    }
+
+    private void animateChildTo(
+            @NonNull CustomBottomNavigationView child,
+            int fromValue, int toValue, long duration, TimeInterpolator interpolator, AnimateEndCallback callback) {
+        if(currentFabAnimator != null){
+            currentFabAnimator.cancel();
+        }
+        currentFabAnimator = ValueAnimator.ofInt(fromValue, toValue)
+                .setDuration(duration);
+        currentFabAnimator.setInterpolator(interpolator);
+        currentFabAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                child.setFabDiameter((int)animation.getAnimatedValue());
+            }
+        });
+        currentFabAnimator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                currentFabAnimator = null;
+                if(callback != null){
+                    callback.animateEnd();
+                }
+            }
+        });
+        currentFabAnimator.start();
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        if(currentFabAnimator != null){
+            currentFabAnimator.cancel();
+            currentFabAnimator = null;
+        }
+    }
+
+    private interface AnimateEndCallback{
+        void animateEnd();
     }
 }

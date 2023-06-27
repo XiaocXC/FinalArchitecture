@@ -46,7 +46,12 @@ public class SagCircleEdgeTreatment extends BaseCircleEdgeTreatment implements C
         float cradleDiameter = fabMargin * 2 + fabDiameter;
         float cradleRadius = cradleDiameter / 2f;
         float roundedCornerOffset = interpolation * roundedCornerRadius;
-        float middle = center + horizontalOffset;
+        float middle = 0;
+        if(isCenter){
+            middle = center + horizontalOffset;
+        } else {
+            middle = horizontalOffset;
+        }
 
         // 切口的中心偏移量介于附着时的竖直偏移量和对应比率。
         float verticalOffset =

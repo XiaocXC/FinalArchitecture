@@ -60,6 +60,8 @@
         <attr format="dimension" name="fabCradleRoundedCornerRadius"/>
         <!-- 设置fab的竖直偏移值 -->
         <attr format="dimension" name="fabCradleVerticalOffset"/>
+        <!-- 是否基于中心 -->
+        <attr format="boolean" name="isCenter"/>
     </declare-styleable>
 
 </resources>

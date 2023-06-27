@@ -73,6 +73,7 @@
         android:layout_gravity="bottom"
         android:background="@color/black"
         app:edgeTreatmentType="BULGE_TYPE"
+        app:isCenter="false"
         android:clipToPadding="false"
         app:menu="@menu/menu_bottom_navigation"
         app:layout_behavior=".widget.navigationBar.HideBottomEdgeTreatmentOnScrollBehavior"/>
