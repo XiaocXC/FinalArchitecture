@@ -38,7 +38,7 @@ class ToolboxFragment : BaseFragment<FragmentToolboxBinding, EmptyViewModel>() {
             findNavController().navigate(MainFragmentDirections.actionMainFragmentToSelectSingleOrMultiFragment())
         }
 
-        mBinding.btnImeAnim.setOnClickListener {
+        mBinding.btnAnim.setOnClickListener {
             findNavController().navigate(MainFragmentDirections.actionMainFragmentToImeAnimFragment())
         }
 

@@ -1,28 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:clipChildren="false">
 
-    <com.google.android.material.card.MaterialCardView
-        app:cardBackgroundColor="?attr/colorPrimaryVariant"
-        app:cardElevation="0dp"
-        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.ChatBubble.Self"
+    <CheckBox
+        android:id="@+id/cbSelect"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <FrameLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_marginHorizontal="8dp"
-        android:layout_marginVertical="4dp">
+        android:layout_weight="1"
+        android:layout_gravity="center_vertical"
+        android:clipChildren="false">
 
-        <TextView
-            android:id="@+id/bubble_message"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/messageBubble"
+            app:cardBackgroundColor="?attr/colorPrimaryVariant"
+            app:cardElevation="0dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="6dp"
-            android:layout_marginVertical="4dp"
-            android:text="Hello IME"
-            android:textColor="@color/white"
-            android:textAppearance="@style/TextAppearance.Material3.LabelMedium" />
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginVertical="4dp">
 
-    </com.google.android.material.card.MaterialCardView>
-</FrameLayout>
+            <TextView
+                android:id="@+id/bubble_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="6dp"
+                android:layout_marginVertical="4dp"
+                android:text="Hello IME"
+                android:textColor="@color/white"
+                android:textAppearance="@style/TextAppearance.Material3.LabelMedium" />
+
+        </com.google.android.material.card.MaterialCardView>
+    </FrameLayout>
+
+</LinearLayout>

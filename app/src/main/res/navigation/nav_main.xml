@@ -173,7 +173,7 @@
         android:label="SelectSingleOrMultiFragment" />
     <fragment
         android:id="@+id/imeAnimFragment"
-        android:name="com.zjl.finalarchitecture.module.toolbox.imeAnim.ImeAnimFragment"
+        android:name="com.zjl.finalarchitecture.module.toolbox.imeAnim.ImeFragment"
         android:label="ImeAnimFragment" />
     <fragment
         android:id="@+id/backgroundChangeFragment"
