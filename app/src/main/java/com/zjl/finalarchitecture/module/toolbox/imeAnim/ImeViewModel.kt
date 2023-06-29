@@ -51,4 +51,8 @@ class ImeViewModel: BaseViewModel() {
             )
         }.toMutableList()
     }
+
+    fun addMessageData(data: MessageData){
+        _messageList.value.add(data)
+    }
 }

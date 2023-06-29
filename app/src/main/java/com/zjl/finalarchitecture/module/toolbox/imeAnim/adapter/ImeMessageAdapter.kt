@@ -152,7 +152,7 @@ class ImeMessageAdapter: BaseMultiItemQuickAdapter<MultiItemEntity, BaseViewHold
             val messageBubble = viewHolder.getView<MaterialCardView>(R.id.messageBubble)
             val shapePathModel = ShapeAppearanceModel.builder()
                 .setAllCorners(RoundedCornerTreatment())
-                .setAllCornerSizes(12.dp.toFloat())
+                .setAllCornerSizes(8.dp.toFloat())
                 .setRightEdge(object : TriangleEdgeTreatment(4.dp.toFloat(), false) {
                     override fun getEdgePath(
                         length: Float,
@@ -169,7 +169,7 @@ class ImeMessageAdapter: BaseMultiItemQuickAdapter<MultiItemEntity, BaseViewHold
             val messageBubble = viewHolder.getView<MaterialCardView>(R.id.messageBubble)
             val shapePathModel = ShapeAppearanceModel.builder()
                 .setAllCorners(RoundedCornerTreatment())
-                .setAllCornerSizes(12.dp.toFloat())
+                .setAllCornerSizes(8.dp.toFloat())
                 .setLeftEdge(object : TriangleEdgeTreatment(4.dp.toFloat(), false) {
                     override fun getEdgePath(
                         length: Float,

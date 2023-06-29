@@ -11,6 +11,8 @@ import com.zjl.base.utils.launchAndCollectIn
 import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.databinding.FragmentImeAnimBinding
 import com.zjl.finalarchitecture.module.toolbox.imeAnim.adapter.ImeMessageAdapter
+import com.zjl.finalarchitecture.module.toolbox.imeAnim.data.MessageData
+import java.util.UUID
 
 /**
  * @author Xiaoc
@@ -44,6 +46,22 @@ class ImeFragment: BaseFragment<FragmentImeAnimBinding, ImeViewModel>() {
         // 监听返回按键，如果在编辑状态则先处理还原
         requireActivity().onBackPressedDispatcher.addCallback(backActionCallback)
 
+        // 模拟发送内容
+        mBinding.btnSend.setOnClickListener {
+            val text = mBinding.messageEdittext.text
+            if(text.isEmpty()){
+                Toast.makeText(requireContext(), "请输入内容！", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            val messageData = MessageData().apply {
+                id = UUID.randomUUID().toString()
+                message = text.toString()
+                type = MessageData.MESSAGE_TYPE_TEXT_SELF
+            }
+            imeAdapter.addData(messageData)
+            mViewModel.addMessageData(messageData)
+        }
+
         // 取消选择
         mBinding.cancel.setOnClickListener {
             imeAdapter.disableSelect()
@@ -68,11 +86,13 @@ class ImeFragment: BaseFragment<FragmentImeAnimBinding, ImeViewModel>() {
                 if(enable){
                     mBinding.toolbar.navigationIcon = null
                     mBinding.selectContainerToolbar.visibility = View.VISIBLE
+                    mBinding.messageHolder.visibility = View.GONE
 
                     backActionCallback.isEnabled = true
                 } else {
                     mBinding.toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
                     mBinding.selectContainerToolbar.visibility = View.GONE
+                    mBinding.messageHolder.visibility = View.VISIBLE
 
                     mBinding.cbAll.text = "全选"
                     mBinding.cbAll.isChecked = false
