@@ -55,4 +55,8 @@ class ImeViewModel: BaseViewModel() {
     fun addMessageData(data: MessageData){
         _messageList.value.add(data)
     }
+
+    fun loadUserInfo(){
+
+    }
 }

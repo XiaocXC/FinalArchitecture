@@ -30,10 +30,10 @@ class ProjectAdapter : BaseQuickAdapter<ArticleListVO, BaseViewHolder>(
             val itemProjectImageView = holder.getView<ImageView>(R.id.item_project_imageview)
 
             if (envelopePic.isEmpty()) {
-                itemProjectImageView.load(R.drawable.holyshit)
+                itemProjectImageView.load(R.drawable.test)
             }else{
                 itemProjectImageView.load(envelopePic) {
-                    placeholder(R.drawable.xiaocaidan)
+                    placeholder(R.drawable.test)
                 }
             }
 

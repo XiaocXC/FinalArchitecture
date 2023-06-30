@@ -30,7 +30,7 @@
         android:id="@+id/imgLogo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/realsex5"
+        android:src="@drawable/test"
         android:scaleType="centerCrop"
         app:shapeAppearanceOverlay="@style/ShapeAppearance.Architecture.MediumComponent"
         app:layout_constraintBottom_toBottomOf="parent"
