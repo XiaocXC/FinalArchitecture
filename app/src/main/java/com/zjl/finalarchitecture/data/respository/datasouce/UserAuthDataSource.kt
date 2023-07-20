@@ -42,7 +42,7 @@ object UserAuthDataSource {
     }
 
     /**
-     * 登出退出登录
+     * 退出登录
      * （启动全局作用域使用）
      */
     fun signOut() {

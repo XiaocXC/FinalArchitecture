@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -15,7 +14,6 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#FAFAFA"
             android:clipToPadding="false"
             android:overScrollMode="never"
             android:scrollbars="none">
@@ -28,7 +26,6 @@
                     android:id="@+id/cl1"
                     android:layout_width="match_parent"
                     android:layout_height="180dp"
-                    android:background="@drawable/change3"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -68,7 +65,7 @@
                         android:layout_marginStart="13dp"
                         android:ellipsize="end"
                         android:maxLines="2"
-                        android:textColor="?attr/colorOnPrimary"
+                        android:textColor="?attr/colorPrimary"
                         android:textSize="18sp"
                         app:layout_constraintBottom_toTopOf="@+id/txtTip"
                         app:layout_constraintEnd_toStartOf="@+id/guideline9"
@@ -83,150 +80,333 @@
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:maxLines="2"
-                        android:textColor="?attr/colorOnPrimary"
-                        android:textSize="13sp"
+                        android:textColor="?attr/colorPrimary"
+                        android:textSize="14sp"
                         app:layout_constraintBottom_toBottomOf="@+id/ivUserPhoto"
                         app:layout_constraintEnd_toEndOf="@+id/txtUserName"
                         app:layout_constraintStart_toStartOf="@+id/txtUserName"
                         app:layout_constraintTop_toBottomOf="@+id/txtUserName"
                         tools:text="@string/app_name" />
 
-<!--                    <com.zjl.finalarchitecture.widget.WaveView-->
-<!--                        android:id="@+id/waveView"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="17dp"-->
-<!--                        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                        app:layout_constraintEnd_toEndOf="parent"-->
-<!--                        app:layout_constraintStart_toStartOf="parent" />-->
+                    <!--                    <com.zjl.finalarchitecture.widget.WaveView-->
+                    <!--                        android:id="@+id/waveView"-->
+                    <!--                        android:layout_width="match_parent"-->
+                    <!--                        android:layout_height="17dp"-->
+                    <!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+                    <!--                        app:layout_constraintEnd_toEndOf="parent"-->
+                    <!--                        app:layout_constraintStart_toStartOf="parent" />-->
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
                 <LinearLayout
-                    android:id="@+id/userSetting"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/cl1">
 
-                    <com.zjl.finalarchitecture.widget.SettingBar
-                        android:id="@+id/sbIntegral"
-                        android:layout_width="match_parent"
-                        app:bar_leftText="@string/description_app_integral"
-                        android:layout_height="48dp"
-                        app:bar_leftSize="14sp"
-                        app:bar_rightSize="14sp"
-                        app:bar_leftColor="@color/base_panda"
-                        app:bar_rightIcon="@drawable/arrows_right_ic" />
 
-                    <com.zjl.finalarchitecture.widget.SettingBar
-                        android:id="@+id/sbCollect"
+                    <LinearLayout
+                        android:id="@+id/linearIntegral"
                         android:layout_width="match_parent"
-                        app:bar_leftText="@string/description_app_collect"
-                        android:layout_height="48dp"
-                        app:bar_leftSize="14sp"
-                        app:bar_rightSize="14sp"
-                        app:bar_leftColor="@color/base_panda"
-                        app:bar_rightIcon="@drawable/arrows_right_ic" />
+                        android:layout_height="50dp"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp">
 
-                    <com.zjl.finalarchitecture.widget.SettingBar
-                        android:id="@+id/sbShare"
-                        android:layout_width="match_parent"
-                        app:bar_leftText="@string/description_app_share"  android:layout_height="48dp"
-                        app:bar_leftSize="14sp"
-                        app:bar_rightSize="14sp"
-                        app:bar_leftColor="@color/base_panda"
-                        app:bar_rightIcon="@drawable/arrows_right_ic" />
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:scaleType="fitCenter"
+                            android:src="@mipmap/ic_coin"
+                            tools:ignore="UseAppTint" />
 
-                    <com.zjl.finalarchitecture.widget.SettingBar
-                        android:id="@+id/sbReadRecord"
-                        android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        app:bar_leftSize="14sp"
-                        app:bar_rightSize="14sp"
-                        app:bar_leftColor="@color/base_panda"
-                        app:bar_leftText="@string/description_app_read_record"
-                        app:bar_rightIcon="@drawable/arrows_right_ic" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_weight="1"
+                            android:singleLine="true"
+                            android:text="@string/description_app_integral" />
 
-                    <com.zjl.finalarchitecture.widget.SettingBar
-                        android:id="@+id/sbReadLater"
+                        <TextView
+                            android:id="@+id/tv_coin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="10dp"
+                            android:singleLine="true"
+                            android:text=""
+                            android:textColor="?attr/colorPrimary"
+                            tools:text="520" />
+
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:scaleType="fitCenter"
+                            android:src="@mipmap/ic_enter"
+                            tools:ignore="UseAppTint" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linearCollect"
                         android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        app:bar_leftSize="14sp"
-                        app:bar_rightSize="14sp"
-                        app:bar_leftColor="@color/base_panda"
-                        app:bar_leftText="@string/description_app_read_later"
-                        app:bar_rightIcon="@drawable/arrows_right_ic" />
+                        android:layout_height="50dp"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp">
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:scaleType="fitCenter"
+                            android:src="@mipmap/ic_collect"
+                            tools:ignore="UseAppTint" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_weight="1"
+                            android:singleLine="true"
+                            android:text="@string/description_app_collect" />
+
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:scaleType="fitCenter"
+                            android:src="@mipmap/ic_enter"
+                            tools:ignore="UseAppTint" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linearShare"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp">
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:scaleType="fitCenter"
+                            android:src="@mipmap/ic_share_article"
+                            tools:ignore="UseAppTint" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_weight="1"
+                            android:singleLine="true"
+                            android:text="@string/description_app_share" />
+
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:scaleType="fitCenter"
+                            android:src="@mipmap/ic_enter"
+                            tools:ignore="UseAppTint" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linearReadLater"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp">
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:scaleType="fitCenter"
+                            android:src="@mipmap/ic_read_later"
+                            tools:ignore="UseAppTint" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_weight="1"
+                            android:singleLine="true"
+                            android:text="@string/description_app_read_later"
+                            />
+
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:scaleType="fitCenter"
+                            android:src="@mipmap/ic_enter"
+                            tools:ignore="UseAppTint" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linearReadRecord"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp">
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:scaleType="fitCenter"
+                            android:src="@mipmap/ic_read_record"
+                            tools:ignore="UseAppTint" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_weight="1"
+                            android:singleLine="true"
+                            android:text="@string/description_app_read_record" />
+
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:scaleType="fitCenter"
+                            android:src="@mipmap/ic_enter"
+                            tools:ignore="UseAppTint" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linearOpen"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp">
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:scaleType="fitCenter"
+                            android:src="@mipmap/ic_github"
+                            tools:ignore="UseAppTint" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_weight="1"
+                            android:singleLine="true"
+                            android:text="@string/description_app_open_project" />
+
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:scaleType="fitCenter"
+                            android:src="@mipmap/ic_enter"
+                            tools:ignore="UseAppTint" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linearAboutMe"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp">
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:scaleType="fitCenter"
+                            android:src="@mipmap/ic_about"
+                            tools:ignore="UseAppTint" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_weight="1"
+                            android:singleLine="true"
+                            android:text="@string/description_app_about_we"/>
+
+
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:scaleType="fitCenter"
+                            android:src="@mipmap/ic_enter"
+                            tools:ignore="UseAppTint" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linearSetting"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp">
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:scaleType="fitCenter"
+                            android:src="@mipmap/ic_setting"
+                            tools:ignore="UseAppTint" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_weight="1"
+                            android:singleLine="true"
+                            android:text="@string/description_app_setting" />
+
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:scaleType="fitCenter"
+                            android:src="@mipmap/ic_enter"/>
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/txtLogout"
+                        android:layout_width="match_parent"
+                        android:layout_height="55dp"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
+                        android:text="@string/description_app_exit"
+                        android:textColor="@color/base_red"
+                        android:textSize="@dimen/sp_14"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/appSetting" />
 
                 </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/appSetting"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginTop="10dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/userSetting">
-
-<!--                    <com.zjl.finalarchitecture.widget.SettingBar-->
-<!--                        android:id="@+id/sbTheme"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="48dp"-->
-<!--                        app:bar_leftSize="14sp"-->
-<!--                        app:bar_rightSize="14sp"-->
-<!--                        app:bar_leftColor="@color/base_panda"-->
-<!--                        app:bar_leftText="@string/description_app_theme_change"-->
-<!--                        app:bar_rightIcon="@drawable/arrows_right_ic" />-->
-
-                    <com.zjl.finalarchitecture.widget.SettingBar
-                        android:id="@+id/sbOpenProject"
-                        android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        app:bar_leftSize="14sp"
-                        app:bar_rightSize="14sp"
-                        app:bar_leftColor="@color/base_panda"
-                        app:bar_leftText="@string/description_app_open_project"
-                        app:bar_rightIcon="@drawable/arrows_right_ic" />
-
-                    <com.zjl.finalarchitecture.widget.SettingBar
-                        android:id="@+id/sbAboutWe"
-                        android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        app:bar_leftSize="14sp"
-                        app:bar_rightSize="14sp"
-                        app:bar_leftColor="@color/base_panda"
-                        app:bar_leftText="@string/description_app_about_we"
-                        app:bar_rightIcon="@drawable/arrows_right_ic" />
-
-                    <com.zjl.finalarchitecture.widget.SettingBar
-                        android:id="@+id/sbSystemSetting"
-                        android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        app:bar_leftSize="14sp"
-                        app:bar_rightSize="14sp"
-                        app:bar_leftColor="@color/base_panda"
-                        app:bar_leftText="@string/description_app_setting"
-                        app:bar_rightIcon="@drawable/arrows_right_ic" />
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/txtLogout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:gravity="center"
-                    android:paddingTop="15dp"
-                    android:paddingBottom="15dp"
-                    android:text="@string/description_app_exit"
-                    android:textColor="@color/base_red"
-                    android:textSize="@dimen/sp_14"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/appSetting" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

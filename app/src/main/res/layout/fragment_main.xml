@@ -19,25 +19,25 @@
         unlabeled:所有item 中都不显示，包括底下都文字
         selected:标签在选中的item 中显示
      -->
-    <!--    <com.google.android.material.bottomnavigation.BottomNavigationView-->
-    <!--        android:id="@+id/mBottomNavigationView"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        style="@style/Widget.MaterialComponents.BottomNavigationView"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        app:itemIconTint="@null"-->
-    <!--        app:labelVisibilityMode="unlabeled"-->
-    <!--        app:itemTextColor="@drawable/nav_btm_color"/>-->
-
-    <com.wwdablu.soumya.lottiebottomnav.LottieBottomNav
-        android:id="@+id/lottieBottomNav"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/mBottomNavigationView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        app:menu_selected_height="30dp"
-        app:menu_selected_width="30dp"
-        app:menu_text_show_on_unselected="true"
-        app:menu_unselected_height="29dp"
-        app:menu_unselected_width="29dp" />
+        android:minHeight="64dp"
+        app:itemTextColor="@drawable/nav_btm_color"
+        app:labelVisibilityMode="unlabeled"
+        app:menu="@menu/menu_bottom_navigation" />
+
+    <!--        <com.wwdablu.soumya.lottiebottomnav.LottieBottomNav-->
+    <!--        android:id="@+id/lottieBottomNav"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:background="@android:color/white"-->
+    <!--        app:menu_selected_height="30dp"-->
+    <!--        app:menu_selected_width="30dp"-->
+    <!--        app:menu_text_show_on_unselected="true"-->
+    <!--        app:menu_unselected_height="29dp"-->
+    <!--        app:menu_unselected_width="29dp" />-->
 
 
 </LinearLayout>

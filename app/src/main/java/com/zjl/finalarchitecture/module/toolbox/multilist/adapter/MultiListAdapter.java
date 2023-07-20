@@ -19,14 +19,14 @@ import java.util.Objects;
 /**
  * @author Xiaoc
  * @since 2022-04-27
- *
+ * <p>
  * 多样式列表Adapter
  */
 public class MultiListAdapter extends BaseMultiItemQuickAdapter<ExampleMultiEntity, BaseViewHolder> {
 
     private final OnBannerSelectChangedEvent bannerSelectChangedEvent;
 
-    public MultiListAdapter(OnBannerSelectChangedEvent bannerSelectChangedEvent){
+    public MultiListAdapter(OnBannerSelectChangedEvent bannerSelectChangedEvent) {
         this.bannerSelectChangedEvent = bannerSelectChangedEvent;
         // Banner的内容，我们复用文章的Banner
         addItemType(ExampleMultiEntity.TYPE_BANNER, R.layout.item_article_wrapper_banner);
@@ -38,7 +38,7 @@ public class MultiListAdapter extends BaseMultiItemQuickAdapter<ExampleMultiEnti
 
     @Override
     protected void convert(@NonNull BaseViewHolder baseViewHolder, ExampleMultiEntity exampleMultiEntity) {
-        switch (exampleMultiEntity.getItemType()){
+        switch (exampleMultiEntity.getItemType()) {
             case ExampleMultiEntity.TYPE_BANNER:
                 // Banner
                 handleTypeBanner(baseViewHolder, (ExampleMultiEntity.MultiBannerData) exampleMultiEntity);
@@ -51,12 +51,14 @@ public class MultiListAdapter extends BaseMultiItemQuickAdapter<ExampleMultiEnti
                 // 文本
                 handleTypeText(baseViewHolder, (ExampleMultiEntity.MultiTextData) exampleMultiEntity);
                 break;
+            default:
+                break;
         }
     }
 
     @Override
     protected void onItemViewHolderCreated(@NonNull BaseViewHolder viewHolder, int viewType) {
-        switch (viewType){
+        switch (viewType) {
             case ExampleMultiEntity.TYPE_BANNER:
                 BannerViewPager<String> bannerViewPager = viewHolder.getView(R.id.article_banner);
                 bannerViewPager.setAdapter(new MultiListBannerAdapter());
@@ -74,7 +76,7 @@ public class MultiListAdapter extends BaseMultiItemQuickAdapter<ExampleMultiEnti
                 rvMultiExpand.setAdapter(new MultiListExpandChildAdapter());
                 TextView tvExpand = viewHolder.getView(R.id.tv_expand);
                 tvExpand.setOnClickListener(v -> {
-                    ExampleMultiEntity.MultiExpandData expandData = (ExampleMultiEntity.MultiExpandData)viewHolder.itemView.getTag();
+                    ExampleMultiEntity.MultiExpandData expandData = (ExampleMultiEntity.MultiExpandData) viewHolder.itemView.getTag();
                     expandData.setExpanded(!expandData.getExpanded());
                     notifyItemChanged(viewHolder.getAbsoluteAdapterPosition());
                 });
@@ -85,7 +87,7 @@ public class MultiListAdapter extends BaseMultiItemQuickAdapter<ExampleMultiEnti
     /**
      * 处理Banner数据
      */
-    private void handleTypeBanner(BaseViewHolder baseViewHolder, ExampleMultiEntity.MultiBannerData bannerData){
+    private void handleTypeBanner(BaseViewHolder baseViewHolder, ExampleMultiEntity.MultiBannerData bannerData) {
         BannerViewPager<String> bannerViewPager = baseViewHolder.getView(R.id.article_banner);
         bannerViewPager.refreshData(bannerData.getImgUrls());
     }
@@ -93,23 +95,21 @@ public class MultiListAdapter extends BaseMultiItemQuickAdapter<ExampleMultiEnti
     /**
      * 处理展开折叠数据
      */
-    private void handleTypeExpand(BaseViewHolder baseViewHolder, ExampleMultiEntity.MultiExpandData expandData){
+    private void handleTypeExpand(BaseViewHolder baseViewHolder, ExampleMultiEntity.MultiExpandData expandData) {
         baseViewHolder.itemView.setTag(expandData);
         RecyclerView rvMultiExpand = baseViewHolder.getView(R.id.rv_multi_expand);
 
         MultiListExpandChildAdapter adapter = (MultiListExpandChildAdapter) Objects.requireNonNull(rvMultiExpand.getAdapter());
         baseViewHolder.setGone(R.id.tv_expand, expandData.getExpandList().size() <= 3);
 
-        if(expandData.getExpanded()){
+        if (expandData.getExpanded()) {
             // 如果展开，我们显示全部列表
             baseViewHolder.setText(R.id.tv_expand, getContext().getString(R.string.multi_list_collapse_des));
             adapter.setList(expandData.getExpandList());
         } else {
             baseViewHolder.setText(R.id.tv_expand, getContext().getString(R.string.multi_list_expand_des));
             // 如果没展开，我们只展示3个默认
-            List<String> subList = expandData.getExpandList().subList(
-                    0, Math.min(3, expandData.getExpandList().size())
-            );
+            List<String> subList = expandData.getExpandList().subList(0, Math.min(3, expandData.getExpandList().size()));
             adapter.setList(subList);
         }
 
@@ -118,11 +118,11 @@ public class MultiListAdapter extends BaseMultiItemQuickAdapter<ExampleMultiEnti
     /**
      * 处理普通文本
      */
-    private void handleTypeText(BaseViewHolder baseViewHolder, ExampleMultiEntity.MultiTextData textData){
+    private void handleTypeText(BaseViewHolder baseViewHolder, ExampleMultiEntity.MultiTextData textData) {
         baseViewHolder.setText(R.id.tv_expand_des, textData.getText());
     }
 
-    public interface OnBannerSelectChangedEvent{
+    public interface OnBannerSelectChangedEvent {
         void onBannerSelectChanged(String imgUrl);
     }
 

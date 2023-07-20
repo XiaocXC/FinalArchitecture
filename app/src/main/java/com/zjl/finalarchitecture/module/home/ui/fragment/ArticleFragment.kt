@@ -108,8 +108,6 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel>()
                 uiRootState,
                 mBinding.refreshLayout
             ) {
-                var bitmap: Bitmap? = null
-                bitmap?.toIntArray()
                 retryAll()
             }
         }

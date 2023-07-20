@@ -26,10 +26,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:lines="1"
-        android:textColor="@color/base_white"
         android:textSize="80sp"
         android:padding="10dp"
-        android:background="@color/md_colorPrimary"
         app:autoSizeMaxTextSize="60sp"
         app:autoSizeTextType="uniform"
         tools:text="520" />

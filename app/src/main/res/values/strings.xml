@@ -62,9 +62,9 @@
     <string name="shopping_cart_select_num">已选择 %d 样</string>
 
     <!-- 我的 -->
-    <string name="me_my_coin_num">积分：%s | 等级：%s | 排名：%s</string>
+    <string name="me_my_coin_num">等级:%s | 排名:%s</string>
     <string name="me_app_author">ZJL</string>
-    <string name="my_rank_coin">当前积分</string>
+    <string name="my_rank_coin">当前积分:%s</string>
     <string name="me_app_github_url">https://github.com/XiaocXC/FinalArchitecture</string>
 
     <!-- 设置 -->
@@ -77,4 +77,7 @@
     <string name="preference_sign_out">退出登录</string>
     <string name="description_sign_out_success">退出登录成功</string>
     <string name="description_sign_out_des_dialog">您确定要退出登录吗？</string>
+
+    <string name="tip_message_to_login">请您先登录</string>
+
 </resources>
