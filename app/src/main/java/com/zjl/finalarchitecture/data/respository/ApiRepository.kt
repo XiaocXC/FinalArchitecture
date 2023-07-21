@@ -150,8 +150,7 @@ object ApiRepository {
      * @param cid 栏目ID
      */
     suspend fun requestProjectDetailListDataByPage(
-        pageNo: Int,
-        cid: Int
+        pageNo: Int, cid: Int
     ): ApiResult<PageVO<ArticleListVO>> {
         return mApiService.getProjectArticleListByPage(pageNo, cid)
     }
@@ -169,8 +168,7 @@ object ApiRepository {
      * @param id 栏目ID
      */
     suspend fun requestWechatDetailListDataByPage(
-        id: Int,
-        page: Int
+        id: Int, page: Int
     ): ApiResult<PageVO<ArticleListVO>> {
         return mApiService.getWechatArticleListByPage(id, page)
     }
@@ -226,9 +224,7 @@ object ApiRepository {
      * 教程详情
      */
     suspend fun requestTutorialDetailListData(
-        page: Int,
-        cid: Int?,
-        orderType: Int = 1
+        page: Int, cid: Int?, orderType: Int = 1
     ): ApiResult<PageVO<ArticleListVO>> {
         return mApiService.getTutorialDetailList(page, cid, orderType)
     }
@@ -255,7 +251,14 @@ object ApiRepository {
      */
     suspend fun requestCoinRecordList(
         page: Int
-    ):  ApiResult<PageVO<CoinRecordVO>> {
+    ): ApiResult<PageVO<CoinRecordVO>> {
         return mApiService.getCoinRecordList(page)
     }
+
+    suspend fun requestRankList(
+        page: Int
+    ):ApiResult<PageVO<RankVO>> {
+        return mApiService.getRankList(page)
+    }
+
 }

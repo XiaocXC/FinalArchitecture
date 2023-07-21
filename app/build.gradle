@@ -5,6 +5,7 @@ plugins {
     // kotlin-parcelize 插件，支持@Parcelize注解
     id 'kotlin-parcelize'
     id 'androidx.navigation.safeargs.kotlin'
+    id 'org.jetbrains.kotlin.android'
 }
 
 

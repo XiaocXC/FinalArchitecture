@@ -14,25 +14,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/ic_arrow_back"
-        app:titleCentered="true"
-        app:title="@string/description_login" />
+        app:title="@string/description_login"
+        app:titleCentered="true" />
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/iv_logo"
         android:layout_width="64dp"
         android:layout_height="64dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="35dp"
         android:src="@mipmap/logo"
-        app:shapeAppearanceOverlay="@style/ShapeAppearance.Architecture.SmallComponent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_sign_in" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_sign_in"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.Architecture.SmallComponent" />
 
     <LinearLayout
         android:id="@+id/container_edit_phone_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="58dp"
+        android:layout_marginTop="35dp"
         android:orientation="vertical"
         android:paddingVertical="16dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -51,7 +51,8 @@
                 style="@style/Widget.Architecture.TextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"/>
+                android:inputType="text"
+                android:minHeight="54dp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -62,12 +63,13 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="24dp"
-            android:text="@string/description_login_next_step"
             android:enabled="false"
-            app:progressGravity="TEXT_CENTER"
+            android:minHeight="54dp"
+            android:text="@string/description_login_next_step"
             app:layout_constraintEnd_toEndOf="@+id/edit_account"
             app:layout_constraintStart_toStartOf="@+id/edit_account"
-            app:layout_constraintTop_toBottomOf="@+id/cb_agree_privacy" />
+            app:layout_constraintTop_toBottomOf="@+id/cb_agree_privacy"
+            app:progressGravity="TEXT_CENTER" />
 
         <Button
             android:id="@+id/btn_register"
@@ -87,7 +89,7 @@
         android:id="@+id/container_edit_password_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="35dp"
         android:paddingVertical="16dp"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
@@ -109,6 +111,7 @@
                 style="@style/Widget.Architecture.TextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:minHeight="54dp"
                 android:inputType="text" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -119,14 +122,15 @@
             style="@style/Widget.Architecture.BaseButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:minHeight="54dp"
             android:layout_marginHorizontal="16dp"
-            android:text="@string/description_login"
-            android:enabled="false"
-            app:progressGravity="TEXT_CENTER"
             android:layout_marginTop="24dp"
+            android:enabled="false"
+            android:text="@string/description_login"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/edit_password"
-            app:layout_constraintTop_toBottomOf="@+id/edit_password" />
+            app:layout_constraintTop_toBottomOf="@+id/edit_password"
+            app:progressGravity="TEXT_CENTER" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

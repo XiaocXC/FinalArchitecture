@@ -69,6 +69,13 @@
             android:id="@+id/action_mainFragment_to_specialBottomNavigationBarFragment"
             app:destination="@id/specialBottomNavigationBarFragment" />
 
+        <action
+            android:id="@+id/action_mainFragment_to_integralFragment"
+            app:destination="@+id/integralFragment"/>
+
+        <action
+            android:id="@+id/action_mainFragment_to_rankFragment"
+            app:destination="@+id/rankFragment"/>
 
     </fragment>
 
@@ -210,13 +217,14 @@
         android:id="@+id/action_global_sign_in"
         app:destination="@id/nav_auth" />
 
-    <!-- MineFragment -->
     <action
         android:id="@+id/action_global_to_settingFragment"
         app:destination="@+id/settingFragment"/>
-    <action
-        android:id="@+id/action_global_to_integralFragment"
-        app:destination="@+id/integralFragment"/>
+
+
+
+
+
     <fragment
         android:id="@+id/paletteFragment"
         android:name="com.zjl.finalarchitecture.module.toolbox.palette.PaletteFragment"
@@ -237,6 +245,8 @@
         android:id="@+id/specialBottomNavigationBarFragment"
         android:name="com.zjl.finalarchitecture.module.toolbox.bottomNaivgationBar.SpecialBottomNavigationBarFragment"
         android:label="SpecialBottomNavigationBarFragment" />
-
-
+    <fragment
+        android:id="@+id/rankFragment"
+        android:name="com.zjl.finalarchitecture.module.mine.ui.fragment.rank.RankFragment"
+        android:label="RankFragment" />
 </navigation>

@@ -40,12 +40,11 @@ class IntegralFragment : BaseFragment<FragmentIntegralBinding, IntegralViewModel
     /* 个人积分详情列表 */
     private var mIntegralAdapter by autoCleared<IntegralAdapter>()
 
-    private lateinit var articleStateContainer: MultiStateContainer
+    private lateinit var mStateContainer: MultiStateContainer
 
     override fun initViewAndEvent(savedInstanceState: Bundle?) {
-
         //标题
-        mBinding.toolbar.title = StringUtils.getString(R.string.my_rank_coin)
+        mBinding.toolbar.title = StringUtils.getString(R.string.my_rank_integral)
 
         mBinding.toolbar.setNavigationOnClickListener {
             findNavController().navigateUp()
@@ -53,8 +52,8 @@ class IntegralFragment : BaseFragment<FragmentIntegralBinding, IntegralViewModel
 
         mBinding.toolbar.setOnMenuItemClickListener(this)
 
-        // 将文章列表绑定到状态布局上
-        articleStateContainer = mBinding.refreshLayout.bindMultiState()
+        // 将列表绑定到状态布局上
+        mStateContainer = mBinding.refreshLayout.bindMultiState()
 
         /**
          * 微信公众号详情列表 rv adapter
@@ -62,6 +61,7 @@ class IntegralFragment : BaseFragment<FragmentIntegralBinding, IntegralViewModel
         mIntegralAdapter = IntegralAdapter()
 
         mBinding.rv.adapter = mIntegralAdapter
+
         mBinding.refreshLayout.setOnRefreshLoadMoreListener(this)
         // 分割线
         mBinding.rv.addItemDecoration(
@@ -82,11 +82,10 @@ class IntegralFragment : BaseFragment<FragmentIntegralBinding, IntegralViewModel
 
         /* 个人积分列表回调 */
         mViewModel.coinRecordList.launchAndCollectIn(viewLifecycleOwner){
-            it.handlePagingStatus(mIntegralAdapter, articleStateContainer, mBinding.refreshLayout){
+            it.handlePagingStatus(mIntegralAdapter, mStateContainer, mBinding.refreshLayout){
                 retryAll()
             }
         }
-
 
     }
 

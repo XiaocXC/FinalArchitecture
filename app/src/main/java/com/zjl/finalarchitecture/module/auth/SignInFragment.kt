@@ -1,6 +1,7 @@
 package com.zjl.finalarchitecture.module.auth
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
@@ -16,8 +17,7 @@ import com.zjl.base.utils.findNavController
 import com.zjl.base.utils.launchAndCollectIn
 import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.databinding.FragmentLoginBinding
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
+import com.blankj.utilcode.util.ColorUtils
 
 /**
  * @author Xiaoc
@@ -25,13 +25,12 @@ import kotlinx.coroutines.launch
  *
  * 登录Fragment（密码登录）
  */
-class SignInFragment: BaseFragment<FragmentLoginBinding, SignInViewModel>() {
+class SignInFragment : BaseFragment<FragmentLoginBinding, SignInViewModel>() {
 
 //    private val signInViewModel by hiltNavGraphViewModels<SignInViewModel>(R.id.nav_auth)
 
     private lateinit var backCallback: OnBackPressedCallback
 
-    private var accountNumberPass: Boolean = false
 
     override fun initViewAndEvent(savedInstanceState: Bundle?) {
 
@@ -44,10 +43,10 @@ class SignInFragment: BaseFragment<FragmentLoginBinding, SignInViewModel>() {
             mBinding.btnNextStep.postDelayed({
                 // 动画效果后再更新，防止出现闪现文字的清空
                 mBinding.btnNextStep.setLoading(false)
-            },200L)
+            }, 200L)
             mBinding.btnSignIn.setLoading(false)
             // 如果正在输入密码页面，不切换
-            if(mBinding.containerEditPhoneView.isVisible){
+            if (mBinding.containerEditPhoneView.isVisible) {
                 switchView()
             }
         }
@@ -56,15 +55,14 @@ class SignInFragment: BaseFragment<FragmentLoginBinding, SignInViewModel>() {
         // 监听输入账号的输入框
         mBinding.editAccount.addOnEditTextAttachedListener {
             it.editText?.doAfterTextChanged { text ->
-                accountNumberPass = !text.isNullOrEmpty()
-                updateNextStepButtonState()
+                updateNextStepButtonState(mBinding.btnNextStep, !text.isNullOrEmpty())
             }
         }
 
         // 监听密码输入框
         mBinding.editPassword.addOnEditTextAttachedListener {
             it.editText?.doAfterTextChanged { text ->
-                mBinding.btnSignIn.isEnabled = !text.isNullOrEmpty()
+                updateNextStepButtonState(mBinding.btnSignIn, !text.isNullOrEmpty())
             }
         }
 
@@ -93,13 +91,36 @@ class SignInFragment: BaseFragment<FragmentLoginBinding, SignInViewModel>() {
 
     }
 
-    private fun updateNextStepButtonState(){
-        mBinding.btnNextStep.isEnabled = accountNumberPass
+
+    private fun updateNextStepButtonState(view: View, change: Boolean) {
+        when (view) {
+            mBinding.btnNextStep -> {
+                mBinding.btnNextStep.isEnabled = change
+                mBinding.btnNextStep.setTextColor(
+                    if (change) {
+                        ColorUtils.getColor(R.color.base_white)
+                    } else {
+                        ColorUtils.getColor(R.color.base_panda)
+                    }
+                )
+            }
+
+            mBinding.btnSignIn -> {
+                mBinding.btnSignIn.isEnabled = change
+                mBinding.btnSignIn.setTextColor(
+                    if (change) {
+                        ColorUtils.getColor(R.color.base_white)
+                    } else {
+                        ColorUtils.getColor(R.color.base_panda)
+                    }
+                )
+            }
+        }
     }
 
     override fun createObserver() {
         backCallback = requireActivity().onBackPressedDispatcher.addCallback(this) {
-            if(!mBinding.containerEditPhoneView.isVisible){
+            if (!mBinding.containerEditPhoneView.isVisible) {
                 switchView()
                 // 清除输入的验证码输入框
                 mBinding.editPassword.editText?.text = null
@@ -111,30 +132,33 @@ class SignInFragment: BaseFragment<FragmentLoginBinding, SignInViewModel>() {
         }
 
         // 登录状态
-        mViewModel.eventSignInState.launchAndCollectIn(viewLifecycleOwner){
+        mViewModel.eventSignInState.launchAndCollectIn(viewLifecycleOwner) {
             it.onSuccess {
                 mBinding.btnSignIn.setLoading(false)
-                Toast.makeText(requireContext(), R.string.description_login_success, Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(), R.string.description_login_success, Toast.LENGTH_SHORT
+                ).show()
                 // 登录成功则返回上一页
                 findNavController().navigateUp()
             }.onLoading {
                 mBinding.btnSignIn.setLoading(true)
             }.onFailure { _, throwable ->
                 mBinding.btnSignIn.setLoading(false)
-                Toast.makeText(requireContext(), throwable.message ?: "未知错误", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(), throwable.message ?: "未知错误", Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
 
     private fun createTransition(entering: Boolean): MaterialSharedAxis {
         val transition = MaterialSharedAxis(MaterialSharedAxis.X, entering)
-
         transition.addTarget(mBinding.containerEditPhoneView)
         transition.addTarget(mBinding.containerEditPasswordView)
         return transition
     }
 
-    private fun switchView(){
+    private fun switchView() {
         val startViewShowing = mBinding.containerEditPhoneView.isVisible
         val transition = createTransition(startViewShowing)
         TransitionManager.beginDelayedTransition(mBinding.root, transition)

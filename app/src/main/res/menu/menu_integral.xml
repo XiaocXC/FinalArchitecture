@@ -11,13 +11,13 @@
    -->
     <item
         android:id="@+id/menu_coin_rank"
-        android:icon="@drawable/ic_baseline_graphic_eq_18"
-        app:showAsAction="always"
-        android:title="积分" />
+        android:icon="@mipmap/ic_rank"
+        android:title="积分"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/menu_coin_rule"
-        android:icon="@drawable/ic_baseline_rule_18"
-        app:showAsAction="always"
-        android:title="规则" />
+        android:icon="@mipmap/ic_rule"
+        android:title="规则"
+        app:showAsAction="always" />
 
 </menu>

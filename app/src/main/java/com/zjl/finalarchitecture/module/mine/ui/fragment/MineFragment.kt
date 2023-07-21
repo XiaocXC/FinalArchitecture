@@ -85,7 +85,7 @@ class MineFragment : BaseFragment<FragmentMineBinding, MineViewModel>(), View.On
             }
 
             R.id.linearIntegral -> {
-                findNavController().navigate(NavMainDirections.actionGlobalToIntegralFragment())
+                findNavController().navigate(R.id.action_mainFragment_to_integralFragment)
             }
 
             R.id.linearCollect -> {

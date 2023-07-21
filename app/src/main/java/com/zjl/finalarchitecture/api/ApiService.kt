@@ -64,8 +64,7 @@ interface ApiService {
      */
     @GET("/article/list/{page}/json")
     suspend fun getSystemChildData(
-        @Path("page") pageNo: Int,
-        @Query("cid") id: String
+        @Path("page") pageNo: Int, @Query("cid") id: String
     ): ApiResult<PageVO<ArticleListVO>>
 
     /**
@@ -92,8 +91,7 @@ interface ApiService {
      */
     @GET("/project/list/{page}/json")
     suspend fun getProjectArticleListByPage(
-        @Path("page") pageNum: Int,
-        @Query("cid") cid: Int
+        @Path("page") pageNum: Int, @Query("cid") cid: Int
     ): ApiResult<PageVO<ArticleListVO>>
 
     /**
@@ -107,8 +105,7 @@ interface ApiService {
      */
     @POST("article/query/{page}/json")
     suspend fun getSearchDataByKey(
-        @Path("page") pageNo: Int,
-        @Query("k") searchKey: String
+        @Path("page") pageNo: Int, @Query("k") searchKey: String
     ): ApiResult<PageVO<ArticleListVO>>
 
 
@@ -123,8 +120,7 @@ interface ApiService {
      */
     @GET("/wxarticle/list/{id}/{page}/json")
     suspend fun getWechatArticleListByPage(
-        @Path("id") id: Int,
-        @Path("page") page: Int
+        @Path("id") id: Int, @Path("page") page: Int
     ): ApiResult<PageVO<ArticleListVO>>
 
     /**
@@ -135,8 +131,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/user/login")
     suspend fun login(
-        @Field("username") account: String,
-        @Field("password") password: String
+        @Field("username") account: String, @Field("password") password: String
     ): ApiResult<UserInfoVO>
 
     /**
@@ -178,9 +173,7 @@ interface ApiService {
      */
     @GET("article/list/{page}/json")
     suspend fun getTutorialDetailList(
-        @Path("page") page: Int,
-        @Query("cid") cid: Int?,
-        @Query("order_type") orderType: Int = 1
+        @Path("page") page: Int, @Query("cid") cid: Int?, @Query("order_type") orderType: Int = 1
     ): ApiResult<PageVO<ArticleListVO>>
 
 
@@ -198,4 +191,10 @@ interface ApiService {
     @GET("lg/coin/list/{page}/json")
     suspend fun getCoinRecordList(@Path("page") page: Int): ApiResult<PageVO<CoinRecordVO>>
 
+    /**
+     * 获取个人积分获取列表
+     * page 1 开始
+     */
+    @GET("coin/rank/{page}/json")
+    suspend fun getRankList(@Path("page") page: Int): ApiResult<PageVO<RankVO>>
 }
