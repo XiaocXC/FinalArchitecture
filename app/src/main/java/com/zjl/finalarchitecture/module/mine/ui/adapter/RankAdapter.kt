@@ -8,11 +8,12 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.data.model.CoinRecordVO
+import com.zjl.finalarchitecture.data.model.RankVO
 
-class RankAdapter : BaseQuickAdapter<CoinRecordVO, BaseViewHolder>(
+class RankAdapter : BaseQuickAdapter<RankVO, BaseViewHolder>(
     R.layout.item_rank
 ) {
-    override fun convert(holder: BaseViewHolder, item: CoinRecordVO) {
+    override fun convert(holder: BaseViewHolder, item: RankVO) {
 
         val index: Int = holder.adapterPosition + 1
         holder.setText(R.id.txtIndex, "$index")
@@ -23,12 +24,15 @@ class RankAdapter : BaseQuickAdapter<CoinRecordVO, BaseViewHolder>(
             1 -> {
                 holder.getView<ImageView>(R.id.imageIndex).load(R.mipmap.ic_rank_1)
             }
+
             2 -> {
                 holder.getView<ImageView>(R.id.imageIndex).load(R.mipmap.ic_rank_2)
             }
+
             3 -> {
                 holder.getView<ImageView>(R.id.imageIndex).load(R.mipmap.ic_rank_3)
             }
+
             else -> {
                 holder.getView<ImageView>(R.id.imageIndex).load(ColorDrawable(Color.TRANSPARENT))
             }

@@ -71,11 +71,10 @@
 
         <action
             android:id="@+id/action_mainFragment_to_integralFragment"
-            app:destination="@+id/integralFragment"/>
+            app:destination="@+id/integralFragment"
+            app:enterAnim="@anim/zoom_small_in"
+            app:exitAnim="@anim/zoom_small_out" />
 
-        <action
-            android:id="@+id/action_mainFragment_to_rankFragment"
-            app:destination="@+id/rankFragment"/>
 
     </fragment>
 
@@ -165,7 +164,6 @@
     <include app:graph="@navigation/nav_auth" />
 
 
-
     <fragment
         android:id="@+id/treeCheckFragment"
         android:name="com.zjl.finalarchitecture.module.toolbox.treeCheck.TreeCheckFragment"
@@ -194,10 +192,12 @@
         android:id="@+id/progressListFragment"
         android:name="com.zjl.finalarchitecture.module.toolbox.progressList.ProgressListFragment"
         android:label="ProgressListFragment" />
+
     <fragment
         android:id="@+id/tutorialFragment"
         android:name="com.zjl.finalarchitecture.module.sysnav.ui.fragment.tutorial.TutorialFragment"
         android:label="TutorialFragment" />
+
     <fragment
         android:id="@+id/settingFragment"
         android:name="com.zjl.finalarchitecture.module.setting.SettingFragment"
@@ -211,42 +211,53 @@
     <fragment
         android:id="@+id/integralFragment"
         android:name="com.zjl.finalarchitecture.module.mine.ui.fragment.integral.IntegralFragment"
-        android:label="IntegralFragment" />
+        android:label="IntegralFragment">
 
-    <action
-        android:id="@+id/action_global_sign_in"
-        app:destination="@id/nav_auth" />
+        <action
+            android:id="@+id/action_integralFragment_to_rankFragment"
+            app:destination="@id/rankFragment" />
 
-    <action
-        android:id="@+id/action_global_to_settingFragment"
-        app:destination="@+id/settingFragment"/>
-
-
-
-
+    </fragment>
 
     <fragment
         android:id="@+id/paletteFragment"
         android:name="com.zjl.finalarchitecture.module.toolbox.palette.PaletteFragment"
         android:label="PaletteFragment" />
+
     <fragment
         android:id="@+id/themeChangeFragment"
         android:name="com.zjl.finalarchitecture.module.mine.ui.fragment.theme.ThemeChangeFragment"
         android:label="ThemeChangeFragment" />
+
     <fragment
         android:id="@+id/transAnimFragment"
         android:name="com.zjl.finalarchitecture.module.toolbox.transAnim.TransAnimFragment"
         android:label="TransAnimFragment" />
+
     <fragment
         android:id="@+id/webSocketFragment"
         android:name="com.zjl.finalarchitecture.module.toolbox.websocket.WebSocketFragment"
         android:label="WebSocketFragment" />
+
     <fragment
         android:id="@+id/specialBottomNavigationBarFragment"
         android:name="com.zjl.finalarchitecture.module.toolbox.bottomNaivgationBar.SpecialBottomNavigationBarFragment"
         android:label="SpecialBottomNavigationBarFragment" />
+
     <fragment
         android:id="@+id/rankFragment"
         android:name="com.zjl.finalarchitecture.module.mine.ui.fragment.rank.RankFragment"
         android:label="RankFragment" />
+
+
+    <action
+        android:id="@+id/action_global_sign_in"
+        app:destination="@id/nav_auth"
+        app:enterAnim="@anim/zoom_small_in"
+        app:exitAnim="@anim/zoom_small_out"/>
+
+    <action
+        android:id="@+id/action_global_to_settingFragment"
+        app:destination="@+id/settingFragment" />
+
 </navigation>

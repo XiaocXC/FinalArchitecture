@@ -4,6 +4,7 @@ import com.zjl.base.ui.PagingUiModel
 import com.zjl.base.viewmodel.PagingBaseViewModel
 import com.zjl.base.viewmodel.requestScope
 import com.zjl.finalarchitecture.data.model.CoinRecordVO
+import com.zjl.finalarchitecture.data.model.RankVO
 import com.zjl.finalarchitecture.data.respository.ApiRepository
 import com.zjl.finalarchitecture.utils.ext.paging.requestPagingApiResult
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,8 +20,12 @@ import kotlinx.coroutines.flow.StateFlow
 class RankViewModel : PagingBaseViewModel() {
 
     private val _rankList =
-        MutableStateFlow<PagingUiModel<CoinRecordVO>>(PagingUiModel.Loading(true))
-    val rankListStateFlow: StateFlow<PagingUiModel<CoinRecordVO>> = _rankList
+        MutableStateFlow<PagingUiModel<RankVO>>(PagingUiModel.Loading(true))
+    val rankListStateFlow: StateFlow<PagingUiModel<RankVO>> = _rankList
+
+    init {
+        initData()
+    }
 
     fun initData() {
         onRefreshData()
@@ -45,9 +50,10 @@ class RankViewModel : PagingBaseViewModel() {
     private fun loadRankList(currentIndex: Int) {
         requestScope {
             requestPagingApiResult(
-                isRefresh = currentIndex == initPageIndex(), pagingUiModel = _rankList
+                isRefresh = currentIndex == initPageIndex(),
+                pagingUiModel = _rankList
             ) {
-                ApiRepository.requestCoinRecordList(page = currentIndex)
+                ApiRepository.requestRankList(page = currentIndex)
             }.await()
         }
     }

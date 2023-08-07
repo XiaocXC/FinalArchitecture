@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.StringUtils
+import com.gyf.immersionbar.ImmersionBar
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener
 import com.zjl.base.fragment.BaseFragment
@@ -35,9 +36,7 @@ class RankFragment : BaseFragment<FragmentRankBinding, RankViewModel>(), OnLoadM
 
     override fun initViewAndEvent(savedInstanceState: Bundle?) {
 
-        // 将列表绑定到状态布局上
-        mStateContainer = mBinding.refreshLayout.bindMultiState()
-        mBinding.refreshLayout.setOnLoadMoreListener(this)
+
         //标题
         mBinding.toolbar.title = StringUtils.getString(R.string.my_rank)
         mBinding.toolbar.setNavigationOnClickListener {
@@ -52,6 +51,11 @@ class RankFragment : BaseFragment<FragmentRankBinding, RankViewModel>(), OnLoadM
                 requireContext(), LinearLayoutManager.VERTICAL
             )
         )
+
+        mBinding.refreshLayout.setOnLoadMoreListener(this)
+
+        // 将列表绑定到状态布局上
+        mStateContainer = mBinding.refreshLayout.bindMultiState()
 
     }
 
@@ -68,5 +72,8 @@ class RankFragment : BaseFragment<FragmentRankBinding, RankViewModel>(), OnLoadM
         mViewModel.onLoadMoreData()
     }
 
-
+    override fun configImmersive(immersionBar: ImmersionBar): ImmersionBar? {
+        // 内部Fragment不处理沉浸式，防止被覆盖
+        return immersionBar.titleBar(mBinding.toolbar)
+    }
 }

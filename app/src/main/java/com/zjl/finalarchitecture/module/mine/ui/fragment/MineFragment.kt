@@ -12,6 +12,8 @@ import com.kongzue.dialogx.dialogs.MessageDialog
 import com.kongzue.dialogx.dialogs.PopTip
 import com.kongzue.dialogx.dialogs.TipDialog
 import com.kongzue.dialogx.dialogs.WaitDialog
+import com.kongzue.dialogx.interfaces.BottomDialogSlideEventLifecycleCallback
+import com.kongzue.dialogx.interfaces.DialogLifecycleCallback
 import com.kongzue.dialogx.interfaces.DialogXStyle
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.ui.UiModel
@@ -126,11 +128,19 @@ class MineFragment : BaseFragment<FragmentMineBinding, MineViewModel>(), View.On
      * 未登录提示并且跳转登录界面
      */
     private fun tipAndJumpLogin() {
-        TipDialog.show(R.string.tip_message_to_login, WaitDialog.TYPE.WARNING)
-        lifecycleScope.launch {
-            delay(2500)
-            findNavController().navigate(NavMainDirections.actionGlobalSignIn())
+        TipDialog.show(
+            R.string.tip_message_to_login,
+            WaitDialog.TYPE.WARNING
+        ).dialogLifecycleCallback = object : BottomDialogSlideEventLifecycleCallback<WaitDialog>() {
+            override fun onDismiss(dialog: WaitDialog?) {
+                super.onDismiss(dialog)
+                findNavController().navigate(NavMainDirections.actionGlobalSignIn())
+            }
         }
+//        lifecycleScope.launch {
+//            delay(2500)
+//            findNavController().navigate(NavMainDirections.actionGlobalSignIn())
+//        }
     }
 
 

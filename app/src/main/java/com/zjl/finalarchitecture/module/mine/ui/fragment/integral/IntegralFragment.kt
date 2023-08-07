@@ -33,8 +33,7 @@ import com.zy.multistatepage.bindMultiState
  * @author: zhou
  * @date : 2022/11/30 20:35
  */
-class IntegralFragment : BaseFragment<FragmentIntegralBinding, IntegralViewModel>(),
-    OnRefreshLoadMoreListener, Toolbar.OnMenuItemClickListener {
+class IntegralFragment : BaseFragment<FragmentIntegralBinding, IntegralViewModel>(), OnRefreshLoadMoreListener, Toolbar.OnMenuItemClickListener {
 
 
     /* 个人积分详情列表 */
@@ -64,25 +63,20 @@ class IntegralFragment : BaseFragment<FragmentIntegralBinding, IntegralViewModel
 
         mBinding.refreshLayout.setOnRefreshLoadMoreListener(this)
         // 分割线
-        mBinding.rv.addItemDecoration(
-            ArticleDividerItemDecoration(
-                requireContext(),
-                LinearLayoutManager.VERTICAL
-            )
-        )
+        mBinding.rv.addItemDecoration(ArticleDividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL))
     }
 
     override fun createObserver() {
         /* 本地 userInfo 信息回调 */
         mViewModel.userInfo.launchAndCollectIn(viewLifecycleOwner) { userInfo ->
             if (userInfo != null) {
-                doIntAnim(mBinding.txtCoin,userInfo.coinInfo.coinCount,1500)
+                doIntAnim(mBinding.txtCoin, userInfo.coinInfo.coinCount, 1500)
             }
         }
 
         /* 个人积分列表回调 */
-        mViewModel.coinRecordList.launchAndCollectIn(viewLifecycleOwner){
-            it.handlePagingStatus(mIntegralAdapter, mStateContainer, mBinding.refreshLayout){
+        mViewModel.coinRecordList.launchAndCollectIn(viewLifecycleOwner) {
+            it.handlePagingStatus(mIntegralAdapter, mStateContainer, mBinding.refreshLayout) {
                 retryAll()
             }
         }
@@ -99,7 +93,7 @@ class IntegralFragment : BaseFragment<FragmentIntegralBinding, IntegralViewModel
 
     override fun configImmersive(immersionBar: ImmersionBar): ImmersionBar? {
         // 内部Fragment不处理沉浸式，防止被覆盖
-        return  immersionBar.titleBar(mBinding.toolbar)
+        return immersionBar.titleBar(mBinding.toolbar)
     }
 
     private fun doIntAnim(target: TextView, to: Int, duration: Long) {
@@ -129,6 +123,7 @@ class IntegralFragment : BaseFragment<FragmentIntegralBinding, IntegralViewModel
             R.id.menu_coin_rank -> {
                 //积分排名
                 ToastUtils.showShort("积分排名")
+                findNavController().navigate(R.id.action_integralFragment_to_rankFragment)
                 return true
             }
 
