@@ -1,6 +1,8 @@
 package com.zjl.finalarchitecture.module.home.ui.fragment
 
+import android.Manifest
 import android.graphics.Bitmap
+import android.os.Build
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.transition.MaterialSharedAxis
@@ -22,6 +24,7 @@ import com.zjl.finalarchitecture.module.home.ui.adapter.ArticleDividerItemDecora
 import com.zjl.finalarchitecture.module.home.ui.adapter.BannerVOWrapper
 import com.zjl.finalarchitecture.module.home.viewmodel.ArticleViewModel
 import com.zjl.finalarchitecture.utils.ext.bitmap.toIntArray
+import com.zjl.finalarchitecture.utils.ext.handle
 import com.zjl.finalarchitecture.utils.ext.handlePagingStatus
 import java.io.File
 
@@ -101,9 +104,8 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel>()
             )
         }
 
-        // 文章分页数据
-        mViewModel.articleList.launchAndCollectIn(viewLifecycleOwner){ uiModel ->
-            uiModel.handlePagingStatus(
+        mViewModel.articleFlow.launchAndCollectIn(viewLifecycleOwner){ state ->
+            state.handle(
                 mArticleAdapter,
                 uiRootState,
                 mBinding.refreshLayout
@@ -111,6 +113,17 @@ class ArticleFragment : BaseFragment<FragmentArticleBinding, ArticleViewModel>()
                 retryAll()
             }
         }
+
+        // 文章分页数据
+//        mViewModel.articleList.launchAndCollectIn(viewLifecycleOwner){ uiModel ->
+//            uiModel.handlePagingStatus(
+//                mArticleAdapter,
+//                uiRootState,
+//                mBinding.refreshLayout
+//            ) {
+//                retryAll()
+//            }
+//        }
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout) {

@@ -10,6 +10,7 @@ import com.zjl.finalarchitecture.data.model.ArticleListVO
 import com.zjl.finalarchitecture.data.model.BannerVO
 import com.zjl.finalarchitecture.data.respository.ApiRepository
 import com.zjl.finalarchitecture.utils.CacheUtil
+import com.zjl.finalarchitecture.utils.ext.paging.Pager
 import com.zjl.finalarchitecture.utils.ext.paging.requestPagingApiResult
 import kotlinx.coroutines.flow.*
 
@@ -23,11 +24,8 @@ class ArticleViewModel : PagingBaseViewModel() {
     private val _bannerList = MutableStateFlow<List<BannerVO>>(emptyList())
     val bannerList: StateFlow<List<BannerVO>> = _bannerList
 
-    // 文章列表
-    private val _articleList = MutableStateFlow<PagingUiModel<ArticleListVO>>(PagingUiModel.Loading(true))
-    val articleList: StateFlow<PagingUiModel<ArticleListVO>> = _articleList
-
-    private var mCurrentIndex: Int = initPageIndex()
+    private val articlePager = Pager<ArticleListVO>(0)
+    val articleFlow = articlePager.observePager
 
     private val _collectArticleEvent = MutableSharedFlow<UiModel<Int>>()
     val collectArticleEvent: SharedFlow<UiModel<Int>> = _collectArticleEvent
@@ -42,14 +40,12 @@ class ArticleViewModel : PagingBaseViewModel() {
     }
 
     override fun onRefreshData(tag: Any?) {
-        mCurrentIndex = initPageIndex()
         requestBanner()
-        requestArticle(mCurrentIndex)
+        requestArticle(true)
     }
 
     override fun onLoadMoreData(tag: Any?) {
-        ++mCurrentIndex
-        requestArticle(mCurrentIndex)
+        requestArticle(false)
     }
 
     /**
@@ -67,12 +63,12 @@ class ArticleViewModel : PagingBaseViewModel() {
 
                 // 更新数据源
                 // 找到对应Id的索引
-                val changedItemIndex = _articleList.value.totalList.indexOfFirst {
+                val changedItemIndex = articlePager.totalList.indexOfFirst {
                     it.id == id
                 }
                 if(changedItemIndex >= 0){
                     // 更新收藏信息
-                    val changedItem = _articleList.value.totalList[changedItemIndex]
+                    val changedItem = articlePager.totalList[changedItemIndex]
                     changedItem.collect = true
                     _collectArticleEvent.emit(UiModel.Success(changedItemIndex))
                 }
@@ -97,12 +93,12 @@ class ArticleViewModel : PagingBaseViewModel() {
 
                 // 更新数据源
                 // 找到对应Id的索引
-                val changedItemIndex = _articleList.value.totalList.indexOfFirst {
+                val changedItemIndex = articlePager.totalList.indexOfFirst {
                     it.id == id
                 }
                 if(changedItemIndex >= 0){
                     // 更新收藏信息
-                    val changedItem = _articleList.value.totalList[changedItemIndex]
+                    val changedItem = articlePager.totalList[changedItemIndex]
                     changedItem.collect = false
                     _collectArticleEvent.emit(UiModel.Success(changedItemIndex))
                 }
@@ -116,17 +112,18 @@ class ArticleViewModel : PagingBaseViewModel() {
 
     /**
      * 加载分页文章数据
-     * @param currentIndex 当前加载的分页数据
      */
-    private fun requestArticle(currentIndex: Int){
+    private fun requestArticle(refresh: Boolean){
         // 启动请求协程域，里面的任何错误均可被处理
         requestScope {
+            articlePager.loading(refresh)
+
             // 调用快捷的分页请求方法，具体使用请见该方法注释
-            requestPagingApiResult(isRefresh = currentIndex == initPageIndex(), pagingUiModel = _articleList){
+            requestPagingApiResult(articlePager){
                 // 1.获取文章分页数据
-                val articlePageData = ApiRepository.requestArticleDataByPage(currentIndex)
+                val articlePageData = ApiRepository.requestArticleDataByPage(articlePager.currentIndex)
                 // 2.当我们开启了置顶显示且是第一页时，我们请求一次置顶数据
-                if (CacheUtil.isNeedTop() && currentIndex == initPageIndex()) {
+                if (CacheUtil.isNeedTop() && articlePager.currentIndex == articlePager.initPageIndex) {
                     val topArticleList = mutableListOf<ArticleListVO>()
 
                     // 3.获取置顶数据，如果成功，我们将其组装到总数据中

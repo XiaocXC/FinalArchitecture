@@ -2,7 +2,10 @@ package com.zjl.finalarchitecture.utils.ext
 
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
+import com.zjl.base.ui.AppendState
+import com.zjl.base.ui.PagerState
 import com.zjl.base.ui.PagingUiModel
+import com.zjl.base.ui.RefreshState
 import com.zjl.base.ui.state.LoadingState
 import com.zy.multistatepage.MultiStateContainer
 import com.zy.multistatepage.state.EmptyState
@@ -124,6 +127,54 @@ fun <T> PagingUiModel<T>.handlePagingStatus(
                 if(refreshLayout == null){
                     // 加载失败
                     adapter.loadMoreModule.loadMoreToLoading()
+                }
+            }
+        }
+    }
+}
+
+fun <T> PagerState<T>.handle(
+    adapter: BaseQuickAdapter<T, *>,
+    stateContainer: MultiStateContainer? = null,
+    refreshLayout: SmartRefreshLayout? = null,
+    retry: () -> Unit = {},
+){
+    when (this) {
+        is AppendState<T> ->{
+            // 添加数据
+            adapter.addData(this.append)
+            refreshLayout?.finishLoadMore()
+        }
+        is RefreshState<T> ->{
+            // 刷新全数据
+            if(data.isEmpty()){
+                stateContainer?.show(EmptyState())
+            } else {
+                stateContainer?.show(SuccessState())
+            }
+
+            adapter.setList(this.data)
+            // 结束下拉刷新
+            refreshLayout?.finishRefresh(500)
+
+        }
+        is com.zjl.base.ui.LoadingState<T> ->{
+            // 数据请求中
+            if(adapter.data.isNotEmpty()){
+                refreshLayout?.autoLoadMoreAnimationOnly()
+            } else {
+                refreshLayout?.autoRefreshAnimationOnly()
+            }
+        }
+        is com.zjl.base.ui.ErrorState<T> ->{
+            // 数据请求失败
+            refreshLayout?.finishRefresh(false)
+            refreshLayout?.finishLoadMore(false)
+            if(adapter.data.isEmpty()){
+                // 显示错误布局
+                stateContainer?.show<ErrorState> {
+                    it.setErrorMsg(this.error.message ?: "")
+                    it.retry(retry)
                 }
             }
         }

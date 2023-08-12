@@ -2,14 +2,31 @@ package com.zjl.finalarchitecture.utils.ext.paging
 
 import com.zjl.base.ApiResult
 import com.zjl.base.exception.NetworkException
+import com.zjl.base.ui.AppendState
+import com.zjl.base.ui.ErrorState
+import com.zjl.base.ui.LoadingState
+import com.zjl.base.ui.PagerState
 import com.zjl.base.ui.PagingUiModel
+import com.zjl.base.ui.RefreshState
+import com.zjl.base.ui.UiModel
 import com.zjl.base.ui.append
+import com.zjl.base.ui.data
+import com.zjl.base.ui.onFailure
+import com.zjl.base.ui.onLoading
+import com.zjl.base.ui.onSuccess
 import com.zjl.finalarchitecture.data.model.PageVO
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.ensureActive
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.shareIn
 import kotlin.jvm.Throws
 
 /**
@@ -93,5 +110,106 @@ inline fun <reified T> CoroutineScope.requestPagingApiResult(
                 throw throwable
             }
         }
+    }
+}
+
+@Throws(NetworkException::class)
+inline fun <reified T> CoroutineScope.requestPagingApiResult(
+    pager: Pager<T>,
+    crossinline block: suspend (CoroutineScope.() -> ApiResult<PageVO<T>>)
+): Deferred<PageVO<T>> {
+    return async {
+        ensureActive()
+        // 进行请求，并解析返回结果
+        return@async when(val result = block(this)){
+            is ApiResult.Success ->{
+                val data = result.data
+                pager.append(data.dataList, data.over)
+                // 脱壳返回里面的数据
+                data
+            }
+            is ApiResult.Failure ->{
+                val throwable = result.throwable
+                // 如果传入了uiModel，则给它赋值失败状态
+                pager.error(throwable)
+                // 抛出错误，让外部去捕捉
+                throw throwable
+            }
+        }
+    }
+}
+
+class Pager<T>(
+    /**
+     * 初始页码
+     */
+    val initPageIndex: Int = 0
+) {
+
+    /**
+     * 当前页码
+     */
+    var currentIndex = 0
+
+    /**
+     * 是否滑动到底部
+     */
+    var endOfPaginationReached: Boolean = false
+
+    private val _addListState = Channel<PagerState<T>>()
+    private val addListState = _addListState.receiveAsFlow()
+
+    /**
+     * 内部存储的总List数据
+     */
+    val totalList = mutableListOf<T>()
+
+    /**
+     * 观察的变化数据
+     */
+    val observePager = flow {
+        emit(RefreshState(endOfPaginationReached, totalList))
+
+        addListState.collect {
+            emit(it)
+        }
+    }
+
+    /**
+     * 添加分页数据
+     * 内部会根据调用次数，自动进行页码添加等操作
+     */
+    suspend fun append(data: List<T>, endOfPaginationReached: Boolean){
+        val index = currentIndex
+        if(index == initPageIndex){
+            totalList.clear()
+        }
+        totalList.addAll(data)
+        currentIndex ++
+        this.endOfPaginationReached = endOfPaginationReached
+
+        if(index == initPageIndex){
+            _addListState.send(RefreshState(endOfPaginationReached, data))
+        } else {
+            _addListState.send(AppendState(endOfPaginationReached, data))
+        }
+    }
+
+
+    /**
+     * 刷新数据
+     */
+    suspend fun loading(refresh: Boolean){
+        if(refresh){
+            currentIndex = initPageIndex
+        }
+        _addListState.send(LoadingState())
+    }
+
+    /**
+     * 分页请求失败
+     */
+    suspend fun error(throwable: Throwable){
+        _addListState.send(ErrorState(throwable))
     }
 }
