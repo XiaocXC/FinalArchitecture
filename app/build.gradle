@@ -90,5 +90,5 @@ dependencies {
 
     implementation(libs.lottie.android)
     implementation(libs.lottieBottomNav.core)
-    implementation(libs.titleBar.core)
+//    implementation(libs.titleBar.core)
 }
