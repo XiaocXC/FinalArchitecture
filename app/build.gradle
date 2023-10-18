@@ -49,9 +49,9 @@ android {
         def originalPath = variant.getPackageApplicationProvider().get().outputDirectory.getAsFile().get().getPath()
         variant.assembleProvider.get().doLast {
             // Release包命名规则是：APP名_创建时间_构建类型_版本号.apk
-//            fileName = "${appName}_${createTime}_${buildType}_${defaultConfig.versionCode}.apk"
+            // fileName = "${appName}_${createTime}_${buildType}_${defaultConfig.versionCode}.apk"
             // 将名字打印出来
-//            println "文件名 -> : ${fileName}"
+            // println "文件名 -> : ${fileName}"
 
             if (buildType == "release") {
                 copy {
@@ -90,5 +90,6 @@ dependencies {
 
     implementation(libs.lottie.android)
     implementation(libs.lottieBottomNav.core)
+    implementation(libs.bleCore.core)
 //    implementation(libs.titleBar.core)
 }

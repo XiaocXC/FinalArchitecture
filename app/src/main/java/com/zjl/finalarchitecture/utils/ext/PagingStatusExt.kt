@@ -113,13 +113,13 @@ fun <T> PagingUiModel<T>.handlePagingStatus(
                 adapter.setList(this.totalList)
             }
             if (this.refresh) {
-                refreshLayout?.autoRefresh()
+                refreshLayout?.autoRefreshAnimationOnly()
                 // 如果adapter不存在数据，我们展示加载状态框
                 if (adapter.itemCount <= 0) {
                     stateContainer?.show(LoadingState())
                 }
             } else {
-                refreshLayout?.autoLoadMore()
+                refreshLayout?.autoLoadMoreAnimationOnly()
                 // 如果SmartRefresh为空，我们才使用Adapter的加载状态
                 if(refreshLayout == null){
                     // 加载失败

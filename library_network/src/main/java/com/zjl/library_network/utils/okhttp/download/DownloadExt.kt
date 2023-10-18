@@ -30,6 +30,22 @@ import kotlin.coroutines.resumeWithException
  * @param url 下载地址
  * @param okHttpClient 可选，你可以使用你自己的OkHttpClient对象
  * @param block 一些自定义下载配置，例如你可以添加参数、监听并指定下载名称等内容
+ *
+ * //                lifecycleScope.launch {
+ * //                    val fileResult = downloadFile<String>("https://www.wanandroid.com/resources/image/pc/logo.png") {
+ * //                        setDownloadFileName("logo2.png")
+ * //                        setDownloadDir(requireContext().getExternalFilesDir("final")?.absolutePath + "/")
+ * //                        addDownloadListener(object : ProgressListener() {
+ * //                            override fun onProgress(p: Progress) {
+ * //                                LogUtils.e("下载进度：${p.progress()}")
+ * //                            }
+ * //                        })
+ * //                    }
+ * //                    val await: File = fileResult.await()
+ * //                    LogUtils.e("下载完成的文件：${await.absolutePath}")
+ * //                }
+ *
+ *
  **/
 inline fun <reified T> CoroutineScope.downloadFile(
     url: String,

@@ -28,6 +28,10 @@ class MineViewModel: BaseViewModel() {
     private val _signOutEvent = Channel<UiModel<Unit>>()
     val signOutEvent = _signOutEvent.receiveAsFlow()
 
+    init {
+        initData()
+    }
+
     fun initData() {
         getUserInfo()
     }

@@ -25,6 +25,11 @@ class IntegralViewModel : PagingBaseViewModel() {
         MutableStateFlow<PagingUiModel<CoinRecordVO>>(PagingUiModel.Loading(true))
     val coinRecordList: StateFlow<PagingUiModel<CoinRecordVO>> = _coinRecordList
 
+
+    init {
+        initData()
+    }
+
     fun initData() {
         onRefreshData()
     }
@@ -48,8 +53,7 @@ class IntegralViewModel : PagingBaseViewModel() {
     private fun loadCoinRecordListData(currentIndex: Int) {
         requestScope {
             requestPagingApiResult(
-                isRefresh = currentIndex == initPageIndex(),
-                pagingUiModel = _coinRecordList
+                isRefresh = currentIndex == initPageIndex(), pagingUiModel = _coinRecordList
             ) {
                 ApiRepository.requestCoinRecordList(page = currentIndex)
             }.await()

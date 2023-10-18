@@ -2,37 +2,32 @@ package com.zjl.finalarchitecture.module.mine.ui.fragment
 
 import android.os.Bundle
 import android.view.View
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import coil.load
+import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.kongzue.dialogx.dialogs.MessageDialog
-import com.kongzue.dialogx.dialogs.PopTip
 import com.kongzue.dialogx.dialogs.TipDialog
 import com.kongzue.dialogx.dialogs.WaitDialog
 import com.kongzue.dialogx.interfaces.BottomDialogSlideEventLifecycleCallback
-import com.kongzue.dialogx.interfaces.DialogLifecycleCallback
-import com.kongzue.dialogx.interfaces.DialogXStyle
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.ui.UiModel
 import com.zjl.base.ui.onFailure
 import com.zjl.base.ui.onSuccess
 import com.zjl.base.utils.findNavController
 import com.zjl.base.utils.launchAndCollectIn
-import com.zjl.finalarchitecture.BuildConfig
 import com.zjl.finalarchitecture.NavMainDirections
 import com.zjl.finalarchitecture.R
 import com.zjl.finalarchitecture.data.model.user.CombineUserInfoVO
 import com.zjl.finalarchitecture.data.respository.datasouce.UserAuthDataSource
 import com.zjl.finalarchitecture.databinding.FragmentMineBinding
-import com.zjl.finalarchitecture.module.main.ui.fragment.MainFragmentDirections
 import com.zjl.finalarchitecture.module.mine.viewmodel.MineViewModel
-import com.zjl.finalarchitecture.module.webview.viewmodel.WebDataUrl
-import kotlinx.coroutines.delay
+import com.zjl.library_network.utils.okhttp.Progress
+import com.zjl.library_network.utils.okhttp.ProgressListener
+import com.zjl.library_network.utils.okhttp.download.downloadFile
 import kotlinx.coroutines.launch
-import timber.log.Timber
+import java.io.File
 
 
 class MineFragment : BaseFragment<FragmentMineBinding, MineViewModel>(), View.OnClickListener {
@@ -91,7 +86,7 @@ class MineFragment : BaseFragment<FragmentMineBinding, MineViewModel>(), View.On
             }
 
             R.id.linearCollect -> {
-
+//                findNavController().navigate(R.id.action_)
             }
 
             R.id.linearShare -> {
@@ -116,6 +111,7 @@ class MineFragment : BaseFragment<FragmentMineBinding, MineViewModel>(), View.On
 
             R.id.linearSetting -> {
 
+
             }
 
             R.id.txtLogout -> {
@@ -124,42 +120,8 @@ class MineFragment : BaseFragment<FragmentMineBinding, MineViewModel>(), View.On
         }
     }
 
-    /**
-     * 未登录提示并且跳转登录界面
-     */
-    private fun tipAndJumpLogin() {
-        TipDialog.show(
-            R.string.tip_message_to_login,
-            WaitDialog.TYPE.WARNING
-        ).dialogLifecycleCallback = object : BottomDialogSlideEventLifecycleCallback<WaitDialog>() {
-            override fun onDismiss(dialog: WaitDialog?) {
-                super.onDismiss(dialog)
-                findNavController().navigate(NavMainDirections.actionGlobalSignIn())
-            }
-        }
-//        lifecycleScope.launch {
-//            delay(2500)
-//            findNavController().navigate(NavMainDirections.actionGlobalSignIn())
-//        }
-    }
-
-
-    /**
-     * 退出登录弹框
-     */
-    private fun displaySignOutDialog() {
-        MessageDialog.show(
-            R.string.preference_sign_out,
-            R.string.description_sign_out_des_dialog,
-            R.string.description_confirm
-        ).setOkButton { _, _ ->
-            mViewModel.signOut()
-            false
-        }
-    }
 
     override fun createObserver() {
-
         // 获取用户数据回调
         mViewModel.userInfo.launchAndCollectIn(viewLifecycleOwner) {
             // 判断是否登录更新不同视图
@@ -204,16 +166,47 @@ class MineFragment : BaseFragment<FragmentMineBinding, MineViewModel>(), View.On
     }
 
     /**
-     * 退出登录
+     * 退出登录提示
      */
     private fun showToastTip(uiState: UiModel<Unit>) {
         uiState.onSuccess {
             // 清理数据
             handleUserInfoFlowCollect(null)
             // 退出登录成功我们弹出
-            TipDialog.show(getString(R.string.description_sign_out_success))
+            TipDialog.show(
+                getString(R.string.description_sign_out_success), WaitDialog.TYPE.SUCCESS
+            )
         }.onFailure { _, throwable ->
-            TipDialog.show(throwable.message)
+            TipDialog.show(throwable.message, WaitDialog.TYPE.ERROR)
+        }
+    }
+
+
+    /**
+     * 未登录提示并且跳转登录界面
+     */
+    private fun tipAndJumpLogin() {
+        TipDialog.show(
+            R.string.tip_message_to_login, WaitDialog.TYPE.WARNING
+        ).dialogLifecycleCallback = object : BottomDialogSlideEventLifecycleCallback<WaitDialog>() {
+            override fun onDismiss(dialog: WaitDialog?) {
+                super.onDismiss(dialog)
+                findNavController().navigate(NavMainDirections.actionGlobalSignIn())
+            }
+        }
+    }
+
+    /**
+     * 退出登录弹框
+     */
+    private fun displaySignOutDialog() {
+        MessageDialog.show(
+            R.string.preference_sign_out,
+            R.string.description_sign_out_des_dialog,
+            R.string.description_confirm
+        ).setOkButton { _, _ ->
+            mViewModel.signOut()
+            false
         }
     }
 

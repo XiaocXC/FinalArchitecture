@@ -13,10 +13,8 @@ import kotlin.collections.ArrayList
  */
 fun main() {
 
-    val list =
-        listOf<String>("it", "word", "abc", "shuai", "wudi", "nihaoa", "xuelunya", "niubi666")
-    val result = list
-        .filter { it.length > 3 }
+    val list = listOf<String>("it", "word", "abc", "shuai", "wudi", "nihaoa", "xuelunya", "niubi666")
+    val result = list.filter { it.length > 3 }
         .map { it.length }
         .take(4)
 //    print(result.toString())
@@ -44,14 +42,10 @@ fun main() {
     val list2: ArrayList<String> = ArrayList<String>()
 
     list2.add("C")
-    println(
-        "" + list2.add("Z")
-    )
+    println("" + list2.add("Z"))
     println(list2.size)
-    println(
-        "${list2.add("M")}"
-    )
-    println(list2.size)
+    println("${list2.add("M")}")
+//    println(list2.size)
 //    println(split.contentToString())
 
 
@@ -104,5 +98,7 @@ fun main() {
 //    val mAddPlazaListFlow: StateFlow<List<ArticleListVO>> = _addPlazaListFlow
 //
 //    private var currentPage = 0
+
+
 
 }

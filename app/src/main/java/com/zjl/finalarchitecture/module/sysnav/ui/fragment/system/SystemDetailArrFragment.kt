@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
+import com.gyf.immersionbar.ImmersionBar
 import com.zjl.base.fragment.BaseFragment
 import com.zjl.base.utils.ext.init
 import com.zjl.base.utils.ext.reduceDragSensitivity
@@ -111,6 +112,10 @@ class SystemDetailArrFragment : BaseFragment<FragmentSystemDetailArrBinding, Sys
         override fun createFragment(position: Int): Fragment {
             return SystemDetailChildFragment.newInstance(children[position].id)
         }
+    }
+
+    override fun configImmersive(immersionBar: ImmersionBar): ImmersionBar? {
+        return null
     }
 
 }

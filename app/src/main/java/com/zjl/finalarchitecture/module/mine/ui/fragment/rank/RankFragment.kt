@@ -57,6 +57,9 @@ class RankFragment : BaseFragment<FragmentRankBinding, RankViewModel>(), OnLoadM
         // 将列表绑定到状态布局上
         mStateContainer = mBinding.refreshLayout.bindMultiState()
 
+
+
+
     }
 
     override fun createObserver() {

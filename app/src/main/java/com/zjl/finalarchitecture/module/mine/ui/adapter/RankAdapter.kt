@@ -18,7 +18,7 @@ class RankAdapter : BaseQuickAdapter<RankVO, BaseViewHolder>(
         val index: Int = holder.adapterPosition + 1
         holder.setText(R.id.txtIndex, "$index")
         holder.setText(R.id.txtUserName, item.username)
-        holder.setText(R.id.txtCoinCount, item.coinCount)
+        holder.setText(R.id.txtCoinCount, "${item.coinCount}")
 
         when (index) {
             1 -> {
