@@ -63,6 +63,20 @@
             android:layout_height="wrap_content"
             android:text="显示"/>
 
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:cardCornerRadius="24dp"
+            app:strokeWidth="0dp">
+
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bottomNavigationBar_cor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.Design.BottomNavigationView"
+                app:menu="@menu/menu_bottom_navigation"/>
+        </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
 
 
@@ -71,10 +85,10 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_gravity="bottom"
-        android:background="@color/black"
         app:edgeTreatmentType="BULGE_TYPE"
         app:isCenter="false"
         android:clipToPadding="false"
         app:menu="@menu/menu_bottom_navigation"
         app:layout_behavior=".widget.navigationBar.HideBottomEdgeTreatmentOnScrollBehavior"/>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

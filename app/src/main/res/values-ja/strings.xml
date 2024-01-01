@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FinalArchitecture</string>
+    <string name="enter_now">今すぐ入る</string>
+
+    <string name="home">ホーム</string>
+    <string name="system">システム</string>
+    <string name="discovery">発見</string>
+    <string name="toolbox">ツール</string>
+    <string name="mine">私の</string>
+
+    <string name="description_confirm">確認</string>
+
+    <string name="search_hint">スペースで区切って検索キーワードを入力</string>
+    <string name="fuck_bitch">フロントデスクの黒いシルクの小娘に密かに襲いかかる</string>
+    <string name="tab">("記事", "広場", "Q&amp;A", "プロジェクト", "WeChat")</string>
+    <string name="search">検索</string>
+    <string name="top_article">トップ</string>
+    <string name="new_article">新着</string>
+    <string name="new_ask">Q&amp;A</string>
+    <string name="send_to_plaza">記事を広場に投稿</string>
+    <string name="love">愛してるよ</string>
+
+    <string name="multi_list_title">複数リストスタイル</string>
+    <string name="multi_list_expand_title">おすすめニュース</string>
+    <string name="multi_list_expand_des">展開</string>
+    <string name="multi_list_collapse_des">折りたたむ</string>
+
+    <string name="hint_search_des">検索キーワードを入力</string>
+    <string name="search_hot_des">人気の検索</string>
+    <string name="search_history_des">検索履歴</string>
+
+    <string name="description_app_integral">私のポイント</string>
+    <string name="description_app_collect">私のコレクション</string>
+    <string name="description_app_share">私の共有</string>
+    <string name="description_app_read_record">読書履歴</string>
+    <string name="description_app_read_later">後で読む</string>
+    <string name="description_app_open_project">オープンソースプロジェクト</string>
+    <string name="description_app_about_we">作者について</string>
+    <string name="description_app_setting">システム設定</string>
+    <string name="description_app_version">現在のバージョン</string>
+    <string name="description_app_theme_change">テーマ設定</string>
+    <string name="description_app_exit">現在のアカウントをログアウト</string>
+
+    <!-- ログイン -->
+    <string name="description_login">ログイン</string>
+    <string name="description_login_account_hint">アカウントを入力してください</string>
+    <string name="description_login_password_hint">パスワードを入力してください</string>
+    <string name="description_login_password_again_hint">もう一度パスワードを入力してください</string>
+    <string name="description_login_next_step">次へ</string>
+    <string name="description_login_success">ログインに成功しました</string>
+    <string name="description_not_login_tip">クリックしてログイン</string>
+
+    <string name="description_register">登録</string>
+    <string name="description_register_success">登録に成功しました</string>
+
+    <!-- ファイル選択ツリー -->
+    <string name="description_already_tree">このフォルダはすでに含まれています</string>
+
+    <string name="shopping_cart_title">ショッピングカート</string>
+    <string name="shopping_cart_select_num">%dアイテムが選択されました</string>
+
+    <!-- 私の -->
+    <string name="me_my_coin_num">レベル:%s | ランキング:%s</string>
+    <string name="me_app_author">ZJL</string>
+    <string name="my_rank_integral">現在のポイント</string>
+    <string name="my_rank_coin">現在のポイント:%s</string>
+    <string name="me_app_github_url">https://github.com/XiaocXC/FinalArchitecture</string>
+    <string name="my_rank">ポイントランキング</string>
+
+    <!-- 設定 -->
+    <string name="key_preference_about">アプリについて</string>
+    <string name="key_preference_github_website">GitHubコード</string>
+    <string name="key_preference_sign_out">ログアウト</string>
+    <string name="preference_category_others">その他</string>
+    <string name="preference_title_about">概要</string>
+    <string name="preference_title_home_website">ソースコード</string>
+    <string name="preference_sign_out">ログアウト</string>
+    <string name="description_sign_out_success">ログアウトに成功しました</string>
+    <string name="description_sign_out_des_dialog">本当にログアウトしますか？</string>
+
+    <string name="tip_message_to_login">先にログインしてください</string>
+
+    <!-- 言語 -->
+    <string name="description_language">言語を選択</string>
+</resources>

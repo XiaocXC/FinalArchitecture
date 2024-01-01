@@ -55,8 +55,6 @@
 
     <!-- 文件选择树 -->
     <string name="description_already_tree">已经包含了该文件夹</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="shopping_cart_title">购物车</string>
     <string name="shopping_cart_select_num">已选择 %d 样</string>
@@ -80,5 +78,8 @@
     <string name="description_sign_out_des_dialog">您确定要退出登录吗？</string>
 
     <string name="tip_message_to_login">请您先登录</string>
+
+    <!-- 语言 -->
+    <string name="description_language">选择语言</string>
 
 </resources>

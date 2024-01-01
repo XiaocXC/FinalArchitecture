@@ -24,11 +24,11 @@ public class Versions {
     public static final int VERSION_CODE = 1;
 
     // 编译版本
-    public static final int COMPILE_SDK = 33;
+    public static final int COMPILE_SDK = 34;
     // 目标版本
     public static final int TARGET_SDK = 33;
     // 最小版本
     public static final int MIN_SDK = 23;
     // Kotlin版本
-    public static final String KOTLIN = "1.7.10";
+    public static final String KOTLIN = "1.8.21";
 }

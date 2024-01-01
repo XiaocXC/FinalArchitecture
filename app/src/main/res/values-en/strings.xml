@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FinalArchitecture</string>
+    <string name="enter_now">Enter Now</string>
+
+    <string name="home">Home</string>
+    <string name="system">System</string>
+    <string name="discovery">Discovery</string>
+    <string name="toolbox">Tools</string>
+    <string name="mine">Mine</string>
+
+    <string name="description_confirm">Confirm</string>
+
+    <string name="search_hint">Enter search keywords separated by spaces</string>
+    <string name="fuck_bitch">I secretly rushed towards the front desk in black silk</string>
+    <string name="tab">("Article", "Square", "Q&amp;A", "Project", "WeChat")</string>
+    <string name="search">Search</string>
+    <string name="top_article">Top</string>
+    <string name="new_article">New</string>
+    <string name="new_ask">Q&amp;A</string>
+    <string name="send_to_plaza">Post article to Square</string>
+    <string name="love">I love you</string>
+
+    <string name="multi_list_title">Multiple List Style</string>
+    <string name="multi_list_expand_title">Recommended News</string>
+    <string name="multi_list_expand_des">Expand</string>
+    <string name="multi_list_collapse_des">Collapse</string>
+
+    <string name="hint_search_des">Enter search keywords</string>
+    <string name="search_hot_des">Popular searches</string>
+    <string name="search_history_des">Search history</string>
+
+    <string name="description_app_integral">My Points</string>
+    <string name="description_app_collect">My Collection</string>
+    <string name="description_app_share">My Shares</string>
+    <string name="description_app_read_record">Reading History</string>
+    <string name="description_app_read_later">Read Later</string>
+    <string name="description_app_open_project">Open Source Projects</string>
+    <string name="description_app_about_we">About the Author</string>
+    <string name="description_app_setting">System Settings</string>
+    <string name="description_app_version">Current Version</string>
+    <string name="description_app_theme_change">Theme Settings</string>
+    <string name="description_app_exit">Log Out</string>
+
+    <!-- Login -->
+    <string name="description_login">Login</string>
+    <string name="description_login_account_hint">Enter your account</string>
+    <string name="description_login_password_hint">Enter your password</string>
+    <string name="description_login_password_again_hint">Please enter your password again</string>
+    <string name="description_login_next_step">Next</string>
+    <string name="description_login_success">Login successful</string>
+    <string name="description_not_login_tip">Click to login</string>
+
+    <string name="description_register">Register</string>
+    <string name="description_register_success">Registration successful</string>
+
+    <!-- File Selection Tree -->
+    <string name="description_already_tree">This folder is already included</string>
+
+    <string name="shopping_cart_title">Shopping Cart</string>
+    <string name="shopping_cart_select_num">Selected %d items</string>
+
+    <!-- My -->
+    <string name="me_my_coin_num">Level:%s | Ranking:%s</string>
+    <string name="me_app_author">ZJL</string>
+    <string name="my_rank_integral">Current Points</string>
+    <string name="my_rank_coin">Current Points:%s</string>
+    <string name="me_app_github_url">https://github.com/XiaocXC/FinalArchitecture</string>
+    <string name="my_rank">Points Ranking</string>
+
+    <!-- Settings -->
+    <string name="key_preference_about">About App</string>
+    <string name="key_preference_github_website">GitHub Code</string>
+    <string name="key_preference_sign_out">Sign Out</string>
+    <string name="preference_category_others">Others</string>
+    <string name="preference_title_about">About</string>
+    <string name="preference_title_home_website">Source Code</string>
+    <string name="preference_sign_out">Logout</string>
+    <string name="description_sign_out_success">Logout successful</string>
+    <string name="description_sign_out_des_dialog">Are you sure you want to logout?</string>
+
+    <string name="tip_message_to_login">Please log in first</string>
+
+    <!-- Language -->
+    <string name="description_language">Select Language</string>
+</resources>

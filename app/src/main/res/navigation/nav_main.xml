@@ -74,6 +74,9 @@
             app:destination="@+id/integralFragment"
             app:enterAnim="@anim/zoom_small_in"
             app:exitAnim="@anim/zoom_small_out" />
+        <action
+            android:id="@+id/action_mainFragment_to_languageFragment"
+            app:destination="@id/languageFragment" />
 
 
     </fragment>
@@ -259,5 +262,9 @@
     <action
         android:id="@+id/action_global_to_settingFragment"
         app:destination="@+id/settingFragment" />
+    <fragment
+        android:id="@+id/languageFragment"
+        android:name="com.zjl.finalarchitecture.module.language.LanguageFragment"
+        android:label="LanguageFragment" />
 
 </navigation>

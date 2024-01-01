@@ -391,6 +391,39 @@
 
                     </LinearLayout>
 
+                    <LinearLayout
+                        android:id="@+id/linearLanguage"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp">
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:scaleType="fitCenter"
+                            android:src="@mipmap/ic_setting"
+                            tools:ignore="UseAppTint" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_weight="1"
+                            android:singleLine="true"
+                            android:text="@string/description_language" />
+
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:scaleType="fitCenter"
+                            android:src="@mipmap/ic_enter"/>
+
+                    </LinearLayout>
+
                     <TextView
                         android:id="@+id/txtLogout"
                         android:layout_width="match_parent"

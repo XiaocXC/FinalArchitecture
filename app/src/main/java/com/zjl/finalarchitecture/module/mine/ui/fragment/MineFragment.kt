@@ -68,6 +68,9 @@ class MineFragment : BaseFragment<FragmentMineBinding, MineViewModel>(), View.On
 
         /* 退出登录 */
         mBinding.txtLogout.setOnClickListener(this)
+
+        /* 选择语言 */
+        mBinding.linearLanguage.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
@@ -77,6 +80,10 @@ class MineFragment : BaseFragment<FragmentMineBinding, MineViewModel>(), View.On
     }
 
     private fun itemClick(view: View) {
+        if(view.id == R.id.linearLanguage){
+            findNavController().navigate(R.id.action_mainFragment_to_languageFragment)
+            return
+        }
         if (!UserAuthDataSource.isLogin) {
             tipAndJumpLogin()
             return

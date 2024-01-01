@@ -220,7 +220,6 @@ public class CustomBottomNavigationView extends BottomNavigationView {
         setEdgeTreatmentHorizontalOffset(horizontalOffset, true);
     }
 
-    @SuppressLint("RestrictedApi")
     public void setEdgeTreatmentHorizontalOffset(float horizontalOffset, boolean animate){
         this.fabHorizontalOffset = horizontalOffset;
         BaseCircleEdgeTreatment edgeTreatment = getTopEdgeTreatment();
